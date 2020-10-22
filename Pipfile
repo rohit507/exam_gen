@@ -9,6 +9,7 @@ mkdocstrings = "*"
 mkdocs-material = "*"
 setuptools = "*"
 pep517 = "*"
+pymdown-extensions = "*"
 
 [dev-packages]
 mypy = "*"

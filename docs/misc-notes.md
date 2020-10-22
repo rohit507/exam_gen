@@ -98,9 +98,15 @@ stuff here should be eventually moved somewhere else in these docs.
             ['A','B','D']
   
     - Which means that the system can't really handle multiple inheritance as is. 
+    - I'm better off using some other introspection to go through parent classes
+      and using some other hook for class init to set things up.
+    - Yup, that's it. We use `__bases__` as the structure to get the parent classes
+      and `__init_subclass__` as the init hook.
+      
+## Doc Test
     
-    
-            
+::: exam_gen.mixins.settings
+        
 ## Things To Do 
 
   - TODO: Figure out what the `options.install_requires` actually means. 

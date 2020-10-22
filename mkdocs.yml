@@ -12,6 +12,12 @@ theme:
     repo: check-square
 
 plugins:
+  - search
   - mkdocstrings:
       watch:
         - exam_gen/ 
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
