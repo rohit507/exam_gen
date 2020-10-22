@@ -1,0 +1,17 @@
+site_name: UCB EECS Exam Generator
+
+repo_name: rohit507/exam_gen
+
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: blue
+    secondary: yellow
+  icon:
+    repo: check-square
+
+plugins:
+  - mkdocstrings:
+      watch:
+        - exam_gen/ 
