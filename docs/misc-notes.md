@@ -86,7 +86,21 @@ stuff here should be eventually moved somewhere else in these docs.
       for settings management. 
       - It's trivially simple and super powerful. 
       - It's just a monoid that we can sum down the inheritance heirarchy. 
+    - Oh wait, I just tried adding this: 
+
+            class Bloop(Buzz,Bing):
+                bar = "D"
+                      
+            print(Bloop.bars)
+    
+    - And got : 
       
+            ['A','B','D']
+  
+    - Which means that the system can't really handle multiple inheritance as is. 
+    
+    
+            
 ## Things To Do 
 
   - TODO: Figure out what the `options.install_requires` actually means. 
