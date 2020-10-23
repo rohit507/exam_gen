@@ -4,6 +4,7 @@ repo_name: rohit507/exam_gen
 
 theme:
   name: material
+  custom_dir : docs/theme/
   palette:
     scheme: slate
     primary: blue
@@ -13,6 +14,7 @@ theme:
 
 plugins:
   - search
+  - localsearch
   - mkdocstrings:
       watch:
         - exam_gen/ 
@@ -21,3 +23,5 @@ markdown_extensions:
   - admonition
   - pymdownx.details
   - pymdownx.superfences
+
+use_directory_urls: false
