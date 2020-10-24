@@ -22,11 +22,13 @@ stuff here should be eventually moved somewhere else in these docs.
       - Look at [this page](https://pawamoy.github.io/mkdocstrings/usage/) for more 
         detailed usage directions. 
     - The theme is [`mkdocs-material`](https://squidfunk.github.io/mkdocs-material/). 
-    - Run doc server with `pipenv run mkdocs serve` and open [http://127.0.0.1:8000/]() .
+    - Run doc server with `pipenv run mkdocs serve` and open 
+      [http://127.0.0.1:8000/]() .
     - Build a static stite with `pipenv run mkdocs build`, results will be placed 
       in the `site/` directory. 
 
-  - Using best practices taken from [https://sourcery.ai/blog/python-best-practices/]():
+  - Using best practices taken from 
+    [https://sourcery.ai/blog/python-best-practices/]():
     - Import Sort: `pipenv run isort`
     - PEP 8 Convention Check: `pipenv run flake8`
     - Static Type Check: `pipenv run mypy` 
@@ -46,8 +48,8 @@ stuff here should be eventually moved somewhere else in these docs.
       as we mixin a bunch of different classes. 
     
   - We should be able to use the `__init_subclass_` mechanism to implement the sort of
-    auto-collating settings system that I would like. Especially given how nice it would 
-    be have the sort of auto-documenting structure that I want. 
+    auto-collating settings system that I would like. Especially given how nice it
+    would be have the sort of auto-documenting structure that I want. 
     - Take the following example
     
             class Bar():
@@ -103,15 +105,11 @@ stuff here should be eventually moved somewhere else in these docs.
     - Yup, that's it. We use `__bases__` as the structure to get the parent classes
       and `__init_subclass__` as the init hook.
       
-## Doc Test
-    
-::: exam_gen.mixins.settings
-        
 ## Things To Do 
 
   - TODO: Figure out what the `options.install_requires` actually means. 
   - TODO: Remove unneccesary dependencies from `Pipfile.lock`. 
   - TODO: Actually-set-up/Verify that the git pre-commit hook works. 
-  - TODO: Move the notes from above somewhere appropriate within the docs or the code. 
+  - TODO: Move the notes from above somewhere appropriate within the docs or the code
 
 

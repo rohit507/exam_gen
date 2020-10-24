@@ -1,6 +1,6 @@
-# exam_gen
+# UCB EECS Exam Generator 
 
-A python library for generating randomized exams at UCB. This readme is just a
-scratchpad, go look at the docs folder for the actual documentation.
+This is a library that streamlines the process of writing, generating, and grading
+semi-random exams and quizzes. 
 
-TODO :: Add the basic instructions to build the docs. 
+TODO :: link to github pages docs files
