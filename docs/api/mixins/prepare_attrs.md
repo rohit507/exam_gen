@@ -34,14 +34,14 @@ class Subtest(Test):
 Subtest().run() 
 ```
 
-The whole thing when run should print `(15,35)`, which is not super useful 
-really. 
+The whole thing when run should print `(15,35)`. 
 
 !!! note
     `test_var` and `subtest_var` become properties of the `Subtest` 
     *class*, not any particular subtest object. If you're using a mutable 
     value like a dictionary then updates will be shared between all the 
-    various objects involved. 
+    various objects involved unless you copy them in the object's `__new__` 
+    or `__init__` functions. 
     
 ## DSL Example 
 
@@ -68,14 +68,12 @@ class ValidateOptions(metaclass=PrepareAttrs):
 
      super().__init_subclass__(**kwargs)
 
-     if 'do_this' in cls.__dict__: 
+     do_this = cls.__dict__['do_this']
+     do_that = cls.__dict__['do_that']
+     do_both = cls.__dict__['do_both']
 
-       do_this = cls.__dict__['do_this']
-       do_that = cls.__dict__['do_that']
-       do_both = cls.__dict__['do_both']
-
-       if (do_this and do_that) != do_both:
-         raise RuntimeError("Invalid Class Options")
+     if (do_this and do_that) != do_both:
+       raise RuntimeError("Invalid Class Options")
 
 class Test1(ValidateOptions):
   do_this = False
@@ -85,19 +83,34 @@ class Test2(ValidateOptions):
   do_both = False
 ```
 
-Notice how the user can update and refer to settings really concisely here. 
+Notice how the user can both update and refer to settings information in their
+class definitions. 
 
-!!! todo
-    - TODO: Why do we need to check whether `'do_this'` is in the class dictionary? 
-    - TODO: Sketch how this could be used elsewhere 
+This example does come with a few issues when it comes to sequential inheritance 
+and overloading of things defined by parent classes. The next example will explain
+how to get around those problems and others. 
 
 ## Complex Example 
 
 !!! todo
-    - TODO : Write example that focuses on gather information from parent classes. 
-    - TODO : Explain how this reacts with the python mro machinery.
-    - TODO : Add a diagram of how these steps get resolved for a class. 
+    - Write example that focuses on gather information from parent classes.
+    - Get overloading working. 
+    - Show how to handle object creation and making sure there's a clear separation 
+      between class attributes and object properties. 
+    - Explain how this reacts with the python mro machinery.
+    - Add a diagram of how these steps get resolved for a class. 
+    
 
-## Generated Documentation
+## Generated Documentation 
 
 ::: exam_gen.mixins.prepare_attrs
+    handler: python
+    selection:
+      members: 
+        - "PrepareAttrs"
+      filters: 
+        - "!__prepare__" 
+    rendering: 
+      heading_level: 3 
+      show_source: false
+      show_root_toc_entry: false

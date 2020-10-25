@@ -12,6 +12,14 @@ theme:
   icon:
     repo: check-square
 
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Miscellaneous Notes: misc-notes.md
+  - Developer API:
+      - Mixins:
+          - PrepareAttrs: api/mixins/prepare_attrs.md 
+
 plugins:
   - search
   - localsearch
@@ -23,5 +31,7 @@ markdown_extensions:
   - admonition
   - pymdownx.details
   - pymdownx.superfences
+  - toc:
+      permalink: true
 
 use_directory_urls: false
