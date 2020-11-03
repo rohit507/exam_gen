@@ -9,7 +9,7 @@ class PrepareAttrs(type):
     @classmethod
     def __prepare_attrs__(cls, name,bases, attrs):
         """
-        Redefine this function in classes using this metaclass to manipulate the
+        Define this function in classes using this metaclass to manipulate the
         attributes available in subclass definitions.
 
         ???+ Important
@@ -31,7 +31,7 @@ class PrepareAttrs(type):
         Returns:
            dict: The edited `attrs` dictionary that will be available to child
            classes as they're defined. The simplest possible version will just
-           return the argument directly. 
+           return the argument directly.
         """
         return attrs 
 
@@ -44,7 +44,6 @@ class PrepareAttrs(type):
         for cls in reversed(mro):
 
             prep_hook = getattr(cls,'__prepare_attrs__', None)
-
             if prep_hook is not None:
                 attrs = prep_hook(name,bases,attrs)
 
@@ -68,8 +67,6 @@ class PrepareAttrs(type):
 
         Returns:
           class: An 'empty' stub with an identical mro to the parent class.
-
-          !!! note
               This is cached and so will return the same stub class each time
               it's called on another class. 
         """
@@ -91,11 +88,11 @@ class PrepareAttrs(type):
 
         Args:
            name (str): The name of the class you're getting an mro for
-           bases (Tuple[class]): A tuple of all the classes that the new one
+           bases (tuple): A tuple of all the classes that the new one
               will directly inherit from.
 
         Returns:
-           list[Class]: The mro that a hypothetical class with the given
+           list: The mro that a hypothetical class with the given
               bases would have. 
         """
         stub_bases = tuple(self.get_stub_class(base) for base in bases)

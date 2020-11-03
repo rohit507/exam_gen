@@ -18,6 +18,7 @@ nav:
   - Miscellaneous Notes: misc-notes.md
   - Developer API:
       - Mixins:
+          - Settings: api/mixins/settings.md
           - PrepareAttrs: api/mixins/prepare_attrs.md 
 
 plugins:

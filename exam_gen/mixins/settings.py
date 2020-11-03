@@ -1,8 +1,6 @@
-"""
-Some Docs
-"""
+from exam_gen.mixins.prepare_attrs import *
 
-class SettingsManager():
+class SettingsManager(metaclass=PrepareAttrs):
     """
     A class that inherits from this settings manager will given a `settings`
     attribute with various options and autogenerate documentation from the
