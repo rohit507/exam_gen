@@ -20,6 +20,8 @@ nav:
       - Mixins:
           - Settings: api/mixins/settings.md
           - PrepareAttrs: api/mixins/prepare_attrs.md 
+      - Util:
+          - DynamicCall: api/util/dynamic_call.md
 
 plugins:
   - search
