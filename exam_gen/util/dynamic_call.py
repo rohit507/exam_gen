@@ -1,5 +1,5 @@
 from pprint import *
-from inspect import signature
+from inspect import *
 
 
 def dynamic_call(
@@ -53,7 +53,7 @@ def dynamic_call(
          argument (like `**kwargs`) then add those keyword arguments to the dict.
 
       5. If there are any required arguments that remain unused, then throw an
-         error. 
+         error.
 
     !!! Danger
         I am not at all sure if this is a good idea. Like with
@@ -63,7 +63,7 @@ def dynamic_call(
         Unlike `prepare_attrs` it *might* be prone to throwing errors to the
         end user that they're unable to handle. It's dependent on the user of
         this library to make sure that errors get translated into something
-        more user friendly. 
+        more user friendly.
 
     Args:
         func (function): The function to call.
@@ -76,7 +76,7 @@ def dynamic_call(
 
     Returns:
         any: Whatever `func` would return, or an error if arguments don't
-            match up. 
+            match up.
     """
     sig = signature(func)
     num_args = len(sig.parameters)
@@ -88,18 +88,82 @@ def dynamic_call(
     }
 
     args = []
-    kwargs = {} 
+    kwargs = {}
+    used_args = []
 
     # Pad Order to match the number of args
     if len(order) < num_args:
        order = (order + num_args * [None])[:num_args]
 
     # Use zip to make a big list of all the order elements parameters
-    # and other info we need to evaluate each parameter. 
+    # and other info we need to evaluate each parameter.
     terms = zip(zip(range(0,num_args),order),sig.parameters.items())
-    for ((i,order_item),(param_name, param)) in terms:
-        pprint((i,param_name,param.kind))
-        pass
+    for ((index,order_item),(param_name, param)) in terms:
+        if param.kind == Parameter.POSITIONAL_OR_KEYWORD:
+            if param_name in arg_dict:
+                used_args.append(param_name)
+                args.append(arg_dict[param_name])
+            elif (order_item != None) and (order_item in arg_dict):
+                used_args.append(order_item)
+                args.append(arg_dict[order_item])
+            elif param.default != Parameter.empty:
+                used_args.append(param_name)
+                args.append(param.default)
+            elif (order_item != None) and (order_item not in arg_dict):
+                raise PositionalParameterNotAvailable(
+                    ("Parameter '{}' found in positional param list " +
+                     "but not in provided argument dictionary."
+                    ).format(order_item),
+                    order_item = order_item,
+                    param = param,
+                    index = index,
+                    **err_data)
+            elif (order_item == None) and (param_name not in arg_dict):
+                raise ParameterNotAvailable(
+                    ("Parameter '{}' not found in argument dictionary " +
+                     "and no default was provided."
+                    ).format(param_name),
+                    param_name = param_name,
+                    param = param,
+                    index = index,
+                    **err_data)
+            else:
+                raise RuntimeError(
+                     "Should be unreachable. There's an error in " +
+                     "`exam_gen.util.dynamic_call` somewhere." )
+        elif param.kind == Parameter.VAR_POSITIONAL:
+            raise VarPositionalArgumentNotSupported(
+                ("Dynamic Call API doesn't support variadic positional " +
+                 " variables"),
+                param_name = param_name,
+                param = param,
+                index = index,
+                **err_data)
+        elif param.kind == Parameter.KEYWORD_ONLY:
+            if param_name in arg_dict:
+                used_args.append(param_name)
+                kwargs[param_name] = arg_dict[param_name]
+            elif param.default != Parameter.empty:
+                used_args.append(param_name)
+                kwargs[param_name] = param.default
+            else:
+                raise ParameterNotAvailable(
+                    ("Parameter '{}' not found in argument dictionary " +
+                     "and no default was provided."
+                    ).format(param_name),
+                    param_name = param_name,
+                    param = param,
+                    index = index,
+                    **err_data)
+        elif param.kind == Parameter.VAR_KEYWORD: pass
+        else:
+            raise RuntimeError(
+                "Should be unreachable. There's an error in " +
+                "`exam_gen.util.dynamic_call` somewhere.")
+
+    for arg in arg_dict:
+        if arg not in used_args:
+            kwargs[arg] = arg_dict[arg]
 
     return func(*args, **kwargs)
 
@@ -108,15 +172,37 @@ class DynamicCallError(RuntimeError):
     """
     Parent error for various things that could go wrong with
     `dynamic_call`. Exists to make it easier to provide good error messages
-    to users. 
+    to users.
+
+    Params:
+      func (function): The function we failed to call
+      message (string): The error message
+      **meta (dict): Whatever additional metadata is reasonable.
     """
-    def __init__(self, func, message = "", **meta):
-        """
-        Params:
-           func (function): The function we failed to call
-           message (string): The error message
-           **meta (dict): Whatever additional metadata is reasonable. 
-        """
-        super().__init__()
-        self.func = func
+    def __init__(self, message = "", **meta):
+        super().__init__(message)
         self.meta = meta
+
+class PositionalParameterNotAvailable(DynamicCallError):
+    """
+    Thrown when a parameter in the list of ordered parameters is not
+    found in the provided argument dictionary. This usually is an error
+    on the part of the caller of `dynamic_call`.
+    """
+    pass
+
+class ParameterNotAvailable(DynamicCallError):
+    """
+    Thrown when a parameter required by the function being called isn't
+    available in argument dictionary. This is usually because the input
+    function to `dynamic_call` is asking for some input that the caller
+    of `dynamic_call` wasn't expected.
+    """
+    pass
+
+class VarPositionalArgumentNotSupported(DynamicCallError):
+    """
+    This error is thrown when a `VAR_POSITIONAL` argument is used by the
+    called function, which the `dynamic_call` interface doesn't support.
+    """
+    pass
