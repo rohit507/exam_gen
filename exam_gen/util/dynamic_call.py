@@ -1,5 +1,7 @@
 from pprint import *
 from inspect import *
+from itertools import chain, product, count
+from string import ascii_lowercase
 
 
 def dynamic_call(
@@ -110,7 +112,7 @@ def dynamic_call(
                 used_args.append(param_name)
                 args.append(param.default)
             elif (order_item != None) and (order_item not in arg_dict):
-                raise PositionalParameterNotAvailable(
+                raise PositionalParameterNotAvailableError(
                     ("Parameter '{}' found in positional param list " +
                      "but not in provided argument dictionary."
                     ).format(order_item),
@@ -119,7 +121,7 @@ def dynamic_call(
                     index = index,
                     **err_data)
             elif (order_item == None) and (param_name not in arg_dict):
-                raise ParameterNotAvailable(
+                raise ParameterNotAvailableError(
                     ("Parameter '{}' not found in argument dictionary " +
                      "and no default was provided."
                     ).format(param_name),
@@ -132,7 +134,7 @@ def dynamic_call(
                      "Should be unreachable. There's an error in " +
                      "`exam_gen.util.dynamic_call` somewhere." )
         elif param.kind == Parameter.VAR_POSITIONAL:
-            raise VarPositionalArgumentNotSupported(
+            raise VarPositionalArgumentNotSupportedError(
                 ("Dynamic Call API doesn't support variadic positional " +
                  " variables"),
                 param_name = param_name,
@@ -147,7 +149,7 @@ def dynamic_call(
                 used_args.append(param_name)
                 kwargs[param_name] = param.default
             else:
-                raise ParameterNotAvailable(
+                raise ParameterNotAvailableError(
                     ("Parameter '{}' not found in argument dictionary " +
                      "and no default was provided."
                     ).format(param_name),
@@ -167,6 +169,102 @@ def dynamic_call(
 
     return func(*args, **kwargs)
 
+def dcall(func, order = None):
+  """
+  A shorthand version of `dynamic_call` meant to match the standard function
+  call interface more closely. With two major invocation styles:
+
+    - The first invocation style allows for positional args in the returned
+      function, and can be used as follows.
+
+      ```python
+      dcall(f)('arg1', arg2, kwarg1 = foo, kwarg2 = bar)
+      ```
+
+      Both positional and keyword arguments are accepted, though the recommendation
+      is that only keyword arguments are used.
+
+      ??? Info
+          Note that all the positional arguments are given a temporary name, and
+          added to the `order` list of the underlying `dynamic_call` invocation.
+
+          An invocation like `dcall(f)(1,2,3,foo = 4)` would be turned into
+          something like the following internally:
+
+          ```python
+          dynamic_call(f,
+            order=['a','b','c'],
+            arg_dict = {
+              'a'  : 1,
+              'b'  : 2,
+              'c'  : 3,
+              'foo': 4
+              }
+            )
+          ```
+          These names are chosen to not conflict with any keyword arguments
+          but have a slight potential for causing weird errors.
+
+      ??? Question
+          Should this usage mode be removed entirely? It's unclear whether
+          it's useful enough for the potential issues it may cause.
+
+    - The alternate invocation format allows you to specify the order of
+      positional parameters when you call `dcall`. For instance:
+
+      ```python
+      dcall(foo, order=['rng','count','val'])(rng = bar, count = 4, val = "str")
+      ```
+
+      When an order parameter is given, the returned function can only be called
+      with keyword arguments. Trying to call it with positional arguments will
+      raise a `UnexpectedPositionalArgumentError`.
+
+  Parameters:
+      func (function): The function you're trying to call with a dynamic set of
+          arguments.
+      order (list): The list of parameters that should be passed to `func` as
+          positional arguments. If an order is passed to `dcall` the returned
+          function cannot be called with any positional arguments.
+
+  Returns:
+      function: A function that can be called somewhat normally, while still
+          accommodating a variety of potential signatures in the input `func`.
+  """
+
+  # Will iterate through all strings made of lowercase letters in order.
+  # (i.e `['a','b','c', ... ,'z','aa','ab','ac', ... ,'az','ba', ... , 'zz',`
+  # 'aaa','aab','aac', ... ]` onto infinity)
+  name_list = chain(map(lambda x: product(ascii_lowercase, repeat = x), count()))
+
+  def f(*args, **kwargs):
+
+      call_order = []
+
+      if (order != None) and (args != []):
+          raise UnexpetedPositionalArgumentError(
+              "Calls to `dcall` cannot have both an order parameter and " +
+              "positional arguments.",
+              func = func,
+              order = order,
+              args = args,
+              kwargs = kwargs
+              )
+      elif (order != None):
+          call_order.append(order)
+      else:
+          # Assign each positional argument a name and add it to the set
+          # ordered parameters and keyword arguments.
+          for arg in args:
+              name = next(name_list)
+              while name in kwargs.keys():
+                  name = next(name_list)
+              call_order.append(name)
+              kwargs[name] = arg
+
+      return dynamic_call(func,kwargs,call_order)
+
+  return f
 
 class DynamicCallError(RuntimeError):
     """
@@ -183,26 +281,44 @@ class DynamicCallError(RuntimeError):
         super().__init__(message)
         self.meta = meta
 
-class PositionalParameterNotAvailable(DynamicCallError):
+class PositionalParameterNotAvailableError(DynamicCallError):
     """
     Thrown when a parameter in the list of ordered parameters is not
     found in the provided argument dictionary. This usually is an error
     on the part of the caller of `dynamic_call`.
+
+    **Parameters:** See params for `DynamicCallError`.
     """
     pass
 
-class ParameterNotAvailable(DynamicCallError):
+class ParameterNotAvailableError(DynamicCallError):
     """
     Thrown when a parameter required by the function being called isn't
     available in argument dictionary. This is usually because the input
     function to `dynamic_call` is asking for some input that the caller
     of `dynamic_call` wasn't expected.
+
+    **Parameters:** See params for `DynamicCallError`.
     """
     pass
 
-class VarPositionalArgumentNotSupported(DynamicCallError):
+class VarPositionalArgumentNotSupportedError(DynamicCallError):
     """
     This error is thrown when a `VAR_POSITIONAL` argument is used by the
     called function, which the `dynamic_call` interface doesn't support.
+
+    **Parameters:** See params for `DynamicCallError`.
+    """
+    pass
+
+class UnexpectedPositionalArgumentError(DynamicCallError):
+    """
+    This error is thrown when an invocation of `dcall` was given an order to
+    turn keyword arguments into positional arguments, but the returned
+    function was still called with positional arguments. This indicates that
+    the `dcall` wrapper doesn't know how to handle these new positional args
+    since they conflict with the previously provided order.
+
+    **Parameters:** See params for `DynamicCallError`.
     """
     pass

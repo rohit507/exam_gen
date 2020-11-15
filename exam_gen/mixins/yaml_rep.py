@@ -1,4 +1,4 @@
-from pyyaml import yaml
+import yaml
 
 class Yamlable():
 
@@ -16,3 +16,5 @@ class Yamlable():
         # Set yaml tag
         # register constructor
         # register representer
+
+        pass

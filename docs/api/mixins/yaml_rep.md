@@ -13,3 +13,16 @@ Requirements:
     values that we do manage.
   - Some way to dump/load large strings to a separate file rather than
     keep them inline.
+
+So yeah:
+
+  - How do I do construction of the
+
+## Generated Documentation
+
+::: exam_gen.mixins.yaml_rep
+    handler: python
+    rendering:
+      heading_level: 3
+      show_source: false
+      show_root_toc_entry: false

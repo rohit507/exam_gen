@@ -8,13 +8,6 @@ more modular backend.
 
 ::: exam_gen.util.dynamic_call
     handler: python
-    selection:
-      members:
-        - "dynamic_call"
-        - "DynamicCallError"
-        - "PositionalParameterNotAvailable"
-        - "ParameterNotAvailable"
-        - "VarPositionalArgumentNotSupported"
     rendering:
       heading_level: 3
       show_source: false
