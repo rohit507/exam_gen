@@ -16,7 +16,13 @@ Requirements:
 
 So yeah:
 
-  - How do I do construction of the
+  - How do I do construction of the yaml node in a class hierarchy compliant
+    way?
+  - How can I allow for the splitting of source files in a reasonable way?
+
+Hmm, I think the reasonable thing to do for now is to just leave this be as
+something on the todo list. It's important but it's neither on the critical
+path nor something that would be hurt by introduction later.
 
 ## Generated Documentation
 
