@@ -19,7 +19,8 @@ nav:
   - Developer API:
       - Mixins:
           - Settings: api/mixins/settings.md
-          - PrepareAttrs: api/mixins/prepare_attrs.md 
+          - PrepareAttrs: api/mixins/prepare_attrs.md
+          - YamlRep: api/mixins/yaml_rep.md
       - Util:
           - DynamicCall: api/util/dynamic_call.md
 
@@ -28,7 +29,7 @@ plugins:
   - localsearch
   - mkdocstrings:
       watch:
-        - exam_gen/ 
+        - exam_gen/
 
 markdown_extensions:
   - admonition

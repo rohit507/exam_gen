@@ -11,6 +11,7 @@ setuptools = "*"
 pep517 = "*"
 pymdown-extensions = "*"
 mkdocs-localsearch = "*"
+pyyaml = "*"
 
 [dev-packages]
 mypy = "*"
