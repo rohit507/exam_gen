@@ -4,16 +4,6 @@ Classes that inherit from `SettingsManager` will gain a `settings` property
 that acts like a dictionary of various runtime options.
 It also will perform validation of options, auto-generate documentation, and
 provide other features that enable a smoother user experience.
-
-## Generated Documentation
-
-::: exam_gen.mixins.settings
-    handler: python
-    rendering:
-      heading_level: 3
-      show_source: false
-      show_root_toc_entry: false
-
 ## User Docs
 
 ### Reading Options
@@ -242,3 +232,13 @@ separate functions and come with appropriate existence checks.
 ### Duplication on object init
 
 ## Internal/Implementation Documentation
+
+
+## Generated Documentation
+
+::: exam_gen.mixins.settings.data
+    handler: python
+    rendering:
+      heading_level: 3
+      show_source: false
+      show_root_toc_entry: false

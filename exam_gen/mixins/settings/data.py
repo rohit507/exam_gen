@@ -1,22 +1,4 @@
-from exam_gen.mixins.prepare_attrs import *
 from typing import *
-
-class SettingsManager(metaclass=PrepareAttrs):
-    """
-    A class that inherits from this settings manager will given a `settings`
-    attribute with various options and autogenerate documentation from the
-    different parent options given.
-    """
-
-    def __init_subclass__(cls, **kwargs):
-        """
-        """
-        super().__init_subclass__(cls, **kwargs)
-
-    def __init__(self, **kwargs):
-        """
-        """
-        pass
 
 class SettingOption(NamedTuple):
     """
@@ -37,7 +19,6 @@ class SettingOption(NamedTuple):
     definer: Any
     value: str
     description: str
-    pass
 
 class SettingInfo(NamedTuple):
     """
@@ -50,6 +31,8 @@ class SettingInfo(NamedTuple):
     Attributes:
        definer (class or object): Which class initialization or object's
            evaluation this SettingOption was added under. (`required`)
+       is_set (bool): Has this value been set? (default = `False`)
+       value (Any): The actual value being set. (`Optional`)
        default (Any, optional): The default value for this setting.
            (`optional`)
        short_desc (str, optional): A short (< 80 char) description of the
@@ -113,6 +96,8 @@ class SettingInfo(NamedTuple):
 
     """
     definer: Any
+    is_set: bool = False
+    value: Any = None
     default: Optional[Any] = None
     short_desc: Optional[str] = None
     long_desc: Optional[str] = None
@@ -124,6 +109,4 @@ class SettingInfo(NamedTuple):
     required: bool = False
     update_with: Optional[Callable[...,Any]] = None
     copy_with: Optional[Callable[...,Any]] = None
-    options: List[SettingOption] = []
-
-    pass
+    options: List = []

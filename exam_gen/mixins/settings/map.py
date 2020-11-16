@@ -1,0 +1,2 @@
+class SettingsMap:
+    pass
