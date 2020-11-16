@@ -4,6 +4,7 @@ We want to be able to dump and load all the different classes to a human
 readable representation. Both for backups and debugging.
 
 Requirements:
+
   - Somewhat sane method for making a class representable.
   - Some way to skip around the usual init process and load a file without
     recapitulating any side effects.
