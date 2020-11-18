@@ -1,40 +1,56 @@
 from typing import *
+from enum import Flag, auto
 
 class SettingOption(NamedTuple):
     """
     A single valid option for a setting. Multiple options are added to
-    a list that will be turned into a table.
+    a list that will be turned into a table. Used both as internal store
 
     !!! Important
         This in an internal structure that should never be exposed to users
         of this module directly.
+
+    !!! Todo
+        Make this an internal class of `SettingsMap`.
 
     Params:
        definer (class or object): Which class initialization or object's
            evaluation this SettingOption was added under.
-       value (str): One option for a value this setting can take.
        description (str): The description of what setting the setting to
            that value would entail.
+       adding (bool): Are we using this as an `add_option` object?
     """
     definer: Any
-    value: str
     description: str
+    adding: bool = False
+
+class ValidationTime(Flag):
+    """
+    Options for when to validate a setting.
+    """
+    READ = auto()
+    WRITE = auto()
+    BOTH = READ | WRITE
+    NEVER = 0
 
 class SettingInfo(NamedTuple):
     """
-    Named tuple that stores all the properties of a setting leaf node.
+    Named tuple that stores all the properties of a setting leaf node. Also
+    can serve as a partial
 
     !!! Important
         This in an internal structure that should never be exposed to users
         of this module directly.
 
+    !!! Todo
+        Make this an internal class of `SettingsMap`.
+
     Attributes:
        definer (class or object): Which class initialization or object's
            evaluation this SettingOption was added under. (`required`)
-       is_set (bool): Has this value been set? (default = `False`)
-       value (Any): The actual value being set. (`Optional`)
-       default (Any, optional): The default value for this setting.
-           (`optional`)
+       setter (class or object): Which class init or object evaluation set
+           this value. (`optional`)
+       value (Any): The actual value that was set. (`optional`)
        short_desc (str, optional): A short (< 80 char) description of the
            setting. (`optional`)
        long_desc (str, optional): A longer description of a setting and what
@@ -48,22 +64,23 @@ class SettingInfo(NamedTuple):
            | `lambda val: ...` | A single parameter will be passed the value of the setting. Should return a `bool`. |
            | `lambda val settings: ...` | A second parameter will be passed the root settings object as well, so that the consistency of multiple settings can be tested. |
 
-       validate_on (str, optional): Determines when to run the validation
-           function. (default = `'read'`)
+       validate_on (ValidationTime): Determines when to run the validation
+           function. (default = `NEVER`)
 
            | Options | Description |
            | :-- | :-- |
-           | `'read'`  | Validate the setting when it's read by something. |
-           | `'write'` | Validate the setting when it's assigned a value.  |
-           | `'both'`  | Validate the setting on both read and write.      |
-           | `'never'` | Never validate the setting. |
+           | `ValidationTime.READ`  | Validate the setting when it's read by something. |
+           | `ValidationTime.WRITE` | Validate the setting when it's assigned a value.  |
+           | `ValidationTime.BOTH`  | Validate the setting on both read and write.      |
+           | `ValidationTime.NEVER` | Never validate the setting. |
 
            Defaults to `'read'` because there can be cases where a bunch of
            settings need to be assigned and the intermediate state can be
            invalid.
 
        needs_validation (bool): Does this setting need to be validated on the
-            next read operation?  (default = `False`)
+            next read operation?  This is mainly for internal bookkeeping use
+            (default = `False`)
 
        derivation (function): Function to derive the value of the setting
             from other settings. The function should accept the root settings
@@ -90,23 +107,28 @@ class SettingInfo(NamedTuple):
        copy_with (function): Function used to make a deep clone of the value
             of a setting when we need to copy a settings object.
 
-       options (list of SettingOption): A list of options for the setting that
-            will be rendered as a table in the docs.
+       options (dict): A dict of options for the setting that
+            will be rendered as a table in the docs. The key of the dict is
+            the name of the option
+
+       updating (bool): Are we using this as an `update_setting` object?
+       creating (bool): Are we using this as a `new_setting` object?
 
 
     """
     definer: Any
-    is_set: bool = False
+    setter: Any = None
     value: Any = None
-    default: Optional[Any] = None
     short_desc: Optional[str] = None
     long_desc: Optional[str] = None
     validator: Optional[Callable[..., bool]] = None
-    validate_on: str = 'read'
+    validate_on: ValidationTime = ValidationTime.NEVER
     needs_validation: bool = False
     derivation: Optional[Callable[...,Any]] = None
     derive_on_read: bool = True
     required: bool = False
     update_with: Optional[Callable[...,Any]] = None
     copy_with: Optional[Callable[...,Any]] = None
-    options: List = []
+    options: dict = dict()
+    updating: bool = False
+    creating: bool = False

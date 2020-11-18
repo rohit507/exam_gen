@@ -34,8 +34,10 @@ plugins:
 
 markdown_extensions:
   - admonition
+  - md_in_html
   - pymdownx.details
   - pymdownx.superfences
+  - pymdownx.inlinehilite
   - toc:
       permalink: true
 
