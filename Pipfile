@@ -12,6 +12,7 @@ pep517 = "*"
 pymdown-extensions = "*"
 mkdocs-localsearch = "*"
 PyYAML = "*"
+wrapt = "*"
 
 [dev-packages]
 mypy = "*"

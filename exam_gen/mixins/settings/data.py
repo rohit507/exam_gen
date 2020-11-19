@@ -1,5 +1,9 @@
 from typing import *
 from enum import Flag, auto
+from wrapt import ObjectProxy
+from exam_gen.mixins.settings.errors import *
+from exam_gen.util.dynamic_call import *
+from copy import *
 
 class SettingOption(NamedTuple):
     """
@@ -22,7 +26,7 @@ class SettingOption(NamedTuple):
     """
     definer: Any
     description: str
-    adding: bool = False
+
 
 class ValidationTime(Flag):
     """
@@ -32,6 +36,7 @@ class ValidationTime(Flag):
     WRITE = auto()
     BOTH = READ | WRITE
     NEVER = 0
+
 
 class SettingInfo(NamedTuple):
     """
@@ -132,3 +137,105 @@ class SettingInfo(NamedTuple):
     options: dict = dict()
     updating: bool = False
     creating: bool = False
+
+    def add_option(self, name, option):
+        self.options[name] = option
+
+    def update(self, update):
+        self.definer = update.definer
+        if update.setter != None: self.setter = update.setter
+        if update.value != None:
+            self.value = update.value
+            self.needs_validation |= update.needs_validation
+        if update.short_desc != None: self.short_desc = update.short_desc
+        if update.long_desc != None: self.long_desc = update.long_desc
+        if update.validator != None: self.validator = update.validator
+        if update.validate_on != None: self.validate_on = update.validate_on
+        if update.derivation != None: self.derivation = update.derivation
+        if update.derive_on_read != None:
+            self.derive_on_read = update.derive_on_read
+        if update.required != None: self.required = update.required
+        if update.update_with != None: self.update_with = update.update_with
+        if update.copy_with != None: self.copy_with = update.copy_with
+        if update.options != None:
+            self.options.update(update.options)
+
+    def copy(self):
+        val = None
+        if self.copy_with != None:
+            val = self.copy_with(self.value)
+        else:
+            val = deepcopy(self.value)
+        return self._replace(value = val,
+                             options = deepcopy(options))
+
+    def is_set(self):
+        return self.setter != None
+
+    def get_val(self, name, parent):
+        if not self.is_set() and self.derive_on_read:
+            self.derive(name, parent)
+        if self.validate_on & ValidationTime.READ:
+            self.validate(name, parent)
+        if not self.is_set():
+            raise UndefinedSettingError(
+                ("Setting at `{}.{}` not defined at attempted use."
+                ).format(parent.path_string, name))
+        else:
+            return self.value
+
+    def set_val(self, value, name, parent):
+        self.setter = parent.context
+        if self.update_with != None:
+            self.value = self.update_with(self.value, value)
+        else:
+            self.value = value
+        self.dirty()
+        if self.validate_on & ValidationTime.WRITE:
+            self.validate(name, parent)
+        pass
+
+    def dirty(self):
+        self.needs_validation = True
+
+    def derive(self, name, parent):
+        if not self.is_set():
+            if self.derivation != None:
+                self.set_val(self.derivation(parent.get_root), name, parent)
+            else:
+                raise SettingNotDerivableError(
+                    ("Cannot derive setting `{}.{}`"
+                    ).format(parent.path_string, name))
+        else:
+            pass
+
+    def validate(self, name, parent):
+        if self.needs_validation:
+
+            if self.required and not self.is_set():
+                raise UndefinedRequiredSettingError(
+                    ("Setting `{}.{}` is required but not set."
+                    ).format(parent.path_string, name))
+
+            if self.validator != None:
+
+                validation_args = {
+                    'val': self.value,
+                    'settings': parent.get_root
+                    }
+                validation_order = ['val', 'settings']
+                validation_func = dcall(self.validator, order=validation_order)
+                result = validation_func(validation_args)
+
+                if isinstance(result, bool) and (not result):
+                    raise InvalidSettingError(
+                        ("Validation of setting `{}.{}` failed."
+                        ).format(parent.path_string, name))
+                elif isinstance(result, str):
+                    raise InvalidSettingError(
+                        ("Validation of setting `{}.{}` failed with error: {}"
+                        ).format(parent.path_string, name, result))
+
+            self.needs_validation = False
+        else:
+            pass

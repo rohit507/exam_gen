@@ -20,19 +20,22 @@ class SettingsMap:
     def __init__(self,
                  context,
                  root = None,
+                 path = [],
                  description = None,
                  context_stack = [],
                  **kwargs
     ):
+        self.kwargs = kwargs
         super().__init__(**kwargs)
 
         if context == None:
             raise RuntimeError("There must be a current context in which this"+
                                " SettingsMap is initialized.")
 
-        self.context_stack = [context] + context_stack
+        self.context_stack = context_stack
         self.context = context
-        self.root = self if root == None else root
+        self.root = root
+        self.path = path
         self.docs_dirty = True
         self.docs = None
         self.description = description
@@ -41,61 +44,78 @@ class SettingsMap:
 
     def __getattr__(self, name):
         # If there's a member
-           # If it's a setting
-              # if it's set
-                 # if it needs to be validated, validate and return it
-              # if it's not set and is derivable on read
-                 # derive it, set it, and return it
-              # else
-                 # raise UndefinedSettingError
-           # if it's a settingsMap
-              # return it
-        # else
-           # raise NoSuchSettingError
-        raise NotImplementedError
+        if name in self.members:
+           member = self.members[name]
+           if isinstance(member, SettingInfo):
+               return member.get_val(self)
+           elif isinstance(member, SettingsMap):
+               return member
+           else:
+               raise RuntimeError("Internal Error w/ SettingsMap")
+        elif hasattr(super(), name):
+            super().__getattr__(name)
+        else:
+          raise NoSuchSettingError("Could not find setting '{}.{}'.".format(
+              self.path_string, name))
 
     def __setattr__(self, name, value):
-        # if value is a new settings object
-          # if setting exists
-             # raise SettingAlreadyExistsError
-          # if setting is settingMap
-             # raise SettingsMapNotUpdatableError
-          # else create a new setting & mark revalidation & regen docs
-        # if value is an update settings object
-          # if setting doesn't exist
-            # raise NoSettingToUpdateError
-          # else update the setting & mark all for revalidation & regen docs
-        # if value is an add_option object
-          # if setting exists
-            # add the option & regen docs
-          # else
-            # raise NoSuchSettingError or SettingsMapNotUpdatableError
-        # if value is a dict
-          # if setting is a settings map
-            # `+=` the value and the setting together
-        # else
-          # if setting exists
-            # set the value & mark for revalidation & regen docs & and etc
-          # if not
-            # raise NoSuchSettingError
-        raise NotImplementedError
+        if isinstance(value, SettingInfo):
+            if value.creating:
+                self.__new_setting(name, value)
+            elif value.updating:
+                self.__update_setting(name, value)
+            else:
+                raise RuntimeError("Internal Error w/ SettingsMap")
+        elif isinstance(value, SettingOption):
+            self.__add_option(name, value)
+        elif (name in self.members) and isinstance(value, dict):
+            self.__update_settings_map(name, value)
+        elif (not hasattr(super(), name)) and isinstance(value, dict):
+            self.__new_settings_map(name, value)
+        elif name in self.members:
+            member = self.members[name]
+            if isinstance(member, SettingInfo):
+                member.set_val(value, name, self)
+            else:
+                raise NoSuchSettingError(
+                    ("No settings exists at `{}.{}`."
+                    ).format(self.path_string, name))
+        else:
+            super().__set_attr__(name, value)
 
-    def __iadd__(self, other): # Note: this is `+=`
-        # if other is a dict
-          # go through and add each item to this object via __setattr__
-        # else
-          # raise InvalidBulkAssignment
-        raise NotImplementedError
+    def __iadd__(self, other):
+        if isinstance(other, dict):
+            for (name, val) in other:
+                self.__set_attr__(name, val)
+        else:
+            raise InvalidBulkAssignmentError("Expected a dict as input " +
+                                             "to bulk setting assignment.")
 
-    def copy(self, context, root = None):
-        # Make a clone of this object that we can use elsewhere that has a
-        # a new defined context
+    def copy(self, context, root = None, path = []):
 
-        # create a new SettingsMap with appropriate additional context
-        # go through each term in our map and add it, with the appropriate
-        # modifications to the new settings map. Use the `copy_with` functions
-        # of the various values as needed.
-        raise NotImplementedError
+        new_map = SettingsMap(context,
+                              root,
+                              path,
+                              self.description,
+                              [self.context] + self.context_stack,
+                              **self.kwargs)
+
+        root = new_map if root == None else root
+
+        for (name, member) in self.members.items():
+            if isinstance(member, SettingInfo):
+                new_setting = member.copy(context, root, path)
+                new_setting.creating = True
+                new_map.__set_attr__(name, new_setting)
+            elif isinstance(member, SettingsMap):
+                new_submap = member.copy(context,
+                                         root,
+                                         path + [name])
+                new_map.__new_raw_settings_map(name, new_submap)
+            else:
+                raise RuntimeError("Internal Error w/ SettingsMap")
+
+        return new_map
 
     def new_setting_func(self):
         # get a new_setting function for the current context
@@ -117,40 +137,61 @@ class SettingsMap:
         raise NotImplementedError
 
     def dirty_all_validation(self):
-        # mark all the validation flags dirty
-        raise NotImplementedError
+        for (name, member) in self.members.items():
+            if isinstance(member, SettingInfo):
+                member.dirty()
+            elif isinstance(member, SettingsMap):
+                member.dirty_all_validation()
 
     def dirty_validation(self, name):
-        raise NotImplementedError
+        if name in self.members:
+            member = self.members[name]
+            if isinstance(member, SettingInfo):
+                member.dirty()
+            elif isinstance(member, SettingsMap):
+                member.dirty_all_validation()
+        else:
+            raise NoSuchSettingError(
+                ("No setting `{}.{}` to mark as dirty."
+                 ).format(self.path_string, name))
 
     def validate_all(self):
-        # go through all elements and
-          # if settingsmap, run validate_all
-          # else validate the specific value
-        raise NotImplementedError
+        for (name, member) in self.members.items():
+            if isinstance(member, SettingInfo):
+                member.validate(name, self)
+            elif isinstance(member, SettingsMap):
+                member.validate_all()
 
     def validate(self, name):
-        # validate a single item
-        # if its required and does not exist
-          # raise UndefinedRequiredSettingError
-        # if it needs validation
-          # if validation fails
-            # raise InvalidSettingError
-          # else
-            # mark validation clean
-        raise NotImplementedError
+        if name in self.members:
+            member = self.members[name]
+            if isinstance(member, SettingInfo):
+                member.validate(name, self)
+            elif isinstance(member, SettingsMap):
+                member.validate_all()
+        else:
+            raise NoSuchSettingError(
+                ("No setting `{}.{}` to validate."
+                 ).format(self.path_string, name))
 
     def derive_all(self):
-        # go through all items and derive them
-        raise NotImplementedError
+        for (name, member) in self.members.items():
+            if isinstance(member, SettingInfo):
+                member.derive(name, self)
+            elif isinstance(member, SettingsMap):
+                member.derive_all()
 
     def derive(self, name):
-        # for a single item
-        # if its derivable
-          # do that, set the value
-        # if it's not
-          # raise SettingNotDerivableError
-        raise NotImplementedError
+        if name in self.members:
+            member = self.members[name]
+            if isinstance(member, SettingInfo):
+                member.derive(name, self)
+            elif isinstance(member, SettingsMap):
+                member.derive_all()
+        else:
+            raise NoSuchSettingError(
+                ("No setting `{}.{}` to derive value for."
+                 ).format(self.path_string, name))
 
     def set_context(self, context):
         self.context_stack = [context] + self.context_stack
@@ -161,3 +202,29 @@ class SettingsMap:
 
     def gather_docs(self, context):
         raise NotImplementedError
+
+    @property
+    def path_string(self):
+        return '.'.join(self.path)
+
+    @property
+    def __is_root(self):
+        return self.root == None
+
+    @property
+    def get_root(self):
+        return self if self.root == None else root
+
+    def __new_setting(self, name, info): pass
+
+    def __update_setting(self, name, info): pass
+
+    def __new_settings_map(self, name, info): pass
+
+    def __new_raw_settings_map(self, name, smap): pass
+
+    def __update_settings_map(self, name, opts): pass
+
+    def __add_option(self, name, info): pass
+
+    def __set_value(self, name, info): pass
