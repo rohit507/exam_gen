@@ -60,12 +60,12 @@ class Option(Defined, NamedTuple):
     short_desc: str = None
     long_desc : Optional[str] = None
 
-    def update(self, other):
+    def update(self, other, force_update = False):
 
         if self.name != other.name:
             raise RuntimeError("Internal Error: update of mismatched options.")
 
-        if not isinstance(other, UpdateOption):
+        if not (isinstance(other, UpdateOption) or force_update):
             raise RuntimeError("Internal Error: invalid option used to update.")
 
         if hasattr(super(), 'update'): super().update(other)
@@ -106,17 +106,20 @@ class SettingInfo(Defined, NamedTuple):
     long_desc: Optional[str] = None
     options: dict = dict()
 
-    def add_option(self, option):
-        if not isinstance(option, AddOption):
+    def add_option(self, option : Option, force_update = False):
+        if not (isinstance(option, AddOption) or force_update):
             raise RuntimeError("InternalError: New option is invalid.")
 
         self.options[option.name] = Option(**option._addict())
 
-    def update_option(self, option):
-        if not isinstance(option, UpdateOption):
+    def update_option(self, option : Option, force_update = False):
+        if not (isinstance(option, UpdateOption) or force_update):
             raise RuntimeError("InternalError: Invalid option update.")
 
-        self.options[option.name].update(option)
+        self.options[option.name].update(option, force_update)
+
+    def has_option(self, name : str):
+        return name in options
 
     def update(self, other):
         """
@@ -203,28 +206,28 @@ class SettingValidation(SettingValue, NamedTuple):
            settings need to be assigned and the intermediate state can be
            invalid.
 
-       needs_validation (bool): Does this setting need to be validated on the
+       needsidation (bool): Does this setting need to be validated on the
             next read operation?  This is mainly for internal bookkeeping use
             (default = `False`)
     """
     required: bool = None
     validator: Optional[Callable[..., bool]] = None
     validate_on: ValidationTime = None
-    needs_validation: bool = False
+    needsidation: bool = False
 
     def update(self, other):
         if self.setter != other.setter:
-            self.needs_validation = True
+            self.needsidation = True
         if hasattr(super(), 'update'): super().update(other)
         if other.required != None: self.required = other.required
         if other.validator != None: self.validator = other.validator
         if other.validate_on != None: self.validate_on = other.validate_on
 
-    def dirty_val(self): self.needs_validation = True
+    def dirty(self): self.needsidation = True
 
-    def validate_val(self, parent, name = None):
+    def validate(self, parent, name = None):
         name = self.name if name == None else name
-        if self.needs_validation:
+        if self.needsidation:
 
             if self.required and not self.is_set():
                 raise UndefinedRequiredSettingError(
@@ -252,7 +255,7 @@ class SettingValidation(SettingValue, NamedTuple):
                         ("Validation of setting `{}.{}` failed."
                         ).format(parent.path_string, name))
 
-            self.needs_validation = False
+            self.needsidation = False
 
 class SettingConstruction(SettingValue, NamedTuple):
     """
@@ -291,7 +294,7 @@ class SettingConstruction(SettingValue, NamedTuple):
         if update.derive_on_read != None:
             self.derive_on_read = update.derive_on_read
 
-    def copy_val(self):
+    def copy(self):
         val = None
         if self.copy_with != None:
             val = self.copy_with(self.value)
@@ -300,12 +303,12 @@ class SettingConstruction(SettingValue, NamedTuple):
         return self._replace(value = val,
                              options = deepcopy(options))
 
-    def derive_val(self, parent, name = None):
+    def derive(self, parent, name = None):
         name = self.name if name == None else name
         if self.is_set:
             return None
         if self.derive_with != None:
-            self.set_val(self.derive_with(parent.get_root), name, parent)
+            self.set(self.derive_with(parent.get_root), name, parent)
         else:
             raise SettingNotDerivableError(
                 ("Cannot derive setting `{}.{}` since no method to do " +
@@ -324,15 +327,15 @@ class Setting(SettingInfo,
             raise RuntimeError("Internal Error: Invalid Setting Update.")
         if hasattr(super(), 'update'): super().update(other)
 
-    def get_val(self, parent, name = None):
+    def get(self, parent, name = None):
 
         name = self.name if name == None else name
 
         if not self.is_set and self.derive_on_read:
-            self.derive_val(name, parent)
+            self.derive(name, parent)
 
         if self.validate_on & ValidationTime.READ:
-            self.validate_val(name, parent)
+            self.validate(name, parent)
 
         if not self.is_set:
             raise UndefinedSettingError(
@@ -341,7 +344,7 @@ class Setting(SettingInfo,
 
         return self.value
 
-    def set_val(self, value, parent, name = None):
+    def set(self, value, parent, name = None):
         name = self.name if name == None else name
         self.setter = parent.context
 
@@ -352,7 +355,7 @@ class Setting(SettingInfo,
         self.dirty()
 
         if self.validate_on & ValidationTime.WRITE:
-            self.validate_val(name, parent)
+            self.validate(name, parent)
 
 class AddSetting(Setting):
     """
@@ -365,80 +368,3 @@ class UpdateSetting(Setting):
     Wrapper to indicate we're updating a setting that should already exist.
     """
     pass
-
-class SettingsType(Flag):
-    """
-    An Enum to capture the different general kinds of data that are relevant
-    to the settings module, especially how it responds to attempts to set
-    attributes to those values when no attribute already exists.
-
-    Attributes:
-
-       NONE : Not a relevant datatype
-       ACTION : Some piece of data that represents a modification to the
-           settings tree.
-       ADD_DATA : A value that can create a new setting or option
-       UPDATE_DATA : A term that can update
-       OPTION : An unflagged OptionInfo element
-       ADD_OPTION : data to represent adding an option
-       UPDATE_OPTION : data to represent updating an option
-       OPTION_LIST : A list of options to add or update with
-       SETTING : Info on a single setting
-       SETTING_MAP : a settings map object in its full gliry
-       SETTING_DICT : a nested dictionary with updates and assignments to
-           various settings.
-       ADD_SETTING_DICT : a dict where every member is an ADD_DATA object
-           suitable for initializing new subtrees of settings.
-       UPDATE_SETTING_DICT : a dict where at least some members are update or
-           add objects, marking the tree as reasonable for use as a recursive
-           update.
-    """
-    NONE = 0
-    ACTION = auto()
-    ADD_DATA = auto() | ACTION
-    UPDATE_DATA = auto() | ACTION
-    OPTION = auto()
-    ADD_OPTION = auto() | OPTION | ADD_DATA
-    UPDATE_OPTION = auto() | OPTION | UPDATE_DATA
-    OPTION_LIST = auto() | ADD_DATA | UPDATE_DATA
-    SETTING = auto()
-    ADD_SETTING = auto() | SETTING | ADD_DATA
-    UPDATE_SETTING = auto() | SETTING | UPDATE_DATA
-    SETTING_MAP = auto()
-    SETTING_DICT = auto()
-    ADD_SETTING_DICT = auto() | SETTING_DICT | ADD_DATA
-    UPDATE_SETTING_DICT = auto() | SETTING_DICT | UPDATE_DATA
-
-    @staticmethod
-    def type_of(data):
-
-        if isinstance(data, Option):
-            if isinstance(data, AddOption):
-                return self.ADD_OPTION
-            if isinstance(data, UpdateOption):
-                return self.UPDATE_OPTION
-            return self.OPTION
-
-        if isinstance(data, Setting):
-            if isinstance(data, AddSetting):
-                return self.ADD_SETTING
-            if isinstance(data, UpdateSetting):
-                return self.UPDATE_SETTING
-            return self.SETTING
-
-        if isinstance(data, SettingsMap):
-            return self.SETTING_MAP
-
-        if isinstance(data, list):
-            if all(map(lambda x: self.type_of(x) & self.OPTION, data)):
-                return self.OPTION_LIST
-
-        if isinstance(data, dict):
-            if all(map(lambda x: isinstance(x,str), data.keys())):
-                if all(map(lambda i: self.type_of(i) & self.ADD_DATA, data.values())):
-                    return self.ADD_SETTING_DICT
-                if any(map(lambda x: self.type_of(x) & self.ACTION, data.values())):
-                    return self.UPDATE_SETTING_DICT
-                return self.SETTING_DICT
-
-        return self.NONE

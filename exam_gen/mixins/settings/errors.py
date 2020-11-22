@@ -14,7 +14,7 @@ class UndefinedRequiredSettingError(UndefinedSettingError):
     """
     pass
 
-class NoSuchSettingError(SettingsError):
+class NoSuchSettingError(AttributeError,SettingsError):
     """
     Error thrown when there is no setting with that name
     """

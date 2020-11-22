@@ -46,81 +46,147 @@ class SettingsMap:
         self.context = context
         self.root = root
         self.path = path
-        self.docs_dirty = True
-        self.docs = None
-        self.description = description
         self.members = dict()
 
 
     def __getattr__(self, name):
-        """
-        !!! FIXME
-            The correct logic here is:
-
-              - Is attr in __dict__?
-                  - Punt to super.__getattr__
-              - Is attr in members?
-                  - Get attr from members
-              - Otherwise
-                  - raise AttributeError
-        """
         if name in self.members:
            member = self.members[name]
            if isinstance(member, SettingInfo):
-               return member.get_val(self)
+               return member.get(self, name)
            elif isinstance(member, SettingsMap):
                return member
            else:
-               raise RuntimeError("Internal Error w/ SettingsMap")
-        elif hasattr(super(), name):
-            super().__getattr__(name)
+               raise RuntimeError("Internal Error: Invalid SettingsMap " +
+                                  "member type: {}".format(type(member)))
         else:
-          raise NoSuchSettingError("Could not find setting '{}.{}'.".format(
+          raise AttributeError("Could not find setting '{}.{}'.".format(
               self.path_string, name))
 
     def __setattr__(self, name, value):
-        """
-        !!! FIXME
-            The actual logic for this should go:
 
-              - Is the attr in __dict__?
-                  - Punt to super().__setattr__
-              - Is `value` one of our special types that we use to mark
-                settings or settings categories?
-                  - Otherwise punt to setters for our special types.
-              - Is the value in our list of settings members?
-                  - Punt to general setters for settings
-              - Else punt to super().__setattr__
+        value_type = SettingsType.type_of(value)
 
-        !!! Note
-            Special types are: SettingInfo, OptionInfo, SettingMap, and
-            dictionaries with string keys and values that are all special
-            types. These signal that there's some action to take when
-            assigning them to an attribute in a map.
-        """
-        if isinstance(value, SettingInfo):
-            if value.creating:
-                self.__new_setting(name, value)
-            elif value.updating:
-                self.__update_setting(name, value)
-            else:
-                raise RuntimeError("Internal Error w/ SettingsMap")
-        elif isinstance(value, SettingOption):
-            self.__add_option(name, value)
-        elif (name in self.members) and isinstance(value, dict):
-            self.__update_settings_map(name, value)
-        elif (not hasattr(super(), name)) and isinstance(value, dict):
-            self.__new_settings_map(name, value)
+        if hasattr(super(), name):
+            super().__setattr__(name, value)
+        elif value_type & SettingsType.OPTION:
+            self.__set_option(name, value)
+        # elif value_type & SettingsType.OPTION_LIST:
+        #     self.__set_option_list(name, value)
+        elif value_type & SettingsType.SETTING:
+            self.__set_setting(name, value)
+        elif value_type & SettingsType.SETTING_DICT:
+            self.__set_setting_dict(name, value)
+        # elif value_type & SettingsType.SETTING_MAP:
+        #     self.__set_setting_map(name, value)
         elif name in self.members:
-            member = self.members[name]
-            if isinstance(member, SettingInfo):
-                member.set_val(value, name, self)
-            else:
-                raise NoSuchSettingError(
-                    ("No settings exists at `{}.{}`."
-                    ).format(self.path_string, name))
+            self.__set_value(name, value)
         else:
-            super().__set_attr__(name, value)
+            super().__setattr__(name, value)
+
+    def __set_option(self, name, value, force_update = False):
+        value_type = SettingsType.type_of(value)
+        is_member = name in self.members
+        member = self.members[name] if is_member else None
+        member_type = SettingsType.type_of(member) if is_member else None
+
+        if not (value_type & SettingsType.OPTION):
+            raise SomeError
+        elif not is_member:
+            raise SomeError
+        elif name != value.name:
+            raise SomeError
+        elif member_type != SettingsType.SETTING:
+            raise SomeError
+        elif (not member.has_option(name) and
+             (value_type == SettingsType.ADD_OPTION or force_update)):
+            member.add_option(value, force_update)
+        elif (member.has_option(name) and
+              (value_type == SettingsType.UPDATE_OPTION or force_update)):
+            member.update_option(value, force_update)
+        elif value_type == SettingsType.ADD_OPTION:
+            raise SomeError
+        elif value_type == SettingsType.UPDATE_OPTION:
+            raise SomeError
+        else:
+            raise RuntimeError("Internal Error: Invalid set option call.")
+
+    def __set_option_list(self, name, value):
+        value_type = SettingsType.type_of(value)
+        is_member = name in self.members
+        member = self.members[name] if is_member else None
+        member_type = SettingsType.type_of(member) if is_member else None
+
+        if not is_member:
+            raise SomeError
+        elif member_type != SettingsType.SETTING:
+            raise SomeError
+        elif value_type == SettingsType.OPTION_LIST:
+            for opt in value:
+                self.__set_option(name, opt, force_update = True)
+        else:
+            raise SomeError
+
+    def __set_setting(self, name, value):
+        value_type = SettingsType.type_of(value)
+        is_member = name in self.members
+        member = self.members[name] if is_member else None
+        member_type = SettingsType.type_of(member) if is_member else None
+
+        if is_member and (member_type != SettingsType.Setting):
+            raise SomeError
+        elif (not is_member) and (value_type == SettingsType.ADD_SETTING):
+            self.__new_setting(name, value)
+        elif value_type == SettingsType.ADD_SETTING:
+            raise SomeError
+        elif is_member and (value_type == SettingsType.UPDATE_SETTING):
+            member.update(value)
+        elif value_type == SettingsType.UPDATE_SETTING:
+            raise SomeError
+        else:
+            raise RuntimeError("Internal Error: Invalid set option call.")
+
+    def __set_setting_dict(self, name, value):
+        value_type = SettingsType.type_of(value)
+        is_member = name in self.members
+        member_type = SettingsType.type_of(member) if is_member else None
+
+        if member_type != SettingsType.SETTING_MAP:
+            raise SomeError
+        elif (not is_member) and (value_type == SettingsType.ADD_SETTING_DICT):
+            self.__new_submap(name)
+            self.members[name].__iadd__(value)
+        elif is_member and (value_type & SettingsType.SETTING_DICT):
+            self.members[name].__iadd__(value)
+        else:
+            raise SomeError
+
+
+    def __set_setting_map(self, name, value):
+        value_type = SettingsType.type_of(value)
+        is_member = name in self.members
+        member_type = SettingsType.type_of(member) if is_member else None
+
+        if value_type != SettingsType.SETTING_MAP:
+            raise SomeError
+        elif not is_member:
+            self.__new_submap(name)
+        elif member_type != SettingsType.SETTING_MAP:
+            raise SomeError
+
+        self.members[name].__update(value)
+
+
+    def __new_setting(self, name, value):
+        pass
+
+    def __new_submap(self, name):
+        pass
+
+
+    def __update(self, other):
+        pass
+
 
     def __iadd__(self, other):
         if isinstance(other, dict):
@@ -129,6 +195,8 @@ class SettingsMap:
         else:
             raise InvalidBulkAssignmentError("Expected a dict as input " +
                                              "to bulk setting assignment.")
+
+### Refactor Everything Below This Line ###
 
     def copy(self, context, root = None, path = []):
 
