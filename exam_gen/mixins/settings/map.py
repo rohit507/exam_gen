@@ -257,23 +257,108 @@ class SettingsMap:
         self.members[name].add_option(info)
 
     def new_setting_func(self):
-        # get a new_setting function for the current context
 
-        # create a function which will create new settings objects with the
-        # correct initial context and properties for whatever we're up to.
-        raise NotImplementedError
+        def new_setting(
+                short_desc : str,
+                long_desc: str = None,
+                default: Any = None,
+                required = None,
+                validator = None,
+                validate_on = None,
+                derivation = None,
+                derive_on_read = True,
+                update_with = None,
+                copy_with = None,
+                options = []
+            ):
+            """ Test do for internal new_setting func """
+            info = SettingInfo(
+                definer = self.context,
+                setter = self.context if default != None else None,
+                value = default,
+                short_desc = short_desc,
+                long_desc = long_desc,
+                needs_validation = default != None,
+                required = required,
+                validator = validator,
+                validate_on = validate_on,
+                derivation = derivation,
+                derive_on_read = derive_on_read,
+                update_with = update_with,
+                copy_with = copy_with,
+                creating = True
+                )
+
+            if isinstance(options, dict):
+                for (nm,dsc) in options.items():
+                    info.add_option(SettingOption(
+                        definer = self.context,
+                        name = nm,
+                        description = dsc,
+                        adding = True))
+
+            return info
+
+        return new_setting
 
     def update_setting_func(self):
-        # get an update_setting function for the current context
-        raise NotImplementedError
+        def update_setting(
+                short_desc : str = None,
+                long_desc: str = None,
+                default: Any = None,
+                required = None,
+                validator = None,
+                validate_on = None,
+                derivation = None,
+                derive_on_read = True,
+                update_with = None,
+                copy_with = None,
+                options = []
+            ):
+            """ Test do for internal update_setting func """
+            info = SettingInfo(
+                definer = self.context,
+                setter = self.context if default != None else None,
+                value = default,
+                short_desc = short_desc,
+                long_desc = long_desc,
+                needs_validation = default != None,
+                required = required,
+                validator = validator,
+                validate_on = validate_on,
+                derivation = derivation,
+                derive_on_read = derive_on_read,
+                update_with = update_with,
+                copy_with = copy_with,
+                updating = True
+                )
+
+            if isinstance(options, dict):
+                for (nm,dsc) in options.items():
+                    info.add_option(SettingOption(
+                        definer = self.context,
+                        name = nm,
+                        description = dsc,
+                        adding = True))
+            elif isinstance(options, list):
+                for opt in options:
+                    info.add_option(opt)
+
+            return info
+
+        return update_setting
 
     def option_func(self):
-        # get a option function for the current context
-        raise NotImplementedError
+        return self.add_option_func()
 
     def add_option_func(self):
-        # get an add/update option function for the current context.
-        raise NotImplementedError
+        def option(name, desc):
+            return SettingOption(
+                definer = self.context,
+                name = name,
+                description = desc,
+                adding = True)
+        return option
 
     def make_docstring(self, context):
         raise NotImplementedError

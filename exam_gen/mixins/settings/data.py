@@ -27,6 +27,7 @@ class SettingOption(NamedTuple):
     definer: Any
     name: str
     description: str
+    adding: bool
 
 
 class ValidationTime(Flag):
