@@ -8,6 +8,10 @@ class SettingsMap:
     Create a new `SettingsMap` object for storing the different settings a
     class is allowed to have.
 
+    !!! Important
+        This in an internal structure that should never be exposed to users
+        of this module directly.
+
     Parameters:
 
         context (class or object): The current context with which the map
@@ -43,7 +47,6 @@ class SettingsMap:
 
 
     def __getattr__(self, name):
-        # If there's a member
         if name in self.members:
            member = self.members[name]
            if isinstance(member, SettingInfo):
@@ -101,7 +104,6 @@ class SettingsMap:
                               **self.kwargs)
 
         root = new_map if root == None else root
-
         for (name, member) in self.members.items():
             if isinstance(member, SettingInfo):
                 new_setting = member.copy(context, root, path)
@@ -114,27 +116,8 @@ class SettingsMap:
                 new_map.__new_raw_settings_map(name, new_submap)
             else:
                 raise RuntimeError("Internal Error w/ SettingsMap")
-
         return new_map
 
-    def new_setting_func(self):
-        # get a new_setting function for the current context
-
-        # create a function which will create new settings objects with the
-        # correct initial context and properties for whatever we're up to.
-        raise NotImplementedError
-
-    def update_setting_func(self):
-        # get an update_setting function for the current context
-        raise NotImplementedError
-
-    def option_func(self):
-        # get a option function for the current context
-        raise NotImplementedError
-
-    def add_option_func(self):
-        # get an add/update option function for the current context.
-        raise NotImplementedError
 
     def dirty_all_validation(self):
         for (name, member) in self.members.items():
@@ -196,12 +179,10 @@ class SettingsMap:
     def set_context(self, context):
         self.context_stack = [context] + self.context_stack
         self.context = context
+        for (k,v) in self.members.items():
+            if isinstance(v,SettingsMap):
+                v.set_context(context)
 
-    def make_docstring(self, context):
-        raise NotImplementedError
-
-    def gather_docs(self, context):
-        raise NotImplementedError
 
     @property
     def path_string(self):
@@ -215,16 +196,87 @@ class SettingsMap:
     def get_root(self):
         return self if self.root == None else root
 
-    def __new_setting(self, name, info): pass
+    def __new_setting(self, name, info):
+        if not info.creating:
+            raise RuntimeError("InternalError in SettingsMap")
+        if name in self.members:
+            raise SettingAlreadyExistsError(
+                ("Trying to create settings `{}.{}` when it already exists."
+                ).format(self.path_string, name))
+        info.creating = False
+        info.updating = False
+        self.members[name] = info
 
-    def __update_setting(self, name, info): pass
+    def __update_setting(self, name, info):
+        if not info.updating:
+            raise RuntimeError("Internal error in SettingsMap")
+        if name not in self.members:
+            raise NoSettingToUpdateError(
+                ("Cannot update non-existent setting `{}.{}`."
+                 ).format(self.path_string, name))
+        self.members[name].update(info)
 
-    def __new_settings_map(self, name, info): pass
+    def __new_settings_map(self, name, info):
+       if name in self.members:
+           raise RuntimeError("Internal Error in SettingsMap.")
 
-    def __new_raw_settings_map(self, name, smap): pass
+       submap = SettingsMap(self.context,
+                            self.get_root,
+                            self.path + [name],
+                            context_stack = self.context_stack)
 
-    def __update_settings_map(self, name, opts): pass
+       for (k,v) in info.items():
+           submap.__set_attr__(k,v)
 
-    def __add_option(self, name, info): pass
+       self.members[name] = submap
 
-    def __set_value(self, name, info): pass
+    def __new_raw_settings_map(self, name, smap):
+        if name in self.members:
+            raise RuntimeError("InternalError in SettingsMap.")
+
+        smap.root = self.get_root
+        smap.path = self.path + [name]
+        smap.context = self.context
+        smap.context_stack = self.context_stack
+
+        self.members[name] = smap
+
+    def __update_settings_map(self, name, opts):
+        if name not in self.members:
+            raise SettingsMapNotUpdatableError(
+                ("Cannot update settings sub-category `{}.{}` as it does " +
+                 "not exist.").format(self.path_string, name))
+        for (k,v) in opts.items:
+            self.members[name].__set_attr__(k,v)
+
+    def __add_option(self, name, info):
+        if name not in self.members:
+            raise NoSettingToUpdateError(
+                ("Cannot add new option to setting `{}.{}` as it does not " +
+                 "exist.").format(self.path_string, name))
+        self.members[name].add_option(info)
+
+    def new_setting_func(self):
+        # get a new_setting function for the current context
+
+        # create a function which will create new settings objects with the
+        # correct initial context and properties for whatever we're up to.
+        raise NotImplementedError
+
+    def update_setting_func(self):
+        # get an update_setting function for the current context
+        raise NotImplementedError
+
+    def option_func(self):
+        # get a option function for the current context
+        raise NotImplementedError
+
+    def add_option_func(self):
+        # get an add/update option function for the current context.
+        raise NotImplementedError
+
+    def make_docstring(self, context):
+        raise NotImplementedError
+
+    def gather_docs(self, context):
+        raise NotImplementedError

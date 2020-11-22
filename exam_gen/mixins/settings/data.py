@@ -25,6 +25,7 @@ class SettingOption(NamedTuple):
        adding (bool): Are we using this as an `add_option` object?
     """
     definer: Any
+    name: str
     description: str
 
 
@@ -139,7 +140,7 @@ class SettingInfo(NamedTuple):
     creating: bool = False
 
     def add_option(self, name, option):
-        self.options[name] = option
+        self.options[option.name] = option
 
     def update(self, update):
         self.definer = update.definer
