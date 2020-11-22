@@ -410,3 +410,81 @@ class SettingsMap:
         # Ideally ties will be broken in MRO order. So the other SettingsMap
         # must come from a parent class or itself.
         pass
+
+
+class SettingsType(Flag):
+    """
+    An Enum to capture the different general kinds of data that are relevant
+    to the settings module, especially how it responds to attempts to set
+    attributes to those values when no attribute already exists.
+
+    Attributes:
+
+       NONE : Not a relevant datatype
+       ACTION : Some piece of data that represents a modification to the
+           settings tree.
+       ADD_DATA : A value that can create a new setting or option
+       UPDATE_DATA : A term that can update
+       OPTION : An unflagged OptionInfo element
+       ADD_OPTION : data to represent adding an option
+       UPDATE_OPTION : data to represent updating an option
+       OPTION_LIST : A list of options to add or update with
+       SETTING : Info on a single setting
+       SETTING_MAP : a settings map object in its full gliry
+       SETTING_DICT : a nested dictionary with updates and assignments to
+           various settings.
+       ADD_SETTING_DICT : a dict where every member is an ADD_DATA object
+           suitable for initializing new subtrees of settings.
+       UPDATE_SETTING_DICT : a dict where at least some members are update or
+           add objects, marking the tree as reasonable for use as a recursive
+           update.
+    """
+    NONE = 0
+    ACTION = auto()
+    ADD_DATA = auto() | ACTION
+    UPDATE_DATA = auto() | ACTION
+    OPTION = auto()
+    ADD_OPTION = auto() | OPTION | ADD_DATA
+    UPDATE_OPTION = auto() | OPTION | UPDATE_DATA
+    OPTION_LIST = auto() | ADD_DATA | UPDATE_DATA
+    SETTING = auto()
+    ADD_SETTING = auto() | SETTING | ADD_DATA
+    UPDATE_SETTING = auto() | SETTING | UPDATE_DATA
+    SETTING_MAP = auto()
+    SETTING_DICT = auto()
+    ADD_SETTING_DICT = auto() | SETTING_DICT | ADD_DATA
+    UPDATE_SETTING_DICT = auto() | SETTING_DICT | UPDATE_DATA
+
+    @staticmethod
+    def type_of(data):
+
+        if isinstance(data, Option):
+            if isinstance(data, AddOption):
+                return self.ADD_OPTION
+            if isinstance(data, UpdateOption):
+                return self.UPDATE_OPTION
+            return self.OPTION
+
+        if isinstance(data, Setting):
+            if isinstance(data, AddSetting):
+                return self.ADD_SETTING
+            if isinstance(data, UpdateSetting):
+                return self.UPDATE_SETTING
+            return self.SETTING
+
+        if isinstance(data, SettingsMap):
+            return self.SETTING_MAP
+
+        if isinstance(data, list):
+            if all(map(lambda x: self.type_of(x) & self.OPTION, data)):
+                return self.OPTION_LIST
+
+        if isinstance(data, dict):
+            if all(map(lambda x: isinstance(x,str), data.keys())):
+                if all(map(lambda i: self.type_of(i) & self.ADD_DATA, data.values())):
+                    return self.ADD_SETTING_DICT
+                if any(map(lambda x: self.type_of(x) & self.ACTION, data.values())):
+                    return self.UPDATE_SETTING_DICT
+                return self.SETTING_DICT
+
+        return self.NONE

@@ -36,7 +36,7 @@ class Option(Defined, NamedTuple):
     Basic metadata for an option.
 
     Params:
-       name (str): the name of the option.
+)       name (str): the name of the option.
        short_desc (str, optional): A short (< 80 char) description of the
            option. (`optional`)
        long_desc (str, optional): A longer description of an option and what
@@ -366,7 +366,7 @@ class UpdateSetting(Setting):
     """
     pass
 
-class SettingsDataType(Flag):
+class SettingsType(Flag):
     """
     An Enum to capture the different general kinds of data that are relevant
     to the settings module, especially how it responds to attempts to set
@@ -394,8 +394,9 @@ class SettingsDataType(Flag):
            update.
     """
     NONE = 0
-    ADD_DATA = auto()
-    UPDATE_DATA = auto()
+    ACTION = auto()
+    ADD_DATA = auto() | ACTION
+    UPDATE_DATA = auto() | ACTION
     OPTION = auto()
     ADD_OPTION = auto() | OPTION | ADD_DATA
     UPDATE_OPTION = auto() | OPTION | UPDATE_DATA
@@ -408,5 +409,36 @@ class SettingsDataType(Flag):
     ADD_SETTING_DICT = auto() | SETTING_DICT | ADD_DATA
     UPDATE_SETTING_DICT = auto() | SETTING_DICT | UPDATE_DATA
 
-def get_setting_data_type(data):
-    pass
+    @staticmethod
+    def type_of(data):
+
+        if isinstance(data, Option):
+            if isinstance(data, AddOption):
+                return self.ADD_OPTION
+            if isinstance(data, UpdateOption):
+                return self.UPDATE_OPTION
+            return self.OPTION
+
+        if isinstance(data, Setting):
+            if isinstance(data, AddSetting):
+                return self.ADD_SETTING
+            if isinstance(data, UpdateSetting):
+                return self.UPDATE_SETTING
+            return self.SETTING
+
+        if isinstance(data, SettingsMap):
+            return self.SETTING_MAP
+
+        if isinstance(data, list):
+            if all(map(lambda x: self.type_of(x) & self.OPTION, data)):
+                return self.OPTION_LIST
+
+        if isinstance(data, dict):
+            if all(map(lambda x: isinstance(x,str), data.keys())):
+                if all(map(lambda i: self.type_of(i) & self.ADD_DATA, data.values())):
+                    return self.ADD_SETTING_DICT
+                if any(map(lambda x: self.type_of(x) & self.ACTION, data.values())):
+                    return self.UPDATE_SETTING_DICT
+                return self.SETTING_DICT
+
+        return self.NONE
