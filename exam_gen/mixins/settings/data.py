@@ -5,31 +5,6 @@ from exam_gen.mixins.settings.errors import *
 from exam_gen.util.dynamic_call import *
 from copy import *
 
-class SettingOption(NamedTuple):
-    """
-    A single valid option for a setting. Multiple options are added to
-    a list that will be turned into a table. Used both as internal store
-
-    !!! Important
-        This in an internal structure that should never be exposed to users
-        of this module directly.
-
-    !!! Todo
-        Make this an internal class of `SettingsMap`.
-
-    Params:
-       definer (class or object): Which class initialization or object's
-           evaluation this SettingOption was added under.
-       description (str): The description of what setting the setting to
-           that value would entail.
-       adding (bool): Are we using this as an `add_option` object?
-    """
-    definer: Any
-    name: str
-    description: str
-    adding: bool
-
-
 class ValidationTime(Flag):
     """
     Options for when to validate a setting.
@@ -39,29 +14,172 @@ class ValidationTime(Flag):
     BOTH = READ | WRITE
     NEVER = 0
 
-
-class SettingInfo(NamedTuple):
+class Defined(NamedTuped):
     """
-    Named tuple that stores all the properties of a setting leaf node. Also
-    can serve as a partial
+    Just captures the historical information of the last entity to change
+    this data.
 
-    !!! Important
-        This in an internal structure that should never be exposed to users
-        of this module directly.
+    Params:
+        definer (class or object): Which class initialization or object's
+            evaluation this SettingOption was added under. (`required`)
+    """
+    definer : Any = None
 
-    !!! Todo
-        Make this an internal class of `SettingsMap`.
+    def update(self, other):
+        if hasattr(super(), 'update'): super().update(other)
+        if other.definer == None:
+            raise RuntimeError("Internal Error: Broken historical logging.")
+        self.definer = other.definer
 
-    Attributes:
-       definer (class or object): Which class initialization or object's
-           evaluation this SettingOption was added under. (`required`)
+class Option(Defined, NamedTuple):
+    """
+    Basic metadata for an option.
+
+    Params:
+       name (str): the name of the option.
+       short_desc (str, optional): A short (< 80 char) description of the
+           option. (`optional`)
+       long_desc (str, optional): A longer description of an option and what
+           it does.
+
+           !!! Note
+               Keep in mind that longer descriptions have to be rendered in a
+               more verbose format for `mkdocs` to work correctly.
+               This *will* allow for relatively advanced markup and structure
+               in the output docs, but at cost of raw readability.
+
+               Tools like `pydoc` will end up spitting a bunch of unreadable
+               raw HTML into their output. It's not a great look. Still it
+               might be worth the cost if you have a good fixed documentation
+               model that can handle the complexity.
+
+           (`optional`)
+
+    """
+    name      : str = None
+    short_desc: str = None
+    long_desc : Optional[str] = None
+
+    def update(self, other):
+
+        if self.name != other.name:
+            raise RuntimeError("Internal Error: update of mismatched options.")
+
+        if not isinstance(other, UpdateOption):
+            raise RuntimeError("Internal Error: invalid option used to update.")
+
+        if hasattr(super(), 'update'): super().update(other)
+        if other.short_desc != None: self.short_desc = other.short_desc
+        if other.long_desc != None: self.long_desc = other.long_desc
+
+
+
+class AddOption(Option):
+    """
+    Wrapper signifying that we're adding an option that shouldn't already
+    exist.
+    """
+    pass
+
+class UpdateOption(Option):
+    """
+    Wrapper signifying that we're updating an option that should exist.
+    """
+    pass
+
+class SettingInfo(Defined, NamedTuple):
+    """
+    Basic metadata for a setting.
+
+    Params:
+       name (str): the name of the option.
+       short_desc (str, optional): A short (< 80 char) description of the
+           option. (`optional`)
+       long_desc (str, optional): A longer description of an option and what
+           it does. (`optional`)
+       options (dict): A dict of options for the setting that
+            will be rendered as a table in the docs. The key of the dict is
+            the name of the option
+    """
+    name: str = None
+    short_desc: str = None
+    long_desc: Optional[str] = None
+    options: dict = dict()
+
+    def add_option(self, option):
+        if not isinstance(option, AddOption):
+            raise RuntimeError("InternalError: New option is invalid.")
+
+        self.options[option.name] = Option(**option._addict())
+
+    def update_option(self, option):
+        if not isinstance(option, UpdateOption):
+            raise RuntimeError("InternalError: Invalid option update.")
+
+        self.options[option.name].update(option)
+
+    def update(self, other):
+        """
+        !!! Note
+            Options from the parameter will supersede option from self.
+        """
+
+        if self.name != other.name:
+            raise RuntimeError("Internal Error: update of mismatched settings.")
+
+        if hasattr(super(), 'update'): super().update(other)
+        if other.short_desc != None: self.short_desc = other.short_desc
+        if other.long_desc != None: self.long_desc = other.long_desc
+        for (name, opt) in other.options.items():
+            if name not in self.options:
+                self.add_option(AddOption(**opt._asdict()))
+            else:
+                self.update_option(UpdateOption(**opt._asdit()))
+
+
+class SettingValue(NamedTuple):
+    """
+    The core value of the setting (if any) and the context in which it was
+    last set.
+
+    Params:
        setter (class or object): Which class init or object evaluation set
            this value. (`optional`)
        value (Any): The actual value that was set. (`optional`)
-       short_desc (str, optional): A short (< 80 char) description of the
-           setting. (`optional`)
-       long_desc (str, optional): A longer description of a setting and what
-           it does. (`optional`)
+    """
+    setter: Any = None
+    value: Any = None
+
+    @property
+    def is_set(self):
+        return self.setter != None
+
+    def update(self, other):
+        """
+        !!! Note
+            If the setters are different, then the value of the parameter will
+            overwrite the value of self.
+        """
+        if hasattr(super(), 'update'): super().update(other)
+        if self.setter != other.setter:
+            self.setter = other.setter
+            self.value = other.value
+
+
+
+class SettingValidation(SettingValue, NamedTuple):
+    """
+    Data on how and whether to validate the correctness of the setting.
+
+    Params:
+
+       required (bool): Does this setting need to be assigned directly?
+            (default = `false`)
+
+            Note: This is checked whenever a term is validated, either when
+            validation is explicitly run or when the `validate_on` value would
+            specify.
+
        validator (function, optional): A function of that will validate this setting, returns
            `True` if valid and `False` or an error string otherwise.
            (`optional`)
@@ -88,130 +206,24 @@ class SettingInfo(NamedTuple):
        needs_validation (bool): Does this setting need to be validated on the
             next read operation?  This is mainly for internal bookkeeping use
             (default = `False`)
-
-       derivation (function): Function to derive the value of the setting
-            from other settings. The function should accept the root settings
-            object as an input. (`optional`)
-
-       derive_on_read (bool): Should this setting be derived when the setting
-            is read and no value has been specified? If `True` the first read
-            will run the derivation function and set the value of the setting.
-            (`optional`)
-
-            Note: A default will take precedence over this setting. Also,
-            this is the only way a derivation will be automatically run.
-
-       required (bool): Does this setting need to be assigned directly?
-            (default = `false`)
-
-            Note: This is checked whenever a term is validated, either when
-            validation is explicitly run or when the `validate_on` value would
-            specify.
-
-       update_with (function): Two parameter function used to combine the
-            new value for a setting with the old whenever it's set. (`optional`)
-
-       copy_with (function): Function used to make a deep clone of the value
-            of a setting when we need to copy a settings object.
-
-       options (dict): A dict of options for the setting that
-            will be rendered as a table in the docs. The key of the dict is
-            the name of the option
-
-       updating (bool): Are we using this as an `update_setting` object?
-       creating (bool): Are we using this as a `new_setting` object?
-
-
     """
-    definer: Any
-    setter: Any = None
-    value: Any = None
-    short_desc: Optional[str] = None
-    long_desc: Optional[str] = None
+    required: bool = None
     validator: Optional[Callable[..., bool]] = None
-    validate_on: ValidationTime = ValidationTime.NEVER
+    validate_on: ValidationTime = None
     needs_validation: bool = False
-    derivation: Optional[Callable[...,Any]] = None
-    derive_on_read: bool = True
-    required: bool = False
-    update_with: Optional[Callable[...,Any]] = None
-    copy_with: Optional[Callable[...,Any]] = None
-    options: dict = dict()
-    updating: bool = False
-    creating: bool = False
 
-    def add_option(self, name, option):
-        self.options[option.name] = option
+    def update(self, other):
+        if self.setter != other.setter:
+            self.needs_validation = True
+        if hasattr(super(), 'update'): super().update(other)
+        if other.required != None: self.required = other.required
+        if other.validator != None: self.validator = other.validator
+        if other.validate_on != None: self.validate_on = other.validate_on
 
-    def update(self, update):
-        self.definer = update.definer
-        if update.setter != None: self.setter = update.setter
-        if update.value != None:
-            self.value = update.value
-            self.needs_validation |= update.needs_validation
-        if update.short_desc != None: self.short_desc = update.short_desc
-        if update.long_desc != None: self.long_desc = update.long_desc
-        if update.validator != None: self.validator = update.validator
-        if update.validate_on != None: self.validate_on = update.validate_on
-        if update.derivation != None: self.derivation = update.derivation
-        if update.derive_on_read != None:
-            self.derive_on_read = update.derive_on_read
-        if update.required != None: self.required = update.required
-        if update.update_with != None: self.update_with = update.update_with
-        if update.copy_with != None: self.copy_with = update.copy_with
-        if update.options != None:
-            self.options.update(update.options)
+    def dirty_val(self): self.needs_validation = True
 
-    def copy(self):
-        val = None
-        if self.copy_with != None:
-            val = self.copy_with(self.value)
-        else:
-            val = deepcopy(self.value)
-        return self._replace(value = val,
-                             options = deepcopy(options))
-
-    def is_set(self):
-        return self.setter != None
-
-    def get_val(self, name, parent):
-        if not self.is_set() and self.derive_on_read:
-            self.derive(name, parent)
-        if self.validate_on & ValidationTime.READ:
-            self.validate(name, parent)
-        if not self.is_set():
-            raise UndefinedSettingError(
-                ("Setting at `{}.{}` not defined at attempted use."
-                ).format(parent.path_string, name))
-        else:
-            return self.value
-
-    def set_val(self, value, name, parent):
-        self.setter = parent.context
-        if self.update_with != None:
-            self.value = self.update_with(self.value, value)
-        else:
-            self.value = value
-        self.dirty()
-        if self.validate_on & ValidationTime.WRITE:
-            self.validate(name, parent)
-        pass
-
-    def dirty(self):
-        self.needs_validation = True
-
-    def derive(self, name, parent):
-        if not self.is_set():
-            if self.derivation != None:
-                self.set_val(self.derivation(parent.get_root), name, parent)
-            else:
-                raise SettingNotDerivableError(
-                    ("Cannot derive setting `{}.{}`"
-                    ).format(parent.path_string, name))
-        else:
-            pass
-
-    def validate(self, name, parent):
+    def validate_val(self, parent, name = None):
+        name = self.name if name == None else name
         if self.needs_validation:
 
             if self.required and not self.is_set():
@@ -229,15 +241,172 @@ class SettingInfo(NamedTuple):
                 validation_func = dcall(self.validator, order=validation_order)
                 result = validation_func(validation_args)
 
-                if isinstance(result, bool) and (not result):
-                    raise InvalidSettingError(
-                        ("Validation of setting `{}.{}` failed."
-                        ).format(parent.path_string, name))
-                elif isinstance(result, str):
+
+                if isinstance(result, str):
                     raise InvalidSettingError(
                         ("Validation of setting `{}.{}` failed with error: {}"
                         ).format(parent.path_string, name, result))
 
+                if (result != True) or (result != None):
+                    raise InvalidSettingError(
+                        ("Validation of setting `{}.{}` failed."
+                        ).format(parent.path_string, name))
+
             self.needs_validation = False
+
+class SettingConstruction(SettingValue, NamedTuple):
+    """
+    Functions to allow the construction and modification of setting values.
+
+    Params:
+
+       derive_with (function): Function to derive the value of the setting
+            from other settings. The function should accept the root settings
+            object as an input. (`optional`)
+
+       update_with (function): Two parameter function used to combine the
+            new value for a setting with the old whenever it's set. (`optional`)
+
+       copy_with (function): Function used to make a deep clone of the value
+            of a setting when we need to copy a settings object.
+
+       derive_on_read (bool): Should this setting be derived when the setting
+            is read and no value has been specified? If `True` the first read
+            will run the derivation function and set the value of the setting.
+            (`optional`)
+
+            Note: A default will take precedence over this setting. Also,
+            this is the only way a derivation will be automatically run.
+    """
+    derive_with: Optional[Callable[...,Any]] = None
+    update_with: Optional[Callable[...,Any]] = None
+    copy_with: Optional[Callable[...,Any]] = None
+    derive_on_read: bool = None
+
+    def update(self, other):
+        if hasattr(super(), 'update'): super().update(other)
+        if update.derive_with != None: self.derive_with = update.derive_with
+        if update.update_with != None: self.update_with = update.update_with
+        if update.copy_with != None: self.copy_with = update.copy_with
+        if update.derive_on_read != None:
+            self.derive_on_read = update.derive_on_read
+
+    def copy_val(self):
+        val = None
+        if self.copy_with != None:
+            val = self.copy_with(self.value)
         else:
-            pass
+            val = deepcopy(self.value)
+        return self._replace(value = val,
+                             options = deepcopy(options))
+
+    def derive_val(self, parent, name = None):
+        name = self.name if name == None else name
+        if self.is_set:
+            return None
+        if self.derive_with != None:
+            self.set_val(self.derive_with(parent.get_root), name, parent)
+        else:
+            raise SettingNotDerivableError(
+                ("Cannot derive setting `{}.{}` since no method to do " +
+                 "so was provided.").format(parent.path_string, name))
+
+class Setting(SettingInfo,
+              SettingValidation,
+              SettingConstruction,
+              SettingValue):
+    """
+    The complete collected information about a setting.
+    """
+
+    def update(self, other):
+        if not isinstance(other, UpdateSetting):
+            raise RuntimeError("Internal Error: Invalid Setting Update.")
+        if hasattr(super(), 'update'): super().update(other)
+
+    def get_val(self, parent, name = None):
+
+        name = self.name if name == None else name
+
+        if not self.is_set and self.derive_on_read:
+            self.derive_val(name, parent)
+
+        if self.validate_on & ValidationTime.READ:
+            self.validate_val(name, parent)
+
+        if not self.is_set:
+            raise UndefinedSettingError(
+                ("Setting at `{}.{}` not defined at attempted use."
+                ).format(parent.path_string, name))
+
+        return self.value
+
+    def set_val(self, value, parent, name = None):
+        name = self.name if name == None else name
+        self.setter = parent.context
+
+        if self.update_with != None:
+            self.value = self.update_with(self.value, value)
+        else:
+            self.value = value
+        self.dirty()
+
+        if self.validate_on & ValidationTime.WRITE:
+            self.validate_val(name, parent)
+
+class AddSetting(Setting):
+    """
+    Wrapper to indicate we're adding a new setting that should not exist.
+    """
+    pass
+
+class UpdateSetting(Setting):
+    """
+    Wrapper to indicate we're updating a setting that should already exist.
+    """
+    pass
+
+class SettingsDataType(Flag):
+    """
+    An Enum to capture the different general kinds of data that are relevant
+    to the settings module, especially how it responds to attempts to set
+    attributes to those values when no attribute already exists.
+
+    Attributes:
+
+       NONE : Not a relevant datatype
+       ACTION : Some piece of data that represents a modification to the
+           settings tree.
+       ADD_DATA : A value that can create a new setting or option
+       UPDATE_DATA : A term that can update
+       OPTION : An unflagged OptionInfo element
+       ADD_OPTION : data to represent adding an option
+       UPDATE_OPTION : data to represent updating an option
+       OPTION_LIST : A list of options to add or update with
+       SETTING : Info on a single setting
+       SETTING_MAP : a settings map object in its full gliry
+       SETTING_DICT : a nested dictionary with updates and assignments to
+           various settings.
+       ADD_SETTING_DICT : a dict where every member is an ADD_DATA object
+           suitable for initializing new subtrees of settings.
+       UPDATE_SETTING_DICT : a dict where at least some members are update or
+           add objects, marking the tree as reasonable for use as a recursive
+           update.
+    """
+    NONE = 0
+    ADD_DATA = auto()
+    UPDATE_DATA = auto()
+    OPTION = auto()
+    ADD_OPTION = auto() | OPTION | ADD_DATA
+    UPDATE_OPTION = auto() | OPTION | UPDATE_DATA
+    OPTION_LIST = auto() | ADD_DATA | UPDATE_DATA
+    SETTING = auto()
+    ADD_SETTING = auto() | SETTING | ADD_DATA
+    UPDATE_SETTING = auto() | SETTING | UPDATE_DATA
+    SETTING_MAP = auto()
+    SETTING_DICT = auto()
+    ADD_SETTING_DICT = auto() | SETTING_DICT | ADD_DATA
+    UPDATE_SETTING_DICT = auto() | SETTING_DICT | UPDATE_DATA
+
+def get_setting_data_type(data):
+    pass

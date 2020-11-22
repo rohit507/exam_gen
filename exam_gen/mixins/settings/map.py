@@ -12,6 +12,12 @@ class SettingsMap:
         This in an internal structure that should never be exposed to users
         of this module directly.
 
+    !!! Todo
+        Refactor this module in terms of descriptors. In particular both
+        SettingInfo and SettingsMap should be descriptors. Most of the error
+        and other logic should be handled in a few places when a call is
+        resolved.
+
     Parameters:
 
         context (class or object): The current context with which the map
@@ -47,6 +53,17 @@ class SettingsMap:
 
 
     def __getattr__(self, name):
+        """
+        !!! FIXME
+            The correct logic here is:
+
+              - Is attr in __dict__?
+                  - Punt to super.__getattr__
+              - Is attr in members?
+                  - Get attr from members
+              - Otherwise
+                  - raise AttributeError
+        """
         if name in self.members:
            member = self.members[name]
            if isinstance(member, SettingInfo):
@@ -62,6 +79,25 @@ class SettingsMap:
               self.path_string, name))
 
     def __setattr__(self, name, value):
+        """
+        !!! FIXME
+            The actual logic for this should go:
+
+              - Is the attr in __dict__?
+                  - Punt to super().__setattr__
+              - Is `value` one of our special types that we use to mark
+                settings or settings categories?
+                  - Otherwise punt to setters for our special types.
+              - Is the value in our list of settings members?
+                  - Punt to general setters for settings
+              - Else punt to super().__setattr__
+
+        !!! Note
+            Special types are: SettingInfo, OptionInfo, SettingMap, and
+            dictionaries with string keys and values that are all special
+            types. These signal that there's some action to take when
+            assigning them to an attribute in a map.
+        """
         if isinstance(value, SettingInfo):
             if value.creating:
                 self.__new_setting(name, value)
@@ -365,3 +401,12 @@ class SettingsMap:
 
     def gather_docs(self, context):
         raise NotImplementedError
+
+    def update(self, other):
+        # This needs to be some sort of context aware update operation that
+        # will pull from the other SettingsMap while preserving the context
+        # stack and other context info.
+
+        # Ideally ties will be broken in MRO order. So the other SettingsMap
+        # must come from a parent class or itself.
+        pass
