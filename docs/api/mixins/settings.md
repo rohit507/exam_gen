@@ -233,59 +233,6 @@ separate functions and come with appropriate existence checks.
 
 ### Duplication on object init
 
-## Internal/Implementation Documentation
-
-Okay, so in order to get the nice behavior I want for mkdocs the docstrings
-of tables should look like the following:
-
-```markdown
-<table markdown="1">
-<tr markdown="block">
-<th markdown="1">
-Month **test**
-</th>
-<th markdown="1">
-Savings
-</th>
-</tr>
-
-<tr markdown="block">
-<td markdown="1">
-January
-</td>
-<td markdown="block">
-
-  - list
-  - other list
-
-!!! Todo
-    Here's an admonition
-</td>
-/tr>
-
-</table>
-```
-
-Note how everything happens at the same indentation level, and how nested
-markdown blocks are not further indented.
-
-In an ideal world we'd be able to tell whether the contents of block have
-span or block level markdown code, but for now we'll just use the existence
-of newlines as a proxy.
-
-That way we can at least try to spit out the more human readable markdown
-format when it's possible. Otherwise, if there's block level code then we can
-produce the (uglier) table version.
-
-#### Wrapt for nicer interface to validation and stuff.
-
-So there's a library `wrapt` (with instructions
-[here](https://wrapt.readthedocs.io/en/latest/wrappers.html)) that would let
-us wrap the various settings objects in a proxy type with some custom
-attributes.
-
-I think it would be super nice looking to do it this way, but impl complexity
-cost is probably too high.
 
 ## Generated Documentation
 

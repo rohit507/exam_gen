@@ -44,7 +44,7 @@ class SettingsMap:
 
         self.context_stack = context_stack
         self.context = context
-        self.root = root
+        self.root_ref = root
         self.path = path
         self.members = dict()
 
@@ -174,17 +174,43 @@ class SettingsMap:
         elif member_type != SettingsType.SETTING_MAP:
             raise SomeError
 
-        self.members[name].__update(value)
+        self.members[name].update(value)
 
 
     def __new_setting(self, name, value):
-        pass
+
+        if name in self.members:
+            raise SomeError
+
+        if name != value.name:
+            raise SomeError
+
+        setting_dict = value._asdict()
+        setting_dict['definer'] = self.context
+        if setting_dict['value'] != None:
+            setting_dict['setter'] = self.context
+        if setting_dict['required'] == None:
+            setting_dict['required'] = False
+        if setting_dict['validate_on'] == None:
+            setting_dict['validate_on'] = ValidationTime.NEVER
+        setting_dict['needs_validation'] = True
+        if setting_dict['derive_on_read'] == None:
+            setting_dict['derive_on_read'] = False
+
+        self.members[name] = Setting(setting_dict)
 
     def __new_submap(self, name):
-        pass
+
+        self.members[name] = SettingsMap(
+            self.context,
+            self.root,
+            self.path + [name],
+            self.context_stack
+        )
 
 
-    def __update(self, other):
+    def update(self, other):
+
         pass
 
 
@@ -293,12 +319,12 @@ class SettingsMap:
         return '.'.join(self.path)
 
     @property
-    def __is_root(self):
-        return self.root == None
+    def is_root(self):
+        return self.root_ref == None
 
     @property
-    def get_root(self):
-        return self if self.root == None else root
+    def root(self):
+        return self if self.root_ref == None else self.root_ref
 
     def __new_setting(self, name, info):
         if not info.creating:

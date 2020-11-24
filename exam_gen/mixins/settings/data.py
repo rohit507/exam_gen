@@ -213,11 +213,11 @@ class SettingValidation(SettingValue, NamedTuple):
     required: bool = None
     validator: Optional[Callable[..., bool]] = None
     validate_on: ValidationTime = None
-    needsidation: bool = False
+    needs_validation: bool = False
 
     def update(self, other):
         if self.setter != other.setter:
-            self.needsidation = True
+            self.needs_validation = True
         if hasattr(super(), 'update'): super().update(other)
         if other.required != None: self.required = other.required
         if other.validator != None: self.validator = other.validator
@@ -227,7 +227,7 @@ class SettingValidation(SettingValue, NamedTuple):
 
     def validate(self, parent, name = None):
         name = self.name if name == None else name
-        if self.needsidation:
+        if self.needs_validation:
 
             if self.required and not self.is_set():
                 raise UndefinedRequiredSettingError(
@@ -255,7 +255,7 @@ class SettingValidation(SettingValue, NamedTuple):
                         ("Validation of setting `{}.{}` failed."
                         ).format(parent.path_string, name))
 
-            self.needsidation = False
+            self.needs_validation = False
 
 class SettingConstruction(SettingValue, NamedTuple):
     """
