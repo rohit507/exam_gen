@@ -1,7 +1,7 @@
 from exam_gen.mixins.settings.errors import *
 from exam_gen.mixins.settings.data import *
 from inspect import isclass
-from textwrap import indent, dedent
+from textwrap import *
 
 class SettingsMap:
     """
@@ -71,13 +71,15 @@ class SettingsMap:
             super().__setattr__(name, value)
         elif value_type & SettingsType.OPTION:
             self.__set_option(name, value)
-        # elif value_type & SettingsType.OPTION_LIST:
+        elif value_type & SettingsType.OPTION_LIST:
+            raise SomeError
         #     self.__set_option_list(name, value)
         elif value_type & SettingsType.SETTING:
             self.__set_setting(name, value)
         elif value_type & SettingsType.SETTING_DICT:
             self.__set_setting_dict(name, value)
-        # elif value_type & SettingsType.SETTING_MAP:
+        elif value_type & SettingsType.SETTING_MAP:
+            raise SomeError
         #     self.__set_setting_map(name, value)
         elif name in self.members:
             self.__set_value(name, value)
@@ -127,24 +129,31 @@ class SettingsMap:
         else:
             raise SomeError
 
-    def __set_setting(self, name, value):
+    def __set_setting(self, name, value, force_update = False):
         value_type = SettingsType.type_of(value)
         is_member = name in self.members
         member = self.members[name] if is_member else None
         member_type = SettingsType.type_of(member) if is_member else None
 
-        if is_member and (member_type != SettingsType.Setting):
+        if is_member and (member_type != SettingsType.SETTING):
             raise SomeError
-        elif (not is_member) and (value_type == SettingsType.ADD_SETTING):
+        elif not (value_type & SettingsType.SETTING):
+            raise SomeError
+        elif (not is_member) and (
+                (value_type == SettingsType.ADD_SETTING) or force_update):
             self.__new_setting(name, value)
         elif value_type == SettingsType.ADD_SETTING:
             raise SomeError
-        elif is_member and (value_type == SettingsType.UPDATE_SETTING):
+        elif is_member and (
+                (value_type == SettingsType.UPDATE_SETTING) or force_update):
             member.update(value)
         elif value_type == SettingsType.UPDATE_SETTING:
             raise SomeError
         else:
             raise RuntimeError("Internal Error: Invalid set option call.")
+
+        if member.needs_validation:
+            self.root.dirty()
 
     def __set_setting_dict(self, name, value):
         value_type = SettingsType.type_of(value)
@@ -186,7 +195,8 @@ class SettingsMap:
             raise SomeError
 
         setting_dict = value._asdict()
-        setting_dict['definer'] = self.context
+        if setting_dict['definer'] != None:
+            setting_dict['definer'] = self.context
         if setting_dict['value'] != None:
             setting_dict['setter'] = self.context
         if setting_dict['required'] == None:
@@ -200,19 +210,11 @@ class SettingsMap:
         self.members[name] = Setting(setting_dict)
 
     def __new_submap(self, name):
-
         self.members[name] = SettingsMap(
             self.context,
             self.root,
             self.path + [name],
-            self.context_stack
-        )
-
-
-    def update(self, other):
-
-        pass
-
+            self.context_stack)
 
     def __iadd__(self, other):
         if isinstance(other, dict):
@@ -222,89 +224,40 @@ class SettingsMap:
             raise InvalidBulkAssignmentError("Expected a dict as input " +
                                              "to bulk setting assignment.")
 
-### Refactor Everything Below This Line ###
+    def update(self, other):
+        # we go through all the members and for each
+        for (name,new) in other.members.items():
+            new_type = SettingsType.type_of(other)
+            if new_type == SettingsType.SETTING:
+                self.__set_setting(name, new, force_update = True)
+            elif new_type == SettingsType.SETTING_MAP:
+                self.__set_setting_map(name, new)
+            else:
+                raise SomeError
+
+
 
     def copy(self, context, root = None, path = []):
-
         new_map = SettingsMap(context,
                               root,
                               path,
                               self.description,
                               [self.context] + self.context_stack,
                               **self.kwargs)
-
-        root = new_map if root == None else root
-        for (name, member) in self.members.items():
-            if isinstance(member, SettingInfo):
-                new_setting = member.copy(context, root, path)
-                new_setting.creating = True
-                new_map.__set_attr__(name, new_setting)
-            elif isinstance(member, SettingsMap):
-                new_submap = member.copy(context,
-                                         root,
-                                         path + [name])
-                new_map.__new_raw_settings_map(name, new_submap)
-            else:
-                raise RuntimeError("Internal Error w/ SettingsMap")
+        new_map.update(self)
         return new_map
 
+    def dirty(self):
+        for member in self.members.values():
+            member.dirty()
 
-    def dirty_all_validation(self):
+    def validate(self, parent = None, name = None):
+        for (name,member) in self.members.items():
+            member.validate(self, name)
+
+    def derive(self, parent = None, name = None):
         for (name, member) in self.members.items():
-            if isinstance(member, SettingInfo):
-                member.dirty()
-            elif isinstance(member, SettingsMap):
-                member.dirty_all_validation()
-
-    def dirty_validation(self, name):
-        if name in self.members:
-            member = self.members[name]
-            if isinstance(member, SettingInfo):
-                member.dirty()
-            elif isinstance(member, SettingsMap):
-                member.dirty_all_validation()
-        else:
-            raise NoSuchSettingError(
-                ("No setting `{}.{}` to mark as dirty."
-                 ).format(self.path_string, name))
-
-    def validate_all(self):
-        for (name, member) in self.members.items():
-            if isinstance(member, SettingInfo):
-                member.validate(name, self)
-            elif isinstance(member, SettingsMap):
-                member.validate_all()
-
-    def validate(self, name):
-        if name in self.members:
-            member = self.members[name]
-            if isinstance(member, SettingInfo):
-                member.validate(name, self)
-            elif isinstance(member, SettingsMap):
-                member.validate_all()
-        else:
-            raise NoSuchSettingError(
-                ("No setting `{}.{}` to validate."
-                 ).format(self.path_string, name))
-
-    def derive_all(self):
-        for (name, member) in self.members.items():
-            if isinstance(member, SettingInfo):
-                member.derive(name, self)
-            elif isinstance(member, SettingsMap):
-                member.derive_all()
-
-    def derive(self, name):
-        if name in self.members:
-            member = self.members[name]
-            if isinstance(member, SettingInfo):
-                member.derive(name, self)
-            elif isinstance(member, SettingsMap):
-                member.derive_all()
-        else:
-            raise NoSuchSettingError(
-                ("No setting `{}.{}` to derive value for."
-                 ).format(self.path_string, name))
+            member.derive(self, name)
 
     def set_context(self, context):
         self.context_stack = [context] + self.context_stack
@@ -326,113 +279,10 @@ class SettingsMap:
     def root(self):
         return self if self.root_ref == None else self.root_ref
 
-    def __new_setting(self, name, info):
-        if not info.creating:
-            raise RuntimeError("InternalError in SettingsMap")
-        if name in self.members:
-            raise SettingAlreadyExistsError(
-                ("Trying to create settings `{}.{}` when it already exists."
-                ).format(self.path_string, name))
-        info.creating = False
-        info.updating = False
-        self.members[name] = info
-
-    def __update_setting(self, name, info):
-        if not info.updating:
-            raise RuntimeError("Internal error in SettingsMap")
-        if name not in self.members:
-            raise NoSettingToUpdateError(
-                ("Cannot update non-existent setting `{}.{}`."
-                 ).format(self.path_string, name))
-        self.members[name].update(info)
-
-    def __new_settings_map(self, name, info):
-       if name in self.members:
-           raise RuntimeError("Internal Error in SettingsMap.")
-
-       submap = SettingsMap(self.context,
-                            self.get_root,
-                            self.path + [name],
-                            context_stack = self.context_stack)
-
-       for (k,v) in info.items():
-           submap.__set_attr__(k,v)
-
-       self.members[name] = submap
-
-    def __new_raw_settings_map(self, name, smap):
-        if name in self.members:
-            raise RuntimeError("InternalError in SettingsMap.")
-
-        smap.root = self.get_root
-        smap.path = self.path + [name]
-        smap.context = self.context
-        smap.context_stack = self.context_stack
-
-        self.members[name] = smap
-
-    def __update_settings_map(self, name, opts):
-        if name not in self.members:
-            raise SettingsMapNotUpdatableError(
-                ("Cannot update settings sub-category `{}.{}` as it does " +
-                 "not exist.").format(self.path_string, name))
-        for (k,v) in opts.items:
-            self.members[name].__set_attr__(k,v)
-
-    def __add_option(self, name, info):
-        if name not in self.members:
-            raise NoSettingToUpdateError(
-                ("Cannot add new option to setting `{}.{}` as it does not " +
-                 "exist.").format(self.path_string, name))
-        self.members[name].add_option(info)
-
     def new_setting_func(self):
 
         def new_setting(
-                short_desc : str,
-                long_desc: str = None,
-                default: Any = None,
-                required = None,
-                validator = None,
-                validate_on = None,
-                derivation = None,
-                derive_on_read = True,
-                update_with = None,
-                copy_with = None,
-                options = []
-            ):
-            """ Test do for internal new_setting func """
-            info = SettingInfo(
-                definer = self.context,
-                setter = self.context if default != None else None,
-                value = default,
-                short_desc = short_desc,
-                long_desc = long_desc,
-                needs_validation = default != None,
-                required = required,
-                validator = validator,
-                validate_on = validate_on,
-                derivation = derivation,
-                derive_on_read = derive_on_read,
-                update_with = update_with,
-                copy_with = copy_with,
-                creating = True
-                )
-
-            if isinstance(options, dict):
-                for (nm,dsc) in options.items():
-                    info.add_option(SettingOption(
-                        definer = self.context,
-                        name = nm,
-                        description = dsc,
-                        adding = True))
-
-            return info
-
-        return new_setting
-
-    def update_setting_func(self):
-        def update_setting(
+                description : str = None,
                 short_desc : str = None,
                 long_desc: str = None,
                 default: Any = None,
@@ -445,8 +295,13 @@ class SettingsMap:
                 copy_with = None,
                 options = []
             ):
-            """ Test do for internal update_setting func """
-            info = SettingInfo(
+            """ Test do for internal new_setting func """
+
+            (short_desc, long_desc) = format_description(description,
+                                                         short_desc,
+                                                         long_desc)
+
+            info = AddSetting(
                 definer = self.context,
                 setter = self.context if default != None else None,
                 value = default,
@@ -460,7 +315,65 @@ class SettingsMap:
                 derive_on_read = derive_on_read,
                 update_with = update_with,
                 copy_with = copy_with,
-                updating = True
+                )
+
+            if isinstance(options, dict):
+                for (nm,dsc) in options.items():
+
+                    (short_opt_desc, long_opt_desc) = format_description(dsc)
+
+                    info.add_option(AddOption(
+                        definer = self.context,
+                        name = nm,
+                        short_desc = short_opt_desc,
+                        long_desc = long_opt_desc))
+            elif isinstance(options, list):
+                for opt in options:
+                    if isinstance(opt, Option):
+                        info.add_option(opt, force_update = True)
+                    else:
+                        raise SomeError
+            else:
+                raise SomeError
+
+            return info
+
+        return new_setting
+
+    def update_setting_func(self):
+        def update_setting(
+                description : str = None,
+                short_desc : str = None,
+                long_desc: str = None,
+                default: Any = None,
+                required = None,
+                validator = None,
+                validate_on = None,
+                derivation = None,
+                derive_on_read = True,
+                update_with = None,
+                copy_with = None,
+                options = []
+            ):
+
+            (short_desc, long_desc) = format_description(description,
+                                                         short_desc,
+                                                         long_desc)
+            """ Test do for internal update_setting func """
+            info = UpdateSetting(
+                definer = self.context,
+                setter = self.context if default != None else None,
+                value = default,
+                short_desc = short_desc,
+                long_desc = long_desc,
+                needs_validation = default != None,
+                required = required,
+                validator = validator,
+                validate_on = validate_on,
+                derivation = derivation,
+                derive_on_read = derive_on_read,
+                update_with = update_with,
+                copy_with = copy_with,
                 )
 
             if isinstance(options, dict):
@@ -472,7 +385,10 @@ class SettingsMap:
                         adding = True))
             elif isinstance(options, list):
                 for opt in options:
-                    info.add_option(opt)
+                    if isinstance(opt, Option):
+                        info.add_option(opt, force_update = True)
+                    else:
+                        raise SomeError
 
             return info
 
@@ -482,13 +398,38 @@ class SettingsMap:
         return self.add_option_func()
 
     def add_option_func(self):
-        def option(name, desc):
-            return SettingOption(
+        def add_option(name,
+                   description = None,
+                   short_desc = None,
+                   long_desc = None):
+
+            (short_desc, long_desc) = format_description(description,
+                                                         short_desc,
+                                                         long_desc)
+            return AddOption(
                 definer = self.context,
                 name = name,
-                description = desc,
-                adding = True)
-        return option
+                short_desc = short_desc,
+                long_desc = long_desc)
+
+        return add_option
+
+    def update_option_func(self):
+        def update_option(name,
+                   description = None,
+                   short_desc = None,
+                   long_desc = None):
+
+            (short_desc, long_desc) = format_description(description,
+                                                         short_desc,
+                                                         long_desc)
+            return UpdateOption(
+                definer = self.context,
+                name = name,
+                short_desc = short_desc,
+                long_desc = long_desc)
+
+        return update_option
 
     def make_docstring(self, context):
         raise NotImplementedError
@@ -496,14 +437,6 @@ class SettingsMap:
     def gather_docs(self, context):
         raise NotImplementedError
 
-    def update(self, other):
-        # This needs to be some sort of context aware update operation that
-        # will pull from the other SettingsMap while preserving the context
-        # stack and other context info.
-
-        # Ideally ties will be broken in MRO order. So the other SettingsMap
-        # must come from a parent class or itself.
-        pass
 
 
 class SettingsType(Flag):

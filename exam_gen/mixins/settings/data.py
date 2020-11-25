@@ -4,6 +4,7 @@ from wrapt import ObjectProxy
 from exam_gen.mixins.settings.errors import *
 from exam_gen.util.dynamic_call import *
 from copy import *
+from textwrap import *
 
 class ValidationTime(Flag):
     """
@@ -14,7 +15,17 @@ class ValidationTime(Flag):
     BOTH = READ | WRITE
     NEVER = 0
 
-class Defined(NamedTuped):
+class Described(NamedTuple):
+
+    short_desc: str = None
+    long_desc : Optional[str] = None
+
+    def update(self, other):
+        if hasattr(super(), 'update'): super().update(other)
+        if other.short_desc != None: self.short_desc = other.short_desc
+        if other.long_desc != None: self.long_desc = other.long_desc
+
+class Defined(NamedTuple):
     """
     Just captures the historical information of the last entity to change
     this data.
@@ -31,7 +42,7 @@ class Defined(NamedTuped):
             raise RuntimeError("Internal Error: Broken historical logging.")
         self.definer = other.definer
 
-class Option(Defined, NamedTuple):
+class Option(Defined, Described,  NamedTuple):
     """
     Basic metadata for an option.
 
@@ -57,8 +68,6 @@ class Option(Defined, NamedTuple):
 
     """
     name      : str = None
-    short_desc: str = None
-    long_desc : Optional[str] = None
 
     def update(self, other, force_update = False):
 
@@ -69,9 +78,12 @@ class Option(Defined, NamedTuple):
             raise RuntimeError("Internal Error: invalid option used to update.")
 
         if hasattr(super(), 'update'): super().update(other)
-        if other.short_desc != None: self.short_desc = other.short_desc
-        if other.long_desc != None: self.long_desc = other.long_desc
 
+    def add_option(self):
+        return AddOption(**self._asdict())
+
+    def update_option(self):
+        return UpdateOption(**self._asdict())
 
 
 class AddOption(Option):
@@ -87,7 +99,7 @@ class UpdateOption(Option):
     """
     pass
 
-class SettingInfo(Defined, NamedTuple):
+class SettingInfo(Defined, Described,  NamedTuple):
     """
     Basic metadata for a setting.
 
@@ -102,8 +114,6 @@ class SettingInfo(Defined, NamedTuple):
             the name of the option
     """
     name: str = None
-    short_desc: str = None
-    long_desc: Optional[str] = None
     options: dict = dict()
 
     def add_option(self, option : Option, force_update = False):
@@ -131,8 +141,6 @@ class SettingInfo(Defined, NamedTuple):
             raise RuntimeError("Internal Error: update of mismatched settings.")
 
         if hasattr(super(), 'update'): super().update(other)
-        if other.short_desc != None: self.short_desc = other.short_desc
-        if other.long_desc != None: self.long_desc = other.long_desc
         for (name, opt) in other.options.items():
             if name not in self.options:
                 self.add_option(AddOption(**opt._asdict()))
@@ -206,7 +214,7 @@ class SettingValidation(SettingValue, NamedTuple):
            settings need to be assigned and the intermediate state can be
            invalid.
 
-       needsidation (bool): Does this setting need to be validated on the
+       needs_validation (bool): Does this setting need to be validated on the
             next read operation?  This is mainly for internal bookkeeping use
             (default = `False`)
     """
@@ -223,7 +231,7 @@ class SettingValidation(SettingValue, NamedTuple):
         if other.validator != None: self.validator = other.validator
         if other.validate_on != None: self.validate_on = other.validate_on
 
-    def dirty(self): self.needsidation = True
+    def dirty(self): self.needs_validation = True
 
     def validate(self, parent, name = None):
         name = self.name if name == None else name
@@ -368,3 +376,27 @@ class UpdateSetting(Setting):
     Wrapper to indicate we're updating a setting that should already exist.
     """
     pass
+
+def format_descriptions(
+        description : str = None,
+        short_desc : str = None,
+        long_desc : str = None):
+
+    if long_desc:
+        long_desc = dedent(long_desc).strip()
+
+    if short_desc:
+        short_desc = short_desc.strip()
+
+    if description and (not short_desc) and (not long_desc):
+        description = dedent(description)
+        if (len(description) > 80) and (len(description.splitlines()) > 1):
+            short_desc = shorten(fill(description).strip(), width = 80)
+            long_desc = description
+        else:
+            short_desc = description
+            long_desc = None
+    elif long_desc and not short_desc:
+            short_desc = shorten(fill(long_desc).strip(), width = 80)
+
+    return (short_desc, long_desc)
