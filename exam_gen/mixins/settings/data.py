@@ -1,8 +1,8 @@
-from typing import *
 from enum import Flag, auto
-from wrapt import ObjectProxy
 from exam_gen.mixins.settings.errors import *
 from exam_gen.util.dynamic_call import *
+from exam_gen.mixins.settings.options_tuple import Options as NamedTuple
+from typing import Optional, Any, Callable
 from copy import *
 from textwrap import *
 
@@ -20,8 +20,10 @@ class Described(NamedTuple):
     short_desc: str = None
     long_desc : Optional[str] = None
 
+    super_update = object.update if hasattr(object,'update') else None
+
     def update(self, other):
-        if hasattr(super(), 'update'): super().update(other)
+        if super_update != None : super_update(other)
         if other.short_desc != None: self.short_desc = other.short_desc
         if other.long_desc != None: self.long_desc = other.long_desc
 
@@ -36,8 +38,10 @@ class Defined(NamedTuple):
     """
     definer : Any = None
 
+    super_update = object.update if hasattr(object,'update') else None
+
     def update(self, other):
-        if hasattr(super(), 'update'): super().update(other)
+        if super_update != None : super_update(other)
         if other.definer == None:
             raise RuntimeError("Internal Error: Broken historical logging.")
         self.definer = other.definer
@@ -69,6 +73,8 @@ class Option(Defined, Described,  NamedTuple):
     """
     name      : str = None
 
+    super_update = object.update if hasattr(object,'update') else None
+
     def update(self, other, force_update = False):
 
         if self.name != other.name:
@@ -77,7 +83,7 @@ class Option(Defined, Described,  NamedTuple):
         if not (isinstance(other, UpdateOption) or force_update):
             raise RuntimeError("Internal Error: invalid option used to update.")
 
-        if hasattr(super(), 'update'): super().update(other)
+        if super_update != None : super_update(other)
 
     def add_option(self):
         return AddOption(**self._asdict())
@@ -131,6 +137,8 @@ class SettingInfo(Defined, Described,  NamedTuple):
     def has_option(self, name : str):
         return name in options
 
+    super_update = object.update if hasattr(object,'update') else None
+
     def update(self, other):
         """
         !!! Note
@@ -140,7 +148,7 @@ class SettingInfo(Defined, Described,  NamedTuple):
         if self.name != other.name:
             raise RuntimeError("Internal Error: update of mismatched settings.")
 
-        if hasattr(super(), 'update'): super().update(other)
+        if super_update != None : super_update(other)
         for (name, opt) in other.options.items():
             if name not in self.options:
                 self.add_option(AddOption(**opt._asdict()))
@@ -165,20 +173,22 @@ class SettingValue(NamedTuple):
     def is_set(self):
         return self.setter != None
 
+    super_update = object.update if hasattr(object,'update') else None
+
     def update(self, other):
         """
         !!! Note
             If the setters are different, then the value of the parameter will
             overwrite the value of self.
         """
-        if hasattr(super(), 'update'): super().update(other)
+        if super_update != None : super_update(other)
         if self.setter != other.setter:
             self.setter = other.setter
             self.value = other.value
 
 
 
-class SettingValidation(SettingValue, NamedTuple):
+class SettingValidation(NamedTuple):
     """
     Data on how and whether to validate the correctness of the setting.
 
@@ -223,10 +233,12 @@ class SettingValidation(SettingValue, NamedTuple):
     validate_on: ValidationTime = None
     needs_validation: bool = False
 
+    super_update = object.update if hasattr(object,'update') else None
+
     def update(self, other):
         if self.setter != other.setter:
             self.needs_validation = True
-        if hasattr(super(), 'update'): super().update(other)
+        if super_update != None : super_update(other)
         if other.required != None: self.required = other.required
         if other.validator != None: self.validator = other.validator
         if other.validate_on != None: self.validate_on = other.validate_on
@@ -265,7 +277,7 @@ class SettingValidation(SettingValue, NamedTuple):
 
             self.needs_validation = False
 
-class SettingConstruction(SettingValue, NamedTuple):
+class SettingConstruction(NamedTuple):
     """
     Functions to allow the construction and modification of setting values.
 
@@ -294,8 +306,10 @@ class SettingConstruction(SettingValue, NamedTuple):
     copy_with: Optional[Callable[...,Any]] = None
     derive_on_read: bool = None
 
+    super_update = object.update if hasattr(object,'update') else None
+
     def update(self, other):
-        if hasattr(super(), 'update'): super().update(other)
+        if super_update != None : super_update(other)
         if update.derive_with != None: self.derive_with = update.derive_with
         if update.update_with != None: self.update_with = update.update_with
         if update.copy_with != None: self.copy_with = update.copy_with
@@ -323,17 +337,19 @@ class SettingConstruction(SettingValue, NamedTuple):
                  "so was provided.").format(parent.path_string, name))
 
 class Setting(SettingInfo,
+              SettingValue,
               SettingValidation,
-              SettingConstruction,
-              SettingValue):
+              SettingConstruction):
     """
     The complete collected information about a setting.
     """
 
+    super_update = object.update if hasattr(object,'update') else None
+
     def update(self, other):
         if not isinstance(other, UpdateSetting):
             raise RuntimeError("Internal Error: Invalid Setting Update.")
-        if hasattr(super(), 'update'): super().update(other)
+        if super_update != None : super_update(other)
 
     def get(self, parent, name = None):
 
@@ -377,7 +393,7 @@ class UpdateSetting(Setting):
     """
     pass
 
-def format_descriptions(
+def format_description(
         description : str = None,
         short_desc : str = None,
         long_desc : str = None):

@@ -27,6 +27,13 @@ class SettingsMap:
             of. If `None`, this object is the root of the tree.
     """
 
+    #kwargs = None
+    context_stack = None
+    context = None
+    root_ref = None
+    path = None
+    members = None
+
     def __init__(self,
                  context,
                  root = None,
@@ -35,7 +42,7 @@ class SettingsMap:
                  context_stack = [],
                  **kwargs
     ):
-        self.kwargs = kwargs
+        # self.kwargs = kwargs
         super().__init__(**kwargs)
 
         if context == None:
@@ -66,12 +73,13 @@ class SettingsMap:
     def __setattr__(self, name, value):
 
         value_type = SettingsType.type_of(value)
+        print((value_type, SettingsType.OPTION_LIST))
 
-        if hasattr(super(), name):
+        if hasattr(super(), name) or hasattr(self, name):
             super().__setattr__(name, value)
         elif value_type & SettingsType.OPTION:
             self.__set_option(name, value)
-        elif value_type & SettingsType.OPTION_LIST:
+        elif value_type == SettingsType.OPTION_LIST:
             raise SomeError
         #     self.__set_option_list(name, value)
         elif value_type & SettingsType.SETTING:
@@ -302,8 +310,8 @@ class SettingsMap:
                                                          long_desc)
 
             info = AddSetting(
-                definer = self.context,
                 setter = self.context if default != None else None,
+                definer = self.context,
                 value = default,
                 short_desc = short_desc,
                 long_desc = long_desc,
@@ -311,7 +319,7 @@ class SettingsMap:
                 required = required,
                 validator = validator,
                 validate_on = validate_on,
-                derivation = derivation,
+                derive_with = derivation,
                 derive_on_read = derive_on_read,
                 update_with = update_with,
                 copy_with = copy_with,
@@ -370,7 +378,7 @@ class SettingsMap:
                 required = required,
                 validator = validator,
                 validate_on = validate_on,
-                derivation = derivation,
+                derive_with = derivation,
                 derive_on_read = derive_on_read,
                 update_with = update_with,
                 copy_with = copy_with,
@@ -468,22 +476,31 @@ class SettingsType(Flag):
     """
     NONE = 0
     ACTION = auto()
-    ADD_DATA = auto() | ACTION
-    UPDATE_DATA = auto() | ACTION
+    _ADD_DATA_AUTO = auto()
+    ADD_DATA = _ADD_DATA_AUTO | ACTION
+    _UPDATE_DATA_AUTO = auto()
+    UPDATE_DATA = _UPDATE_DATA_AUTO | ACTION
     OPTION = auto()
-    ADD_OPTION = auto() | OPTION | ADD_DATA
-    UPDATE_OPTION = auto() | OPTION | UPDATE_DATA
-    OPTION_LIST = auto() | ADD_DATA | UPDATE_DATA
+    _ADD_OPTION_AUTO = auto()
+    ADD_OPTION = _ADD_OPTION_AUTO | OPTION | ADD_DATA
+    _UPDATE_OPTION_AUTO = auto()
+    UPDATE_OPTION = _UPDATE_OPTION_AUTO | OPTION | UPDATE_DATA
+    _OPTION_LIST_AUTO = auto()
+    OPTION_LIST = _OPTION_LIST_AUTO | ADD_DATA | UPDATE_DATA
     SETTING = auto()
-    ADD_SETTING = auto() | SETTING | ADD_DATA
-    UPDATE_SETTING = auto() | SETTING | UPDATE_DATA
+    _ADD_SETTING_AUTO = auto()
+    ADD_SETTING = _ADD_SETTING_AUTO | SETTING | ADD_DATA
+    _UPDATE_SETTING_AUTO = auto()
+    UPDATE_SETTING = _UPDATE_SETTING_AUTO | SETTING | UPDATE_DATA
     SETTING_MAP = auto()
     SETTING_DICT = auto()
-    ADD_SETTING_DICT = auto() | SETTING_DICT | ADD_DATA
-    UPDATE_SETTING_DICT = auto() | SETTING_DICT | UPDATE_DATA
+    _ADD_SETTING_DICT_AUTO = auto()
+    ADD_SETTING_DICT = _ADD_SETTING_DICT_AUTO | SETTING_DICT | ADD_DATA
+    _UPDATE_SETTING_DICT_AUTO = auto()
+    UPDATE_SETTING_DICT = _UPDATE_SETTING_DICT_AUTO | SETTING_DICT | UPDATE_DATA
 
-    @staticmethod
-    def type_of(data):
+    @classmethod
+    def type_of(self, data):
 
         if isinstance(data, Option):
             if isinstance(data, AddOption):
