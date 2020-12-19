@@ -126,7 +126,7 @@ class SettingInfo(Defined, Described,  NamedTuple):
         if not (isinstance(option, AddOption) or force_update):
             raise RuntimeError("InternalError: New option is invalid.")
 
-        self.options[option.name] = Option(**option._addict())
+        self.options[option.name] = Option(**option._asdict())
 
     def update_option(self, option : Option, force_update = False):
         if not (isinstance(option, UpdateOption) or force_update):
