@@ -448,4 +448,4 @@ separate functions and come with appropriate existence checks.
 
 ## Generated Documentation
 
-::: exam_gen.mixins.settings.data
+::: exam_gen.mixins.settings

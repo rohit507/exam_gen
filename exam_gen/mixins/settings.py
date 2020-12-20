@@ -15,7 +15,7 @@ log = logging.getLogger(__name__)
 field_styles = coloredlogs.DEFAULT_FIELD_STYLES
 field_styles.update({ 'levelname': {'bold': True, 'color':'yellow'}})
 coloredlogs.install(
-    level='DEBUG',
+    level='WARNING',
     logger=log,
     fmt='%(levelname)s@%(name)s:%(lineno)s:\n%(message)s\n',
     field_styles = field_styles
@@ -34,7 +34,7 @@ def create_settings_mixin(
 
         def prepare_attrs(cls, name, bases, env):
 
-            log.warn("Preparing Attrs for '%s' with cls %s and initial env: %s",
+            log.debug("Preparing Attrs for '%s' with cls %s and initial env: %s",
                   name, cls, env)
 
             if hasattr(super(cls), "__prepare_attrs__"):

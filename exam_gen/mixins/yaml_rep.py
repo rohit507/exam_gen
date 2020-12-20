@@ -1,20 +1,15 @@
-import yaml
+import logging
+import coloredlogs
 
-class Yamlable():
+log = logging.getLogger(__name__)
+field_styles = coloredlogs.DEFAULT_FIELD_STYLES
+field_styles.update({ 'levelname': {'bold': True, 'color':'yellow'}})
+coloredlogs.install(
+    level='DEBUG',
+    logger=log,
+    fmt='%(levelname)s@%(name)s:%(lineno)s:\n%(message)s\n',
+    field_styles = field_styles
+)
 
-    yaml_tag = None
 
-    @classmethod
-    def from_yaml(cls, loader, node):
-        return data
-
-    @classmethod
-    def to_yaml(cls, dumper, data):
-        return node
-
-    def __init_subclass__(cls):
-        # Set yaml tag
-        # register constructor
-        # register representer
-
-        pass
+__all__ = []
