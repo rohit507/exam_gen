@@ -13,6 +13,7 @@ pymdown-extensions = "*"
 mkdocs-localsearch = "*"
 PyYAML = "*"
 wrapt = "*"
+coloredlogs = "*"
 
 [dev-packages]
 mypy = "*"

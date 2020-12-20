@@ -233,12 +233,219 @@ separate functions and come with appropriate existence checks.
 
 ### Duplication on object init
 
+??? Random Test Code
+    ```python
+    from pprint import *
+    from inspect import *
+    # from exam_gen.util.dynamic_call import *
+    # from exam_gen.mixins.yaml_rep import *
+    from exam_gen.mixins.settings.map import *
+
+    class Foo: pass
+
+    settings = Settings(
+        context = Foo,
+        long_desc = """
+        Here's a quick test of a settings group description with some
+        complex components. **Like** *some* formatting.
+
+        !!! Note
+            Or this admonition.
+        """,
+        path = "settings"
+        )
+
+    # pprint(settings._as_dict())
+
+    settings.new_setting(
+        name = "test",
+        desc = "A test setting, that does something.",
+        options = {
+            "option_1" : "this is option 1",
+            "option_2" : "this is option **2**",
+            }
+        )
+
+    # settings.new_setting_group(
+    #     name = "group",
+    #     desc = """
+    #     Here's some more compllex formatting in a group description.
+
+    #     > Like a quote
+
+    #     !!! Note
+    #         And another admontition
+    #     """,
+    #     )
+
+    ## pprint(settings._as_dict())
+    print(settings.test)
+    settings.test = 4
+    print(settings.test)
+    settings.test += 4
+    print(settings.test)
+
+    settings_new = settings._clone()
+    pprint(settings._as_dict())
+    pprint(settings_new._as_dict())
+    settings_new.test += 123
+    print(settings.test)
+    print(settings_new.test)
+
+
+    # pprint(settings._as_dict())
+    # pprint(settings._gen_docs())
+    ```
+
+??? Jinja Stuff
+    ```python
+    from jinja2 import Environment, meta
+
+    docs_template_string = """
+    {{long_desc}}
+    {% if table != {} %}
+
+    **{{table_title}}:**
+    <table markdown="1">
+    <tr markdown="1">
+    <th markdown="1">
+    {{table_header}}
+    </th>
+    <th markdown="1">
+    {{desc_header}}
+    </th>
+    </tr>
+    {% for (name, desc) in table.items() %}
+    <tr markdown="1">
+    <td markdown="1">
+    `{{name}}`
+    </td>
+    <td markdown="1">
+    {{desc}}
+    </th>
+    </tr>
+    {% endfor %}
+    </table>
+    {% endif %}
+    """
+
+    print(meta.find_undeclared_variables(Environment().parse(docs_template_string)))
+    ```
+
+??? Example
+
+    Code:
+
+    ```python
+    from pprint import *
+    from inspect import *
+    # from exam_gen.util.dynamic_call import *
+    # from exam_gen.mixins.yaml_rep import *
+    from exam_gen.mixins.settings.map import *
+
+    class Foo(SettingsManager):
+
+        settings.new_setting(
+            "test",
+            desc = "test setting"
+            )
+        settings.test = 3
+
+        pass
+
+    class Bar(Foo):
+        settings.new_setting(
+            "test2",
+            desc = "test setting 2"
+            )
+        settings.test2 = 2
+        settings.test2 += settings.test
+        settings.test = 4
+
+    class Buzz(Foo):
+        settings.new_setting(
+            "test3",
+            desc = "test setting 3"
+            )
+        settings.test3 = "hello"
+        settings.test3 += " " + str(settings.test)
+        settings.test = 12
+
+    class Bing(Bar, Buzz): pass
+    class Bong(Buzz, Bar): pass
+
+    foo = Foo()
+    bar = Bar()
+    buzz = Buzz()
+    bing = Bing()
+    bong = Bong()
+    foo.settings.test = 14
+
+    pprint({
+        'Foo': {
+            'test': str(Foo.settings.test),
+        },
+        'foo': {
+            'test': str(foo.settings.test),
+        },
+        'Bar': {
+            'test': str(Bar.settings.test),
+            'test2': str(Bar.settings.test2),
+        },
+        'bar': {
+            'test': str(bar.settings.test),
+            'test2': str(bar.settings.test2),
+        },
+        'Buzz': {
+            'test': str(Buzz.settings.test),
+            'test3': str(Buzz.settings.test3),
+        },
+        'buzz': {
+            'test': str(buzz.settings.test),
+            'test3': str(buzz.settings.test3),
+        },
+        'Bing': {
+            'test': str(Bing.settings.test),
+            'test2': str(Bing.settings.test2),
+            'test3': str(Bing.settings.test3),
+        },
+        'bing': {
+            'test': str(bing.settings.test),
+            'test2': str(bing.settings.test2),
+            'test3': str(bing.settings.test3),
+        },
+        'Bong': {
+            'test': str(Bong.settings.test),
+            'test2': str(Bong.settings.test2),
+            'test3': str(Bong.settings.test3),
+        },
+        'bong': {
+            'test': str(bong.settings.test),
+            'test2': str(bong.settings.test2),
+            'test3': str(bong.settings.test3),
+        },
+        }
+    )
+    ```
+
+    Output:
+
+    ```python
+    {'Bar': {'test': '4', 'test2': '5'},
+     'Bing': {'test': '4', 'test2': '5', 'test3': 'hello 3'},
+     'Bong': {'test': '12', 'test2': '5', 'test3': 'hello 3'},
+     'Buzz': {'test': '12', 'test3': 'hello 3'},
+     'Foo': {'test': '3'},
+     'bar': {'test': '4', 'test2': '5'},
+     'bing': {'test': '4', 'test2': '5', 'test3': 'hello 3'},
+     'bong': {'test': '12', 'test2': '5', 'test3': 'hello 3'},
+     'buzz': {'test': '12', 'test3': 'hello 3'},
+     'foo': {'test': '14'}}
+    ```
+
+!!! Todo
+    Implement freezing of settings data later.
 
 ## Generated Documentation
 
 ::: exam_gen.mixins.settings.data
-    handler: python
-    rendering:
-      heading_level: 3
-      show_source: false
-      show_root_toc_entry: false
