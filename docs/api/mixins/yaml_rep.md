@@ -25,6 +25,38 @@ Hmm, I think the reasonable thing to do for now is to just leave this be as
 something on the todo list. It's important but it's neither on the critical
 path nor something that would be hurt by introduction later.
 
+## yaml diff model
+
+ - Data Structure for a yaml like representation of a term.
+ - Contruction of a term from a ..
+
+nvm, the hard part of this is the chaining and stuff.
+
+## General Build process model
+
+Ok, so I want to have a flow as follows:
+
+ - `<class>/config.py` : Config File
+    - determines class specific information like roster and grades file and
+      formatting touch
+ - `<class>/<roster_file>` : Roster(s)
+ - `<class>/<grades>` : Raw grades files
+ - `<class>/<build>/roster.yaml` : parsed roster
+ - `<class>/<build>/grades.yaml` : parsed grades
+ - `<class>/<build>/<student>/` : student specific build information
+    - symlinks to assets and templates
+    - various `.yaml` files with problem data and exam data
+    - generated support files
+    - generated build files
+ - `<class>/<build>/<other_target>` : build information for other target files
+ - `<class>/<output>/` : result files for various targets
+
+
+And base items as follows:
+
+ - `<templates>/<template_files>`
+ - `<assets>/<asset_files>`
+
 ## Generated Documentation
 
 ::: exam_gen.mixins.yaml_rep
