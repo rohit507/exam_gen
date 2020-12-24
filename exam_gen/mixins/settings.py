@@ -8,6 +8,7 @@ from types import new_class
 import logging
 import coloredlogs
 import sys
+import attr
 from pprint import pformat
 import collections
 
@@ -15,20 +16,25 @@ log = logging.getLogger(__name__)
 field_styles = coloredlogs.DEFAULT_FIELD_STYLES
 field_styles.update({ 'levelname': {'bold': True, 'color':'yellow'}})
 coloredlogs.install(
-    level='WARNING',
+    level='DEBUG',
     logger=log,
     fmt='%(levelname)s@%(name)s:%(lineno)s:\n%(message)s\n',
     field_styles = field_styles
 )
 
 
-__all__ = ["Settings","create_settings_mixin","SettingsManager"]
+# __all__ = ["Settings","create_settings_mixin","SettingsManager"]
+
+settings_classes = dict()
+
 
 def create_settings_mixin(
         name,
         var_name,
         **kwargs
         ):
+
+    __var_name = "__" + var_name
 
     def populate(namespace):
 
@@ -50,10 +56,10 @@ def create_settings_mixin(
             else:
                 env[var_name] = env[var_name]._clone(context=cls)
 
-            cls_settings = getattr(cls, var_name, None)
+            cls_settings = getattr(cls, __var_name, None)
             if cls_settings != None:
-                log.debug("Class %s already has variable %s while preparing " +
-                      "attrs for %s: Updating", cls, var_name, name)
+                log.warning("Class %s already has variable %s while preparing " +
+                            "attrs for %s: Updating ", cls, var_name, name)
                 env[var_name]._update(cls_settings)
 
             log.debug("Final env when preparing %s with %s: %s",
@@ -61,19 +67,44 @@ def create_settings_mixin(
 
             return env
 
+
         def init_subclass(cls, **kwargs):
-            log.debug("Initializing subclass for '%s' with cls %s",
-                  name, cls)
-            super(cls).__init_subclass__(**kwargs)
-            setattr(cls, var_name,
+            log.warning("Initializing subclass for '%s' with cls %s",
+                        name, cls)
+            super(settings_classes[name], cls).__init_subclass__(**kwargs)
+            setattr(cls, __var_name,
                     getattr(cls, var_name)._clone(context=cls))
 
-            docs = getattr(cls, var_name)._gen_docs()
-            if cls.__doc__ != None:
-                cls.__doc__ = textwrap.dedent(cls.__doc__)
-                cls.__doc__ += "\n\n" + docs
-            else:
-                cls.__doc__ = getattr(cls, var_name)._gen_docs()
+            var = getattr(cls, __var_name)
+            docs = var._gen_docs()
+            # if cls.__doc__ != None:
+            #     cls.__doc__ = textwrap.dedent(cls.__doc__)
+            #     cls.__doc__ += "\n\n" + docs
+            # else:
+            #     cls.__doc__ = getattr(cls, __var_name)._gen_docs()
+
+            def get_var(self):
+                log.debug("Getting %s from %s via property.",
+                          var_name, self)
+                obj = getattr(self, __var_name)
+                return obj
+
+            def set_var(self, value):
+                log.debug("Setting %s from %s to %s via property.",
+                          var_name, self, value)
+                return setattr(self, __var_name, value)
+
+            get_var.__doc__ = docs
+
+            pseudo_property = type('PseudoProp',(type(property()),),{
+                '__getattr__': var.__getattr__,
+                '__setattr__': var.__setattr__,
+            })
+
+            prop = pseudo_property(get_var, set_var)
+            # setattr(prop,'__getattribute__',getattr(var,'__getattribute__'))
+            setattr(cls, var_name, prop)
+
 
             log.debug("Generated docs for %s during subclass init: \n%s",
                   cls, cls.__doc__)
@@ -87,34 +118,25 @@ def create_settings_mixin(
             log.debug("Initializing %s in %s of type %s: %s %s",
                   name, self, cls, vargs, kwargs)
 
-            super(PrepareAttrs, cls).__init__(self, *vargs, **kwargs)
-            data = getattr(self, var_name, None)
+            super(settings_classes[name], cls).__init__(self, *vargs, **kwargs)
+            data = getattr(self, __var_name, None)
             if data != None:
-                setattr(self, var_name, data._clone(context=self))
+                setattr(self, __var_name, data._clone(context=self))
 
         namespace["__prepare_attrs__"] = classmethod(prepare_attrs)
         namespace["__init_subclass__"] = classmethod(init_subclass)
         namespace["__init__"] = init
 
-
         return namespace
 
-    return new_class(
+    settings_classes[name] = new_class(
         name,
         (),
         {'metaclass': PrepareAttrs},
         exec_body = populate,
         )
 
-SettingsManager = create_settings_mixin(
-    name = "SettingsManager",
-    var_name = "settings",
-    desc = "",
-    table_title = "Settings",
-    table_header = "Name",
-    desc_header = "Description",
-    default_header = "Default Value",
-    )
+    return settings_classes[name]
 
 
 class Setting(wrapt.ObjectProxy):
@@ -235,6 +257,7 @@ class Settings:
     __desc_header = None
     __default_header = None
 
+
     def __init__(self,
                  context,
                  root = None,
@@ -326,8 +349,17 @@ class Settings:
               self, other)
         self.__apply_new_members(other.__members)
 
+    # def __getattribute__(self, name):
+    #     log.debug("getting_attribute : %s in %s", name, self)
+    #     try:
+    #         return object.__getattribute__(self, name)
+    #     except AttributeError as err:
+    #         return (object.__getattribute__(self, '__getattr__'))(name)
+
     def __getattr__(self,name):
 
+        log.debug("getting attr %s for %s",
+                  name, self)
         # Try getting a setting from the members
         if name in self.__members:
             if isinstance(self.__members[name], Setting):
@@ -352,6 +384,8 @@ class Settings:
             assert False, "Unreachable"
 
     def __setattr__(self, name, value):
+        log.debug("setting attr %s for %s to %s",
+                  name, self, value)
         if name in self.__members:
             self.__members[name].__set__(self, value)
         elif hasattr(self, name):
@@ -517,9 +551,9 @@ setting_docs_template = jinja2.Template(textwrap.dedent(
     setting_docs_template_string))
 
 settings_docs_template_string = """
+{{long_desc}}
 <details class=abstract markdown="block">
 <summary markdown="span">{{table_title}}</summary>
-{{long_desc}}
 {% if table != {} %}
 <table markdown="1" width="100%">
 <tr markdown="block" width="100%">
@@ -553,3 +587,25 @@ settings_docs_template_string = """
 
 settings_docs_template = jinja2.Template(textwrap.dedent(
     settings_docs_template_string))
+
+SettingsManager = create_settings_mixin(
+    name = "SettingsManager",
+    var_name = "settings",
+    desc = "Various options that control how this class will function.",
+    table_title = "Available Settings",
+    table_header = "Name",
+    desc_header = "Description",
+    default_header = "Default Value",
+    )
+
+MetadataManager = create_settings_mixin(
+    name = "MetadataManager",
+    var_name = "metadata",
+    desc = "Assorted Metadata",
+    table_title = "Metadata Fields",
+    table_header = "Name",
+    desc_header = "Description",
+    default_header = "Default Value",
+    )
+
+class Test(SettingsManager, MetadataManager): pass
