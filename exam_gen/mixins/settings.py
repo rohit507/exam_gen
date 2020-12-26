@@ -608,4 +608,39 @@ MetadataManager = create_settings_mixin(
     default_header = "Default Value",
     )
 
-class Test(SettingsManager, MetadataManager): pass
+class Test(SettingsManager, MetadataManager):
+
+    settings.new_setting(
+        "test",
+        desc = "test setting",
+        options = {
+            "option_1": "bla bla",
+            "option_2": """
+            *Bla* **Bla** *Bla*
+
+            !!! Error
+                Oh no!
+            """,
+            }
+        )
+
+    settings.new_setting_group(
+        name = "group",
+        desc = ""
+        )
+
+    settings.group.new_setting(
+        "subgroup_setting",
+        desc = """
+        Here's some more compllex formatting in a group description.
+
+        > Like a quote
+
+        !!! Note
+            And another admontition
+        """,
+        )
+
+    settings.test = 3
+
+    pass

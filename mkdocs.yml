@@ -19,11 +19,14 @@ nav:
   - Developer API:
       - exam_gen.mixins:
           - settings: api/mixins/settings.md
+          - config: api/mixins/config.md
           - prepare_attrs: api/mixins/prepare_attrs.md
           - yaml_rep: api/mixins/yaml_rep.md
+          - template: api/mixins/template.md
       - exam_gen.util:
           - dynamic_call: api/util/dynamic_call.md
           - error: api/util/error.md
+          - logging: api/util/logging.md
 
 plugins:
   - search

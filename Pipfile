@@ -15,6 +15,7 @@ PyYAML = "*"
 wrapt = "*"
 coloredlogs = "*"
 attrs = "*"
+graphlib = "*"
 
 [dev-packages]
 mypy = "*"

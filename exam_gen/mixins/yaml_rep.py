@@ -11,5 +11,4 @@ coloredlogs.install(
     field_styles = field_styles
 )
 
-
 __all__ = []
