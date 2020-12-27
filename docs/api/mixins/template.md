@@ -15,5 +15,3 @@ Yeah ok, can't do anything clever with blocks really. Need to pass context
 down and pass rendered content up.
 
 ## Generated Documentation
-
-::: exam_gen.mixins.settings

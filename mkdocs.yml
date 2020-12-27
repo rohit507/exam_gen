@@ -18,7 +18,6 @@ nav:
   - Miscellaneous Notes: misc-notes.md
   - Developer API:
       - exam_gen.mixins:
-          - settings: api/mixins/settings.md
           - config: api/mixins/config.md
           - prepare_attrs: api/mixins/prepare_attrs.md
           - yaml_rep: api/mixins/yaml_rep.md

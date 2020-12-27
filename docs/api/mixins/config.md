@@ -7,8 +7,8 @@
     handler: python
     selection:
       filters:
-         - "!__repr__"
+         - "!__"
     rendering:
       heading_level: 3
-      show_source: true
+      show_source: false
       show_root_toc_entry: false

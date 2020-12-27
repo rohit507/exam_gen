@@ -40,10 +40,10 @@ class ConfigDocFormat():
                        keys are the column headings and the values are the
                        formatted strings.
 
-                       !!! Note
-                           Any variables available to format specifiers, like
-                           `is_group` or `is_val`, will also be made available
-                           to the template under each entry.
+                       **Note:** Any variables available to format specifiers, like
+                       `is_group` or `is_val`, will also be made available
+                       to the template under each entry.
+
               - `group_table`: dict w/ various info on groups
                   - `exists`: Does the table exist
                   - `name`: The name of the table
@@ -52,10 +52,10 @@ class ConfigDocFormat():
                        keys are the column headings and the values are the
                        formatted strings.
 
-                       !!! Note
-                           Any variables available to format specifiers, like
-                           `is_group` or `is_val`, will also be made available
-                           to the template under each entry.
+                       **Note:** Any variables available to format specifiers, like
+                       `is_group` or `is_val`, will also be made available
+                       to the template under each entry.
+
               - `combined_table`: A table of combined vars and groups
                   - `exists`: Does the table exist
                   - `name`: The name of the table
@@ -64,16 +64,17 @@ class ConfigDocFormat():
                        keys are the column headings and the values are the
                        formatted strings.
 
-                       !!! Note
-                           Any variables available to format specifiers, like
-                           `is_group` or `is_val`, will also be made available
-                           to the template under each entry.
+                        **Note:** Any variables available to format specifiers, like
+                        `is_group` or `is_val`, will also be made available
+                        to the template under each entry.
+
                   - `group_col_widths`: map from keys to colwidths for a group.
                        Should be used to set the `colspan` parameter in table
                        cells if needed.
 
                        The width of a column will be `0` if it should be
                        omitted.
+
                   - `val_col_widths`: map from keys to colwidths for a value
                        Should be used to set the `colspan` parameter in table
                        cells if needed.
@@ -84,42 +85,42 @@ class ConfigDocFormat():
        val_table_name (dict): The title for the value table.
 
        val_table_format (dict): Dictionary used to set the columns the val
-           table. Each key should be a column heading, with the value being
-           a format string used to format the entry.
+          table. Each key should be a column heading, with the value being
+          a format string used to format the entry.
 
-           Use `None` if you don't want the val table to appear at all. The
-           table will also be ommitted if there are no entries for it.
+          Use `None` if you don't want the val table to appear at all. The
+          table will also be ommitted if there are no entries for it.
 
-           ??? Info "Available Format Specifiers"
-               These are the keys that will be available to the format strings.
+          ??? Info "Available Format Specifiers"
+              These are the keys that will be available to the format strings.
 
-                - `is_val`: is this a variable?
-                - `is_group`: is this a group?
-                - `defined_in`: the module where their was defined / last updated
-                - `val`: the value the term was set to
-                - `val_repr`: thst string representation of a value.
-                - `doc`: the provided docstring for the term
-                - `name`: the name of the term, only the final component
-                - `path`: the full pathname of the value
+               - `is_val`: is this a variable?
+               - `is_group`: is this a group?
+               - `defined_in`: the module where their was defined / last updated
+               - `val`: the value the term was set to
+               - `val_repr`: thst string representation of a value.
+               - `doc`: the provided docstring for the term
+               - `name`: the name of the term, only the final component
+               - `path`: the full pathname of the value
 
        group_table_name (dict): The title for the subgroup table.
 
        group_table_format (dict): Dictionary used to set the columns the group
-           table. Each key should be a column heading, with the value being
-           a format string used to format the entry.
+          table. Each key should be a column heading, with the value being
+          a format string used to format the entry.
 
-           Use `None` if you don't want the group table to appear at all. The
-           table will also be ommitted if there are no entries for it.
+          Use `None` if you don't want the group table to appear at all. The
+          table will also be ommitted if there are no entries for it.
 
-           ??? Info "Available Format Specifiers"
-               These are the keys that will be available to the format strings.
+          ??? Info "Available Format Specifiers"
+              These are the keys that will be available to the format strings.
 
-                - `is_val`: is this a variable?
-                - `is_group`: is this a group?
-                - `defined_in`: the module where their was defined / last updated
-                - `doc`: the provided docstring for the term
-                - `name`: the name of the term, only the final component
-                - `path`: the full pathname of the value
+               - `is_val`: is this a variable?
+               - `is_group`: is this a group?
+               - `defined_in`: the module where their was defined / last updated
+               - `doc`: the provided docstring for the term
+               - `name`: the name of the term, only the final component
+               - `path`: the full pathname of the value
 
        combine_tables (bool): Do we combine the value and group tables into a
            single joint table?
@@ -489,4 +490,4 @@ default_format = ConfigDocFormat(
     combined_table_name = "Configuration Values and Subgroups",
     recurse_entries = True,
 )
-""" A default ConfigDocFormat instance to be used elsewhere """
+""" A default ConfigDocFormat instance to be used elsewhere."""

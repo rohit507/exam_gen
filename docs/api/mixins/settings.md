@@ -447,5 +447,3 @@ separate functions and come with appropriate existence checks.
     Implement freezing of settings data later.
 
 ## Generated Documentation
-
-::: exam_gen.mixins.settings
