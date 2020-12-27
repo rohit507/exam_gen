@@ -1,5 +1,5 @@
 import exam_gen.util.logging as logging
-import exam_gen.util.attrs_wrapper as attrs_wrapper
+from exam_gen.util.attrs_wrapper import attrs
 import attr
 import attr.validators as valid
 import wrapt
@@ -13,18 +13,8 @@ from copy import *
 
 log = logging.new(__name__, level="DEBUG")
 
-default_attrs_params = {
-    'order': False,
-    'collect_by_mro': True,
-    'attrs_init': True,
-    }
 
-def attrs(**kwargs):
-    params = deepcopy(default_attrs_params)
-    params.update(kwargs)
-    return attrs_wrapper.wrap(**params)
-
-@attr.s()
+@attrs()
 class ConfigVal():
 
     value = attr.ib(default=None)
