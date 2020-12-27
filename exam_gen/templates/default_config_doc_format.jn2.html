@@ -1,0 +1,46 @@
+{% macro make_table(table, combined=False) %}
+{% if table.exists %}
+<details class=abstract markdown="block">
+    <summary markdown="span">{{table.name}}</summary>
+    <table markdown="1" width="100%">
+        <tr markdown="block" width="100%">
+            {% for col_name in table.headers %}
+            <th markdown="block">
+                {{col_name}}
+            </th>
+            {% endfor %}
+        </tr>
+        {% for entry in table.entries %}
+        <tr markdown="block" width="100%">
+            {% for col_name in table.headers %}
+
+            {# Create a col_span variable #}
+            {% set ns = namespace(col_span=1) %}
+
+            {# If we're in a combined table figure out what the col_span is #}
+            {% if combined %}
+            {% if entry.is_group %}
+            {% set ns.col_span = table.group_col_widths[col_name] %}
+            {% else %}
+            {% set ns.col_span = table.val_col_widths[col_name] %}
+            {% endif %}
+
+            {# print the table cell if needed #}
+            {% if ns.col_span != 0 %}
+            <td
+                {% if ns.col_span != 1 %}colspan="{{ns.col_span}}"{% endif %}
+                markdown="block">
+                {{ entry[col_name] }}
+            </td>
+            {% endif %}
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+{% endmacro %}
+
+{{doc}}
+
+{{ make_table(val_table) }}
+    {{ make_table(group_table) }}
+    {{ make_table(combined_table, True) }}

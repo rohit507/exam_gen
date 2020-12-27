@@ -1,4 +1,5 @@
 import attr
+from copy import *
 
 default_attrs_params = {
     'order': False,
@@ -9,7 +10,7 @@ default_attrs_params = {
 def attrs(**kwargs):
     params = deepcopy(default_attrs_params)
     params.update(kwargs)
-    return attrs_wrapper.wrap(**params)
+    return wrap(**params)
 
 def wrap(attrs_init=None, **kwargs):
     '''
