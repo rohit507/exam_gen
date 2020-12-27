@@ -24,6 +24,7 @@
             {% else %}
             {% set ns.col_span = table.val_col_widths[col_name] %}
             {% endif %}
+            {% endif %}
 
             {# print the table cell if needed #}
             {% if ns.col_span != 0 %}
@@ -37,10 +38,11 @@
         </tr>
         {% endfor %}
     </table>
+{% endif %}
 {% endmacro %}
 
 {{doc}}
 
 {{ make_table(val_table) }}
-    {{ make_table(group_table) }}
-    {{ make_table(combined_table, True) }}
+{{ make_table(group_table) }}
+{{ make_table(combined_table, True) }}

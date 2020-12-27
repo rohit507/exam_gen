@@ -6,6 +6,6 @@ import setuptools
 setuptools.setup(
     include_package_data=True,
     package_data = {
-        'exam_gen': ['templates/*'],
+        '': ['templates/*.jn2*'],
     }
 )

@@ -1,4 +1,5 @@
 import attr
+import attr.validators as valid
 import graphlib
 import jinja2
 import textwrap
@@ -8,6 +9,7 @@ from exam_gen.mixins.config.value import ConfigValue
 from exam_gen.mixins.config.group import ConfigGroup
 import exam_gen.util.attrs_wrapper as wrapped
 import exam_gen.util.logging as logging
+import exam_gen.templates
 
 log = logging.new(__name__, level="DEBUG")
 
@@ -157,7 +159,6 @@ class ConfigDocFormat():
         validator=valid.instance_of(str),
     )
 
-    @staticmethod
     def __normalize_format_dict(format_dict):
         return {key: textwrap.dedent(val) for (key,val) in format_dict.items()}
 
@@ -212,13 +213,13 @@ class ConfigDocFormat():
     @combined_table_header.default
     def combined_table_header_default(self):
         graph = graphlib.TopologicalSorter()
-        table_edges = zip(self.val_table_headers[::2],
-                              val_table_headers[1::2])
-        table_edges += zip(self.group_table_headers[::2],
-                                self.group_table_headers[1::2])
+        table_edges = list(zip(self.val_table_headers[::2],
+                               self.val_table_headers[1::2]))
+        table_edges += list(zip(self.group_table_headers[::2],
+                                self.group_table_headers[1::2]))
         for (start, end) in table_edges:
             graph.add(end, start)
-        return list(graph.sorted_order())
+        return list(graph.static_order())
 
 
     @staticmethod
@@ -295,7 +296,7 @@ class ConfigDocFormat():
         )
 
     @classmethod
-    def get_val_data(config_val):
+    def get_val_data(cls, config_val):
         """
         Exact and format data for a ConfigValue
         """
@@ -311,7 +312,7 @@ class ConfigDocFormat():
             }}
 
     @classmethod
-    def get_group_data(config_group):
+    def get_group_data(cls, config_group):
         """
         Extract and format data for a ConfigGroup
         """
@@ -324,7 +325,7 @@ class ConfigDocFormat():
             }}
 
     @classmethod
-    def collect_group_data(config_group, recurse=False):
+    def collect_group_data(cls, config_group, recurse=False):
         """
         Run through the members of a ConfigGroup and gather all the template
         data in a dictionary, where the keys are the path to each term.
@@ -346,14 +347,20 @@ class ConfigDocFormat():
         """
         List of headers for the value table.
         """
-        return self.val_table_format.keys() if self.val_table_format != None else []
+        if self.val_table_format != None:
+            return list(self.val_table_format.keys())
+        else:
+            return []
 
     @property
     def group_table_headers(self):
         """
         List of headers for the group table
         """
-        return self.group_table_format.keys() if self.group_table_format != None else []
+        if self.group_table_format != None:
+            return list(self.group_table_format.keys())
+        else:
+            return []
 
     @classmethod
     def format_data(self, format_dict, data):
@@ -473,7 +480,7 @@ default_format = ConfigDocFormat(
         'Default':"`#!py %(val_repr)s`",
         'Defined In':"`#!py %(defined_in)s`",
         },
-    group_table_table = "Configuration Subgroups",
+    group_table_name = "Configuration Subgroups",
     group_table_format = {
         'Value Name':"`#!py %{path}`",
         'Description':"%(doc)s",
