@@ -1,4 +1,5 @@
 from pprint import *
+
 class PrepareAttrs(type):
     """
     Classes using this metaclass can define a `__prepare_attrs__` class method to
@@ -33,7 +34,7 @@ class PrepareAttrs(type):
            classes as they're defined. The simplest possible version will just
            return the argument directly.
         """
-        return attrs 
+        return attrs
 
     @classmethod
     def __prepare__(metaclass, name, bases):
@@ -52,7 +53,7 @@ class PrepareAttrs(type):
     # Code below from : https://stackoverflow.com/a/52427184
     # Meant to replicate the mro calculation process in python without
     # The sort of side effects that just using type(name,bases,{}).__mro__
-    # would produce. 
+    # would produce.
 
     stub_cache = {object: object}
 
@@ -68,7 +69,7 @@ class PrepareAttrs(type):
         Returns:
           class: An 'empty' stub with an identical mro to the parent class.
               This is cached and so will return the same stub class each time
-              it's called on another class. 
+              it's called on another class.
         """
         if cls is object:
             return object
@@ -93,7 +94,7 @@ class PrepareAttrs(type):
 
         Returns:
            list: The mro that a hypothetical class with the given
-              bases would have. 
+              bases would have.
         """
         stub_bases = tuple(self.get_stub_class(base) for base in bases)
         stub_cls = type(name, stub_bases, {})

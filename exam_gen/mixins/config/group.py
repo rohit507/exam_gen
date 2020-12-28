@@ -1,6 +1,8 @@
 import attr
 import inspect
 import textwrap
+from pprint import *
+from copy import *
 from exam_gen.mixins.config.value import ConfigValue
 import exam_gen.util.attrs_wrapper as wrapped
 import exam_gen.util.logging as logging
@@ -40,13 +42,25 @@ class ConfigGroup():
     path = attr.ib(factory=list)
 
     def __init__(self, **kwargs):
-        log.debug("Initializing ConfigGroup with args: %s",kwargs)
+        log.debug("Initializing ConfigGroup with args:\n\n%s",
+                  pformat(kwargs))
+
         self.__attrs_init__(**kwargs)
         self.update_context(self.ctxt)
 
     def update_context(self, ctxt):
-        log.debug("Updating context for %s to %s",
-                  self, ctxt)
+        log.debug(textwrap.dedent(
+            """
+            Updating context for:
+
+              ConfigGrouup:
+              %s
+
+              New Ctxt: %s
+            """),
+                  pformat(attr.asdict(self)),
+                  pformat(ctxt)
+        )
         self.ctxt = ctxt
         for member in self.members.values():
             if isinstance(member, ConfigGroup):
@@ -60,7 +74,7 @@ class ConfigGroup():
         return ".".join(self.path)
 
     def __getattr__(self, name):
-        log.debug("Getting attr %s from ConfigGroup %s",
+        log.debug("Getting attr '%s' from ConfigGroup %s.",
                   name, self.path_string())
 
         if name in self.members:
@@ -145,26 +159,26 @@ class ConfigGroup():
                 output[name] = member.value_dict()
         return output
 
-    def new_value(self, name, default = None, doc = None):
+    def new_value(self, name, default = None, doc = None, value = None):
         self.members[name] = ConfigValue(
-            value = default,
+            value = default if default != None else value,
             doc = doc,
             ctxt = self.ctxt,
             path = self.path + [name],
             )
 
     def new_group(self, name, doc = None):
-        self._members[name] = ConfigGroup(
+        self.members[name] = ConfigGroup(
             doc = doc,
             ctxt = self.ctxt,
             path = self.path + [name],
-            root = self.root(),
+            root = self.root,
             )
 
     def clone(self, **kwargs):
         args = {
             'doc': self.doc,
-            'path': self.path + [name],
+            'path': self.path,
             'ctxt': self.ctxt,
         }
         args.update(**kwargs)

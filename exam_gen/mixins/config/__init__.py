@@ -1,8 +1,10 @@
-import exam_gen.mixins.config.format as fmt
-import exam_gen.mixins.config.superclass as cls
+from exam_gen.mixins.config.format import default_format, ConfigDocFormat
+from exam_gen.mixins.config.superclass import new_config_superclass
+from exam_gen.mixins.config.managers import SettingsManager
 
-default_format = fmt.default_format
-DocFormat = fmt.ConfigDocFormat
-new_superclass = cls.new_config_superclass
-
-__all__ = ['default_format', 'DocFormat', 'new_superclass']
+__all__ = [
+    'default_format',
+    'ConfigDocFormat',
+    'new_config_superclass',
+    'SettingsManager',
+    ]

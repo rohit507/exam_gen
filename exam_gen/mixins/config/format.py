@@ -4,9 +4,11 @@ import graphlib
 import jinja2
 import textwrap
 import inspect
+import itertools
 import pkg_resources
 from exam_gen.mixins.config.value import ConfigValue
 from exam_gen.mixins.config.group import ConfigGroup
+from pprint import *
 import exam_gen.util.attrs_wrapper as wrapped
 import exam_gen.util.logging as logging
 import exam_gen.templates
@@ -174,6 +176,65 @@ class ConfigDocFormat():
         ),
     )
 
+    val_table_headers = attr.ib(
+        validator=valid.optional(
+            valid.and_(
+                valid.instance_of(list),
+                valid.deep_iterable(
+                    valid.instance_of(str)
+                ),
+            )
+        ),
+    )
+
+    @val_table_headers.default
+    def val_table_headers_default(self):
+        """
+        List of headers for the value table.
+        """
+        if self.val_table_format != None:
+
+            keys = list(self.val_table_format)
+
+            log.debug(textwrap.dedent(
+                """
+                Attempting to get ordered headers for val table:
+
+                  Dict:
+                  %s
+
+                  List:
+                  %s
+                """),
+                      pformat(self.val_table_format),
+                      pformat(keys),
+            )
+
+            return keys
+        else:
+            return []
+
+    group_table_headers = attr.ib(
+        validator=valid.optional(
+            valid.and_(
+                valid.instance_of(list),
+                valid.deep_iterable(
+                    valid.instance_of(str)
+                ),
+            )
+        ),
+    )
+
+    @group_table_headers.default
+    def group_table_headers_default(self):
+        """
+        List of headers for the group table
+        """
+        if self.group_table_format != None:
+            return list(self.group_table_format)
+        else:
+            return []
+
     group_table_name = attr.ib(
         default="",
         validator=valid.instance_of(str),
@@ -200,7 +261,7 @@ class ConfigDocFormat():
         validator=valid.instance_of(str),
     )
 
-    combined_table_header = attr.ib(
+    combined_table_headers = attr.ib(
         validator=valid.optional(
             valid.and_(
                 valid.instance_of(list),
@@ -211,8 +272,8 @@ class ConfigDocFormat():
         ),
     )
 
-    @combined_table_header.default
-    def combined_table_header_default(self):
+    @combined_table_headers.default
+    def combined_table_headers_default(self):
         graph = graphlib.TopologicalSorter()
         table_edges = list(zip(self.val_table_headers[::2],
                                self.val_table_headers[1::2]))
@@ -228,15 +289,45 @@ class ConfigDocFormat():
         col_widths = dict()
 
         # get whether each combined cell is in the group cols
-        is_member = map(lambda x:x in elem_cols, combined_cols)
+        is_member = list(map(lambda x:x in elem_cols, combined_cols))
+
+        log.debug(textwrap.dedent(
+            """
+            Generating Colspan widths:
+
+               Combined Cols:
+               %s
+
+               Elem Type Cols:
+               %s
+
+               Membership List:
+               %s
+            """),
+            pformat(combined_cols),
+            pformat(elem_cols),
+            pformat(is_member),
+        )
 
 
         for (ind, col) in enumerate(combined_cols):
             if is_member[ind]:
                 # Get list of members that follow, grouped by whether they're
                 # within our elements of interest
-                next_cols = itertools.groupby(
-                    is_member[ins+1:])
+                next_elems = is_member[ind+1:]
+                next_groups = itertools.groupby(
+                    next_elems)
+
+                # This overly tedious unpacking is because itertools.groupby
+                # returns a list of tuples with iterators in them. I'm just
+                # converting them into a more sane format. You could make this
+                # more efficient but I can't be arsed.
+                next_cols = []
+                for k, group in next_groups:
+                    grp_list = []
+                    for item in list(group):
+                        grp_list += [item]
+                    next_cols += [grp_list]
 
                 # every valid entry is 1 col wide
                 width = 1
@@ -247,6 +338,25 @@ class ConfigDocFormat():
                     and (len(next_cols[0]) != 0)
                     and (not next_cols[0][0])):
                     width += len(next_cols[0])
+
+                log.debug(textwrap.dedent(
+                    """
+                    For col '%s' at index '%s':
+
+                       Next Members:
+                       %s
+
+                       Next Groups:
+                       %s
+
+                       Final Width:
+                       %s
+                    """),
+                          col,
+                          ind,
+                          next_elems,
+                          next_cols,
+                          width)
 
                 col_widths[col] = width
             else:
@@ -281,20 +391,62 @@ class ConfigDocFormat():
         """
         The column widths for a group entry in a combined table
         """
-        return ConfigDocFormat.get_colwidths(
-            self.combined_cols,
+
+        widths = ConfigDocFormat.get_colwidths(
+            self.combined_table_headers,
             self.group_table_headers
         )
+
+        log.debug(textwrap.dedent(
+            """
+            Genrating Group Col Widths:
+
+               Combined Headers:
+               %s
+
+               Group Headers:
+               %s
+
+               Result Widths:
+               %s
+            """),
+                  pformat(self.combined_table_headers),
+                  pformat(self.group_table_headers),
+                  pformat(widths),
+        )
+
+        return widths
 
     @property
     def combined_val_col_widths(self):
         """
         The column widths for a value entry in a combined table
         """
-        return ConfigDocFormat.get_colwidths(
-            self.combined_cols,
+
+        widths = ConfigDocFormat.get_colwidths(
+            self.combined_table_headers,
             self.val_table_headers
         )
+
+        log.debug(textwrap.dedent(
+            """
+            Genrating Value Col Widths:
+
+               Combined Headers:
+               %s
+
+               Value Headers:
+               %s
+
+               Result Widths:
+               %s
+            """),
+                  pformat(self.combined_table_headers),
+                  pformat(self.val_table_headers),
+                  pformat(widths),
+        )
+
+        return widths
 
     @classmethod
     def get_val_data(cls, config_val):
@@ -307,7 +459,7 @@ class ConfigDocFormat():
             'val': config_val.value,
             'val_repr': repr(config_val.value),
             'doc': config_val.doc,
-            'defined_in': config_val.ctxt.__module__.__qualname__,
+            'defined_in': config_val.ctxt.__qualname__,
             'name': config_val.path[-1],
             'path': config_val.path_string(),
             }}
@@ -326,15 +478,15 @@ class ConfigDocFormat():
             }}
 
     @classmethod
-    def collect_group_data(cls, config_group, recurse=False):
+    def collect_group_data(self, config_group, recurse=False):
         """
         Run through the members of a ConfigGroup and gather all the template
         data in a dictionary, where the keys are the path to each term.
         This will recurse if necessary.
         """
         data = dict()
-        for member in config_group.__members.values():
-            if isinstance(member, ConfigVal):
+        for member in config_group.members.values():
+            if isinstance(member, ConfigValue):
                 data.update(ConfigDocFormat.get_val_data(member))
             else:
                 data.update(ConfigDocFormat.get_group_data(member))
@@ -343,25 +495,6 @@ class ConfigDocFormat():
                         ConfigDocFormat.collect_group_data(member, recurse))
         return data
 
-    @property
-    def val_table_headers(self):
-        """
-        List of headers for the value table.
-        """
-        if self.val_table_format != None:
-            return list(self.val_table_format.keys())
-        else:
-            return []
-
-    @property
-    def group_table_headers(self):
-        """
-        List of headers for the group table
-        """
-        if self.group_table_format != None:
-            return list(self.group_table_format.keys())
-        else:
-            return []
 
     @classmethod
     def format_data(self, format_dict, data):
@@ -369,12 +502,32 @@ class ConfigDocFormat():
         Format all the values in a format dictionary given a particular
         dataset.
         """
+
         output = dict()
         for (key, format_string) in format_dict.items():
-            output[key] = format_string.format(**data)
+            output[key] = format_string.format_map(data)
         for (key, value) in data.items():
             if key not in output:
                 output[key] = value
+
+        log.debug(textwrap.dedent(
+            """
+            Formatting Data:
+
+              Format String:
+              %s
+
+              Data:
+              %s
+
+              Result:
+              %s
+            """),
+                  pformat(format_dict, depth = 6,indent = 2),
+                  pformat(data, depth = 6, indent = 2),
+                pformat(output, depth = 6, indent = 2),
+        )
+
         return output
 
     def format_val_data(self, val_data):
@@ -382,7 +535,7 @@ class ConfigDocFormat():
         format a value table entry if we have a formatter for it.
         """
         if self.val_table_format != None:
-            self.format_data(self.val_table_format, val_data)
+            return self.format_data(self.val_table_format, val_data)
         else:
             return dict()
 
@@ -395,6 +548,21 @@ class ConfigDocFormat():
         else:
             return dict()
 
+    def format_member_data(self, data):
+
+        log.debug("Formatting Member Data:\n\n%s", pformat(data))
+
+        output = None
+        if data['is_val']:
+            output = self.format_val_data(data)
+        else:
+            output = self.format_group_data(data)
+
+        log.debug("Formatted Member Data:\n\n%s", pformat(output))
+
+        return output
+
+
     def process_config_group(self, config):
         """
         Run through a configuration group to produce all the variables that
@@ -403,8 +571,32 @@ class ConfigDocFormat():
 
         # Process data from config group
         rows = self.collect_group_data(config, self.recurse_entries)
-        vals = {path: data for (path, data) in rows.items() if data['is_var']}
-        groups = {path: data for (path, data) in rows.items() if data['is_group']}
+        formatted = dict()
+        for (path, data) in rows.items():
+            formatted[path] = self.format_member_data(data)
+            log.debug("Formatted `%s` data to get:\n\n%s",
+                      path, pformat(formatted[path]))
+
+        vals = {path: data for (path, data) in formatted.items() if data['is_val']}
+        groups = {path: data for (path, data) in formatted.items() if data['is_group']}
+
+        log.debug(textwrap.dedent(
+            """
+            Control Group Raw Contents:
+
+              Rows:
+              %s
+
+              Vals:
+              %s
+
+              Groups :
+              %s
+            """),
+                  pformat(rows),
+                  pformat(vals),
+                  pformat(groups),
+        )
 
         # Figure out which tables should exist in our output.
         val_table_can_exist = (
@@ -414,12 +606,28 @@ class ConfigDocFormat():
             (len(groups) > 0)
             and (self.group_table_format != None))
         combined_table_exists = (
-            ((len(vals) == 0) or (self.val_table_format != None))
-            and ((len(groups) == 0) or (self.group_table_format != None))
-            and (len(vals) + len(groups) > 0)
+            (val_table_can_exist and group_table_can_exist)
             and self.combine_tables)
         val_table_exists = (not combined_table_exists) and val_table_can_exist
         group_table_exists = (not combined_table_exists) and group_table_can_exist
+
+        log.debug(textwrap.dedent(
+            """
+            Table Existence Data:
+
+              Val Table Can Exist: %s
+              Grp Table Can Exist: %s
+
+              Val Table Exists: %s
+              Grp Table Exists: %s
+              Cmb Table Exists: %s
+            """),
+            val_table_can_exist,
+            group_table_can_exist,
+            val_table_exists,
+            group_table_exists,
+            combined_table_exists,
+        )
 
         # generate top level output data
         output = dict()
@@ -433,7 +641,7 @@ class ConfigDocFormat():
         output['val_table']['exists'] = val_table_exists
         if val_table_exists:
             output['val_table']['name'] = self.val_table_name
-            output['val_table']['headers'] = self.val_table_header
+            output['val_table']['headers'] = self.val_table_headers
             output['val_table']['entries'] = [
                 vals[path] for path in sorted(vals.keys())]
 
@@ -441,7 +649,7 @@ class ConfigDocFormat():
         output['group_table']['exists'] = group_table_exists
         if group_table_exists:
             output['group_table']['name'] = self.group_table_name
-            output['group_table']['headers'] = self.group_table_header
+            output['group_table']['headers'] = self.group_table_headers
             output['group_table']['entries'] = [
                 groups[path] for path in sorted(groups.keys())]
 
@@ -449,13 +657,17 @@ class ConfigDocFormat():
         output['combined_table']['exists'] = combined_table_exists
         if combined_table_exists:
             output['combined_table']['name'] = self.combined_table_name
-            output['combined_table']['headers'] = self.combined_table_header
+            output['combined_table']['headers'] = self.combined_table_headers
             output['combined_table']['entries'] = [
-                rows[path] for path in sorted(rows.keys())]
+                formatted[path] for path in sorted(formatted.keys())]
             output['combined_table']['group_col_widths'] = (
-                self.combined_group_col_widths())
+                self.combined_group_col_widths)
             output['combined_table']['val_col_widths'] = (
-                self.combined_val_col_widths())
+                self.combined_val_col_widths)
+
+        log.debug("Processed Doc Data:\n\n%s",pformat(output))
+
+        return output
 
 
     @staticmethod
@@ -464,9 +676,9 @@ class ConfigDocFormat():
         Render the documentation for a config group using the provided
         formatter.
         """
-        return docs_format.template.render(
-            docs_format.process_config_group(config_group)
-            )
+        processed_data = docs_format.process_config_group(config_group)
+
+        return docs_format.template.render(processed_data)
 
 template_env = jinja2.Environment(
     loader = jinja2.PackageLoader('exam_gen'),
@@ -476,18 +688,31 @@ default_format = ConfigDocFormat(
     template = template_env.get_template('default_config_doc_format.jn2.html'),
     val_table_name = "Configuration Values",
     val_table_format = {
-        'Value Name':"`#!py %{path}`",
-        'Description':"%(doc)s",
-        'Default':"`#!py %(val_repr)s`",
-        'Defined In':"`#!py %(defined_in)s`",
+        'Value Name':"`#!py {path}`",
+        'Description':"{doc}",
+        'Default':"`#!py {val_repr}`",
+        #'Defined In':"`#!py {defined_in}`",
         },
+    val_table_headers = [
+        'Value Name',
+        'Description',
+        'Default',
+        #'Defined In'
+    ],
     group_table_name = "Configuration Subgroups",
     group_table_format = {
-        'Value Name':"`#!py %{path}`",
-        'Description':"%(doc)s",
+        'Value Name':"`#!py {path}`",
+        'Description':"{doc}",
         },
+    group_table_headers = ['Value Name', 'Description'],
     combine_tables = True,
     combined_table_name = "Configuration Values and Subgroups",
+    combined_table_headers = [
+        'Value Name',
+        'Description',
+        'Default',
+        #'Defined In'
+    ],
     recurse_entries = True,
 )
 """ A default ConfigDocFormat instance to be used elsewhere."""

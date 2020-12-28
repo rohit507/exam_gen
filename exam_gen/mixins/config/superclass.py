@@ -1,10 +1,17 @@
 import exam_gen.util.logging as logging
+import textwrap
+import types
+import attr
+from pprint import *
 from exam_gen.util.attrs_wrapper import attrs
+from exam_gen.mixins.prepare_attrs import PrepareAttrs
 from exam_gen.mixins.config.value import ConfigValue
 from exam_gen.mixins.config.group import ConfigGroup
 from exam_gen.mixins.config.format import ConfigDocFormat, default_format
 
 log = logging.new(__name__, level="DEBUG")
+
+config_classes = dict()
 
 def new_config_superclass(
         class_name,
@@ -12,6 +19,7 @@ def new_config_superclass(
         docstring = "",
         var_docstring = "",
         doc_style = default_format,
+        bases = (),
         **kwargs
         ):
     """
@@ -40,14 +48,16 @@ def new_config_superclass(
 
     __var_name = "__" + var_name
 
+    class_docstring = textwrap.dedent(docstring)
+
     def prepare_attrs(cls, name, bases, env):
         if hasattr(super(cls), "__prepare_attrs__"):
             env = super(cls).__prepare_attrs__(name, bases, env)
 
-        class_config = ConfigGroup(doc = var_doc, ctxt = cls, path = [var_name])
+        class_config = ConfigGroup(doc = var_docstring, ctxt = cls, path = [var_name])
         if var_name in env:
             log.debug(prepare_attrs_debug_msg(
-                "Updating config for {name} with data from prepare_attrs of {supr}.",
+                "Updating config for %(name)s with data from prepare_attrs of %(supr).",
                 name, cls, bases, class_config, env[var_name]))
 
             class_config.update(env[var_name])
@@ -56,7 +66,7 @@ def new_config_superclass(
         superclass_config = getattr(cls, __var_name, None)
         if superclass_config != None:
             log.debug(prepare_attrs_debug_msg(
-                "Updating config for {name} with post-init data from {cls}.",
+                "Updating config for %(name) with post-init data from %(cls).",
                 name, cls, bases, class_config, superclass_config))
             class_config.update(superclass_config)
 
@@ -66,27 +76,30 @@ def new_config_superclass(
 
     def init_subclass(cls, **kwargs):
 
-        log.debug("Running init class for {class_name} on class {cls}",
-                  class_name=class_name, cls=cls)
+        log.debug("Running init class for %s on class %s",
+                  class_name, cls)
 
         super(config_classes[class_name], cls).__init_subclass__(**kwargs)
+
+        if cls == config_classes[class_name]:
+            cls.__doc__ = class_docstring
 
         class_config = getattr(cls, var_name, None)
         if class_config == None:
             assert False, "Internal Error: w/ config class gen."
         class_config = class_config.clone(ctxt=cls)
         setattr(cls, __var_name, class_config)
-        docstring = ConfigDocFormat.render_docs(
+        v_docstring = ConfigDocFormat.render_docs(
             attr.evolve(
                 doc_style,
-                doc = var_docstring,
+                doc = textwrap.dedent(var_docstring),
                 **kwargs),
             class_config)
 
         def property_getter(self):
             return getattr(self,__var_name)
 
-        property_getter.__doc__ = docstring
+        property_getter.__doc__ = v_docstring
 
         def property_setter(self, value):
             setattr(self, __var_name, value)
@@ -116,17 +129,20 @@ def new_config_superclass(
     def populate_class_namespace(namespace):
         namespace["__prepare_attrs__"] = classmethod(prepare_attrs)
         namespace["__init_subclass__"] = classmethod(init_subclass)
-        namespace["__init__"] = init
-        namespace["__doc__"] = class_doc
+        namespace["__new__"] = new
+        namespace["__doc__"] = textwrap.dedent(docstring)
 
         return namespace
 
-    return types.new_class(
+    config_classes[class_name] = types.new_class(
         class_name,
-        (),
+        bases,
         {'metaclass':PrepareAttrs},
         exec_body = populate_class_namespace,
     )
+
+
+    return config_classes[class_name]
 
 def prepare_attrs_debug_msg(msg, name, cls, bases, us, them):
     """
@@ -140,30 +156,30 @@ def prepare_attrs_debug_msg(msg, name, cls, bases, us, them):
         our_ctxt = us.ctxt,
         our_path_string = us.path_string(),
         our_values = pformat(
-            us.value_dict(),
+            us.value_dict,
             indent = 8),
         their_path_string = them.path_string(),
         their_ctxt = them.ctxt,
         their_value = pformat(
-            them.value_dict(),
+            them.value_dict,
             indent=8),
         supr=super(cls)
         )
 
     template = """
-        During PrepareAttrs of {name} with {cls}:
-        {msg}
+        During PrepareAttrs of %(name)s with %(cls):
+        %(msg)s
 
-          {name} Data:
-            Bases: {bases}
-            Path: {our_path_string}
-            Context: {our_ctxt}
-            Data: {our_values}
+          %(name)s Data:
+            Bases: %(bases)s
+            Path: %(our_path_string)s
+            Context: %(our_ctxt)s
+            Data: %(our_values)s
 
-          {cls} Data:
-            Path: {their_path_string}
-            Context: {their_ctxt}
-            Data: {their_values}
+          %(cls)s Data:
+            Path: %(their_path_string)s
+            Context: %(their_ctxt)s
+            Data: %(their_values)s
         """
 
     return textwrap.dedent(template).format(

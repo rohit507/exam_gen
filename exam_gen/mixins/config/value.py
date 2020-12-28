@@ -2,6 +2,7 @@ import exam_gen.util.logging as logging
 import inspect
 import textwrap
 import attr
+from pprint import *
 import exam_gen.util.attrs_wrapper as wrapped
 
 log = logging.new(__name__, level="DEBUG")
@@ -37,11 +38,13 @@ class ConfigValue():
     path  = attr.ib(default=[],
                      kw_only=True)
 
-    def __init__(self, value, **kwargs):
-        self.__attrs_init__(value, **kwargs)
+    def __init__(self, **kwargs):
+        log.debug("Creating new ConfigVal with settings:\n\n%s\n",
+                  pformat(kwargs))
+        self.__attrs_init__(**kwargs)
 
     def path_string(self):
-        return ".".join(self._path)
+        return ".".join(self.path)
 
     @property
     def instance_context(self):
