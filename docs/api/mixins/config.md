@@ -3,15 +3,12 @@
 
 ## Source Documentation
 
-::: exam_gen.mixins.config.managers
+::: exam_gen.mixins.config
     handler: python
     selection:
-      members:
-         - SettingsManager
-         - Foo
       filters:
          - "!__"
     rendering:
       heading_level: 3
       show_source: false
-      show_root_toc_entry: True
+      show_root_toc_entry: False

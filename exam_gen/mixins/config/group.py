@@ -7,7 +7,7 @@ from exam_gen.mixins.config.value import ConfigValue
 import exam_gen.util.attrs_wrapper as wrapped
 import exam_gen.util.logging as logging
 
-log = logging.new(__name__, level="DEBUG")
+log = logging.new(__name__)
 
 @wrapped.attrs()
 class ConfigGroup():

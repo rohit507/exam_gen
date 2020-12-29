@@ -5,7 +5,7 @@ import attr
 from pprint import *
 import exam_gen.util.attrs_wrapper as wrapped
 
-log = logging.new(__name__, level="DEBUG")
+log = logging.new(__name__)
 
 @wrapped.attrs()
 class ConfigValue():

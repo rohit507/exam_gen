@@ -3,23 +3,21 @@ import textwrap
 import types
 import attr
 from pprint import *
+from copy import *
 from exam_gen.util.attrs_wrapper import attrs
 from exam_gen.mixins.prepare_attrs import PrepareAttrs
 from exam_gen.mixins.config.value import ConfigValue
 from exam_gen.mixins.config.group import ConfigGroup
 from exam_gen.mixins.config.format import ConfigDocFormat, default_format
 
-log = logging.new(__name__, level="DEBUG")
+log = logging.new(__name__)
 
 config_classes = dict()
 
-def new_config_superclass(
-        class_name,
+def config_superclass(
         var_name,
-        docstring = "",
         var_docstring = "",
         doc_style = default_format,
-        bases = (),
         **kwargs
         ):
     """
@@ -28,18 +26,23 @@ def new_config_superclass(
 
     Parameters:
 
-       class_name (str): The name of class to be generated.
-
        var_name (str): The name of the class's configuration variable.
-
-       docstring (str): The dostring for the parent class. Will only appear
-          when looking directly for the generated superclass.
 
        var_docstring (str): The docstring for the configuration variable. Will
           be visible in the collected docs for every subclass.
 
        doc_style (ConfigDocFormat): The documentation style object to use when
           generating the variable documentation for this class.
+
+       val_table_name (str): As in `#!py ConfigDocFormat`
+
+       group_table_name (str): As in `#!py ConfigDocFormat`
+
+       combined_table_name (str): As in `#!py ConfigDocFormat`
+
+       recurse_entries (bool): As in `#!py ConfigDocFormat`
+
+       combine_tables (bool): As in `#!py ConfigDocFormat`
 
        **kwargs: Extra parameters that are passed to documentation style. Taken
           from `#!py exam_gen.mixins.config.format.ConfigDocFormat` so look
@@ -48,101 +51,267 @@ def new_config_superclass(
 
     __var_name = "__" + var_name
 
-    class_docstring = textwrap.dedent(docstring)
+    def annotate_class(cls):
 
-    def prepare_attrs(cls, name, bases, env):
-        if hasattr(super(cls), "__prepare_attrs__"):
-            env = super(cls).__prepare_attrs__(name, bases, env)
+        class_name = cls.__name__
 
-        class_config = ConfigGroup(doc = var_docstring, ctxt = cls, path = [var_name])
-        if var_name in env:
-            log.debug(prepare_attrs_debug_msg(
-                "Updating config for %(name)s with data from prepare_attrs of %(supr).",
-                name, cls, bases, class_config, env[var_name]))
+        args = {
+            'var_name': var_name,
+            'var_docstring': var_docstring,
+            'doc_style': attr.asdict(doc_style),
+        }
+        args.update(kwargs)
 
-            class_config.update(env[var_name])
+        log.debug(textwrap.dedent(
+            """
+            Generating new Config Superclass:
 
+              Args:
+              %s
 
-        superclass_config = getattr(cls, __var_name, None)
-        if superclass_config != None:
-            log.debug(prepare_attrs_debug_msg(
-                "Updating config for %(name) with post-init data from %(cls).",
-                name, cls, bases, class_config, superclass_config))
-            class_config.update(superclass_config)
+              Input Class:
+              %s
 
-        env[var_name] = class_config
+              Class Directory:
+              %s
 
-        return env
-
-    def init_subclass(cls, **kwargs):
-
-        log.debug("Running init class for %s on class %s",
-                  class_name, cls)
-
-        super(config_classes[class_name], cls).__init_subclass__(**kwargs)
-
-        if cls == config_classes[class_name]:
-            cls.__doc__ = class_docstring
-
-        class_config = getattr(cls, var_name, None)
-        if class_config == None:
-            assert False, "Internal Error: w/ config class gen."
-        class_config = class_config.clone(ctxt=cls)
-        setattr(cls, __var_name, class_config)
-        v_docstring = ConfigDocFormat.render_docs(
-            attr.evolve(
-                doc_style,
-                doc = textwrap.dedent(var_docstring),
-                **kwargs),
-            class_config)
-
-        def property_getter(self):
-            return getattr(self,__var_name)
-
-        property_getter.__doc__ = v_docstring
-
-        def property_setter(self, value):
-            setattr(self, __var_name, value)
-
-        property_class = type(
-            "_{}_ConfigProperty".format(class_name),
-            (type(property()),),
-            { '__getattr__': class_config.__getattr__,
-              '__setattr__': class_config.__setattr__,
-            })
-
-        setattr(cls, var_name, property_class(property_getter, property_setter))
-
-    def new(cls, *vargs, **kwargs):
-        inst = super(
-            cls,
-            self
-        ).__new__(self, *vargs, **kwargs)
-
-        class_config = getattr(inst, __var_name, None)
-        if class_config == None:
-            assert False, "Internal Error: w/ config class gen."
-        instance_config = class_config.clone(ctxt=inst)
-        setattr(inst, __var_name, instance_config)
-        return inst
-
-    def populate_class_namespace(namespace):
-        namespace["__prepare_attrs__"] = classmethod(prepare_attrs)
-        namespace["__init_subclass__"] = classmethod(init_subclass)
-        namespace["__new__"] = new
-        namespace["__doc__"] = textwrap.dedent(docstring)
-
-        return namespace
-
-    config_classes[class_name] = types.new_class(
-        class_name,
-        bases,
-        {'metaclass':PrepareAttrs},
-        exec_body = populate_class_namespace,
-    )
+            """
+            ),
+                  pformat(args), cls, pformat(cls.__dict__))
 
 
-    return config_classes[class_name]
+        def prepare_attrs(cls, name, bases, env):
+
+            log.debug("Preparing Attrs:\n  %s",pformat({
+                'cls': cls, 'name': name, 'bases':bases, 'env':env}))
+
+            if hasattr(super(cls), "__prepare_attrs__"):
+                env = super(cls).__prepare_attrs__(name, bases, env)
+
+            class_config = ConfigGroup(
+                doc = var_docstring,
+                ctxt = cls,
+                path = [var_name])
+            if var_name in env:
+                log.debug(prepare_attrs_debug_msg(
+                    "Updating config for %(name)s with data from prepare_attrs of %(supr).",
+                    name, cls, bases, class_config, env[var_name]))
+
+                class_config.update(env[var_name])
+
+
+            superclass_config = getattr(cls, __var_name, None)
+            if superclass_config != None:
+                log.debug(prepare_attrs_debug_msg(
+                    "Updating config for %(name) with post-init data from %(cls).",
+                    name, cls, bases, class_config, superclass_config))
+                class_config.update(superclass_config)
+
+            env[var_name] = class_config
+
+            log.debug(textwrap.dedent(
+                """
+                Prepared Attrs for Subclass:
+
+                   Class:
+                   %s
+
+                   Name:
+                   %s
+
+                   Environment:
+                   %s
+                """), cls, name, pformat(env))
+            return env
+
+        def empty_doc(cls):
+            return textwrap.dedent(
+                """
+                Empty configuration group variable that you can extend in
+                subclasses as needed. These extensions will be automatically
+                documented where possible.
+
+                ??? Example "Creating new `#!py {var_name}` fields."
+                    Add new values with `#!py {var_name}.new_value()`:
+                    ```python
+                    class SomeSubclass({class_name}):
+
+                        {var_name}.new_value(
+                            name = "example_var",
+                            default = ["some","example","value"], # defaults to `None`
+                            doc = \"""
+                            Docstring for `example_var`
+                            \""",
+                        )
+
+                        {var_name}.example_var = ["new","example","value"]
+                    ```
+
+                ??? Example "Creating new `#!py {var_name}` subgroups."
+
+                    Add new config subgroups with `#!py {var_name}.new_group()`:
+                    ```python
+                    class SomeSubclass({class_name}):
+
+                        {var_name}.new_group(
+                            name = "example_group",
+                            doc = \"""
+                            Docstring for `example_group`
+                            \""",
+                        )
+
+                        {var_name}.example_group.new_value(
+                        "example_var", 1234, "example_docstring")
+
+                        {var_name}.example_group.example_var += 12
+                    ```
+
+                ??? Warning
+                    Both `#!py new_value()` and `#! new_group()` are
+                    unavailable at runtime, and can only be used in class
+                    definitions like the above.
+
+                    This keeps the documentation in sync with the available
+                    options and generally prevents bad practices.
+
+                    <sub><sub>If you really must do this, the functions are moved to
+                    `#!py _hidden_new_value()` and `#!py _hidden_new_group()`
+                    during instance initialization.</sub></sub>
+                """).format(
+                        var_name = var_name,
+                        class_name = cls.__name__,
+                    )
+
+        def init_subclass(cls, **kwargs):
+
+            log.debug("Running init subclass for %s on class %s",
+                      class_name, cls)
+
+            super(config_classes[class_name], cls).__init_subclass__(**kwargs)
+
+            class_config = getattr(cls, var_name, None)
+            if class_config == None:
+                assert False, "Internal Error: w/ config class gen."
+
+            class_config = class_config.clone(ctxt=cls)
+            setattr(cls, __var_name, class_config)
+
+
+            v_docstring = ConfigDocFormat.render_docs(
+                attr.evolve(
+                    doc_style,
+                    doc = textwrap.dedent(var_docstring),
+                    **kwargs),
+                class_config,
+                empty_doc = empty_doc(cls))
+
+            def property_getter(self):
+                return getattr(self,__var_name)
+
+            property_getter.__doc__ = v_docstring
+
+            def property_setter(self, value):
+                setattr(self, __var_name, value)
+
+            property_class = type(
+                "_{}_ConfigProperty".format(class_name),
+                (type(property()),),
+                { '__getattr__': class_config.__getattr__,
+                  '__setattr__': class_config.__setattr__,
+                })
+
+            setattr(cls, var_name, property_class(
+                property_getter,
+                property_setter))
+
+        def init(self, *vargs, **kwargs):
+            super(
+                config_classes[class_name], self
+            ).__init__(*vargs, **kwargs)
+
+            log.debug(textwrap.dedent(
+                """
+                Running `__init__` For Settings Superclass:
+
+                  Settings Class: %s
+
+                  Class: %s
+                """)
+                      , config_classes[class_name], cls)
+
+            class_config = getattr(self, __var_name, None)
+            if class_config == None:
+
+                class_config = ConfigGroup(
+                    doc = var_docstring,
+                    ctxt = self,
+                    path = [var_name])
+
+            instance_config = class_config.clone(ctxt=self)
+            setattr(instance_config,'_hidden_new_value',
+                    getattr(instance_config, 'new_value'))
+            delattr(instance_config,'new_value')
+            setattr(instance_config,'_hidden_new_group',
+                    getattr(instance_config, 'new_group'))
+            delattr(instance_config,'new_group')
+            setattr(self, __var_name, instance_config)
+            # return inst
+
+        def populate_class_namespace(namespace):
+
+            input_namespace = copy(namespace)
+
+            namespace["__prepare_attrs__"] = classmethod(prepare_attrs)
+            namespace["__init_subclass__"] = classmethod(init_subclass)
+            namespace["__init__"] = init
+            namespace["__doc__"] = cls.__doc__
+            namespace["__module__"] = cls.__module__
+
+            log.debug(textwrap.dedent(
+                """
+                Populating Namespace of New Superclass:
+
+                  Class:
+                  %s
+
+                  Initial Namespace:
+                  %s
+
+                  Final Namespace:
+                  %s
+                """)
+                      , cls, pformat(input_namespace), pformat(namespace))
+            return namespace
+
+        output_class = types.new_class(
+            "wrapped_{}".format(class_name),
+            (),
+            {'metaclass':PrepareAttrs},
+            exec_body = populate_class_namespace,
+        )
+
+        def get_stub(self): pass
+
+        get_stub.__doc__ = empty_doc(cls)
+        setattr(output_class,var_name, property(get_stub))
+
+        log.debug(textwrap.dedent(
+            """
+            Finished Generating Config Superclass:
+
+              Output Class:
+              %s
+
+              Class Directory:
+              %s
+
+            """
+        ),
+        output_class, pformat(output_class.__dict__))
+        config_classes[class_name] = output_class
+        return config_classes[class_name]
+
+    return annotate_class
 
 def prepare_attrs_debug_msg(msg, name, cls, bases, us, them):
     """

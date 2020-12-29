@@ -13,7 +13,7 @@ import exam_gen.util.attrs_wrapper as wrapped
 import exam_gen.util.logging as logging
 import exam_gen.templates
 
-log = logging.new(__name__, level="DEBUG")
+log = logging.new(__name__)
 
 @wrapped.attrs()
 class ConfigDocFormat():
@@ -671,14 +671,20 @@ class ConfigDocFormat():
 
 
     @staticmethod
-    def render_docs(docs_format, config_group):
+    def render_docs(docs_format, config_group, empty_doc = ""):
         """
         Render the documentation for a config group using the provided
         formatter.
         """
         processed_data = docs_format.process_config_group(config_group)
 
-        return docs_format.template.render(processed_data)
+        if (processed_data['val_table']['exists']
+            or processed_data['group_table']['exists']
+            or processed_data['combined_table']['exists']):
+
+            return docs_format.template.render(processed_data)
+        else:
+            return empty_doc
 
 template_env = jinja2.Environment(
     loader = jinja2.PackageLoader('exam_gen'),
