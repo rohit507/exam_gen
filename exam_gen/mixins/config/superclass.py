@@ -10,6 +10,8 @@ from exam_gen.mixins.config.value import ConfigValue
 from exam_gen.mixins.config.group import ConfigGroup
 from exam_gen.mixins.config.format import ConfigDocFormat, default_format
 
+__all__ = ["config_superclass"]
+
 log = logging.new(__name__)
 
 config_classes = dict()
@@ -17,12 +19,42 @@ config_classes = dict()
 def config_superclass(
         var_name,
         var_docstring = "",
-        doc_style = default_format,
+        doc_style = None,
         **kwargs
         ):
     """
-    Generates a new superclass with a special configuration variable that
-    subclasses can add to, and which is automatically documented properly.
+    A decorator to create new superclasses with a special configuration
+    variable that various subclasses can add to, and which is automatically
+    documented properly.
+
+    Look in `exam_gen.mixins.config.managers` for examples of how to use this
+    decorator.
+
+    !!! Danger ""
+        The *only* property of the decorated class which is preserved is the
+        docstring. All other functions and properties are **lost**. The
+        post-decoration class isn't even a subclass of the input and can't
+        access any of its features.
+
+        This is really only meant to produce stubs that are at the very tops
+        of an inheritance hierarchy. **It will not work as a way to add a
+        configuration group to a class with existing functionality.**
+
+    ??? Todo "Feature Todo List"
+
+          - `attrs` support for generated class
+          - Fix bug where attributes inherited from `ConfigDocFormat` aren't
+            properly passed through.
+          - Actually inherit from the decorates class in some useful way.
+          - Make these classes work with whatever YAML stuff you end up
+            using for the rest of the system.
+          - Add two methods for the generated to read in a set of config vals
+            as a nested dictionary when `__init__` is called.
+             - **Method 1:** Naively override all settings based on the
+                dict input.
+             - **Method 2:** Only override settings that were defined outside
+                before the current class definition or this specific instance.
+
 
     Parameters:
 
@@ -32,28 +64,30 @@ def config_superclass(
           be visible in the collected docs for every subclass.
 
        doc_style (ConfigDocFormat): The documentation style object to use when
-          generating the variable documentation for this class.
-
-       val_table_name (str): As in `#!py ConfigDocFormat`
-
-       group_table_name (str): As in `#!py ConfigDocFormat`
-
-       combined_table_name (str): As in `#!py ConfigDocFormat`
-
-       recurse_entries (bool): As in `#!py ConfigDocFormat`
-
-       combine_tables (bool): As in `#!py ConfigDocFormat`
+          generating the variable documentation for this class. (Defaults
+          to `exam_gen.mixins.config.format.default_format` when the actual
+          input is `#!py None`)
 
        **kwargs: Extra parameters that are passed to documentation style. Taken
           from `#!py exam_gen.mixins.config.format.ConfigDocFormat` so look
           there for specific flags you can set.
+
+          **Notable Inherited Params:**
+
+             - `val_table_name` (str): As in `#!py ConfigDocFormat`
+             - `group_table_name` (str): As in `#!py ConfigDocFormat`
+             - `combined_table_name` (str): As in `#!py ConfigDocFormat`
+             - `recurse_entries` (bool): As in `#!py ConfigDocFormat`
+             - `combine_tables` (bool): As in `#!py ConfigDocFormat`
     """
 
+    doc_style = doc_style if doc_style != None else default_format
     __var_name = "__" + var_name
 
     def annotate_class(cls):
 
         class_name = cls.__name__
+        qual_name = "{}.{}".format(cls.__module__, cls.__name__)
 
         args = {
             'var_name': var_name,
@@ -187,7 +221,7 @@ def config_superclass(
             log.debug("Running init subclass for %s on class %s",
                       class_name, cls)
 
-            super(config_classes[class_name], cls).__init_subclass__(**kwargs)
+            super(config_classes[qual_name], cls).__init_subclass__(**kwargs)
 
             class_config = getattr(cls, var_name, None)
             if class_config == None:
@@ -226,7 +260,7 @@ def config_superclass(
 
         def init(self, *vargs, **kwargs):
             super(
-                config_classes[class_name], self
+                config_classes[qual_name], self
             ).__init__(*vargs, **kwargs)
 
             log.debug(textwrap.dedent(
@@ -237,7 +271,7 @@ def config_superclass(
 
                   Class: %s
                 """)
-                      , config_classes[class_name], cls)
+                      , config_classes[qual_name], cls)
 
             class_config = getattr(self, __var_name, None)
             if class_config == None:
@@ -266,6 +300,7 @@ def config_superclass(
             namespace["__init__"] = init
             namespace["__doc__"] = cls.__doc__
             namespace["__module__"] = cls.__module__
+            # namespace[var_name] = attr.ib()
 
             log.debug(textwrap.dedent(
                 """
@@ -283,6 +318,16 @@ def config_superclass(
                       , cls, pformat(input_namespace), pformat(namespace))
             return namespace
 
+        # # Make sure the parent class is attrs annotated
+        # attrs_cls = cls
+
+        # if not attr.has(cls):
+        #     attrs_cls = attr.make_class(
+        #         class_name,
+        #         {var_name: attr.ib()},
+        #         (cls,),
+        #     )
+
         output_class = types.new_class(
             "wrapped_{}".format(class_name),
             (),
@@ -290,6 +335,8 @@ def config_superclass(
             exec_body = populate_class_namespace,
         )
 
+        # Shove a property into the variable so we can stick in an attribute
+        # docstring
         def get_stub(self): pass
 
         get_stub.__doc__ = empty_doc(cls)
@@ -307,17 +354,22 @@ def config_superclass(
 
             """
         ),
+
         output_class, pformat(output_class.__dict__))
-        config_classes[class_name] = output_class
-        return config_classes[class_name]
+        config_classes[qual_name] = output_class
+        return config_classes[qual_name]
 
     return annotate_class
 
 def prepare_attrs_debug_msg(msg, name, cls, bases, us, them):
+
+    hide_docs = True
     """
     Generate an overly verbose debug message during class initialization.
-    Mainly to help debug inheritance.
+    Mainly to help debug inheritance of variables in the environment of a
+    class that's inheriting from a config superclass.
     """
+
     properties = dict(
         name = name,
         cls = cls.__qualname__,

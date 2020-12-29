@@ -22,17 +22,17 @@ class ConfigGroup():
        members (dict): A dict of values and subgroups indexed by name.
 
        doc (str): The docstring explain what's within this group of
-         configuration settings.
+          configuration settings.
 
        ctxt (class or instance): The current evaluation context for this
-         group. It's used to update the assignment context when values are
-         defined or modified.
+          group. It's used to update the assignment context when values are
+          defined or modified.
 
        root (ConfigGroup): The root of the configuration tree. If it's set
-         to self then this instance is the root.
+          to self then this instance is the root.
 
        path (list[str]): The path of attrs needed to access this config group
-         as a list of strings.
+          as a list of strings.
     """
 
     members = attr.ib(factory=dict, init=False)
@@ -47,6 +47,24 @@ class ConfigGroup():
 
         self.__attrs_init__(**kwargs)
         self.update_context(self.ctxt)
+
+    def set_docstring(self, docstring, value=None):
+        """
+        Set a new docstring for this config group or a in the group subvalue.
+        This will only do anything if set in the class definition. Setting it
+        at runtime (after the docstring has been generated) will do nothing.
+
+        Parameters:
+
+           docstring (str): The new docstring to use.
+           value (str): If left to the default (`None`) then the function will
+              update the docstring of this config group. If it's set to the
+              name of a value then it'll update the docstring of that value.
+        """
+        if value == None:
+            self.doc = textwrap.dedent(docstring)
+        else:
+            self.members[value] = textwrap.dedent(docstring)
 
     def update_context(self, ctxt):
         log.debug(textwrap.dedent(
@@ -159,7 +177,106 @@ class ConfigGroup():
                 output[name] = member.value_dict()
         return output
 
-    def new_value(self, name, default = None, doc = None, value = None):
+    def apply_value_dict(
+            self,
+            values,
+            preserved_ctxts=[],
+            ignore_missing_members=False,
+            preserve_self_set=False):
+        """
+        Will update the values of this settings group using terms from the
+        value dictionary that's been passed to it.
+
+        !!! Important ""
+            Note that the value dict can always be missing values and subgroups
+            that are defined in the config group. Those entries will simply not
+            be changed.
+
+            The `ignore_missing_members` parameter determines how we handle the
+            opposite case where the value dict has entries that are **not**
+            already defined in the config group.
+
+        Parameters:
+
+           values (dict): The value dict we're using to update this config
+              group.
+
+           preserved_ctxts (list[ctxt]): If a value if from any of these
+              contexts we're not going to override them with values from the
+              dictionary.
+
+           ignore_missing_members (bool): If true we'll ignore any values in
+              the input dict that aren't defined in the config group. Otherwise
+              we'll throw an error if the dict is trying to set some value that
+              isn't in the control group.
+
+           preserve_self_set (bool): Ignored if there's any entries in the
+              `preserved_ctxts` otherwise if true will add the current context
+              (and if the current context is an instance its parent class) to
+              the list of `preserved_ctsts`.
+
+
+        ??? Todo "Feature Todo List"
+            - Better error handling and messages
+        """
+        if (len(preserve_ctxts) == 0) and preserve_self_set:
+            preserve_ctxts = [self.ctxt]
+            if not inspect.isclass(ctxt):
+                preserve_ctxts += [type(self.ctxt)]
+
+        for (key, value) in values.items():
+
+            # Catch extra keys in dict
+            if (key not in self.members) and (not ignore_missing_members):
+                raise SomeError # TODO
+
+            if key in self.members:
+
+                # Insert key subtree into subgroup
+                if isinstance(self.members[key], ConfigGroup):
+                    self.members[key].apply_value_dict(
+                        value, preserved_ctxts, ignore_missing_members)
+
+                # If we can override this
+                if (isinstance(self.members[key], ConfigValue)
+                    and (self.members[key].ctxt not in preserved_ctxts)):
+                        setattr(self, key, value)
+
+
+
+    def new_value(self, name, default = None, doc = "", value = None):
+        """
+        Will create a new value member in this control group which looks
+        like a normal attribute variable.
+
+        Parameters:
+
+           name (str): The name of the new value attribute, must be a valid
+              python identifier.
+
+              !!! Example
+                  Once created the value becomes an attribute like any other.
+
+                  ```python
+                  group = ConfigGroup(...)
+
+                  group.new_value('foo', ...)
+
+                  group.foo = 12
+                  print(group.foo)
+                  ```
+
+                  And so on ...
+
+           default (Any): The value the variable should be set to initially.
+
+           doc (str): The docstring for the value, will be used in the
+              auto-generated documentation.
+
+           value (Any): Alias for `default` that is used when `default` is
+              set to `None`. Ignored otherwise.
+        """
+
         self.members[name] = ConfigValue(
             value = default if default != None else value,
             doc = doc,
@@ -167,7 +284,22 @@ class ConfigGroup():
             path = self.path + [name],
             )
 
-    def new_group(self, name, doc = None):
+    def new_group(self, name, doc = ""):
+        """
+        Creates a new subgroup for this config group. You can add more
+        values and subgroups to it the same way you can to this caller.
+
+        Parameters:
+
+           name (str): The name of the subgroup, must be a valid python
+              identifier. Will be accessible as an attribute just like a value
+              created with `new_value()`.
+
+           doc (str): The docstring for the subgroup, used when documentation
+              is autogenerated at class creation. (Note: This is well before an
+              instance is initialized)
+        """
+
         self.members[name] = ConfigGroup(
             doc = doc,
             ctxt = self.ctxt,
@@ -176,6 +308,14 @@ class ConfigGroup():
             )
 
     def clone(self, **kwargs):
+        """
+        Create a copy of this ConfigGroup with potentially updated arguments.
+
+        Parameters:
+
+           **kwargs (Any): Any parameters that the `ConfigGroup(...)`
+              initializer takes.
+        """
         args = {
             'doc': self.doc,
             'path': self.path,

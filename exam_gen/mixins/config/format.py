@@ -189,6 +189,7 @@ class ConfigDocFormat():
 
     @val_table_headers.default
     def val_table_headers_default(self):
+        hide_doc = True # Docs must be the first statement to show up
         """
         List of headers for the value table.
         """
@@ -227,6 +228,7 @@ class ConfigDocFormat():
 
     @group_table_headers.default
     def group_table_headers_default(self):
+        hide_doc = True # Docs must be the first statement to show up
         """
         List of headers for the group table
         """
@@ -274,6 +276,7 @@ class ConfigDocFormat():
 
     @combined_table_headers.default
     def combined_table_headers_default(self):
+        hide_doc = True # Docs must be the first statement to show up
         graph = graphlib.TopologicalSorter()
         table_edges = list(zip(self.val_table_headers[::2],
                                self.val_table_headers[1::2]))
@@ -286,6 +289,7 @@ class ConfigDocFormat():
 
     @staticmethod
     def get_colwidths(combined_cols, elem_cols):
+        hide_doc = True # Docs must be the first statement to show up
         col_widths = dict()
 
         # get whether each combined cell is in the group cols
@@ -388,6 +392,7 @@ class ConfigDocFormat():
 
     @property
     def combined_group_col_widths(self):
+        hide_doc = True # Docs must be the first statement to show up
         """
         The column widths for a group entry in a combined table
         """
@@ -419,6 +424,7 @@ class ConfigDocFormat():
 
     @property
     def combined_val_col_widths(self):
+        hide_doc = True # Docs must be the first statement to show up
         """
         The column widths for a value entry in a combined table
         """
@@ -450,6 +456,7 @@ class ConfigDocFormat():
 
     @classmethod
     def get_val_data(cls, config_val):
+        hide_doc = True # Docs must be the first statement to show up
         """
         Exact and format data for a ConfigValue
         """
@@ -466,6 +473,7 @@ class ConfigDocFormat():
 
     @classmethod
     def get_group_data(cls, config_group):
+        hide_doc = True # Docs must be the first statement to show up
         """
         Extract and format data for a ConfigGroup
         """
@@ -479,6 +487,7 @@ class ConfigDocFormat():
 
     @classmethod
     def collect_group_data(self, config_group, recurse=False):
+        hide_doc = True # Docs must be the first statement to show up
         """
         Run through the members of a ConfigGroup and gather all the template
         data in a dictionary, where the keys are the path to each term.
@@ -498,6 +507,7 @@ class ConfigDocFormat():
 
     @classmethod
     def format_data(self, format_dict, data):
+        hide_doc = True # Docs must be the first statement to show up
         """
         Format all the values in a format dictionary given a particular
         dataset.
@@ -531,6 +541,7 @@ class ConfigDocFormat():
         return output
 
     def format_val_data(self, val_data):
+        hide_doc = True # Docs must be the first statement to show up
         """
         format a value table entry if we have a formatter for it.
         """
@@ -540,6 +551,7 @@ class ConfigDocFormat():
             return dict()
 
     def format_group_data(self, group_data):
+        hide_doc = True # Docs must be the first statement to show up
         """
         Format a group table entry if we have a formatter for it.
         """
@@ -549,6 +561,7 @@ class ConfigDocFormat():
             return dict()
 
     def format_member_data(self, data):
+        hide_doc = True # Docs must be the first statement to show up
 
         log.debug("Formatting Member Data:\n\n%s", pformat(data))
 
@@ -564,6 +577,7 @@ class ConfigDocFormat():
 
 
     def process_config_group(self, config):
+        hide_doc = True # Docs must be the first statement to show up
         """
         Run through a configuration group to produce all the variables that
         will be fed to the template.
@@ -721,4 +735,4 @@ default_format = ConfigDocFormat(
     ],
     recurse_entries = True,
 )
-""" A default ConfigDocFormat instance to be used elsewhere."""
+""" A default ConfigDocFormat instance to be used in most places. """

@@ -85,16 +85,16 @@ class MetadataManager():
     pass
 
 
-class TestConfigUser(SettingsManager, MetadataManager):
-    """
-    This class exists to help test the generated configuration superclasses.
-    It's not really meant to be used anywhere and shouldn't be exported.
-    """
+# class TestConfigUser(SettingsManager, MetadataManager):
+#     """
+#     This class exists to help test the generated configuration superclasses.
+#     It's not really meant to be used anywhere and shouldn't be exported.
+#     """
 
-    settings.new_value("test", 12, "Test doc **please** *ignore*.")
+#     settings.new_value("test", 12, "Test doc **please** *ignore*.")
 
-    settings.new_group("subgroup", "this si a subgroup that we can use.")
+#     settings.new_group("subgroup", "this si a subgroup that we can use.")
 
-    settings.subgroup.new_value("subtest", None, "Some stuff here")
+#     settings.subgroup.new_value("subtest", None, "Some stuff here")
 
-    pass
+#     pass

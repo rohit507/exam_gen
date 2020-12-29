@@ -15,17 +15,17 @@ class ConfigValue():
     Attributes:
 
        value (Any): The actual value stored. Ideally only immutable terms go
-         here. It's a default term if ctxt is a class, an actual setting
-         value otherwise.
+          here. It's a default term if ctxt is a class, an actual setting
+          value otherwise.
 
        doc (str): The docstring for the value. Will be used when docs are
-         generated for any configuration superclasses.
+          generated for any configuration superclasses.
 
        ctxt (Class or Instance): The location where the default or runtime
-         value was last set.
+          value was last set.
 
        path (List[str]): The chain of attributes that you need to walk in
-         order to get to this element from the root config group.
+          order to get to this element from the root config group.
     """
 
     value = attr.ib(default=None)
