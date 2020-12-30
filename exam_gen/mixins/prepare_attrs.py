@@ -107,8 +107,7 @@ class PrepareAttrs(type):
         reversed_cache = {value:key for key, value in self.stub_cache.items()}
         return [reversed_cache[mro_base] for mro_base in  stub_cls.__mro__[1:]]
 
-@attr.s(kw_only=True)
-class PrepareAttrDecorator():
+def create_decorator(attr_name, decor_data, secret_attr_name = None):
     """
     Can be used to create superclasses that define a new attribute that's
     available at class definition for anything that inherits from them.
@@ -187,72 +186,32 @@ class PrepareAttrDecorator():
             1. `tweak_cls`: Tweak the class after it has been created if
                needed.
 
-    Attributes:
+    Parameters:
 
        attr_name (str): The name of the attribute to be created.
+
+       decorator_data (AttrDecorData): Subclass `AttrDecorData` and define
+          the various functions appropriately. What they should do is
+          documented in that class.
+
+          The various attribute names in `AttrDecorData` line up with the
+          various phase names in our description of the declaration process.
 
        secret_attr_name (str): The name of the secret attribute which is
           used to store the intended attribute value while documentation is
           generated. (defaults to `#!py "__{}".format(attr_name)`)
 
-       prep_attr_inst (callable): See `AttrDecorData` for
-          details.
+    Returns:
 
-       prep_env_update (callable): See `AttrDecorData` for
-          details.
-
-       prep_sc_update (callable): See `AttrDecorData` for details.
-
-       scinit_mk_secret_inst (callable): See `AttrDecorData` for details.
-
-       scinit_attr_docstring (callable): See `AttrDecorData` for details.
-
-       scinit_prop_cls_name (callable): See `AttrDecorData` for details.
-
-       scinit_prop_tweak_dir (callable): See `AttrDecorData` for details.
-
-       scinit_tweak_cls (callable): See `AttrDecorData` for details.
-
+       func: The decorator function that takes and input class and modifies
+          based on the params of this function.
     """
 
-
-    attr_name = attr.ib(
-        validator=valid.instance_of(str)
-    )
-
-    secret_attr_name = attr.ib(
-        validator=valid.instance_of(str)
-    )
-
-    @secret_attr_name.default
-    def secret_attr_name_default(self):
-        return "__{}".format(self.attr_name)
-
-    prep_attr_inst = attr.ib(
-        validator=valid.is_callable()
-    )
-
-    prep_env_update = attr.ib()
-
-    prep_sc_update = attr.ib()
-
-    scinit_mk_secret_inst = attr.ib()
-
-    scinit_attr_docstring = attr.ib()
-
-    scinit_prop_cls_name = attr.ib()
-
-    scinit_prop_tweak_dir = attr.ib()
-
-    scinit_tweak_cls = attr.ib()
-
-    new_mk_inst = attr.ib()
-
-    init_tweak_fun = attr.ib()
-
-    final_tweak_ns = attr.ib()
-
-    final_tweak_cls = attr.ib()
+    def decorate(cls):
+        """
+        The final decorator function that can be used to modify class.
+        """
+        pass
 
 class AttrDecorData():
     """
