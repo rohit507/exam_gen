@@ -207,11 +207,214 @@ def create_decorator(attr_name, decor_data, secret_attr_name = None):
           based on the params of this function.
     """
 
+    if secret_attr_name == None:
+        secret_attr_name = "__{}".format(secret_attr_name)
+
     def decorate(cls):
         """
         The final decorator function that can be used to modify class.
         """
-        pass
+
+        base_cls = cls
+        new_cls_ref = [None]
+
+        base_cls_name = base_cls.__name__
+        base_cls_module = base_cls.__module__
+
+        base_qual_name = "{}.{}".format(base_cls_module, base_cls_name)
+
+        log.debug("Begin decorating `%s` to add new attr `%s`.",
+                  base_qual_name, attr_name)
+
+        def prep_attrs(cls, name, bases, env):
+
+            initial_env = copy(env)
+
+            meta = PrepMeta(
+                cls = cls,
+                name = name,
+                bases = bases,
+                env = env,
+                base_cls = base_cls,
+                base_mod = base_cls_module,
+                base_name = base_cls_name,
+                base_qual_name = base_qual_name,
+                attr_name = attr_name,
+                secret_attr_name = secret_attr_name,
+            )
+
+            if hasattr(super(cls), "__prepare_attrs__"):
+                env = super(cls).__prepare_attrs__(name, bases, env)
+
+            cls_inst = decorator_data.prep_attr_inst(meta)
+
+            if var_name in env:
+                cls_inst = decorator_data.prep_env_update(
+                    cls_inst, env[var_name], meta)
+
+            sc_inst = getattr(cls, secret_var_name, None)
+            if sc_inst != None:
+                cls_inst = decorator_data.prep_sc_update(
+                    cls_inst, sc_inst, meta)
+
+            env[var_name] = cls_inst
+
+            log.debug(textwrap.dedent(
+                """
+                Finished preparing attr `%s` for `%s`:
+
+                   Class Name:
+                %s
+
+                   Bases:
+                %s
+
+                   Incoming Environment:
+                %s
+
+                   Final Environment:
+                %s
+                """),
+                      attr_name,
+                      "{}.{}".format(cls.__module__, cls.__name__),
+                      textwrap.indent(name,"      "),
+                      textwrap.indent(pformat(bases),"      "),
+                      textwrap.indent(pformat(initial_env),"      "),
+                      textwrap.indent(pformat(env), "      "),
+            )
+
+            return env
+
+        def init_subclass(cls, **kwargs):
+
+            meta = ScInitMeta(
+                cls = cls,
+                kwargs = kwargs,
+                new_cls = new_cls_ref[0],
+                base_cls = base_cls,
+                base_mod = base_cls_module,
+                base_name = base_cls_name,
+                base_qual_name = base_qual_name,
+                attr_name = attr_name,
+                secret_attr_name = secret_attr_name,
+            )
+
+            super(meta.new_cls, cls).__init_subclass__(**kwargs)
+
+            cls_inst = getattr(cls, var_name, None)
+
+            if cls_inst == None:
+                assert False, ("Internal Error: During `__init_superclass__`"+
+                               " for `{}`").format(base_cls)
+
+            cls_inst = decorator_data.scinit_mk_secret_inst(
+                cls_inst,
+                meta,
+            )
+
+            docstring = decorator_data.scinit_attr_docstring(cls_inst, meta)
+
+            def prop_getter(self): return getattr(self, secret_var_name)
+
+            prop_getter.__doc__ = docstring
+
+            def prop_setter(self, val): setattr(self, secret_var_name, val)
+
+            prop_name = decorator_data.scinit_prop_cls_name(meta)
+
+            prop_env = {}
+
+            if hasattr(cls_inst, '__getattr__'):
+                prop_env['__getattr__'] = cls_inst.__getattr__
+
+            if hasattr(cls_inst, '__setattr__'):
+                prop_env['__setattr__'] = cls_inst.__setattr__
+
+            prop_env = decorator_data.scinit_prop_tweak_dir(
+                prop_env, cls_inst, meta)
+
+            prop_cls = type(prop_name, (type(property()),), prop_env)
+
+            setattr(cls, attr_name, prop_cls(prop_getter, prop_setter))
+
+            cls = decorator_data.scinit_tweak_cls(cls, cls_inst, meta)
+
+        def new(cls, *vargs, **kwargs):
+
+            meta = NewMeta(
+                cls = cls,
+                vargs = vargs,
+                kwargs = kwargs,
+                new_cls = new_cls_ref[0],
+                base_cls = base_cls,
+                base_mod = base_cls_module,
+                base_name = base_cls_name,
+                base_qual_name = base_qual_name,
+                attr_name = attr_name,
+                secret_attr_name = secret_attr_name,
+            )
+
+            inst = super(met.new_cls, cls).__new__(*vargs, **kwargs)
+
+            cls_inst = getattr(cls, secret_attr_name, None)
+
+            attr_inst = decorator_data.new_mk_inst(cls_int, meta)
+
+            setattr(inst, secret_attr_name, attr_inst)
+
+        final_meta = FinalMeta(
+            base_cls = base_cls,
+            base_mod = base_mod,
+            base_name = base_name,
+            base_qual_name = base_qual_name,
+            attr_name = attr_name,
+            secret_attr_name = secret_attr_name,
+            )
+
+        def populate_class_namespace(namespace):
+
+            input_namespace = copy(namespace)
+
+            namespace["__prepare_attrs__"] = classmethod(prepare_attrs)
+            namespace["__init_subclass__"] = classmethod(init_subclass)
+            namespace["__new__"] = new
+            namespace["__doc__"] = cls.__doc__
+            namespace["__module__"] = cls.__module__
+
+            namespace = decorator_data.final_tweak_ns(namespace, final_meta)
+
+            log.debug(textwrap.dedent(
+                """
+                Populating Namespace of New Superclass:
+
+                  Class:
+                  %s
+
+                  Initial Namespace:
+                  %s
+
+                  Final Namespace:
+                  %s
+                """),
+
+                textwrap.indent(cls,"      "),
+                textwrap.indent(pformat(input_namespace),"      "),
+                textwrap.indent(pformat(namespace),"      "),
+                )
+
+            return namespace
+
+        output_cls = types.new_class(
+            "wrapped_{}".format(base_cls_name),
+            (),
+            {'metaclass': PrepareAttrs},
+            exec_body = populate_class_namespace,
+            )
+
+        output_cls = decorator_data.final_tweak_cls(cls, final_meta)
+
+        return output_cls
+
 
 class AttrDecorData():
     """
@@ -220,257 +423,296 @@ class AttrDecorData():
     """
 
     @staticmethod
-    def prep_attr_inst(prep_meta, prep_attr_decorator):
+    def prep_attr_inst(prep_meta):
         """
-        Todo.
+        Set the initial value of your attribute as it will be before the class
+        definitions are run.
+
+        !!! Warning ""
+            This function must be overridden by any subclasses.
 
         Parameters:
 
-           meta (Meta): Metadata associated with this phase of decoration.
-              Look at the corresponding class docs for details and available
-              attributes.
-
-           prep_attr_decorator (PrepAttrDecorator): The decorator instance
-              which is currently using this function. Has useful attributes
-              like `attr_name` and `secret_attr_name`
+           prep_meta (PrepMeta): See `PrepMeta` class for info.
 
         Returns:
 
-           type: Write details of expected return values
+           attr_val : The initial value of the new variable.
+
+        """
+        raise NotImplementedError("Subclasses must override this function")
+
+    @staticmethod
+    def prep_env_update(cls_val, env_val, prep_meta):
+        """
+        This describes how to update your attribute if a superclass has
+        already set a value for your attribute during its `__prepare_attrs__`
+        phase.
+
+        !!! Info ""
+            This defaults to just returning the previous value of the class's
+            attribute and ignoring the value from the superclass.
+
+        Parameters:
+
+           cls_val (attr_val): The value of the attribute currently assigned
+              to the new subclass.
+
+           env_val (attr_val): The value of the attribute that was generated
+              by a superclass's `__prepare_attrs__`.
+
+           prep_meta (PrepMeta): See `PrepMeta` class for info.
+
+        Returns:
+
+           attr_val: The updated value of your new attr.
 
         """
         pass
 
     @staticmethod
-    def prep_env_update(class_inst, env_inst, prep_meta, prep_attr_decorator):
+    def prep_sc_update(cls_val, sc_val, prep_meta):
         """
-        Todo.
+        This describes how to update your attribute if a superclass has
+        a value for your attribute **after it has been initialized**.
+
+        !!! Warning ""
+            This defaults to using **the value from the superclass** as,
+            generally, you'll want to preserve any updates to a variable
+            by a superclass.
+
+            **Note:** This default will end up keeping the value from most
+            recent superclass in mro order.
 
         Parameters:
 
-           meta (Meta): Metadata associated with this phase of decoration.
-              Look at the corresponding class docs for details and available
-              attributes.
+           cls_val (attr_val): The value of the attribute currently assigned
+              to the new subclass.
 
-           prep_attr_decorator (PrepAttrDecorator): The decorator instance
-              which is currently using this function. Has useful attributes
-              like `attr_name` and `secret_attr_name`
+           env_val (attr_val): The value of the attribute that was generated
+              by a superclass after it was initialized.
+
+           prep_meta (PrepMeta): See `PrepMeta` class for info.
 
         Returns:
 
-           type: Write details of expected return values
-
+           attr_val: The updated value of your new attr.
         """
-        pass
+        return sc_val
 
     @staticmethod
-    def prep_sc_update(class_inst, sc_inst, prep_meta, prep_attr_decorator):
+    def scinit_mk_secret_inst(cls_val, scinit_meta):
         """
-        Todo.
+        Create a version of the attr's value that's unique to the class,
+        tweaking it if necessary.
+
+        !!! Note ""
+            By default this just returns `cls_val` and doesn't make any
+            additional changes. That said, you probably want to make a copy of
+            the value.
 
         Parameters:
 
-           meta (Meta): Metadata associated with this phase of decoration.
-              Look at the corresponding class docs for details and available
-              attributes.
+           cls_val (attr_val): The value of the attr after class definition.
 
-           prep_attr_decorator (PrepAttrDecorator): The decorator instance
-              which is currently using this function. Has useful attributes
-              like `attr_name` and `secret_attr_name`
+           scinit_meta (ScInitMeta): See `ScInitMeta` class for info.
 
         Returns:
 
-           type: Write details of expected return values
+           attr_val: Write details of expected return values
 
         """
-        pass
+        return cls_val
 
     @staticmethod
-    def scinit_mk_secret_inst(class_inst, scinit_meta, prep_attr_decorator):
+    def scinit_attr_docstring(cls_val, scinit_meta):
         """
-        Todo.
+        Generate the docstring for your new attribute.
+
+        !!! Warning ""
+            This defaults to None, which means no docstring will be found or
+            generated.
 
         Parameters:
 
-           meta (Meta): Metadata associated with this phase of decoration.
-              Look at the corresponding class docs for details and available
-              attributes.
+           cls_val (attr_val): The value of the attribute currently assigned
+              to the new subclass.
 
-           prep_attr_decorator (PrepAttrDecorator): The decorator instance
-              which is currently using this function. Has useful attributes
-              like `attr_name` and `secret_attr_name`
+           scinit_meta (ScInitMeta): See `ScInitMeta` class for info.
 
         Returns:
 
-           type: Write details of expected return values
-
+           str: The new docstring for your type.
         """
-        pass
+        return None
 
     @staticmethod
-    def scinit_prop_cls_name(scinit_meta, prep_attr_decorator):
+    def scinit_prop_cls_name(scinit_meta):
         """
-        Todo.
+        Choose the name of the newly generated property stub class.
+
+        !!! Info ""
+            Defaults to `_{scinit_meta.attr_name}_Property`.
 
         Parameters:
 
-           meta (Meta): Metadata associated with this phase of decoration.
-              Look at the corresponding class docs for details and available
-              attributes.
-
-           prep_attr_decorator (PrepAttrDecorator): The decorator instance
-              which is currently using this function. Has useful attributes
-              like `attr_name` and `secret_attr_name`
+           scinit_meta (ScInitMeta): See `ScInitMeta` class for info.
 
         Returns:
 
-           type: Write details of expected return values
-
+           str: The name of the property class
         """
-        pass
+        return "_{}_Property".format(scinit_meta.attr_name)
+
 
     @staticmethod
     def scinit_prop_tweak_dir(namespace,
-                              secret_inst,
-                              scinit_meta,
-                              prep_attr_decorator):
+                              cls_val,
+                              scinit_meta):
         """
-        Todo.
+        Modify the namespace for the property we're creating to add sunders
+
+        !!! Note ""
+            Defaults to returning the `namespace` unchanged.
 
         Parameters:
 
-           meta (Meta): Metadata associated with this phase of decoration.
-              Look at the corresponding class docs for details and available
-              attributes.
+           namespace (dict): A dictionary of properties to be added to the
+              the new property subclass, includes `__getattr__` and
+              `__setattr__` if they exist.
 
-           prep_attr_decorator (PrepAttrDecorator): The decorator instance
-              which is currently using this function. Has useful attributes
-              like `attr_name` and `secret_attr_name`
+           cls_val (attr_val): The value of the attribute currently assigned
+              to the new subclass.
+
+           scinit_meta (ScInitMeta): See `ScInitMeta` class for info.
 
         Returns:
 
-           type: Write details of expected return values
-
+           dict: The new namespace for the stub property.
         """
-        pass
+        return namespace
 
     @staticmethod
-    def scinit_tweak_cls(cls,
-                         secret_inst,
-                         scinit_meta,
-                         prep_attr_decorator):
+    def scinit_tweak_cls(cls, cls_val, scinit_meta):
         """
-        Todo.
+        Arbitrary tweaks to the class if needed.
+
+        !!! Note ""
+            Defaults to just returning the input class with no changes.
 
         Parameters:
 
-           meta (Meta): Metadata associated with this phase of decoration.
-              Look at the corresponding class docs for details and available
-              attributes.
+           cls (cls): The subclass that's being initialized.
 
-           prep_attr_decorator (PrepAttrDecorator): The decorator instance
-              which is currently using this function. Has useful attributes
-              like `attr_name` and `secret_attr_name`
+           cls_val (attr_val): The value of the attribute currently assigned
+              to the new subclass.
+
+           scinit_meta (ScInitMeta): See `ScInitMeta` class for info.
 
         Returns:
 
-           type: Write details of expected return values
+           class: modified lass
 
         """
-        pass
+        return cls
 
     @staticmethod
-    def new_mk_inst(secret_inst, new_meta, prep_attr_decorator):
+    def new_mk_inst(cls_inst, new_meta):
         """
-        Todo.
+        Create a new attr object for a specific instance of the subclass.
+
+        !!! Note ""
+            Defaults to just returning `cls_inst` without any modification.
 
         Parameters:
 
-           meta (Meta): Metadata associated with this phase of decoration.
-              Look at the corresponding class docs for details and available
-              attributes.
+           cls_inst (attr): The new instance of the class that's being
+              modified.
 
-           prep_attr_decorator (PrepAttrDecorator): The decorator instance
-              which is currently using this function. Has useful attributes
-              like `attr_name` and `secret_attr_name`
+           new_meta (NewMeta): See `NewMeta` class for info.
 
         Returns:
 
-           type: Write details of expected return values
-
+           attr: the instance attribute that is unique to a single object.
         """
-        pass
+        return cls_inst
 
     @staticmethod
-    def init_tweak_fun(init_fun, init_meta, prep_attr_decorator):
+    def final_tweak_ns(namespace, final_meta):
         """
-        Todo.
+
 
         Parameters:
 
-           meta (Meta): Metadata associated with this phase of decoration.
-              Look at the corresponding class docs for details and available
-              attributes.
+           namespace (attr): The namespace of the function
 
-           prep_attr_decorator (PrepAttrDecorator): The decorator instance
-              which is currently using this function. Has useful attributes
-              like `attr_name` and `secret_attr_name`
+           final_meta (FinalMeta): See `FinalMeta` class for info.
 
         Returns:
 
-           type: Write details of expected return values
-
+           dict: The modified namespace to use when generating the wrapped
+              decorator class.
         """
-        pass
+        return namespace
 
     @staticmethod
-    def final_tweak_ns(namespace, final_meta, prep_attr_decorator):
+    def final_tweak_cls(cls, final_meta):
         """
-        Todo.
+        Tweak the final class in whatever way is appropriate for your
+        task.
+
+        !!! Note ""
+            Defaults to just returning the input class unmodified.
 
         Parameters:
 
-           meta (Meta): Metadata associated with this phase of decoration.
-              Look at the corresponding class docs for details and available
-              attributes.
+           cls (cls): The namespace of the function
 
-           prep_attr_decorator (PrepAttrDecorator): The decorator instance
-              which is currently using this function. Has useful attributes
-              like `attr_name` and `secret_attr_name`
+           final_meta (FinalMeta): See `FinalMeta` class for info.
 
         Returns:
 
-           type: Write details of expected return values
+           dict: The modified namespace to use when generating the wrapped
+              decorator class.
 
         """
-        pass
+        return cls
 
-    @staticmethod
-    def final_tweak_cls(final_cls, final_meta, prep_attr_decorator):
-        """
-        Todo.
+@attr.s
+class FinalMeta():
+    base_cls = attr.ib()
+    base_mod = attr.ib()
+    base_name = attr.ib()
+    base_qual_name = attr.ib()
+    attr_name = attr.ib()
+    secret_attr_name = attr.ib()
 
-        Parameters:
 
-           meta (Meta): Metadata associated with this phase of decoration.
-              Look at the corresponding class docs for details and available
-              attributes.
+@attr.s
+class NewMeta():
+    cls = attr.ib()
+    vargs = attr.ib()
+    kwargs = attr.ib()
+    new_cls = attr.ib()
+    base_cls = attr.ib()
+    base_mod = attr.ib()
+    base_name = attr.ib()
+    base_qual_name = attr.ib()
+    attr_name = attr.ib()
+    secret_attr_name = attr.ib()
 
-           prep_attr_decorator (PrepAttrDecorator): The decorator instance
-              which is currently using this function. Has useful attributes
-              like `attr_name` and `secret_attr_name`
-
-        Returns:
-
-           type: Write details of expected return values
-
-        """
-        pass
 
 @attr.s
 class ScInitMeta():
     cls = attr.ib()
-    result_class = attr.ib()
+    kwargs = attr.ib()
+    new_cls = attr.ib()
+    base_cls = attr.ib()
+    base_mod = attr.ib()
+    base_name = attr.ib()
+    base_qual_name = attr.ib()
+    attr_name = attr.ib()
+    secret_attr_name = attr.ib()
 
 @attr.s
 class PrepMeta():
@@ -478,3 +720,9 @@ class PrepMeta():
     name = attr.ib()
     bases = attr.ib()
     env = attr.ib()
+    base_cls = attr.ib()
+    base_mod = attr.ib()
+    base_name = attr.ib()
+    base_qual_name = attr.ib()
+    attr_name = attr.ib()
+    secret_attr_name = attr.ib()
