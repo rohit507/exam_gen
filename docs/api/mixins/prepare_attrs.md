@@ -1,5 +1,25 @@
 # PrepareAttrs Metaclass
 
+!!! Todo
+
+    - Move the metaclass to `prepare_attrs.metaclass` and the decorator stuff
+      its owm submodule.
+
+## Generated Documentation
+
+::: exam_gen.mixins.prepare_attrs
+    handler: python
+    selection:
+      filters:
+        - "!__"
+        - "__prepare_attrs__"
+    rendering:
+      heading_level: 3
+      show_source: True
+      show_root_toc_entry: false
+
+## General Docs
+
 This metaclass makes it easier to control and manipulate the variables available
 during the class definition process, and has a lot of utility in making class-based
 EDSLs more elegant.
@@ -15,18 +35,6 @@ get a lot of additional power.
     working but flawed examples to build up necessary information needed to
     understand the full function of the final example.
 
-## Generated Documentation
-
-::: exam_gen.mixins.prepare_attrs
-    handler: python
-    selection:
-      filters:
-        - "!__"
-        - "__prepare_attrs__"
-    rendering:
-      heading_level: 3
-      show_source: false
-      show_root_toc_entry: false
 
 ## Creating pre-init class attributes
 

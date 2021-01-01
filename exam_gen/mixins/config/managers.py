@@ -5,7 +5,7 @@ import exam_gen.util.logging as logging
 from pprint import *
 import textwrap
 
-log = logging.new(__name__)
+log = logging.new(__name__, level="DEBUG")
 
 def var_docstring(var_name, desc):
     return textwrap.dedent("""

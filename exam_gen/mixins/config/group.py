@@ -7,7 +7,7 @@ from exam_gen.mixins.config.value import ConfigValue
 import exam_gen.util.attrs_wrapper as wrapped
 import exam_gen.util.logging as logging
 
-log = logging.new(__name__)
+log = logging.new(__name__, level="DEBUG")
 
 @wrapped.attrs()
 class ConfigGroup():
@@ -43,8 +43,7 @@ class ConfigGroup():
 
     def __init__(self, **kwargs):
         log.debug("Initializing ConfigGroup with args:\n\n%s",
-                  pformat(kwargs))
-
+                  textwrap.indent(pformat(kwargs), "     "))
         self.__attrs_init__(**kwargs)
         self.update_context(self.ctxt)
 
@@ -54,9 +53,12 @@ class ConfigGroup():
         This will only do anything if set in the class definition. Setting it
         at runtime (after the docstring has been generated) will do nothing.
 
+        This is useful for when a subclass wants to add more information.
+
         Parameters:
 
            docstring (str): The new docstring to use.
+
            value (str): If left to the default (`None`) then the function will
               update the docstring of this config group. If it's set to the
               name of a value then it'll update the docstring of that value.
@@ -64,7 +66,26 @@ class ConfigGroup():
         if value == None:
             self.doc = textwrap.dedent(docstring)
         else:
-            self.members[value] = textwrap.dedent(docstring)
+            self.members[value].doc = textwrap.dedent(docstring)
+
+    def get_docstring(self, value=None):
+        """
+        Retrieve the docstring of a config group or value.
+
+        Arguments:
+
+           value (optional[str]): If None will return the docstring of the
+             current config group. If the name of a value is provided, this
+             will get the docstring for that value.
+
+        Returns:
+
+           str: The docstring you're asking for.
+        """
+        if value == None:
+            return self.doc
+        else:
+            return self.members[value].doc
 
     def update_context(self, ctxt):
         log.debug(textwrap.dedent(
@@ -92,41 +113,62 @@ class ConfigGroup():
         return ".".join(self.path)
 
     def __getattr__(self, name):
-        log.debug("Getting attr '%s' from ConfigGroup %s.",
-                  name, self.path_string())
+        log.debug("Getting attr '%s' from ConfigGroup.",
+                  name)
 
-        if name in self.members:
-            if isinstance(self.members[name], ConfigValue):
-                return self.members[name].value
-            elif isinstance(self.members[name], ConfigGroup):
-                return self.members[name]
+        members = None
+
+        try:
+            members = super(ConfigGroup, self).__getattribute__('members')
+        except AttributeError as err:
+            log.debug(
+                "Did not find `members` attribute when looking up '%s' " +
+                "falling back to superclass __getattribute__.", name)
+
+            return super(ConfigGroup, self).__getattribute__(name)
+
+        if name in members:
+            log.debug("Found entry in members under '%s'.", name)
+            if isinstance(members[name], ConfigValue):
+                log.debug("Found ConfigValue under '%s'.", name)
+                return members[name].value
+                log.debug("Found ConfigGroup under '%s'.", name)
+            elif isinstance(members[name], ConfigGroup):
+                return members[name]
             else:
                 assert False, "Internal Error: member of invalid type."
-
-        # Otherwise fall back to the usual attribute mechanism, if that fails
-        # throw a more informative exception than the default AttributeError.
-        #
-        # Note: The `try` clause here should always fail as `__getattr__` is
-        #       only called when `__getattribute__` (and therefore
-        #       `object.__getattr__`) has already failed. It's only here so
-        #       that we get access to the main `attribute
-        try:
-            _ = super().__getattribute__(name)
-        except AttributeError as err:
-            # TODO : better error message
-            raise AttributeError from err
         else:
-            assert False, "Unreachable"
-
+            log.debug("Did not find entry in members under '%s', " +
+                      "falling back to superclass __getattribute__.",
+                      name)
+            return super(ConfigGroup, self).__getattribute__(name)
 
     def __setattr__(self, name, value):
-        if not hasattr(super(),"members"):
-            super().__setattr__(name, value)
-        elif name in self.members:
-            self.members[name].value = value
-            self.members[name].ctxt = self.ctxt
+
+        members = None
+
+        try:
+            members = super(ConfigGroup, self).__getattribute__('members')
+        except AttributeError as err:
+            log.debug(
+                "Did not find members attribute when attempting to set %s.",
+                name)
+            super(ConfigGroup, self).__setattr__(name, value)
+            return None
+
+        if name in members:
+            log.debug("Found member `%s` in config group.", name)
+            if isinstance(members[name], ConfigValue):
+                members[name].value = value
+                members[name].ctxt  = self.ctxt
+            else:
+                raise AttributeError(
+                    "Attribute '%s' is not a settable config value."
+                )
         else:
-            super().__setattr__(name, value)
+            log.debug("Did not find `%s` in config group, falling back " +
+                      "to superclass __setattr__.", name)
+            super(ConfigGroup, self).__setattr__(name, value)
 
     def update(self, other):
         if  not isinstance(other, ConfigGroup):
@@ -174,7 +216,7 @@ class ConfigGroup():
             if isinstance(member, ConfigValue):
                 output[name] = member.value
             elif isinstance(member, ConfigGroup):
-                output[name] = member.value_dict()
+                output[name] = member.value_dict
         return output
 
     def apply_value_dict(
