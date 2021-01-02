@@ -7,7 +7,7 @@ from exam_gen.mixins.config.value import ConfigValue
 import exam_gen.util.attrs_wrapper as wrapped
 import exam_gen.util.logging as logging
 
-log = logging.new(__name__, level="DEBUG")
+log = logging.new(__name__, level="WARNING")
 
 @wrapped.attrs()
 class ConfigGroup():
@@ -75,8 +75,8 @@ class ConfigGroup():
         Arguments:
 
            value (optional[str]): If None will return the docstring of the
-             current config group. If the name of a value is provided, this
-             will get the docstring for that value.
+              current config group. If the name of a value is provided, this
+              will get the docstring for that value.
 
         Returns:
 

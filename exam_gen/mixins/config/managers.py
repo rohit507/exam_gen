@@ -1,6 +1,5 @@
 # import exam_gen.mixins.config.format as fmt
 import exam_gen.mixins.config.superclass as cls
-from exam_gen.mixins.prepare_attrs import PrepareAttrs
 import exam_gen.util.logging as logging
 from pprint import *
 import textwrap

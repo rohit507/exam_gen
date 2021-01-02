@@ -5,14 +5,15 @@ import attr
 from pprint import *
 from copy import *
 from exam_gen.util.attrs_wrapper import attrs
-from exam_gen.mixins.prepare_attrs import PrepareAttrs, create_decorator, AttrDecorData
+from exam_gen.mixins.prepare_attrs.decorator import create_decorator
+from exam_gen.mixins.prepare_attrs.dataclasses import AttrDecorData
 from exam_gen.mixins.config.value import ConfigValue
 from exam_gen.mixins.config.group import ConfigGroup
 from exam_gen.mixins.config.format import ConfigDocFormat, default_format
 
 __all__ = ["config_superclass"]
 
-log = logging.new(__name__, level="DEBUG")
+log = logging.new(__name__, level="WARNING")
 
 config_classes = dict()
 
