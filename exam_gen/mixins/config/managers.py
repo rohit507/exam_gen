@@ -76,6 +76,7 @@ class SettingsManager():
         """
     )
 )
+
 class MetadataManager():
     """
     When you inherit from this superclass you get a `metadata` variable that
