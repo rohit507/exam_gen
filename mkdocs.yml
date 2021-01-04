@@ -22,6 +22,7 @@ nav:
           - prepare_attrs: api/mixins/prepare_attrs.md
           - yaml_rep: api/mixins/yaml_rep.md
           - template: api/mixins/template.md
+          - chain: api/mixins/chain.md
       - exam_gen.util:
           - dynamic_call: api/util/dynamic_call.md
           - error: api/util/error.md

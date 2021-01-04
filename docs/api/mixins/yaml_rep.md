@@ -56,12 +56,3 @@ And base items as follows:
 
  - `<templates>/<template_files>`
  - `<assets>/<asset_files>`
-
-## Generated Documentation
-
-::: exam_gen.mixins.yaml_rep
-    handler: python
-    rendering:
-      heading_level: 3
-      show_source: false
-      show_root_toc_entry: false
