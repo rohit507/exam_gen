@@ -8,8 +8,9 @@ import exam_gen.util.logging as logging
 
 log = logging.new(__name__, level="DEBUG")
 
-class Chainable():
+class Chainable(metaclass=PrepareAttrs):
 
+    @classmethod
     def __prepare_attrs__(cls, name, bases, env):
         """
         Add the decorators to the class's environment
@@ -27,23 +28,18 @@ class Chainable():
 
         return env
 
-class StrippedProperty(type(property())):
+class StrippedProperty():
 
     def __init__(self, doc = None, members = None):
         # Get rid of all the stuff from `Property` so that we can exploit
         # how docstring tools use it but nothing
-        for attr in ['getter', 'setter', 'deleter']:
-            if hasattr(self, attr): delattr(self, attr)
+        # for attr in ['getter', 'setter', 'deleter']:
+        #    if hasattr(self, attr): delattr(self, attr)
 
-        def stub(self): pass
-        self.fget = stub
-
-        for attr in ['fset', 'fdel']:
-            setattr(self, attr, None)
-
-        self.fget.__doc__ = doc
+        self.fmembers = members
         self._name =  "UNKNOWN_NAME"
         self.__doc__ = doc
+
 
     def __set_name__(self, obj, name):
         self._owner = obj
@@ -117,39 +113,42 @@ class Gatherer(StrippedProperty):
 
 
     def combine(self, func):
-        return type(self)(self,
-                          self.fgather,
-                          self.fmembers,
-                          func,
-                          self.__doc__)
+        pprint("combine")
+        return type(self)(
+            gather = self.fgather,
+            combine = func,
+            members = self.fmembers,
+            doc = self.__doc__)
 
     def gather(self, func):
-        return type(self)(self,
-                          func,
-                          self.fmembers,
-                          self.fcombine,
-                          self.__doc__)
+        pprint("gather")
+        return type(self)(
+            gather = func,
+            combine = self.fcombine,
+            members = self.fmembers,
+            doc = self.__doc__)
 
     def members(self, func):
-        return type(self)(self,
-                          self.fgather,
-                          func,
-                          self.fcombine,
-                          self.__doc__)
+        pprint("members")
+        return type(self)(
+            gather = self.fgather,
+            combine = self.fcombine,
+            members = func,
+            doc = self.__doc__)
 
 
     def _igather(self, obj):
         sa = self._sub_attr(obj)
         return (self.fgather if sa == None else sa._igather)(obj)
 
-    def _icombine(self, obj, items):
+    def _icombine(self, obj, item, items):
         sa = self._sub_attr(obj)
-        return (self.fcombine if sa == None else sa._icombine)(obj, items)
+        return (self.fcombine if sa == None else sa._icombine)(obj, item, items)
 
     def _collect(self, obj):
-        items = [self._igather(obj)]
-        items += [self._collect(x) for x in self._imembers(obj)]
-        return self._icombine(obj, items)
+        item = [self._igather(obj)]
+        items = [self._collect(x) for x in self._imembers(obj)]
+        return self._icombine(obj, item, items)
 
 
 class Distributor(StrippedProperty):
@@ -171,7 +170,7 @@ class Distributor(StrippedProperty):
         self.fdistrib = distribute
 
     @staticmethod
-    def decorator(func, *, members = None, distribute = None, doc = None):
+    def decorator(func = None, members = None, distribute = None, doc = None):
         if ((members == None) and (distribute == None) and (doc == None)):
             return Distributor(func)
         else:
@@ -184,35 +183,32 @@ class Distributor(StrippedProperty):
         return func
 
     def assign(self, func):
-        return type(self)(self,
-                          func,
+        return type(self)(func,
                           self.fdistrib,
                           self.fmembers,
                           self.__doc__)
 
     def distribute(self, func):
-        return type(self)(self,
-                          self.fassign,
+        return type(self)(self.fassign,
                           func,
                           self.fmembers,
                           self.__doc__)
 
     def members(self, func):
-        return type(self)(self,
-                          self.fassign,
+        return type(self)(self.fassign,
                           self.fdistrib,
                           func,
                           self.__doc__)
 
-    def _iassign(self, obj, item):
+    def _iassign(self, obj, datum):
         sa = self._sub_attr(obj)
-        return (self.fassign if sa == None else sa._iassign)(obj, item)
+        return (self.fassign if sa == None else sa._iassign)(obj, datum)
 
-    def _idistrib(self, obj, items):
+    def _idistrib(self, obj, data):
         sa = self._sub_attr(obj)
-        return (self.fdistrib if sa == None else sa._idistrib)(obj, items)
+        return (self.fdistrib if sa == None else sa._idistrib)(obj, data)
 
-    def _distrib(self, obj, items):
+    def _distrib(self, obj, data):
         (self_data, sub_data) = self._idistrib(obj, data)
         self._iassign(obj, self_data)
         for member in self._imembers(obj):
@@ -232,6 +228,7 @@ class NestedIterator(StrippedProperty):
             assign = None,
             recurse = None,
             members = None,
+            doc = None,
     ):
 
         super().__init__(
@@ -243,7 +240,7 @@ class NestedIterator(StrippedProperty):
         self.frecurse = recurse
 
     @staticmethod
-    def decorator(func, *, members = None, recurse = None, doc = None):
+    def decorator(func = None, members = None, recurse = None, doc = None):
         if ((members == None) and (recurse == None) and (doc == None)):
             return NestedIterator(func)
         else:
@@ -252,26 +249,23 @@ class NestedIterator(StrippedProperty):
             return stub
 
     def __get__(self, obj, objtype = None):
-        def func(seed) : return self._traverse(obj, items)
+        def func(seed) : return self._traverse(obj, seed)
         return func
 
     def assign(self, func):
-        return type(self)(self,
-                          func,
+        return type(self)(func,
                           self.frecurse,
                           self.fmembers,
                           self.__doc__)
 
     def recurse(self, func):
-        return type(self)(self,
-                          self.fassign,
+        return type(self)(self.fassign,
                           func,
                           self.fmembers,
                           self.__doc__)
 
     def members(self, func):
-        return type(self)(self,
-                          self.frecurse,
+        return type(self)(self.frecurse,
                           self.fdistrib,
                           func,
                           self.__doc__)
@@ -282,7 +276,7 @@ class NestedIterator(StrippedProperty):
 
     def _irecurse(self, obj, seed):
         sa = self._sub_attr(obj)
-        return (self.irecurse if sa == None else sa._irecurse)(obj, seed)
+        return (self.frecurse if sa == None else sa._irecurse)(obj, seed)
 
     def _traverse(self, obj, seed):
         self._iassign(obj, seed)
@@ -297,8 +291,9 @@ class PropagateDown(StrippedProperty):
     def __init__(
             self,
             assign = None,
-            copy = deepcopy,
+            copy = None,
             members = None,
+            doc=None,
     ):
 
         super().__init__(
@@ -307,10 +302,13 @@ class PropagateDown(StrippedProperty):
         )
 
         self.fassign  = assign
-        self.fcopy = copy
+
+        def def_copy(self, dat): return deepcopy(dat)
+
+        self.fcopy = copy if copy != None else def_copy
 
     @staticmethod
-    def decorator(func, *, members = None, copy = None, doc = None):
+    def decorator(func = None, members = None, copy = None, doc = None):
         if ((members == None) and (copy == None) and (doc == None)):
             return PropagateDown(func)
         else:
@@ -319,26 +317,23 @@ class PropagateDown(StrippedProperty):
             return stub
 
     def __get__(self, obj, objtype = None):
-        def func(seed) : return self._push(obj, data)
+        def func(data) : return self._push(obj, data)
         return func
 
     def assign(self, func):
-        return type(self)(self,
-                          func,
+        return type(self)(func,
                           self.fcopy,
                           self.fmembers,
                           self.__doc__)
 
     def copy(self, func):
-        return type(self)(self,
-                          self.fassign,
+        return type(self)(self.fassign,
                           func,
                           self.fmembers,
                           self.__doc__)
 
     def members(self, func):
-        return type(self)(self,
-                          self.fassign,
+        return type(self)(self.fassign,
                           self.copy,
                           func,
                           self.__doc__)
@@ -349,7 +344,7 @@ class PropagateDown(StrippedProperty):
 
     def _icopy(self, obj, data):
         sa = self._sub_attr(obj)
-        return (self.fcopy(data) if sa == None else sa._icopy(obj, data))
+        return (self.fcopy(obj,data) if sa == None else sa._icopy(obj, data))
 
     def _push(self, obj, data):
         new_data = self._iassign(obj, data)
@@ -364,21 +359,25 @@ class TreeTraverse(StrippedProperty):
     def __init__(
             self,
             modify = None,
-            copy = deepcopy,
+            copy = None,
             members = None,
+            doc = None
     ):
 
         super().__init__(
-            doc = doc if doc != None else assign.__doc__,
+            doc = doc if doc != None else modify.__doc__,
             members = members,
         )
 
-        self.fmodify  = assign
-        self.fcopy = copy
+        self.fmodify = modify
+
+        def def_copy(self, dat): return deepcopy(dat)
+
+        self.fcopy = copy if copy != None else def_copy
 
     @staticmethod
-    def decorator(func, *, members = None, modify = None, doc = None):
-        if ((members == None) and (modify == None) and (doc == None)):
+    def decorator(func = None, members = None, copy = None, doc = None):
+        if ((members == None) and (copy == None) and (doc == None)):
             return TreeTraverse(func)
         else:
             def stub(func):
@@ -386,26 +385,23 @@ class TreeTraverse(StrippedProperty):
             return stub
 
     def __get__(self, obj, objtype = None):
-        def func(seed) : return self._traverse(obj, data)
+        def func(data) : return self._traverse(obj, data)
         return func
 
     def modify(self, func):
-        return type(self)(self,
-                          func,
+        return type(self)(func,
                           self.fcopy,
                           self.fmembers,
                           self.__doc__)
 
     def copy(self, func):
-        return type(self)(self,
-                          self.fassign,
+        return type(self)(self.fmodify,
                           func,
                           self.fmembers,
                           self.__doc__)
 
     def members(self, func):
-        return type(self)(self,
-                          self.fassign,
+        return type(self)(self.fmodify,
                           self.copy,
                           func,
                           self.__doc__)
@@ -416,10 +412,10 @@ class TreeTraverse(StrippedProperty):
 
     def _icopy(self, obj, data):
         sa = self._sub_attr(obj)
-        return (self.fcopy(data) if sa == None else sa._icopy(obj, data))
+        return (self.fcopy if sa == None else sa._icopy)(obj, data)
 
     def _traverse(self, obj, data):
-        new_data = self._iassign(obj, data)
+        new_data = self._imodify(obj, data)
         copy_data = self._icopy(obj, new_data)
         for member in self._imembers(obj):
             copy_data = self._traverse(member, copy_data)
