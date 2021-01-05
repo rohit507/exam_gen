@@ -99,13 +99,14 @@ class Gatherer(StrippedProperty):
         self.fcombine = combine
 
     @staticmethod
-    def decorator(func, *, members = None, combine = None, doc = None):
-        if ((members == None) and (combine == None) and (doc == None)):
-            return Gatherer(func)
-        else:
-            def stub(func):
-                return Gatherer(func, members, combine, doc)
+    def decorator(gather = None, *, members = None, combine = None, doc = None):
+        def stub(func):
+            return Gatherer(func, combine, members, doc)
+
+        if gather == None:
             return stub
+        else:
+            return stub(gather)
 
     def __get__(self, obj, objtype = None):
         def func() : return self._collect(obj)
@@ -170,13 +171,14 @@ class Distributor(StrippedProperty):
         self.fdistrib = distribute
 
     @staticmethod
-    def decorator(func = None, members = None, distribute = None, doc = None):
-        if ((members == None) and (distribute == None) and (doc == None)):
-            return Distributor(func)
-        else:
-            def stub(func):
-                return Distributor(func, distribute, members, doc)
+    def decorator(assign = None, *, members = None, distribute = None, doc = None):
+        def stub(func):
+            return Distributor(func, distribute, members, doc)
+
+        if assign == None:
             return stub
+        else:
+            return stub(assign)
 
     def __get__(self, obj, objtype = None):
         def func(items) : return self._distrib(obj, items)
@@ -240,13 +242,14 @@ class NestedIterator(StrippedProperty):
         self.frecurse = recurse
 
     @staticmethod
-    def decorator(func = None, members = None, recurse = None, doc = None):
-        if ((members == None) and (recurse == None) and (doc == None)):
-            return NestedIterator(func)
-        else:
-            def stub(func):
-                return NestedIterator(func, recurse, members, doc)
+    def decorator(assign = None, *, members = None, recurse = None, doc = None):
+        def stub(func):
+            return NestedIterator(func, recurse, members, doc)
+
+        if assign == None:
             return stub
+        else:
+            return stub(assign)
 
     def __get__(self, obj, objtype = None):
         def func(seed) : return self._traverse(obj, seed)
@@ -308,13 +311,14 @@ class PropagateDown(StrippedProperty):
         self.fcopy = copy if copy != None else def_copy
 
     @staticmethod
-    def decorator(func = None, members = None, copy = None, doc = None):
-        if ((members == None) and (copy == None) and (doc == None)):
-            return PropagateDown(func)
-        else:
-            def stub(func):
-                return PropagateDown(func, copy, members, doc)
+    def decorator(assign = None, *, members = None, copy = None, doc = None):
+        def stub(func):
+            return PropagateDown(func, copy, members, doc)
+
+        if assign == None:
             return stub
+        else:
+            return stub(assign)
 
     def __get__(self, obj, objtype = None):
         def func(data) : return self._push(obj, data)
@@ -376,13 +380,14 @@ class TreeTraverse(StrippedProperty):
         self.fcopy = copy if copy != None else def_copy
 
     @staticmethod
-    def decorator(func = None, members = None, copy = None, doc = None):
-        if ((members == None) and (copy == None) and (doc == None)):
-            return TreeTraverse(func)
-        else:
-            def stub(func):
-                return TreeTraverse(func, copy, members, doc)
+    def decorator(modify = None, *, members = None, copy = None, doc = None):
+        def stub(func):
+            return TreeTraverse(func, copy, members, doc)
+
+        if modify == None:
             return stub
+        else:
+            return stub(modify)
 
     def __get__(self, obj, objtype = None):
         def func(data) : return self._traverse(obj, data)
