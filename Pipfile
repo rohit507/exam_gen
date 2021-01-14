@@ -4,26 +4,23 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-mkdocs = "*"
-mkdocstrings = "*"
-mkdocs-material = "*"
-setuptools = "*"
-pep517 = "*"
-pymdown-extensions = "*"
-mkdocs-localsearch = "*"
 PyYAML = "*"
-wrapt = "*"
-coloredlogs = "*"
 attrs = "*"
 graphlib = "*"
-attr = "*"
+pep517 = "*"
+setuptools = "*"
 
 [dev-packages]
-mypy = "*"
+coloredlogs = "*"
+flake8 = "*"
+isort = "*"
+mkdocs = "*"
+mkdocs-localsearch = "*"
+mkdocs-material = "*"
+mkdocstrings = "*"
+pymdown-extensions = "*"
 pytest = "*"
 pytest-cov = "*"
-isort = "*"
-flake8 = "*"
 
 [requires]
 python_version = "3.9"

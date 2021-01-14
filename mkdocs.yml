@@ -23,6 +23,7 @@ nav:
           - yaml_rep: api/mixins/yaml_rep.md
           - template: api/mixins/template.md
           - chain: api/mixins/chain.md
+          - user_setup: api/mixins/user_setup.md
       - exam_gen.util:
           - dynamic_call: api/util/dynamic_call.md
           - error: api/util/error.md

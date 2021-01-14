@@ -1,9 +1,10 @@
-import logging
 import copy
-import coloredlogs
 import inspect
+import logging
 import textwrap
 from pprint import *
+
+import coloredlogs
 
 __all__ = ["new"]
 

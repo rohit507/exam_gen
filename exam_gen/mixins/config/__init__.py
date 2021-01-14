@@ -1,6 +1,6 @@
-from exam_gen.mixins.config.format import default_format, ConfigDocFormat
+from exam_gen.mixins.config.format import ConfigDocFormat, default_format
+from exam_gen.mixins.config.managers import MetadataManager, SettingsManager
 from exam_gen.mixins.config.superclass import config_superclass
-from exam_gen.mixins.config.managers import SettingsManager, MetadataManager
 
 __all__ = [
     'default_format',

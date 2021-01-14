@@ -1,15 +1,17 @@
-import exam_gen.util.logging as logging
 import textwrap
 import types
-import attr
-from pprint import *
 from copy import *
-from exam_gen.util.attrs_wrapper import attrs
-from exam_gen.mixins.prepare_attrs.decorator import create_decorator
-from exam_gen.mixins.prepare_attrs.dataclasses import AttrDecorData
-from exam_gen.mixins.config.value import ConfigValue
-from exam_gen.mixins.config.group import ConfigGroup
+from pprint import *
+
+import attr
+
+import exam_gen.util.logging as logging
 from exam_gen.mixins.config.format import ConfigDocFormat, default_format
+from exam_gen.mixins.config.group import ConfigGroup
+from exam_gen.mixins.config.value import ConfigValue
+from exam_gen.mixins.prepare_attrs.dataclasses import AttrDecorData
+from exam_gen.mixins.prepare_attrs.decorator import create_decorator
+from exam_gen.util.attrs_wrapper import attrs
 
 __all__ = ["config_superclass"]
 

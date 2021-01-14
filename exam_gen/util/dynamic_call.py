@@ -1,6 +1,6 @@
-from pprint import *
 from inspect import *
-from itertools import chain, product, count
+from itertools import chain, count, product
+from pprint import *
 from string import ascii_lowercase
 
 

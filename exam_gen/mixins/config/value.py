@@ -1,9 +1,11 @@
-import exam_gen.util.logging as logging
 import inspect
 import textwrap
-import attr
 from pprint import *
+
+import attr
+
 import exam_gen.util.attrs_wrapper as wrapped
+import exam_gen.util.logging as logging
 
 log = logging.new(__name__)
 

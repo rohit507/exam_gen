@@ -1,5 +1,6 @@
-import attr
 from copy import *
+
+import attr
 
 default_attrs_params = {
     'order': False,

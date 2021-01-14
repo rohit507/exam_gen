@@ -1,11 +1,13 @@
-import attr
 import inspect
 import textwrap
-from pprint import *
 from copy import *
-from exam_gen.mixins.config.value import ConfigValue
+from pprint import *
+
+import attr
+
 import exam_gen.util.attrs_wrapper as wrapped
 import exam_gen.util.logging as logging
+from exam_gen.mixins.config.value import ConfigValue
 
 log = logging.new(__name__, level="WARNING")
 

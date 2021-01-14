@@ -1,11 +1,13 @@
-import exam_gen.util.logging as logging
 import textwrap
 import types
-import attr
-from pprint import *
 from copy import *
-from exam_gen.util.attrs_wrapper import attrs
+from pprint import *
+
+import attr
+
 import exam_gen.mixins.config as config
+import exam_gen.util.logging as logging
+from exam_gen.util.attrs_wrapper import attrs
 
 log = logging.new(__name__, level='DEBUG')
 
@@ -50,6 +52,8 @@ class BaseTemplate(config.SettingsManager, config.MetadataManager):
     The various values and subgroups shown below will generally be available
     to any template that's being rendered by this class.
     """)
+
+    member_templates = attr.ib(factory=list)
 
     def render(self):
         """

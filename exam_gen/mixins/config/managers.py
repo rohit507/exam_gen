@@ -1,8 +1,9 @@
 # import exam_gen.mixins.config.format as fmt
+import textwrap
+from pprint import *
+
 import exam_gen.mixins.config.superclass as cls
 import exam_gen.util.logging as logging
-from pprint import *
-import textwrap
 
 log = logging.new(__name__, level="DEBUG")
 

@@ -1,45 +1,566 @@
-import attr
-from textwrap import indent, dedent
-from pprint import pprint, pformat
 from copy import copy, deepcopy
+from pprint import pformat, pprint
+from textwrap import dedent, indent
+from collections import Iterable
+
+import inspect
+
+import attr
+import attr.validators as valid
+
+from exam_gen.util.attrs_wrapper import attrs
+import exam_gen.util.logging as logging
 from exam_gen.mixins.chain.util import *
 from exam_gen.mixins.prepare_attrs import PrepareAttrs
-import exam_gen.util.logging as logging
 
-log = logging.new(__name__, level="DEBUG")
+log = logging.new(__name__, level="WARNING")
 
-class Chainable(metaclass=PrepareAttrs):
+
+class TypedDispatch():
+    """
+    Get a value (usually a function) based on the type of a presented object.
+    """
+
+    def __init__(self, *vargs):
+        log.debug(
+            dedent("""
+            Initializing new typed dispatch with args:
+            %s
+            """),
+            indent(pformat(vargs), "    ")
+            )
+
+
+        self._dispatch = dict()
+        self._default = None
+
+        if (len(vargs) == 0):
+            raise RuntimeError("Invalid Init of TypedDispatch")
+
+        if len(vargs) >= 1:
+            self.add_default(vargs[0])
+
+        if len(vargs) >= 2:
+            for (cls, val) in vargs[1:]:
+                self.add_dispatch(cls, val)
+
+        if self.default == None:
+            raise RuntimeError("Invalid TypedDispatch Init")
+
+
+    def add_dispatch(self, cls, val):
+        self._dispatch[cls] = val
+
+    def add_default(self, val):
+        self._default = val
+
+    def dispatch (self, val):
+        disp_cls = disp_val = None
+
+        # Find the "Closest" parent class to value, the one which is a
+        # superclass to the value and a subclass to every other parent class
+        # in the set. Arbitrarily chooses a return val if there's multiple
+        # dispatchers of equal "distance"
+        for (cls, cls_val) in self.dispatcher_list:
+            if isinstance(val, cls):
+                if (disp_cls == None) or issubclass(cls, disp_cls):
+                    disp_cls, disp_val = cls, cls_val
+
+        if disp_cls == None:
+            disp_val = self._default
+
+        return disp_val
+
+    @property
+    def dispatcher_list(self):
+        return self._dispatch.items()
+
+    @property
+    def dispatcher_map(self):
+        return self._dispatch.items()
+
+    @property
+    def default(self):
+        return self._default
+
+    def combine(self, other = None):
+        """
+        Make a copy of this dispatcher. If there's an 'other' param provided
+        then copy all of its dispatchers and defaults, overriding if there's
+        any overlap.
+        """
+
+        output = TypedDispath(self.default, *self.dispatcher_list)
+        if other != None:
+            for (k,v) in other.dispatcher_list:
+                output.add_dispatch(k,v)
+            output.add_default(other.default)
+
+
+            log.debug(
+                dedent("""
+                Combining Dispatchers:
+
+                  Self:
+                %s
+
+                  Self Default:
+                %s
+
+                  Self Dispatch List:
+                %s
+
+                  Other:
+                %s
+
+                  Other Default:
+                %s
+
+                  Other Dispatch List:
+                %s
+
+                  Result:
+                %s
+
+                  Result Default:
+                %s
+
+                  Result Dispatch List:
+                %s
+
+
+                """),
+                indent(pformat(self), "    "),
+                indent(pformat(self.default), "    "),
+                indent(pformat(self.dispatcher_list), "    "),
+                indent(pformat(other), "    "),
+                indent(pformat(other.default), "    "),
+                indent(pformat(other.dispatcher_list), "    "),
+                indent(pformat(output), "    "),
+                indent(pformat(output.default), "    "),
+                indent(pformat(output.dispatcher_list), "    "),
+            )
+
+        return output
+
+def traversal_dispatcher(dispatcher_name):
+    """
+    A decorator for a function to get the value from the dispatcher for a
+    particular sub-object. Ignores everthing about the function it's decorating
+    other then the documentation.
+
+    Assumes the dispatcher has functions where the object is the first param.
+    """
+
+    def wrapper(func):
+
+        def get_dispatch(self, obj):
+            """
+            Create a getter to get the relevant function or member.
+
+            If the object has a decorator of the same name and type
+            its dispatcher will be used over this class'
+            """
+
+            self_dispatch = getattr(self, dispatcher_name)
+            self_decor = getattr(obj, self._name, None)
+
+            dispatch, obj_decor = self_dispatch, self_decor
+            obj_dispatch = getattr(obj, dispatcher_name, None)
+
+            # If we have a genuinely different object we're iterating over
+            # that has an identical traversal then include its dispatcher
+            # over our own.
+            if ((obj_dispatch != None)
+                and (obj != self._owner)
+                and (obj_decor != None)
+                and (obj_decor != self)
+                and isinstance(obj_decor, type(self))):
+                dispatch = obj_dispatch.combine(dispatch)
+
+            log.debug(
+                dedent("""
+                Getting Dispatched for:
+
+                  Dispatcher Name:
+                %s
+
+                  Dipatch Function:
+                %s
+
+                  Self:
+                %s
+
+                  Owner:
+                %s
+
+                  Object Decorator:
+                %s
+
+                  Object Dispatcher:
+                %s
+
+                  Target Object:
+                %s
+
+                  Target Dispatcher:
+                %s
+
+                  Return Dispatcher:
+                %s
+
+                  Return Dispatch Default:
+                %s
+
+                  Return Dispatch List:
+                %s
+                """),
+                indent(dispatcher_name, "    "),
+                indent(func.__qualname__, "    "),
+                indent(pformat(self), "    "),
+                indent(pformat(self._owner), "    "),
+                indent(pformat(self_decor), "    "),
+                indent(pformat(self_dispatch), "    "),
+                indent(pformat(obj), "    "),
+                indent(pformat(obj_dispatch), "    "),
+                indent(pformat(dispatch), "    "),
+                indent(pformat(dispatch.default), "    "),
+                indent(pformat(dispatch.dispatcher_list), "    "),
+                )
+
+            return dispatch
+
+        def with_dispatch(self, obj, *vargs, **kwargs):
+
+            disp = get_dispatch(self, obj)
+            ret_func = disp.dispatch(obj)
+            out = ret_func(obj, *vargs, **kwargs)
+            log.debug(
+                dedent("""
+                Calling Dispatcher '%s' via '%s':
+
+                  Self:
+                %s
+
+                  Obj:
+                %s
+
+                  Vargs:
+                %s
+
+                  Kwargs:
+                %s
+
+                  Result:
+                %s
+
+                  Result Default:
+                %s
+
+                  Result Dispatch List:
+                %s
+
+                  Return Func:
+                %s
+
+                  Return Func Sig
+                %s
+
+                  Result:
+                %s
+                """),
+                dispatcher_name,
+                func.__qualname__,
+                indent(pformat(self), "    "),
+                indent(pformat(obj), "    "),
+                indent(pformat(vargs), "    "),
+                indent(pformat(kwargs), "    "),
+                indent(pformat(disp), "    "),
+                indent(pformat(disp.default), "    "),
+                indent(pformat(disp.dispatcher_list), "    "),
+                indent(pformat(ret_func), "    "),
+                indent(pformat(inspect.signature(func)), "    "),
+                indent(pformat(out), "    "),
+            )
+            return out
+
+        with_dispatch.__doc__ = func.__doc__
+
+
+
+        log.debug(
+            dedent("""
+            Creating dispatcher for variable '%s':
+
+              Dispatcher Name:
+            %s
+
+              Dispatcher Signature:
+            %s
+
+              Return Function:
+            %s
+            """),
+            dispatcher_name,
+            indent(func.__qualname__, "    "),
+            indent(pformat(with_dispatch), "    "),
+        )
+
+        return with_dispatch
+
+    return wrapper
+
+def traversal_decorator(key_param):
+    """
+    A decorator that generates the initial decorator for a traversal class, by
+    wrapping a function that calls "init", and assigning one of its components
+    as
+
+    The key parameter is the one that's assumed to be the default when there's
+    no parameters to th
+    """
+
+    def wrapper(func):
+
+        def decorate(cls, *vargs, **kwargs):
+
+            log.debug(
+                dedent("""
+                Using Decorator to Construct Traversal:
+
+                  Class:
+                %s
+
+                  Function:
+                %s
+
+                  Vargs:
+                %s
+
+                  Kwargs:
+                %s
+                """),
+                indent(pformat(cls), "    "),
+                indent(func.__qualname__, "    "),
+                indent(pformat(vargs), "    "),
+                indent(pformat(kwargs), "    "),
+            )
+
+            def create(key_func):
+                out_kwargs = deepcopy(kwargs)
+
+                if ('doc' not in kwargs) or (kwargs['doc'] == None):
+                    out_kwargs['doc'] = key_func.__doc__
+
+                if key_func != None:
+                    out_kwargs[key_param] = key_func
+                elif 'key_param' not in kwargs:
+                    raise RuntimeError("Invalid Decorator Init")
+
+                out_vargs = tuple(vargs[1:])
+                dec = func(cls, *out_vargs, **out_kwargs)
+
+                log.debug(
+                    dedent("""
+                    Constructing Decorator Object:
+
+                      Input Function:
+                    %s
+
+                      Result Vargs
+                    %s
+
+                      Result Kwargs:
+                    %s
+
+                      Decorator:
+                    %s
+
+                      Decorator Dir:
+                    %s
+                    """),
+                    indent(pformat(key_func), "    "),
+                    indent(pformat(out_vargs), "    "),
+                    indent(pformat(out_kwargs), "    "),
+                    indent(pformat(dec), "    "),
+                    indent(pformat(dir(dec), compact=True), "    "),
+                   )
+
+                return dec
+
+            if (len(vargs) == 1) and (key_param not in kwargs):
+                return create(vargs[0])
+            elif key_param not in kwargs:
+                return create
+            else:
+                return create(None)
+
+        decorate.__doc__ = func.__doc__
+
+        log.debug(
+            dedent("""
+            Constructing new decorator function for decorator:
+
+              Key Param:
+            %s
+
+              Func Name:
+            %s
+
+              Input Signature:
+            %s
+
+              Output Signature:
+            %s
+            """),
+            indent(key_param, "    "),
+            indent(func.__qualname__, "    "),
+            indent(pformat(inspect.signature(func)), "    "),
+            indent(pformat(inspect.signature(decorate)), "    "),
+        )
+
+        return decorate
+
+    return wrapper
+
+def traversal_updater(dispatcher_name):
+    """
+    This is a decorator that will make a function update a dispatcher based
+    on the provided arguments.
+
+    The input function acts as a modifier for the function the
+    """
+
+    def wrapper(transform_func):
+
+        log.debug(
+            dedent("""
+            Constructing new updater for decorator:
+
+              Dispatcher Name:
+            %s
+
+              Transform Func Name:
+            %s
+            """),
+            indent(dispatcher_name, "    "),
+            indent(transform_func.__qualname__, "    ")
+        )
+
+        def mark_func(self, typ = None, func = None):
+
+            if inspect.isfunction(typ) and (func == None):
+                func = typ
+                typ = None
+
+            log.debug(
+                dedent("""
+                Setting %s for Decorator '%s':
+
+                  Decorator:
+                %s
+
+                  New Type:
+                %s
+
+                  Marking Func:
+                %s
+                """),
+                transform_func.__qualname__,
+                self._name,
+                indent(pformat(self), "    "),
+                indent(pformat(typ), "    "),
+                indent(pformat(func), "    "),
+            )
+
+            def update(input_function):
+                updated_function = transform_func(self, input_function)
+
+                # Handles case where transform doesn't return anything
+                if updated_function == None:
+                    updated_function = input_function
+
+                log.debug(
+                    dedent("""
+                    Updating parameter %s for decorator '%s':
+
+                      Decorator:
+                    %s
+
+                      New Type:
+                    %s
+
+                      Input Function:
+                    %s
+
+                      Transformed Function:
+                    %s
+                    """),
+
+                    transform_func.__qualname__,
+                    self._name,
+                    indent(pformat(self), "    "),
+                    indent(pformat(typ), "    "),
+                    indent(pformat(input_function), "    "),
+                    indent(pformat(updated_function), "    "),
+                )
+
+                if typ != None:
+                    getattr(self, dispatcher_name).add_dispatch(
+                        typ, updated_function)
+                else:
+                    getattr(self, dispatcher_name).add_default(
+                        updated_function)
+
+                return self
+
+            return update(func) if func != None else update
+
+        mark_func.__doc__ = transform_func.__doc__
+
+        return mark_func
+
+    return wrapper
+
+
+@attr.s
+class TraversalBase():
+
+    _members = attr.ib(
+        default = lambda self: list(),
+        converter = TypedDispatch,
+        kw_only = True,
+    )
+
+    @traversal_dispatcher('_members')
+    def _members_indirect(): pass
+
+    @traversal_updater('_members')
+    def members(self, func): return func
+
+    doc = attr.ib(
+        default = None,
+        validator = valid.optional(valid.instance_of(str)),
+        kw_only = True,
+    )
+
+    _owner = attr.ib(
+        default = None,
+        init = False,
+    )
+
+    _name = attr.ib(
+        default = None,
+        init = False,
+    )
 
     @classmethod
-    def __prepare_attrs__(cls, name, bases, env):
-        """
-        Add the decorators to the class's environment
-        """
-        if hasattr(super(),"__prepare_attrs__"):
-            env = super().__prepare_attrs__(name,bases,env)
+    @traversal_decorator(key_param = 'members')
+    def decorate(cls, members = None, doc = None):
+        return TraversalBase(members, doc)
 
-        # We're being rather simple here and just adding the decorators
-        # to the
-        env['gather'] = Gatherer.decorator
-        env['distribute'] = Distributor.decorator
-        env['nested_iter'] = NestedIterator.decorator
-        env['depth_iter'] = PropagateDown.decorator
-        env['tree_iter'] = TreeTraverse.decorator
-
-        return env
-
-class StrippedProperty():
-
-    def __init__(self, doc = None, members = None):
-        # Get rid of all the stuff from `Property` so that we can exploit
-        # how docstring tools use it but nothing
-        # for attr in ['getter', 'setter', 'deleter']:
-        #    if hasattr(self, attr): delattr(self, attr)
-
-        self.fmembers = members
-        self._name =  "UNKNOWN_NAME"
-        self.__doc__ = doc
-
+    def __attrs_post_init__(self):
+        self.__doc__ = self.doc
 
     def __set_name__(self, obj, name):
         self._owner = obj
@@ -60,368 +581,213 @@ class StrippedProperty():
             "Can't delete with attr `{}` of kind {}.".format(
                 self._name, type(self).__name__))
 
-    def _imembers(self, obj):
-        sa = self._sub_attr(obj)
-        if sa != None:
-            return sa._imembers(obj)
-        elif ((self != obj) and hasattr(obj, 'default_members')):
-            return getattr(obj, 'default_members')(obj)
-        else:
-            return self.fmembers(obj)
 
-    def _sub_attr(self, obj):
-        sub_attr = getattr(obj, self._name, None)
-        if ((sub_attr == None)
-            or (obj == self._owner)
-            or (sub_attr == self)
-            or (not isinstance(sub_attr, type(self)))):
-            return None
-        else:
-            return sub_attr
+@attr.s
+class Gatherer(TraversalBase):
 
+    _gather = attr.ib(
+        converter = TypedDispatch,
+    )
 
-class Gatherer(StrippedProperty):
+    @traversal_dispatcher(dispatcher_name = '_gather')
+    def _gather_indirect(): pass
 
-    def __init__(
-            self,
-            gather = None,
-            combine = None,
-            members = None,
-            doc = None
-    ):
+    @traversal_updater(dispatcher_name = '_gather')
+    def gather(self, func): return func
 
-        super().__init__(
-            doc = doc if doc != None else gather.__doc__,
-            members = members
-        )
+    _combine = attr.ib(
+        default = lambda self, item, items: itertools.chain(item, *items),
+        converter = TypedDispatch,
+        kw_only = True,
+    )
 
-        self.fgather  = gather
-        self.fcombine = combine
+    @traversal_dispatcher(dispatcher_name = '_combine')
+    def _combine_indirect(): pass
 
-    @staticmethod
-    def decorator(gather = None, *, members = None, combine = None, doc = None):
-        def stub(func):
-            return Gatherer(func, combine, members, doc)
+    @traversal_updater(dispatcher_name = '_combine')
+    def combine(self, func): return func
 
-        if gather == None:
-            return stub
-        else:
-            return stub(gather)
+    @classmethod
+    @traversal_decorator(key_param = 'gather')
+    def decorate(cls, gather, **kwargs):
+        return Gatherer(gather, **kwargs)
 
     def __get__(self, obj, objtype = None):
         def func() : return self._collect(obj)
         return func
 
-
-    def combine(self, func):
-        pprint("combine")
-        return type(self)(
-            gather = self.fgather,
-            combine = func,
-            members = self.fmembers,
-            doc = self.__doc__)
-
-    def gather(self, func):
-        pprint("gather")
-        return type(self)(
-            gather = func,
-            combine = self.fcombine,
-            members = self.fmembers,
-            doc = self.__doc__)
-
-    def members(self, func):
-        pprint("members")
-        return type(self)(
-            gather = self.fgather,
-            combine = self.fcombine,
-            members = func,
-            doc = self.__doc__)
-
-
-    def _igather(self, obj):
-        sa = self._sub_attr(obj)
-        return (self.fgather if sa == None else sa._igather)(obj)
-
-    def _icombine(self, obj, item, items):
-        sa = self._sub_attr(obj)
-        return (self.fcombine if sa == None else sa._icombine)(obj, item, items)
-
     def _collect(self, obj):
-        item = [self._igather(obj)]
-        items = [self._collect(x) for x in self._imembers(obj)]
-        return self._icombine(obj, item, items)
 
+        item = [self._gather_indirect(obj)]
 
-class Distributor(StrippedProperty):
+        items = [self._collect(x) for x in self._members_indirect(obj)]
+        return self._combine_indirect(obj, item, items)
 
-    def __init__(
-            self,
-            assign = None,
-            distribute = None,
-            members = None,
-            doc = None
-    ):
+@attr.s
+class Distributor(TraversalBase):
 
-        super().__init__(
-            doc = doc if doc != None else assign.__doc__,
-            members = members
-        )
+    _assign = attr.ib(
+        converter = TypedDispatch,
+    )
 
-        self.fassign  = assign
-        self.fdistrib = distribute
+    @traversal_dispatcher(dispatcher_name = '_assign')
+    def _assign_indirect(self, obj, data): pass
 
-    @staticmethod
-    def decorator(assign = None, *, members = None, distribute = None, doc = None):
-        def stub(func):
-            return Distributor(func, distribute, members, doc)
+    @traversal_updater(dispatcher_name = '_assign')
+    def assign(self, func): return func
 
-        if assign == None:
-            return stub
-        else:
-            return stub(assign)
+    _allocate = attr.ib(
+        default = lambda self, items: (items, items),
+        converter = TypedDispatch,
+        kw_only = True,
+    )
+
+    @traversal_dispatcher(dispatcher_name = '_allocate')
+    def _allocate_indirect(): pass
+
+    @traversal_updater(dispatcher_name = '_allocate')
+    def allocate(self, func): return func
+
+    @classmethod
+    @traversal_decorator(key_param = 'assign')
+    def decorate(cls,assign,**kwargs):
+        return Distributor(assign,**kwargs)
 
     def __get__(self, obj, objtype = None):
         def func(items) : return self._distrib(obj, items)
         return func
 
-    def assign(self, func):
-        return type(self)(func,
-                          self.fdistrib,
-                          self.fmembers,
-                          self.__doc__)
-
-    def distribute(self, func):
-        return type(self)(self.fassign,
-                          func,
-                          self.fmembers,
-                          self.__doc__)
-
-    def members(self, func):
-        return type(self)(self.fassign,
-                          self.fdistrib,
-                          func,
-                          self.__doc__)
-
-    def _iassign(self, obj, datum):
-        sa = self._sub_attr(obj)
-        return (self.fassign if sa == None else sa._iassign)(obj, datum)
-
-    def _idistrib(self, obj, data):
-        sa = self._sub_attr(obj)
-        return (self.fdistrib if sa == None else sa._idistrib)(obj, data)
-
     def _distrib(self, obj, data):
-        (self_data, sub_data) = self._idistrib(obj, data)
-        self._iassign(obj, self_data)
-        for member in self._imembers(obj):
+        (self_data, sub_data) = self._allocate_indirect(obj, data)
+        self._assign_indirect(obj, self_data)
+        for member in self._members_indirect(obj):
             self._distrib(member, sub_data)
 
 
-class NestedIterator(StrippedProperty):
-    """
-    process:
-      - apply seed to self.
-      - create iterator from seed, pull items for each sub_elem, let each
-        process.
-    """
+def yield_none_forever(self, seq):
+    while True:
+        yield None
 
-    def __init__(
-            self,
-            assign = None,
-            recurse = None,
-            members = None,
-            doc = None,
-    ):
+@attr.s
+class NestedIterator(TraversalBase):
 
-        super().__init__(
-            doc = doc if doc != None else assign.__doc__,
-            members = members,
-        )
+    _assign = attr.ib(
+        converter = TypedDispatch,
+    )
 
-        self.fassign  = assign
-        self.frecurse = recurse
+    @traversal_dispatcher(dispatcher_name = '_assign')
+    def _assign_indirect(): pass
 
-    @staticmethod
-    def decorator(assign = None, *, members = None, recurse = None, doc = None):
-        def stub(func):
-            return NestedIterator(func, recurse, members, doc)
+    @traversal_updater(dispatcher_name = '_assign')
+    def assign(self, func): return func
 
-        if assign == None:
-            return stub
-        else:
-            return stub(assign)
+    _step = attr.ib(
+        default = yield_none_forever,
+        converter = TypedDispatch,
+        kw_only = True,
+    )
+
+    @traversal_dispatcher(dispatcher_name = '_step')
+    def _step_indirect(): pass
+
+    @traversal_updater(dispatcher_name = '_step')
+    def step(self, func): return func
+
+    @classmethod
+    @traversal_decorator(key_param = 'assign')
+    def decorate(cls, assign, **kwargs):
+        return NestedIterator(assign, **kwargs)
+
 
     def __get__(self, obj, objtype = None):
         def func(seed) : return self._traverse(obj, seed)
         return func
 
-    def assign(self, func):
-        return type(self)(func,
-                          self.frecurse,
-                          self.fmembers,
-                          self.__doc__)
-
-    def recurse(self, func):
-        return type(self)(self.fassign,
-                          func,
-                          self.fmembers,
-                          self.__doc__)
-
-    def members(self, func):
-        return type(self)(self.frecurse,
-                          self.fdistrib,
-                          func,
-                          self.__doc__)
-
-    def _iassign(self, obj, seed):
-        sa = self._sub_attr(obj)
-        return (self.fassign if sa == None else sa._iassign)(obj, seed)
-
-    def _irecurse(self, obj, seed):
-        sa = self._sub_attr(obj)
-        return (self.frecurse if sa == None else sa._irecurse)(obj, seed)
-
     def _traverse(self, obj, seed):
-        self._iassign(obj, seed)
-        seeds = iter(self._irecurse(obj, seed))
-        for member in self._imembers(obj):
+        self._assign_indirect(obj, seed)
+        seeds = iter(self._step_indirect(obj, seed))
+        for member in self._members_indirect(obj):
             self._traverse(member, next(seeds))
 
-# Things like pushing metadata or other settings from the top down.
-# has `assign`, `members`, and `copy`
-class PropagateDown(StrippedProperty):
+@attr.s
+class PropagateDown(TraversalBase):
 
-    def __init__(
-            self,
-            assign = None,
-            copy = None,
-            members = None,
-            doc=None,
-    ):
+    _assign = attr.ib(
+        converter = TypedDispatch,
+    )
 
-        super().__init__(
-            doc = doc if doc != None else assign.__doc__,
-            members = members,
-        )
+    @traversal_dispatcher(dispatcher_name = '_assign')
+    def _assign_indirect(): pass
 
-        self.fassign  = assign
+    @traversal_updater(dispatcher_name = '_assign')
+    def assign(self, func): return func
 
-        def def_copy(self, dat): return deepcopy(dat)
+    _copy = attr.ib(
+        default = lambda self, item: deepcopy(item),
+        converter = TypedDispatch,
+        kw_only = True,
+    )
 
-        self.fcopy = copy if copy != None else def_copy
+    @traversal_dispatcher(dispatcher_name = '_copy')
+    def _copy_indirect(): pass
 
-    @staticmethod
-    def decorator(assign = None, *, members = None, copy = None, doc = None):
-        def stub(func):
-            return PropagateDown(func, copy, members, doc)
+    @traversal_updater(dispatcher_name = '_copy')
+    def copy(self, func): return func
 
-        if assign == None:
-            return stub
-        else:
-            return stub(assign)
+    @classmethod
+    @traversal_decorator(key_param = 'assign')
+    def decorate(cls, assign, **kwargs):
+        return PropagateDown(assign, **kwargs)
 
     def __get__(self, obj, objtype = None):
         def func(data) : return self._push(obj, data)
         return func
 
-    def assign(self, func):
-        return type(self)(func,
-                          self.fcopy,
-                          self.fmembers,
-                          self.__doc__)
-
-    def copy(self, func):
-        return type(self)(self.fassign,
-                          func,
-                          self.fmembers,
-                          self.__doc__)
-
-    def members(self, func):
-        return type(self)(self.fassign,
-                          self.copy,
-                          func,
-                          self.__doc__)
-
-    def _iassign(self, obj, data):
-        sa = self._sub_attr(obj)
-        return (self.fassign if sa == None else sa._iassign)(obj, data)
-
-    def _icopy(self, obj, data):
-        sa = self._sub_attr(obj)
-        return (self.fcopy(obj,data) if sa == None else sa._icopy(obj, data))
-
     def _push(self, obj, data):
-        new_data = self._iassign(obj, data)
-        for member in self._imembers(obj):
-            self._push(member, self._icopy(obj, new_data))
+        new_data = self._assign_indirect(obj, data)
+        for member in self._members_indirect(obj):
+            self._push(member, self._copy_indirect(obj, new_data))
 
 # Fold through members one item after another, gathering data from
 # the parents, and pass through each child
 # Has `use`, `members`, and `copy`
-class TreeTraverse(StrippedProperty):
+@attr.s
+class TreeTraverse(TraversalBase):
 
-    def __init__(
-            self,
-            modify = None,
-            copy = None,
-            members = None,
-            doc = None
-    ):
+    _modify = attr.ib(
+        converter = TypedDispatch,
+    )
 
-        super().__init__(
-            doc = doc if doc != None else modify.__doc__,
-            members = members,
-        )
+    @traversal_dispatcher(dispatcher_name = '_modify')
+    def _modify_indirect(): pass
 
-        self.fmodify = modify
+    @traversal_updater(dispatcher_name = '_modify')
+    def modify(self, func): return func
 
-        def def_copy(self, dat): return deepcopy(dat)
+    _copy = attr.ib(
+        default = lambda self, item: deepcopy(item),
+        converter = TypedDispatch,
+        kw_only = True,
+    )
 
-        self.fcopy = copy if copy != None else def_copy
+    @traversal_dispatcher(dispatcher_name = '_copy')
+    def _copy_indirect(): pass
 
-    @staticmethod
-    def decorator(modify = None, *, members = None, copy = None, doc = None):
-        def stub(func):
-            return TreeTraverse(func, copy, members, doc)
+    @traversal_updater(dispatcher_name = '_copy')
+    def copy(self, func): return func
 
-        if modify == None:
-            return stub
-        else:
-            return stub(modify)
+    @classmethod
+    @traversal_decorator(key_param = 'modify')
+    def decorate(cls, modify, **kwargs):
+        return TreeTraverse(modify, **kwargs)
 
     def __get__(self, obj, objtype = None):
         def func(data) : return self._traverse(obj, data)
         return func
 
-    def modify(self, func):
-        return type(self)(func,
-                          self.fcopy,
-                          self.fmembers,
-                          self.__doc__)
-
-    def copy(self, func):
-        return type(self)(self.fmodify,
-                          func,
-                          self.fmembers,
-                          self.__doc__)
-
-    def members(self, func):
-        return type(self)(self.fmodify,
-                          self.copy,
-                          func,
-                          self.__doc__)
-
-    def _imodify(self, obj, data):
-        sa = self._sub_attr(obj)
-        return (self.fmodify if sa == None else sa._imodify)(obj, data)
-
-    def _icopy(self, obj, data):
-        sa = self._sub_attr(obj)
-        return (self.fcopy if sa == None else sa._icopy)(obj, data)
-
     def _traverse(self, obj, data):
-        new_data = self._imodify(obj, data)
-        copy_data = self._icopy(obj, new_data)
-        for member in self._imembers(obj):
+        new_data = self._modify_indirect(obj, data)
+        copy_data = self._copy_indirect(obj, new_data)
+        for member in self._members_indirect(obj):
             copy_data = self._traverse(member, copy_data)
         return new_data

@@ -1,17 +1,19 @@
-import attr
-import attr.validators as valid
 import graphlib
-import jinja2
-import textwrap
 import inspect
 import itertools
-import pkg_resources
-from exam_gen.mixins.config.value import ConfigValue
-from exam_gen.mixins.config.group import ConfigGroup
+import textwrap
 from pprint import *
+
+import attr
+import attr.validators as valid
+import jinja2
+import pkg_resources
+
+import exam_gen.templates
 import exam_gen.util.attrs_wrapper as wrapped
 import exam_gen.util.logging as logging
-import exam_gen.templates
+from exam_gen.mixins.config.group import ConfigGroup
+from exam_gen.mixins.config.value import ConfigValue
 
 log = logging.new(__name__)
 

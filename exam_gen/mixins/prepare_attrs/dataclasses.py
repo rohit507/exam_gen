@@ -1,11 +1,13 @@
-import exam_gen.util.logging as logging
 import textwrap
 import types
-import attr.validators as valid
-import attr
-from exam_gen.util.attrs_wrapper import attrs
 from copy import *
 from pprint import *
+
+import attr
+import attr.validators as valid
+
+import exam_gen.util.logging as logging
+from exam_gen.util.attrs_wrapper import attrs
 
 log = logging.new(__name__, level="WARNING")
 

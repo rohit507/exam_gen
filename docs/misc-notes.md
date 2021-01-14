@@ -23,12 +23,12 @@ stuff here should be eventually moved somewhere else in these docs.
         detailed usage directions.
     - The theme is [`mkdocs-material`](https://squidfunk.github.io/mkdocs-material/).
     - Run doc server with `pipenv run mkdocs serve` and open
-      [http://127.0.0.1:8000/]() .
+      <http://127.0.0.1:8000/>.
     - Build a static stite with `pipenv run mkdocs build`, results will be placed
       in the `site/` directory.
 
   - Using best practices taken from
-    [https://sourcery.ai/blog/python-best-practices/]():
+    [the sourcery.ai blog](https://sourcery.ai/blog/python-best-practices/):
     - Import Sort: `pipenv run isort`
     - PEP 8 Convention Check: `pipenv run flake8`
     - Static Type Check: `pipenv run mypy`
@@ -107,7 +107,45 @@ stuff here should be eventually moved somewhere else in these docs.
 
 ## Using a build tool
 
-Right now, it looks like [doit](https://github.com/pydoit/doit) is the ideal
+A bunch of the dependency management stuff has a rather build tool like
+structure. I mean, take a look at a question we might write:
+
+```py
+class NewQuestion(Question):
+
+   metadata.name = "Addition Question"
+   metedata.authors = ["Fry, Phillp J", "Farnsworth, Philo"]
+
+   question_template = File("templates/blabla.html")
+   solution_template = File("templates/blabla-solution.html")
+
+   sub_problems = [
+      Subprob1,
+      (Subprob2, {'param1': 123, 'param2':"FOO"}),
+   ]
+
+   def setup(rng, parent_vars, metadata):
+       return something()
+
+   @generate_file("graph.pdf", requires=["graph_data.csv"])
+   def graph(self, user_vars):
+       some_code_here()
+
+   @generate_file("graph_data.csv")
+   def graph_data(self, user_vars):
+       some_code_here()
+```
+
+Where you an specify files and tasks that should be created when the problem
+is being rendered.
+
+Also useful, if you have some way of dependency change tracking, is using the
+build system to manage the internal structure of the question/template/problem
+and
+
+### doit
+
+Right now, it looks like [`doit`](https://github.com/pydoit/doit) is the ideal
 python library to use to provide an actual build system like interface to
 `exam_gen`.
 
@@ -119,6 +157,26 @@ ourselves.
 I guess it's important we focus on the stuff about generating proper YAML
 dumps and loads, since that's going to be key in making sure that a build system
 style works at all.
+
+### invoke
+
+Alternately we build on top of [`invoke`](http://docs.pyinvoke.org/) which
+doesn't have any handling of file dependencies, but is otherwise a lot closer
+to the structure we want.
+
+If we use `invoke`, then we'll have to implement a lot of the file system
+management stuff ourselves, as well as a bunch of the caching but the
+fundamental dependency resolution should be a lot better, and a lot easier to
+handle.
+
+In order to do more effective partial invocations we'd need some method to
+keep to track of when files (and corresponding data-targets) where last used,
+when they chnaged and a bunch of other things that are important. There's
+a library called `dagger` that can do this, but it'd still take too much effort.
+
+Either way, invoke is probably our best bet by far to actually have a nice cli
+frontend for the exam generation stuff.
+
 
 ## Internal/Implementation Documentation
 
@@ -173,6 +231,16 @@ attributes.
 
 I think it would be super nice looking to do it this way, but impl complexity
 cost is probably too high. Alas.
+
+## Thoughts on architecture/components
+
+  - Templates:
+      - File(...): named tuple that we use to denote this is a file ref not a
+        raw string.
+  - Multi_Templates:
+      - members
+  -
+
 
 ## Things To Do
 
