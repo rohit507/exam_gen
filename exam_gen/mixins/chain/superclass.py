@@ -185,7 +185,7 @@ def traversal_dispatcher(dispatcher_name):
                   Dispatcher Name:
                 %s
 
-                  Dipatch Function:
+                  Dispatch Function:
                 %s
 
                   Self:
@@ -231,6 +231,11 @@ def traversal_dispatcher(dispatcher_name):
             return dispatch
 
         def with_dispatch(self, obj, *vargs, **kwargs):
+            """
+            Use the 'obj' argument to get the appropriate dispatcher from
+            `self` then pass `obj` and the rest of the args to the retrieved
+            function.
+            """
 
             disp = get_dispatch(self, obj)
             ret_func = disp.dispatch(obj)
@@ -286,8 +291,6 @@ def traversal_dispatcher(dispatcher_name):
 
         with_dispatch.__doc__ = func.__doc__
 
-
-
         log.debug(
             dedent("""
             Creating dispatcher for variable '%s':
@@ -316,13 +319,17 @@ def traversal_decorator(key_param):
     wrapping a function that calls "init", and assigning one of its components
     as
 
-    The key parameter is the one that's assumed to be the default when there's
-    no parameters to th
+    The key parameter is the one that's assumed to be the default and the
+    first param when using the decorator.
     """
 
     def wrapper(func):
 
         def decorate(cls, *vargs, **kwargs):
+            """
+            The decorator for the traversal we're building with the
+            `traversal_decorator` decorator.
+            """
 
             log.debug(
                 dedent("""
@@ -347,6 +354,10 @@ def traversal_decorator(key_param):
             )
 
             def create(key_func):
+                """
+                Function that, given just the key field, will construct the
+                final traversal descriptor object.
+                """
                 out_kwargs = deepcopy(kwargs)
 
                 if ('doc' not in kwargs) or (kwargs['doc'] == None):
@@ -388,6 +399,8 @@ def traversal_decorator(key_param):
 
                 return dec
 
+            # If we have the key field just create the final descriptor
+            # otherwise return `create` so that it can be used as a decorator.
             if (len(vargs) == 1) and (key_param not in kwargs):
                 return create(vargs[0])
             elif key_param not in kwargs:
@@ -428,7 +441,13 @@ def traversal_updater(dispatcher_name):
     This is a decorator that will make a function update a dispatcher based
     on the provided arguments.
 
-    The input function acts as a modifier for the function the
+    The function on the traversal that this decorator is applied to should
+    transform the function that the user is passing to update a specific field
+    of the descriptor.
+
+    Alternately if that function returns None (as a function with a body of
+    `pass` would) then the function this decorates will just be used for its
+    docstring.
     """
 
     def wrapper(transform_func):
@@ -448,8 +467,34 @@ def traversal_updater(dispatcher_name):
         )
 
         def mark_func(self, typ = None, func = None):
+            """
+            Function we're creating that will modify a typed dispatcher on
+            the descriptor.
 
-            if inspect.isfunction(typ) and (func == None):
+            Can be used in multiple ways:
+
+               1. As a function `d.foo(typ, func)` which will modify the
+                  decorator `d` by updating `foo` with a new typed dispatch
+                 option.
+               2. As a function `d.foo(func)` which will update the default
+                  for the dispatcher.
+               3. As a decorator `@d.foo` which will use the function it's
+                  decorating as the new default. (Functions as case 2 in the
+                  background)
+               4. As a decorator `@d.foo(typ)` which will use the function
+                  it's decorating as a dispatcher for `typ`.
+
+            These all work when used with keyword arguments instead of just
+            positional.
+
+            We differentiate between cases 2-3 and 4 based on whether in single
+            argument that's provided is a function (cases 2-3) or a class
+            (case 4).
+            """
+
+            if (inspect.isfunction(typ)
+                and (not inspect.isclass(typ))
+                and (func == None)):
                 func = typ
                 typ = None
 
@@ -474,6 +519,12 @@ def traversal_updater(dispatcher_name):
             )
 
             def update(input_function):
+                """
+                This function actually updates the decorator with the input
+                function, whether that's provided by a decorator or just
+                passed in directly.
+                """
+
                 updated_function = transform_func(self, input_function)
 
                 # Handles case where transform doesn't return anything
