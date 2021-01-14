@@ -21,7 +21,7 @@ class TypedDispatch():
     Get a value (usually a function) based on the type of a presented object.
     """
 
-    def __init__(self, *vargs):
+    def __init__(self, *vargs, default_class = None):
         log.debug(
             dedent("""
             Initializing new typed dispatch with args:
@@ -46,7 +46,6 @@ class TypedDispatch():
 
         if self.default == None:
             raise RuntimeError("Invalid TypedDispatch Init")
-
 
     def add_dispatch(self, cls, val):
         self._dispatch[cls] = val
@@ -466,7 +465,7 @@ def traversal_updater(dispatcher_name):
             indent(transform_func.__qualname__, "    ")
         )
 
-        def mark_func(self, typ = None, func = None):
+        def mark_func(self, typ = None, func = None, *, default = False):
             """
             Function we're creating that will modify a typed dispatcher on
             the descriptor.
@@ -490,12 +489,20 @@ def traversal_updater(dispatcher_name):
             We differentiate between cases 2-3 and 4 based on whether in single
             argument that's provided is a function (cases 2-3) or a class
             (case 4).
+
+            Setting `default = True` will override the `typ` parameter and
+            use the input function as a default value. Useful for if you
+            decorate a function that is meant for the specific class and
+            want to override it later.
             """
 
             if (inspect.isfunction(typ)
                 and (not inspect.isclass(typ))
                 and (func == None)):
                 func = typ
+                typ = None
+
+            if default:
                 typ = None
 
             log.debug(
@@ -577,7 +584,7 @@ def traversal_updater(dispatcher_name):
 @attr.s
 class TraversalBase():
 
-    _members = attr.ib(
+    _members : TypedDispatch = attr.ib(
         default = lambda self: list(),
         converter = TypedDispatch,
         kw_only = True,
@@ -617,6 +624,19 @@ class TraversalBase():
         self._owner = obj
         self._name = name
 
+        # This is so that the initial attrs for defaults are also used
+        # for the specific class we're an instance of.
+        #
+        # Otherwise we can have errors where the primary declared attr is
+        # overriden by a subclass, because the subclass binds tighter than
+        # the default.
+        for attrib in self.__attrs_attrs__:
+            attr = getattr(self, attrib.name, None)
+            if (attr != None) and isinstance(attr, TypedDispatch):
+                attr.add_dispatch(obj, attr.default)
+
+
+
     def __get__(self, obj, value):
         raise AttributeError(
             "Can't get with attr `{}` of kind {}.".format(
@@ -635,6 +655,20 @@ class TraversalBase():
 
 @attr.s
 class Gatherer(TraversalBase):
+    """
+    Traverse the set of objects and gather some information.
+
+      - gather: Gets the info for this specific member, should have sig:
+        `def gather_func(self): ... return my_data`
+
+      - combine: Combine info from myself ans all children. Should have sig:
+        `def combine_func(self, my_data, child_data): ... return combined_data`
+        The child_data will be a list where each item is the combined data of
+        the specific child.
+
+     - members: The children of this object used for this traversal, with sig:
+       `def members_func(self): ... return child_list`
+    """
 
     _gather = attr.ib(
         converter = TypedDispatch,
@@ -668,14 +702,25 @@ class Gatherer(TraversalBase):
         return func
 
     def _collect(self, obj):
-
         item = [self._gather_indirect(obj)]
-
         items = [self._collect(x) for x in self._members_indirect(obj)]
         return self._combine_indirect(obj, item, items)
 
 @attr.s
 class Distributor(TraversalBase):
+    """
+    Distribute information through a tree, going top down.
+
+      - assign: given data for this specific member do something.
+        `def assign_func(self,my_data): ... self.do_something(my_data)`
+
+      - allocate: split incoming data from parent into data for self, and
+        data for children. Should have sig
+        `def alloc_func(self, parent_data): ... return (my_data, child_data)`
+
+      - members: The children of this object used for this traversal, with sig
+        `def members_func(self): ... return child_list`.
+    """
 
     _assign = attr.ib(
         converter = TypedDispatch,
@@ -721,6 +766,33 @@ def yield_none_forever(self, seq):
 
 @attr.s
 class NestedIterator(TraversalBase):
+    """
+    Pass data through the line of parents, then through consecutive children.
+    Useful for assigning things like section and sub-section numbers.
+
+      - assign: given data for this specific member do something.
+        `def assign_func(self,my_data): ... self.do_something(my_data)`
+
+      - step: Given the parent's data, return an iterator for sequential
+        child data. Generally should use `yeild` and copy parent data where
+        needed. Should have sig:
+
+        ```
+        def step_func(self, my_data):
+            ...
+            while something:
+                ...
+                yield next_child_data
+        ```
+
+      - members: The children of this object used for this traversal, with sig
+        `def members_func(self): ... return child_list`.
+
+    Note that `step` is structured so that data isn't chained between children,
+    the only chaining is the via the iterator which has no access to the
+    children. This same pattern could be achieved by passing the iterator
+    along though a TreeTraverse, but that would be rather painful.
+    """
 
     _assign = attr.ib(
         converter = TypedDispatch,
@@ -762,16 +834,40 @@ class NestedIterator(TraversalBase):
 
 @attr.s
 class PropagateDown(TraversalBase):
+    """
+    Pass data from top down, where consecutive assign calls form a chain from
+    root to the particular child. This could be done with `distribute` but
+    it would be overcomplicated.
 
-    _assign = attr.ib(
+      - descend: Do something with the data from your parents, then pass data
+        to your children, with sig:
+        ```
+        def assign_func(self,parent_data):
+            ...
+            self.do_something(parent_data)
+            ...
+            return child_data
+        ```
+
+      - copy: copy a piece of child data so that each child has their own
+        version, with sig:
+        `def copy_func(self, child_data): ... return child_data_copy`
+
+      - members: The children of this object used for this traversal, with sig
+        `def members_func(self): ... return child_list`.
+
+    This is a walk from the root of the tree to each node.
+    """
+
+    _descend = attr.ib(
         converter = TypedDispatch,
     )
 
-    @traversal_dispatcher(dispatcher_name = '_assign')
-    def _assign_indirect(): pass
+    @traversal_dispatcher(dispatcher_name = '_descend')
+    def _descend_indirect(): pass
 
-    @traversal_updater(dispatcher_name = '_assign')
-    def assign(self, func): return func
+    @traversal_updater(dispatcher_name = '_descend')
+    def descend(self, func): return func
 
     _copy = attr.ib(
         default = lambda self, item: deepcopy(item),
@@ -786,16 +882,16 @@ class PropagateDown(TraversalBase):
     def copy(self, func): return func
 
     @classmethod
-    @traversal_decorator(key_param = 'assign')
-    def decorate(cls, assign, **kwargs):
-        return PropagateDown(assign, **kwargs)
+    @traversal_decorator(key_param = 'descend')
+    def decorate(cls, descend, **kwargs):
+        return PropagateDown(descend, **kwargs)
 
     def __get__(self, obj, objtype = None):
         def func(data) : return self._push(obj, data)
         return func
 
     def _push(self, obj, data):
-        new_data = self._assign_indirect(obj, data)
+        new_data = self._descend_indirect(obj, data)
         for member in self._members_indirect(obj):
             self._push(member, self._copy_indirect(obj, new_data))
 
@@ -804,6 +900,31 @@ class PropagateDown(TraversalBase):
 # Has `use`, `members`, and `copy`
 @attr.s
 class TreeTraverse(TraversalBase):
+    """
+    This traverses a path from the root to each node which passes through
+    all the parent's earlier siblings.
+
+      - modify: Do something with the data from your parents, then pass data
+        to your children, with sig:
+        ```
+        def modify_func(self,pred_data):
+            ...
+            self.do_something(pred_data)
+            ...
+            return (succ_data, child_data)
+        ```
+
+      - members: The children of this object used for this traversal, with sig
+        `def members_func(self): ... return child_list`.
+
+    Note: Your modify function will probably want to make a personal copy of
+    the data it's passing to its successor and child, but it's the caller's
+    responsibility to make sure that references being passed around are safe.
+
+    Also, yes, most of the other traversals could be implemented in terms of
+    this. It would be a huge pain and it's easier on everyone to separate them
+    out.
+    """
 
     _modify = attr.ib(
         converter = TypedDispatch,
@@ -815,18 +936,6 @@ class TreeTraverse(TraversalBase):
     @traversal_updater(dispatcher_name = '_modify')
     def modify(self, func): return func
 
-    _copy = attr.ib(
-        default = lambda self, item: deepcopy(item),
-        converter = TypedDispatch,
-        kw_only = True,
-    )
-
-    @traversal_dispatcher(dispatcher_name = '_copy')
-    def _copy_indirect(): pass
-
-    @traversal_updater(dispatcher_name = '_copy')
-    def copy(self, func): return func
-
     @classmethod
     @traversal_decorator(key_param = 'modify')
     def decorate(cls, modify, **kwargs):
@@ -836,9 +945,8 @@ class TreeTraverse(TraversalBase):
         def func(data) : return self._traverse(obj, data)
         return func
 
-    def _traverse(self, obj, data):
-        new_data = self._modify_indirect(obj, data)
-        copy_data = self._copy_indirect(obj, new_data)
+    def _traverse(self, obj, pred_data):
+        (succ_data, child_data) = self._modify_indirect(obj, pred_data)
         for member in self._members_indirect(obj):
-            copy_data = self._traverse(member, copy_data)
-        return new_data
+            child_data = self._traverse(member, child_data)
+        return succ_data
