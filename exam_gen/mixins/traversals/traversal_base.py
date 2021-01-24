@@ -67,7 +67,6 @@ class TraversalBase():
         This will be run to apply a set of default flags once the owner
         and name of this descriptor are set.
         """
-        pprint(self._flag_default_disp)
         for (disp_name, func) in self._flag_default_disp:
             disp = getattr(self, disp_name)
             func = func if func != None else disp.default

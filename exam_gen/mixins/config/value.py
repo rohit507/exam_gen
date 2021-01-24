@@ -4,12 +4,11 @@ from pprint import *
 
 import attr
 
-import exam_gen.util.attrs_wrapper as wrapped
 import exam_gen.util.logging as logging
 
 log = logging.new(__name__)
 
-@wrapped.attrs()
+@attr.s
 class ConfigValue():
     """
     This is an internal class that stores a single configuration value.

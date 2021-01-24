@@ -7,18 +7,20 @@ import attr
 
 import exam_gen.mixins.config as config
 import exam_gen.util.logging as logging
-from exam_gen.util.attrs_wrapper import attrs
+
+import jinja2
 
 log = logging.new(__name__, level='DEBUG')
 
-@attrs()
-class BaseTemplate(config.SettingsManager, config.MetadataManager):
+@attr.s
+class TemplateSettings(config.SettingsManager, config.MetadataManager):
     """
-    Classes inheriting from this can produce output strings from a set of
-    environment variables and a template. This exists as a separate class
-    from `jinja2.Template` so that we can wrap it with a few more checks and
-    better errors.
+    This class is what assorted parent classes should inherit when they'll use
+    a template to render text into a nicer format.
+
+    This allows for more convenient settings propagation and general setup.
     """
+    pass
 
     settings.set_docstring("""
     Assorted settings that are available when this class is defined, it's run,
@@ -53,7 +55,13 @@ class BaseTemplate(config.SettingsManager, config.MetadataManager):
     to any template that's being rendered by this class.
     """)
 
-    member_templates = attr.ib(factory=list)
+
+@attr.s
+class BaseTemplate():
+    """
+    This is a wrapper around jinja2.Template that gives us better error
+    messages and other stuff in the potential future.
+    """
 
     def render(self):
         """

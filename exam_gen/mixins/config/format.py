@@ -10,14 +10,13 @@ import jinja2
 import pkg_resources
 
 import exam_gen.templates
-import exam_gen.util.attrs_wrapper as wrapped
 import exam_gen.util.logging as logging
 from exam_gen.mixins.config.group import ConfigGroup
 from exam_gen.mixins.config.value import ConfigValue
 
 log = logging.new(__name__)
 
-@wrapped.attrs()
+@attr.s
 class ConfigDocFormat():
     """
     Class to store formats for printing out configuration setting information.
@@ -388,9 +387,6 @@ class ConfigDocFormat():
             ),
         ),
     )
-
-    def __init__(self, **kwargs):
-        self.__attrs_init__(**kwargs)
 
     @property
     def combined_group_col_widths(self):

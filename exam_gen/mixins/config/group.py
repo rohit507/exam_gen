@@ -5,13 +5,12 @@ from pprint import *
 
 import attr
 
-import exam_gen.util.attrs_wrapper as wrapped
 import exam_gen.util.logging as logging
 from exam_gen.mixins.config.value import ConfigValue
 
 log = logging.new(__name__, level="WARNING")
 
-@wrapped.attrs()
+@attr.s
 class ConfigGroup():
     """
     A group of configuration variables and their subgroups. Only to be used

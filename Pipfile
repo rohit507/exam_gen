@@ -5,10 +5,10 @@ name = "pypi"
 
 [packages]
 PyYAML = "*"
-attrs = "*"
 graphlib = "*"
 pep517 = "*"
 setuptools = "*"
+makefun = "*"
 
 [dev-packages]
 coloredlogs = "*"
@@ -24,3 +24,7 @@ pytest-cov = "*"
 
 [requires]
 python_version = "3.9"
+
+[packages.attrs]
+git = "https://github.com/python-attrs/attrs.git"
+editable = true

@@ -11,7 +11,6 @@ from exam_gen.mixins.config.group import ConfigGroup
 from exam_gen.mixins.config.value import ConfigValue
 from exam_gen.mixins.prepare_attrs.dataclasses import AttrDecorData
 from exam_gen.mixins.prepare_attrs.decorator import create_decorator
-from exam_gen.util.attrs_wrapper import attrs
 
 __all__ = ["config_superclass"]
 

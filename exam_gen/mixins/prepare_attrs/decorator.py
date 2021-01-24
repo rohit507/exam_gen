@@ -9,7 +9,6 @@ import attr.validators as valid
 import exam_gen.util.logging as logging
 from exam_gen.mixins.prepare_attrs.dataclasses import *
 from exam_gen.mixins.prepare_attrs.metaclass import *
-from exam_gen.util.attrs_wrapper import attrs
 
 log = logging.new(__name__, level="WARNING")
 
