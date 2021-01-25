@@ -12,7 +12,6 @@ from exam_gen.mixins.prepare_attrs.metaclass import *
 
 log = logging.new(__name__, level="WARNING")
 
-
 def create_decorator(attr_name, decor_data):
     """
     Can be used to create superclasses that define a new attribute that's

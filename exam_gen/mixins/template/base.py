@@ -4,9 +4,11 @@ from copy import *
 from pprint import *
 
 import attr
+import attr.validators as valid
 
 import exam_gen.mixins.config as config
 import exam_gen.util.logging as logging
+from exam_gen.util.structs import *
 
 import jinja2
 
@@ -55,18 +57,52 @@ class TemplateSettings(config.SettingsManager, config.MetadataManager):
     to any template that's being rendered by this class.
     """)
 
-
 @attr.s
 class BaseTemplate():
     """
     This is a wrapper around jinja2.Template that gives us better error
     messages and other stuff in the potential future.
+
+    !!! Todo
+        - Handle render modes: 'DEFAULT', 'SOLUTIONS', 'RUBRIC', etc..
+        - Reformat Errors for:
+          - Missing Variable in Context on Render
+          - Errors in Template Formatting
+        - Better Management of template string and src loc.
+        - Better Management of template includes and hierarchies (??)
+        - Figure out if there's some good way to do variable inheritance.
     """
 
-    def render(self):
-        """
-        !!! Todo
-            Function should produce an output string based on current settings
-            and input data.
-        """
-        pass
+    parent = attr.ib(
+        default = None,
+        validator = valid.optional(valid.instance_of(TemplateSettings)),
+    )
+    """
+    A reference to a parent object that has a handful of properties useful for
+    setting up a template.
+    """
+
+    environment = attr.ib(
+        default = None,
+    )
+    """
+    A potential reference to the environment from which is a file template
+    might be loaded or some other thing.
+    """
+
+    raw_template = attr.ib(
+        default = None,
+    )
+    """
+    A template that's either a string or a file object
+    """
+
+    raw_vars = attr.ib(
+        default = dict(),
+    )
+    """
+    The variables that are going to be used when rendering a template.
+    """
+
+    # def __init__(self, *args, **kwargs):
+    #     self.__attrs_init__(*args, **kwargs)
