@@ -16,6 +16,21 @@ stuff here should be eventually moved somewhere else in these docs.
     - **Note:** If you're inside a `pipenv shell` you can drop the `pipenv run` prefix
       from all of the commands here that have them.
 
+  - Currently, the package is set up to have a single executable that can manage
+    most of the actual work of running things.
+    - If acting as a user install the package with `pip3 install <location>`
+      (maybe `sudo`?)  Then `exam-gen` will be avilable on the command line.
+    - If working as a developer then you'll have `exam-gen` readily available
+      in `pipenv run` or `pipenv shell`.
+      - I recnoment just using `pipenv shell`
+      - Alternately you can have a simultaneous global "install" with
+        `pip3 install --dev -e ./` but that's contraindicated
+
+
+  - When updating deps as a developer, make sure the setup.py and pipfiles are
+    synced with `pipenv run pipenv-setup sync` after running `pipenv lock`,
+    `pipenv sync` or `pipenv update`.
+
   - We're using [`mkdocs`](https://www.mkdocs.org) for documentation.
     - We're using [`mkdocstrings`](https://github.com/pawamoy/mkdocstrings) to include
       generated docstrings in the mkdocs output.
@@ -37,6 +52,7 @@ stuff here should be eventually moved somewhere else in these docs.
   - We're using the instructions
     [here](https://setuptools.readthedocs.io/en/latest/userguide/quickstart.html)
     to setup `setuptools` and the core python packaging infrastucture.
+
 
 ## Useful Python Facts
 
@@ -248,3 +264,5 @@ cost is probably too high. Alas.
   - TODO: Remove unneccesary dependencies from `Pipfile.lock`.
   - TODO: Actually-set-up/Verify that the git pre-commit hook works.
   - TODO: Move the notes from above somewhere appropriate within the docs or the code
+  - TODO: Once the next version of `attrs` comes out, update the dependency to
+    use the version in pipi

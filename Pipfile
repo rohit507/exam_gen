@@ -9,6 +9,8 @@ graphlib = "*"
 pep517 = "*"
 setuptools = "*"
 makefun = "*"
+attrs = {git = "git+https://github.com/rohit507/attrs.git", editable = true, ref = "936853283e4958fa274070e4d348a51f79c8ca0d"}
+doit = "*"
 
 [dev-packages]
 coloredlogs = "*"
@@ -21,10 +23,11 @@ mkdocstrings = "*"
 pymdown-extensions = "*"
 pytest = "*"
 pytest-cov = "*"
+pipenv-setup = "*"
+exam-gen = {editable = true, path = "."}
+
+[console_scripts]
+exam-gen = "exam_gen.cli.helper:main"
 
 [requires]
 python_version = "3.9"
-
-[packages.attrs]
-git = "https://github.com/python-attrs/attrs.git"
-editable = true

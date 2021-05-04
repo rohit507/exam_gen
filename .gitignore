@@ -130,3 +130,6 @@ dmypy.json
 site/
 scratch.py
 scratch.py
+
+# Doit internal database
+.doit.db
