@@ -11,6 +11,7 @@ setuptools = "*"
 makefun = "*"
 attrs = {git = "git+https://github.com/rohit507/attrs.git", editable = true, ref = "936853283e4958fa274070e4d348a51f79c8ca0d"}
 doit = "*"
+coloredlogs = "*"
 
 [dev-packages]
 coloredlogs = "*"
@@ -27,7 +28,7 @@ pipenv-setup = "*"
 exam-gen = {editable = true, path = "."}
 
 [console_scripts]
-exam-gen = "exam_gen.cli.helper:main"
+exam-gen = "exam_gen.cli:main"
 
 [requires]
 python_version = "3.9"

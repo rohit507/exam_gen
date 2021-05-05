@@ -12,8 +12,10 @@ setup(
     ],
     install_requires=[
         "cloudpickle==1.6.0; python_version >= '3.5'",
+        "coloredlogs==15.0",
         "doit==0.33.1",
         "graphlib==0.9.5",
+        "humanfriendly==9.1; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'",
         "makefun==1.11.3",
         "pep517==0.10.0",
         "pyinotify==0.9.6; sys_platform == 'linux'",
