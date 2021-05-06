@@ -4,9 +4,16 @@ import logging
 import textwrap
 from pprint import *
 
-import coloredlogs
-
 __all__ = ["new"]
+
+colored_logs_loaded = False
+
+try:
+    import coloredlogs
+    colored_logs_loaded = True
+except ModuleNotFoundError:
+    pass
+
 
 def new(name=None, level='WARNING'):
     """
@@ -52,7 +59,6 @@ def new(name=None, level='WARNING'):
         docs for more details on how to use format strings.
 
 
-
     Parameters:
 
        name (str): The name of the logger, used to differentiate between log
@@ -78,18 +84,21 @@ def new(name=None, level='WARNING'):
 
     log = logging.getLogger(name)
 
-    # We modify this, since the original color for the level-name isn't that
-    # visible on terminals w/ a dark theme.
-    field_styles = copy.deepcopy(coloredlogs.DEFAULT_FIELD_STYLES)
-    field_styles.update({ 'levelname': {'bold': True, 'color':'yellow'}})
+    # I want to keep coloredlogs a dev dependency so that it doesn't need to
+    # be installed when the library is just being used to make an exam.
+    if colored_logs_loaded:
+        # We modify this, since the original color for the level-name isn't that
+        # visible on terminals w/ a dark theme.
+        field_styles = copy.deepcopy(coloredlogs.DEFAULT_FIELD_STYLES)
+        field_styles.update({ 'levelname': {'bold': True, 'color':'yellow'}})
 
-    coloredlogs.install(
-        level=level,
-        logger=log,
-        field_styles = field_styles,
+        coloredlogs.install(
+            level=level,
+            logger=log,
+            field_styles = field_styles,
 
-        # Default coloredlog format is way too noisy, and hard to quickly read.
-        fmt='%(levelname)s@%(name)s:%(lineno)s:\n%(message)s\n',
-       )
+            # Default coloredlog format is way too noisy, and hard to quickly read.
+            fmt='%(levelname)s@%(name)s:%(lineno)s:\n%(message)s\n',
+        )
 
     return log

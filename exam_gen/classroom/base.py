@@ -1,23 +1,24 @@
 import attr
 
 import exam_gen.util.logging as logging
+import exam_gen.classroom.roster_parser as roster
 
 log = logging.new(__name__, level="DEBUG")
 
 @attr.s
 class Classroom():
 
-    class_name = attr.ib() # String
+    name = attr.ib() # String
 
-    roster  = attr.ib(default=None) # obj that defines where to find and parse a roster
+    roster  = attr.ib(default=None) # obj that defines to find and parse a roster
     answers = attr.ib(default=None) # defines where to find and how to parse student answers
     grading = attr.ib(default=None) # defines how to format and output grades
 
-    def parse_roster(self):
+    def parse_roster(self, builder):
         """
-        Returns a dict from student id to student metadata
+        Returns a dict from student-id to student metadata.
         """
-        pass
+        return self.roster.get_roster_data(builder)
 
     def parse_answers(self):
         """

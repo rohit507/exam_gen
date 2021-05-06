@@ -2,12 +2,15 @@ from copy import copy, deepcopy
 from pprint import pformat, pprint
 from textwrap import dedent, indent
 from collections import Iterable
+from random import Random
 
 import makefun
 import inspect
 
 import attr
 import attr.validators as valid
+
+import hashlib
 
 import exam_gen.util.logging as logging
 import exam_gen.mixins.user_setup.superclass as user_setup
@@ -58,7 +61,23 @@ def create_seed(*vargs):
       (str): all normalized args are concatenated, hashed, and the lowest 32
       bits of the result are returned as a hexadecimal string
     """
-    pass
+
+    hasher = hashlib.shake_128()
+
+    def run_hasher(v):
+        if isinstance(v, str):
+            hasher.update(bytes(v,'utf-8'))
+        elif isinstance(v, bytes):
+            hasher.update(v)
+            pass
+        elif isinstance(b, Iterable):
+            for elem in v: run_hasher(elem)
+        else:
+            hasher.update(bytes(str(v),'utf-8'))
+
+    for arg in vargs: run_hasher(arg)
+
+    return hasher.digest(8).hex()
 
 def create_gen(seed):
     """

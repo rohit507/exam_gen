@@ -30,8 +30,8 @@ def run_cli(global_vars):
     """
     # var_opts = get_var_opts(global_vars)
     exam = get_exam(global_vars)
-    loader = exam.builder.load_exam(exam)
-    sys.exit(DoitMain(loader).run(sys.argv[1:]))
+    exam.builder.load_exam(exam)
+    sys.exit(DoitMain(exam.builder).run(sys.argv[1:]))
 
 def get_var_opts(global_vars):
     """

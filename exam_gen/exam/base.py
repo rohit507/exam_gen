@@ -8,12 +8,15 @@ log = logging.new(__name__, level="DEBUG")
 @attr.s
 class Exam():
   """
-  Base class for all concrete exams
+  Base class for all concrete exams, should be overridden
 
   TODO
+
+    - People define the options for this thing.
+    - It gets instantiated with information on a student
   """
 
-  builder = attr.ib(factory=exam_gen.builders.Builder)
+  builder = attr.ib()
   """
   The class that defines how to construct a particular exam, as well as
   some other things.
