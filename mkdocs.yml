@@ -14,6 +14,7 @@ theme:
 
 nav:
   - Home: index.md
+  - 'Test (Exam)': api/exam.md
   - Getting Started: getting-started.md
   - Miscellaneous Notes: misc-notes.md
   - Developer API:

@@ -23,7 +23,7 @@ class RosterParser():
     Use roster tweaks to change the value of some parameter for a student.
     """
 
-    def get_roster_data(self, builder):
+    def get_roster_data(self, builder, root_dir):
         """
         Expected result should have 'name', 'sid', 'username', and 'root_seed'
         fields for each student.
@@ -36,7 +36,7 @@ class RosterParser():
             This gives us somewhat more readable file and directory names in
             most cases.
         """
-        raw_data = self.read_roster_data(builder)
+        raw_data = self.read_roster_data(builder, root_dir)
         modified_data = dict()
         for (_, data) in raw_data.items():
 
@@ -59,7 +59,7 @@ class RosterParser():
     def gen_student_seed(self, builder, student_data):
         return create_seed(student_data['sid'], student_data['name'])
 
-    def read_roster_data(self, builder):
+    def read_roster_data(self, builder, root_dir):
         """
         Should read the data from the roster and format it in a dict
         where each key is a student's identifier (sid) and the values are
@@ -85,8 +85,8 @@ class BCoursesCSVRoster(RosterParser):
 
     domain = attr.ib(default='berkeley.edu', kw_only=True)
 
-    def read_roster_data(self, builder):
-        input_data = Path(builder.root_dir) / self.file_name
+    def read_roster_data(self, builder, root_dir):
+        input_data = Path(root_dir) / self.file_name
         input_file = input_data.open(mode='r')
 
         roster_list = list(csv.DictReader(input_file))

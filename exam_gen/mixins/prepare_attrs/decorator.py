@@ -341,7 +341,7 @@ def create_decorator(attr_name, decor_data):
             prop_env = decor_data.scinit_prop_tweak_dir(
                 prop_env, cls_inst, meta)
 
-            prop_cls = type(prop_name, (type(property()),), prop_env)
+            prop_cls = property # type(prop_name, (type(property()),), prop_env)
 
             setattr(cls, attr_name, prop_cls(prop_getter, prop_setter))
 

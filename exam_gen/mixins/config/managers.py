@@ -8,33 +8,7 @@ import exam_gen.util.logging as logging
 log = logging.new(__name__, level="DEBUG")
 
 def var_docstring(var_name, desc):
-    return textwrap.dedent("""
-        {desc}
-
-        Setting a field (e.g. `#!py {var_name}.foo`) that was created in
-        some superclass (`#!py ParentClass`) during class definition:
-        ```python
-        class OurClass(ParentClass):
-           {var_name}.foo = "some value"
-        ```
-
-        Setting a field during instance runtime (i.e. in a function or outside
-        of the class definition):
-        ```python
-        class OurClass(ParentClass):
-
-           def set_foo(self, some_value):
-              self.{var_name}.foo = some_value
-
-        our_instance = OurClass()
-        our_instance.{var_name}.foo = 13
-        ```
-
-        !!! Tip ""
-            Child classes of `#!py OurClass` will inherit any updates to settings
-            that are defined at the class level. Changes made at runtime will
-            **not** be inherited by subclasses and only affect a single object.
-        """).format(var_name = var_name, desc = textwrap.dedent(desc))
+    return textwrap.dedent(desc)
 
 @cls.config_superclass(
     var_name = "settings",
@@ -49,7 +23,6 @@ def var_docstring(var_name, desc):
         """
         Assorted settings that are used by this class and can be set during
         class initialization or runtime.
-
         """
     )
 )

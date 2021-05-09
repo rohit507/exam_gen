@@ -10,19 +10,16 @@ import yaml
 import os
 from pathlib import *
 
+from exam_gen.mixins.path_manager import PathManager
+
 log = logging.new(__name__, level="DEBUG")
 
 @attr.s
-class Builder(TaskLoader2):
+class Builder(TaskLoader2, PathManager):
     """
     """
 
-    exam = attr.ib(default=None)
-
-    root_dir = attr.ib(factory=Path.cwd, kw_only=True)
-
-    template_dir = attr.ib(default='templates', kw_only=True)
-    template_loader = attr.ib(default=None, kw_only=True)
+    exam = attr.ib()
 
     data_dir = attr.ib(default='~data', kw_only=True)
     build_dir = attr.ib(default='~build', kw_only=True)
@@ -34,27 +31,12 @@ class Builder(TaskLoader2):
     roster_file = attr.ib(default='roster.yaml', kw_only=True)
     student_data_file = attr.ib(default='data.yaml', kw_only=True)
 
-
     def __attrs_post_init__(self):
-        if self.template_loader == None:
-            self.template_loader = self.init_template_loader()
 
-    def init_template_loader(self):
-        """
-        The default template loader will look in order at:
+        self.parent_obj = self.exam
 
-          - `<root_dir>/<template_dir>`
-          - `<package_root>/template`
-
-        Override to change where templates are looked for.
-        """
-        return jinja2.ChoiceLoader([
-            jinja2.FileSystemLoader(self.root_dir / self.template_dir),
-            jinja2.PackageLoader('exam_gen')
-            ])
-
-    def load_exam(self, exam):
-        self.exam = exam
+        if hasattr(super(),'__attrs_post_init__'):
+            super().__attrs_post_init__()
 
     def setup(self, opt_values): pass
 
@@ -92,14 +74,14 @@ class Builder(TaskLoader2):
             'doc': 'Parse all class rosters.'
             }
 
-        for clsrm in self.exam.classes:
+        for (name,clsrm) in self.exam.classes.items():
 
             def gen_class_roster(cls=clsrm):
 
                 roster_path = Path(
                     self.root_dir,
                     self.data_dir,
-                    self.class_prefix+cls.name,
+                    self.class_prefix+name,
                     self.roster_file)
 
                 roster_data = cls.parse_roster(self)
@@ -109,6 +91,7 @@ class Builder(TaskLoader2):
                     student_path = Path(
                         self.root_dir,
                         self.data_dir,
+                        self.class_prefix+name,
                         self.student_prefix+student_id,
                         self.student_data_file)
 
@@ -119,7 +102,7 @@ class Builder(TaskLoader2):
                 self.write_class_roster(roster_path, roster_data)
 
             yield { 'basename': basename,
-                    'name': clsrm.name,
+                    'name': name,
                     'actions': [gen_class_roster] }
 
     def write_class_roster(self, roster_path, roster_data):
@@ -128,11 +111,54 @@ class Builder(TaskLoader2):
         roster_file.write(yaml.dump(roster_data))
         roster_file.close()
 
+    def read_class_roster(self): pass
+
     def write_student_data(self, student_path, student_data):
         student_path.parent.mkdir(parents=True, exist_ok=True)
         data_file = student_path.open(mode='w')
         data_file.write(yaml.dump(student_data))
         data_file.close()
+
+    def read_student_data(self, student_path):
+        "read information about student taken from roster"
+        pass
+
+    def write_student_exam_data(self, student_path):
+        """
+        write down the exam and question specific data created when
+        generating an exam
+        """
+        pass
+
+    def read_student_exam_data(self, student_path):
+        pass
+
+    def write_answer_data(self, answer_path, answer_data):
+        """
+        write the answers provided by a student to a data file in a
+        standard(ish) format.
+        """
+        pass
+
+    def read_answer_data(self): pass
+
+    def write_grade_data(self, grade_path, grade_data):
+        """
+        write any user information about grades for a student to a standard
+        location.
+        """
+        pass
+
+    def read_grade_data(self): pass
+
+    def write_result_data(self, result_path, result_data):
+        """
+        Write the output grades, after any auto-grading, to a standard
+        location.
+        """
+        pass
+
+    def read_result_data(self): pass
 
     def generate_class_tasks(self, exam, clsrm):
         """
@@ -157,6 +183,46 @@ class Builder(TaskLoader2):
         should have tasks for:
           - validate_question
         """
+        pass
+
+    def setup_exam(self, exam, build_type, student, build_dir, data_dir):
+        """
+        Sets up the build directory for the exam.
+        """
+        pass
+
+    def setup_exam_question(self,
+                                  exam,
+                                      build_type,
+                                      question,
+                                      student,
+                                      build_dir, data_dir):
+        """
+        Sets up the build directory for a specific question in the exam.
+        """
+        pass
+
+    def gen_exam(self, exam, build_type, student, build_dir, data_dir):
+        """
+        runs the code in the exam object to generate source files and stuff.
+        """
+        pass
+
+    def gen_exam_question(self):
+        """
+        Runs the code in a question object to generate the corresponding
+        source.
+        """
+        pass
+
+    def build_exam(self):
+        """
+        Once all the inputs are created, this will run an external tool
+        to generate output files.
+        """
+        pass
+
+
 
     def generate_student_tasks(self, exam, student):
         """
@@ -173,6 +239,7 @@ class Builder(TaskLoader2):
         These should all be done with a delayed task that has '*' in the
         student position.
         """
+        pass
 
 
 
