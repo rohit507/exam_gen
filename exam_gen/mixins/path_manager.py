@@ -1,3 +1,5 @@
+import attr
+
 import inspect
 import os
 import exam_gen.util.logging as logging
@@ -5,8 +7,9 @@ from pathlib import *
 from pprint import *
 import textwrap
 
-log = logging.new(__name__, level="DEBUG")
+log = logging.new(__name__, level="WARNING")
 
+@attr.s
 class PathManager():
     """
     Helps handle path and file lookup information esp. handling links that are
@@ -23,18 +26,22 @@ class PathManager():
         object's root directory. Usually derived from `parent_obj`.
     """
 
-    def __init__(self,
-                 *vargs,
-                 root_dir=None,
-                 parent_obj=None,
-                 parent_path=None,
-                 **kwargs):
+    root_dir = attr.ib(
+        default=None,
+        kw_only=True)
 
-        if root_dir != None: self.root_dir = root_dir
-        if parent_obj != None: self.parent_obj = parent_obj
-        if parent_path != None: self.parent_path = parent_path
+    parent_obj = attr.ib(default=None, kw_only=True)
 
-        super(PathManager, self).__init__(*vargs, **kwargs)
+    parent_path = attr.ib(default=None, kw_only=True)
+
+    use_class_root = attr.ib(default=False, kw_only=True)
+
+    __class_root = None
+
+    def __attrs_post_init__(self):
+
+        if hasattr(super(),'__attrs_post_init__'):
+            super().__attrs_post_init__()
 
         log.debug(
             textwrap.dedent(
@@ -58,6 +65,8 @@ class PathManager():
             textwrap.indent(pformat(self.parent_obj), "    "),
         )
 
+        parent_path = None
+
         if self.parent_path:
 
             if isinstance(self.parent_path,Path):
@@ -68,20 +77,22 @@ class PathManager():
                 assert False, ("`parent_path` field must have type `Path` or"
                               " `str`.")
 
-            if not root_dir.is_absolute():
+            if not parent_path.is_absolute():
                 assert False, ("`root_dir` must be an absolute path")
 
-        elif issubclass(self.parent_obj, PathManager):
+        elif ((type(self.parent_obj) == PathManager) or
+            issubclass(type(self.parent_obj), PathManager)):
 
-            log.debug("Pulling Parent Path from: %s", pformat(self.parent_obj))
+            log.debug("Pulling Parent Path from: %s", pformat(
+                self.parent_obj.__dict__))
 
             parent_path = self.parent_obj.root_dir
 
         else:
 
             log.debug("No Parent Path from: \n%s\n\n%s\n\n%s",
-                      issubclass(self.parent_obj, PathManager),
-                      PathManager,
+                      issubclass(type(self.parent_obj), PathManager),
+                      type(self.parent_obj),
                       pformat(self.parent_obj.__mro__))
 
         log.debug(
@@ -116,9 +127,17 @@ class PathManager():
             elif class_root.is_relative_to(Path.cwd()):
                 root_dir = class_root
             else:
-                assert False, ("class must be defined in the directory, or "
-                               "a subdirectory of, `cwd()` or `parent_path`."
-                               "Alternately, explicitly specify `root_dir`.")
+                # We need this so that people can use base classes with
+                # modified initialization rather than having to
+                # repeatedly define subclasses.
+                root_dir = parent_path
+                # assert False, ("class must be defined in the directory, or "
+                #                "a subdirectory of, `cwd()` or `parent_path`."
+                #                "Alternately, explicitly specify `root_dir`."
+                #                "\n\n Class: {} \n\n Root Dir: {}"
+                #                "\n\n Class Root: {} \n\n Parent Path: {}"
+                #                ).format(type(self), root_dir,
+                #                         class_root, parent_path)
         else:
           assert False, ("No root directory specified. Try adding "
                          "`root_dir == __file__` as a class variable or "

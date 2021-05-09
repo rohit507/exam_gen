@@ -1,5 +1,6 @@
 import textwrap
 import types
+import inspect
 from copy import *
 from pprint import *
 
@@ -389,7 +390,27 @@ def create_decorator(attr_name, decor_data):
                 **final_attrs,
             )
 
-            inst = super(meta.new_cls, cls).__new__(*vargs, **kwargs)
+            log.debug("Calling super().__new__() for: %s"
+                        "\n\n vargs : %s \n\n kwargs : %s"
+                        "\n\n super_type : %s \n\n self_type : %s"
+                        "\n\n super_sig : %s \n\n self_sig: %s"
+                        , super(meta.new_cls, cls), vargs, kwargs
+                        , type(super(meta.new_cls, cls))
+                        , type(cls)
+                        , inspect.getargspec(super(meta.new_cls, cls).__new__)
+                        , inspect.getargspec(cls.__new__)
+             )
+
+            inst = None
+            try:
+              inst = super(meta.new_cls, cls).__new__(*vargs, **kwargs)
+            except TypeError as err:
+               # Retry creating the instance in case where the next superclass
+               # is `object` and only one arg is allowed.
+               if err.args[0].startswith("object.__new__() takes"):
+                   inst = super(meta.new_cls, cls).__new__(vargs[0])
+               else:
+                   raise err
 
             cls_inst = getattr(cls, secret_attr_name, None)
 

@@ -10,12 +10,13 @@ import yaml
 import os
 from pathlib import *
 
+from exam_gen.mixins.with_options import WithOptions
 from exam_gen.mixins.path_manager import PathManager
 
 log = logging.new(__name__, level="DEBUG")
 
 @attr.s
-class Builder(TaskLoader2, PathManager):
+class Builder(TaskLoader2, PathManager, WithOptions):
     """
     """
 
@@ -33,7 +34,7 @@ class Builder(TaskLoader2, PathManager):
 
     def __attrs_post_init__(self):
 
-        self.parent_obj = self.exam
+        self.parent_path = Path(inspect.getsourcefile(self.exam)).parent
 
         if hasattr(super(),'__attrs_post_init__'):
             super().__attrs_post_init__()
@@ -74,9 +75,11 @@ class Builder(TaskLoader2, PathManager):
             'doc': 'Parse all class rosters.'
             }
 
-        for (name,clsrm) in self.exam.classes.items():
+        for (classname,clsrm_init) in self.exam.classes.items():
 
-            def gen_class_roster(cls=clsrm):
+            clsrm = clsrm_init(parent_obj=self)
+
+            def gen_class_roster(cls=clsrm,name=classname):
 
                 roster_path = Path(
                     self.root_dir,
@@ -102,7 +105,7 @@ class Builder(TaskLoader2, PathManager):
                 self.write_class_roster(roster_path, roster_data)
 
             yield { 'basename': basename,
-                    'name': name,
+                    'name': classname,
                     'actions': [gen_class_roster] }
 
     def write_class_roster(self, roster_path, roster_data):

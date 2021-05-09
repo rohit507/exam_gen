@@ -14,7 +14,7 @@ from exam_gen.mixins.prepare_attrs.decorator import create_decorator
 
 __all__ = ["config_superclass"]
 
-log = logging.new(__name__, level="DEBUG")
+log = logging.new(__name__, level="WARNING")
 
 config_classes = dict()
 

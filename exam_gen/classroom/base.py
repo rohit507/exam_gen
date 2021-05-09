@@ -3,34 +3,14 @@ from pathlib import *
 import inspect
 import exam_gen.util.logging as logging
 import exam_gen.classroom.roster_parser as roster
+from exam_gen.mixins.path_manager import PathManager
+from exam_gen.exam.metadata import ExamSettings, ExamMetadata
+from exam_gen.mixins.with_options import WithOptions
 
 log = logging.new(__name__, level="DEBUG")
 
 @attr.s
-class Classroom():
-
-
-    class_file = attr.ib(default=None,kw_only=True)
-    """
-    Set equal to `__file__` in cases where you're using a subdir for each
-    class.
-    """
-
-    def _get_root_dir(self, builder):
-        """
-        If this classroom is defined in a sub-file of project directory
-        work w/in that sub-directory.
-        """
-        proj_root = builder.root_dir
-        self_root = Path(inspect.getfile(type(self)))
-
-        if self.class_file != None:
-             self_root = self.class_file
-
-        elif self_root.parent.is_relative_to(proj_root):
-            return self_root.parent
-        else:
-            return proj_root
+class Classroom(ExamSettings, ExamMetadata, PathManager, WithOptions):
 
     roster  = attr.ib(default=None)
     "obj that defines to find and parse a roster"
@@ -42,9 +22,7 @@ class Classroom():
         if the new classroom is created in a subfolder relative to the exam
         this will use that
         """
-        root_dir = self._get_root_dir(builder)
-        # print(rd)
-        return self.roster.get_roster_data(builder,root_dir)
+        return self.roster.get_roster_data(builder,self.root_dir)
 
     answers = attr.ib(default=None)
     "defines where to find and how to parse student answers"
