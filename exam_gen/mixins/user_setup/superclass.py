@@ -5,6 +5,7 @@ from collections import Iterable
 
 import makefun
 import inspect
+import textwrap
 
 import attr
 import attr.validators as valid
@@ -29,8 +30,13 @@ class UserSetup():
         """
         Override to do something before user setup, should call `super()` to
         allow other classes to do their setup.
+
+        Returns:
+
+            A log dictionary or at least the dictionary from the call to
+            `super()`
         """
-        pass
+        return dict()
 
     def __post_user_setup__(self, setup_vars):
         """
@@ -42,8 +48,12 @@ class UserSetup():
 
             setup_vars (dict): The variable returned by the user setup function.
                Will be 'None' if no user setup function is defined.
+
+        Returns:
+
+            A log dictionary or at least the dictionary from a call to super.
         """
-        pass
+        return dict()
 
     def _run_user_setup(self, **kwargs):
         """
@@ -55,7 +65,7 @@ class UserSetup():
         """
 
         # Run the pre-setup hook
-        self.__pre_user_setup__()
+        pre_setup_log = self.__pre_user_setup__()
 
         # Get the argument data from the class dictionary
         arg_data_dict = getattr(self, setup_class_attr, dict())
@@ -76,10 +86,38 @@ class UserSetup():
 
         # Run it with the generated arguments
         if setup_func != None:
-            results = setup_func(self, **arg_dict)
+
+            log.debug("Calling user_setup with args: \n\n %s",
+                        pformat(arg_dict))
+
+            log.debug("user_setup has signature: \n\n %s",
+                        inspect.signature(setup_func))
+
+            try:
+                if arg_dict != dict():
+                    results = setup_func(**arg_dict)
+                else:
+                    results = setup_func()
+            except TypeError as err:
+                raise TypeError(("{} function should have signature "
+                                 "'def {}{}'. \n\n"
+                                 "This error might because no `{}` function is "
+                                 "defined for the class `{}` with the correct "
+                                 "sugnature."
+                                 ).format(setup_func_name,
+                                          setup_func_name,
+                                          getattr(self,setup_sig_name),
+                                          setup_func_name,
+                                          type(self).__name__
+                                          )) from err
 
         # Run the post setup hook.
-        self.__post_user_setup__(results)
+        post_setup_log = self.__post_user_setup__(results)
+
+        # return some logging information
+        return {'pre_setup': pre_setup_log,
+                'return': results,
+                'post_setup': post_setup_log}
 
     def __init_subclass__(cls, *vargs, **kwargs):
         """
@@ -108,8 +146,13 @@ class UserSetup():
 
         # Generate the stub function w/ documentation
         setup_sig = user_setup_sig(user_setup_args)
+
+        log.debug("Making user_setup func with signature: %s", setup_sig)
+
+        func_base = getattr(cls, setup_func_name, user_setup_stub)
+
         setup_func = makefun.with_signature(
-            setup_sig, func_name = setup_func_name)(user_setup_stub)
+            setup_sig, func_name = setup_func_name)(func_base)
         setup_func.__doc__ = user_setup_stub.__doc__
         setup_docs = user_setup_docs(setup_sig, setup_func, user_setup_args)
         setup_func.__doc__ = setup_docs
@@ -162,15 +205,21 @@ def user_setup_sig(arg_dict):
     """
 
     params = list()
+    params.append(inspect.Parameter(
+        'self',
+        inspect.Parameter.POSITIONAL_OR_KEYWORD))
 
     for arg_name in sorted(arg_dict.keys()):
         data = arg_dict[arg_name]
-        param = inspect.Parameter(arg_name, inspect.Parameter.KEYWORD_ONLY)
+        param = inspect.Parameter(
+            arg_name,
+            inspect.Parameter.POSITIONAL_OR_KEYWORD,
+            annotation=data['typ'])
         params.append(param)
 
     return inspect.Signature(params)
 
-def setup_arg(arg_name=None, func=None, *, doc=None, typ=None):
+def setup_arg(arg_name=None, func=None, *, doc=None):
     """
     Decorator to register a new user setup argument, will just annotate the
     return function with a few parameters so that `UserSetup.__init_subclass__`
@@ -181,18 +230,13 @@ def setup_arg(arg_name=None, func=None, *, doc=None, typ=None):
         func = arg_name
         arg_name = None
 
-    if typ == None:
-        typ = None
-    elif not isinstance(typ, str):
-        typ = typ.__name__
-
     def wrapper(setup_func):
         metadata = dict()
         metadata['arg'] = arg_name if arg_name != None else setup_func.__name__
         metadata['doc'] = doc if doc != None else setup_func.__doc__
-        metadata['typ'] = typ
+        metadata['doc'] = textwrap.dedent(metadata['doc']).strip()
+        metadata['typ'] = inspect.signature(setup_func).return_annotation
         metadata['fun'] = setup_func
-
         setattr(setup_func, setup_func_attr, metadata)
         return setup_func
 

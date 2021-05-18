@@ -175,6 +175,11 @@ class ConfigGroup():
         if  not isinstance(other, ConfigGroup):
             raise SomeError
 
+        log.debug("performing update on config group"
+                    "\n\n self.members: %s \n\n other.members: %s",
+                    pformat(self.members.keys()),
+                    pformat(other.members.keys()))
+
         for (name, member) in other.members.items():
             if name in self.members:
                 ours = self.members[name]
@@ -208,6 +213,11 @@ class ConfigGroup():
                     self.members[name].update(member)
                 else:
                     assert False, "Internal Error: Member of invalid type."
+
+        log.debug("result of update on config group"
+                    "\n\n self.members: %s",
+                    pformat(self.members.keys()))
+
         return self
 
     @property
@@ -365,4 +375,9 @@ class ConfigGroup():
             'ctxt': self.ctxt,
         }
         args.update(**kwargs)
-        return ConfigGroup(**args).update(self)
+
+        result = ConfigGroup(**args).update(self)
+        log.debug("Cloning: \n\n args: %s \n\n self: %s \n\n result: %s",
+                    args, self, result)
+
+        return result

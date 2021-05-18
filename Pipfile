@@ -9,9 +9,9 @@ graphlib = "*"
 pep517 = "*"
 setuptools = "*"
 makefun = "*"
-attrs = {git = "git+https://github.com/rohit507/attrs.git", editable = true, ref = "936853283e4958fa274070e4d348a51f79c8ca0d"}
 doit = "*"
 coloredlogs = "*"
+attrs = "*"
 
 [dev-packages]
 coloredlogs = "*"

@@ -25,15 +25,6 @@ class Builder(TaskLoader2, PathManager, WithOptions):
     """
 
     exam = attr.ib()
-    """
-    The exam class that w
-    """
-
-    @exam.validator
-    def __exam_validator(self, attribute, value):
-        if not inspect.isclass(value):
-            raise TypeError("`exam` parameter to a builder must be a class")
-
 
     data_dir = attr.ib(default='~data', kw_only=True)
     build_dir = attr.ib(default='~build', kw_only=True)
@@ -46,9 +37,7 @@ class Builder(TaskLoader2, PathManager, WithOptions):
 
     roster_file = attr.ib(default='roster.yaml', kw_only=True)
     student_data_file = attr.ib(default='data.yaml', kw_only=True)
-    setup_log_file = attr.ib(default='setup_build.log.yaml', kw_only=True)
-    generate_log_file = attr.ib(default='gen_files.log.yaml', kw_only=True)
-    generate_out_file = attr.ib(default='gen_files.out.yaml', kw_only=True)
+    setup_log_file = attr.ib(default='setup_build_log.yaml', kw_only=True)
 
     def __attrs_post_init__(self):
 
@@ -68,7 +57,6 @@ class Builder(TaskLoader2, PathManager, WithOptions):
         task_list += self.parse_roster_tasks()
         task_list += self.clean_working_dirs()
         task_list += self.exam_build_setup_tasks('test-format')
-        task_list += self.exam_build_files_tasks('test-format')
 
 
         return task_list
@@ -84,31 +72,20 @@ class Builder(TaskLoader2, PathManager, WithOptions):
             'doc':"Clean all generated files. (i.e. 'rm -rf ~*')"
         })]
 
-    classroom_cache = attr.ib(default=None, init=False)
-    "Cache for class objects"
-
-    def classrooms(self):
-        if self.classroom_cache == None:
-            self.classroom_cache = dict()
-            for (class_name, class_init) in self.exam.classes.items():
-                self.classroom_cache[class_name] = class_init(builder=self)
-
-        return self.classroom_cache
 
     def parse_roster_tasks(self):
-        """
-        Creates the doit tasks to parse the roster with.
-        """
+
+        class_data = dict()
+
+        for (class_name, class_init) in self.exam.classes.items():
+            class_data['class_name'] = class_init(parent_obj=self)
 
         def build_roster(class_name, class_obj):
-            """
-            The actual command that's run to generate the roster files
-            """
 
             roster_path = Path(self.class_data_path(class_name),
                                self.roster_file)
 
-            roster_data = class_obj.roster_data()
+            roster_data = class_obj.parse_roster(self)
 
             self.write_class_roster(roster_path, roster_data)
 
@@ -124,7 +101,7 @@ class Builder(TaskLoader2, PathManager, WithOptions):
 
         return task_gen.build_task_group(
                   task_prefix = 'parse_roster',
-                  group_data = self.classrooms(),
+                  group_data = class_data,
                   run_task = build_roster,
                   task_doc = 'Parse all class rosters.')
 
@@ -181,67 +158,77 @@ class Builder(TaskLoader2, PathManager, WithOptions):
 
 
     def exam_build_setup_tasks(self, exam_format, build_settings=None):
-        """
-        """
-
-
-        def exam_task(class_name,
-                      student_id,
-                      class_obj,
-                      data_dir,
-                      build_dir):
-
-            exam = self.exam(student_id, class_obj)
-            setup_log = exam.setup_build_dir(
-                data_dir, build_dir, build_settings)
-
-            log_path = Path(data_dir, self.setup_log_file)
-            log_path.parent.mkdir(parents=True, exist_ok=True)
-            log_file = log_path.open(mode='w')
-            log_file.write(yaml.dump(setup_log))
-            log_file.close()
-
-        return task_gen.build_exam_task(
-            classrooms = self.classrooms(),
-            task_prefix = "setup_build_dir",
-            exam_format = exam_format,
-            exam_task = exam_task,
-            task_doc = 'Set up build directories.',
-            subtask_doc = 'Set up build directories for class {}.')
-
-    def exam_build_files_tasks(self, exam_format, build_settings=None):
 
         append_format = lambda t, e_f = exam_format: "{}:{}".format(t, e_f)
 
-        def exam_task(class_name,
-                      student_id,
-                      class_obj,
-                      data_dir,
-                      build_dir):
+        exam_data = dict()
 
-            exam = self.exam(student_id, class_obj)
-            (gen_out, gen_log) = exam.generate_build_files(
-                data_dir, build_dir, build_settings)
+        for (class_name, class_init) in self.exam.classes.items():
 
-            out_path = Path(data_dir, self.generate_out_file)
-            out_path.parent.mkdir(parents=True, exist_ok=True)
-            out_file = out_path.open(mode='w')
-            out_file.write(yaml.dump(gen_out))
-            out_file.close()
+            class_data = dict()
 
-            log_path = Path(data_dir, self.generate_log_file)
-            log_path.parent.mkdir(parents=True, exist_ok=True)
-            log_file = log_path.open(mode='w')
-            log_file.write(yaml.dump(gen_log))
+            class_obj = class_init(parent_obj=self)
+
+            roster_data = class_obj.parse_roster(self)
+
+            for (student_id, student_data) in roster_data.items():
+
+                # TODO
+
+                class_data[student_id] = student_data
+
+            exam_data[class_name] = class_data
+
+        def setup_build_dir(class_name, student_id, student_data):
+
+            data_dir  = self.exam_data_path(class_name, student_id, exam_format)
+            build_dir = self.exam_build_path(class_name, student_id, exam_format)
+
+
+            build_dir.mkdir(parents=True, exist_ok=True)
+            data_dir.mkdir(parents=True, exist_ok=True)
+
+            cwd = Path.cwd()
+            os.chdir(build_dir)
+
+            exam      = self.exam(student_data)
+            setup_log = exam.setup_build_dir(build_dir, build_settings)
+
+            os.chdir(cwd)
+
+            log_file = Path(data_dir,self.setup_log_file).open(mode='w')
+            log_file.write(yaml.dump(setup_log))
             log_file.close()
 
+        return task_gen.build_all_class_tasks(
+                  task_prefix = append_format("setup_build_dir"),
+                  exam_data = exam_data,
+                  run_task = setup_build_dir,
+                  task_doc = 'Set up build directories.',
+                  subtask_doc = 'Set up build directories for class {}.')
 
-        return task_gen.build_exam_task(
-            classrooms = self.classrooms(),
-            task_prefix = "generate_files",
-            exam_format = exam_format,
-            exam_task = exam_task,
-            task_doc = 'Generate files for building exams',
-            subtask_doc = 'Generate files for class {}\'s exams.',
-            student_task_deps = ['setup_build_dir']
-        )
+
+            # log.debug(textwrap.dedent(
+            #     """
+            #     Setting up build dir for:
+
+            #       Student Id: %s
+
+            #       Class Name: %s
+
+            #       Data Dir: %s
+
+            #       Build Dir: %s
+
+            #       Student Data:
+            #     %s
+
+            #       Class Obj:
+            #     %s
+            #     """), student_id, class_name, data_dir, build_dir,
+            #           textwrap.indent(pformat(student_data),"    "),
+            #           textwrap.indent(pformat(class_obj),"    "))
+
+
+
+        return build

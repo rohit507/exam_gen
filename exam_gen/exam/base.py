@@ -5,62 +5,72 @@ from exam_gen.builders import *
 from exam_gen.mixins.config import *
 from exam_gen.mixins.path_manager import PathManager
 from exam_gen.exam.metadata import *
+from exam_gen.mixins.user_setup import *
+from exam_gen.student_inst import BuildableDoc, PersonalDoc
+from exam_gen.doc_mixins import *
+from exam_gen.templater.context_var import template_var
 
 log = logging.new(__name__, level="DEBUG")
 
+
+
+@template_var('intro')
 @attr.s
-class Exam(ExamSettings, ExamMetadata, PathManager):
-  """
-  Base class for all concrete exams, should be overridden
+class Exam(ExamSettings, ExamMetadata, PersonalDoc, ContextDoc, RNGSourceDoc):
+    """
+    Base class for all concrete exams, should be overridden
+    """
 
-  TODO
+    classes = attr.ib(factory=dict, init=False)
+    """
+    The dict of classes, with students and stuff, that we can perform operations
+    over.
 
-    - People define the options for this thing.
-    - It gets instantiated with information on a student that's then
-      propagated down to the questions.
+    !!! Important
+        This must be set in the class definition, not at runtime or at init.
+    """
 
-    - Has metadata and settings
-    - Has a set of sub-questions
+    questions = attr.ib(factory=dict, init=False)
+    """
+    The dict of questions that are to be included in the exam
 
-    - Need: Tasks to generate intermediate data and files given:
-      - Metadata on exam and question
+    !!! Important
+        This must be set in the class definition, not at runtime or at init.
+    """
 
-    - Focus 1: Files and file environments:
-      -
-  """
+    # hide from the user.
+    use_class_root = attr.ib(default=True, init=False)
 
-  classes = attr.ib(factory=dict, kw_only=True)
-  """
-  The dict of classes, with students and stuff, that we can perform operations
-  over
-  """
+    def init_root_seed(self):
+        """
+        Get a root seed based on the student data's root seed parameter
+        """
+        return self.classroom.get_data(self.student_id)['root_seed']
 
-  questions = dict()
-  """
-  The dict of questions that are to be included in the exam
-  """
+    def start_build_files(self,
+                          outputs,
+                          data_dir,
+                          build_dir,
+                          build_settings):
+        """
+        Pre-question part of the build process. Generally runs the user init
+        sets up questions, etc...
+        """
 
-  use_class_root = True
+        (sup_out, sub_log) = super().start_build_files(outputs,
+                                                       data_dir,
+                                                       build_dir,
+                                                       build_settings)
 
+        # Propagate RNG to questions
+        # Run user setup, push vars to question
 
-  # student_data = attr.ib()
-  # """
-  # Information about the student that we're being instantiated with.
-  # """
+        log_data = dict()
+        outputs = dict()
+        return (outputs, log_data)
 
-  # grade_data = attr.ib(default=None)
-  # answer_data = attr.ib(default=None)
-  # exam_data = attr.ib(default=None)
-
-  # def setup_build(self, builder, build_dir, build_type):
-  #   """
-  #   Does various things needed
-  #   """
-  #   pass
-
-  # def gen_build(self, builder, build_dir, build_type):
-  #   pass
-
-  # def run_build(): pass
-
-  # pass
+    def user_setup(self):
+        """
+        Test Docs
+        """
+        return dict()

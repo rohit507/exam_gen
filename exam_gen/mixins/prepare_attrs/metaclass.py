@@ -8,7 +8,7 @@ import attr.validators as valid
 
 import exam_gen.util.logging as logging
 
-log = logging.new(__name__, level="WARNING")
+log = logging.new(__name__, level="DEBUG")
 
 class PrepareAttrs(type):
     """

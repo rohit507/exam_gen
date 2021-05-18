@@ -30,6 +30,8 @@ class PathManager():
         default=None,
         kw_only=True)
 
+    dir_path = attr.ib(factory=list, kw_only=True)
+
     parent_obj = attr.ib(default=None, kw_only=True)
 
     parent_path = attr.ib(default=None, kw_only=True)
@@ -90,10 +92,9 @@ class PathManager():
 
         else:
 
-            log.debug("No Parent Path from: \n%s\n\n%s\n\n%s",
+            log.debug("No Parent Path from: \n%s\n\n%s",
                       issubclass(type(self.parent_obj), PathManager),
-                      type(self.parent_obj),
-                      pformat(self.parent_obj.__mro__))
+                      type(self.parent_obj))
 
         log.debug(
             textwrap.dedent(
@@ -144,5 +145,21 @@ class PathManager():
                          "adding `root_dir=__file__` as an initialization "
                          "parameter.")
 
+        dir_path = list()
+
+        if self.parent_obj != None and issubclass(type(self.parent_obj), PathManager):
+            dir_path += self.parent_obj.dir_path
+
+        if parent_path != None:
+            dir_path.append(parent_path)
+
+        if self.dir_path != None:
+            dir_path += self.dir_path
+
+        dir_path.append(root_dir)
+
+        # TODO : Clean up duplicates in the dirpath
+
         self.root_dir = root_dir
         self.parent_path = parent_path
+        self.dir_path = dir_path

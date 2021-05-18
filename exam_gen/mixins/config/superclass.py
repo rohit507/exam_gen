@@ -153,6 +153,7 @@ def config_superclass(
 
         @staticmethod
         def prep_attr_inst(prep_meta):
+            log.debug('prep_attr_inst \n\n %s', prep_meta)
             return ConfigGroup(
                 doc = copy(var_docstring),
                 ctxt = prep_meta.cls,
@@ -161,17 +162,25 @@ def config_superclass(
 
         @staticmethod
         def prep_env_update(cls_val, env_val, prep_meta):
+            log.debug('prep_env_update '
+                      '\n\n%s \n\n%s', cls_val, env_val)
             cls_val.update(env_val)
+            log.debug('post prep_env_update\n\n %s', cls_val)
             return cls_val
 
         @staticmethod
         def prep_sc_update(cls_val, sc_val, prep_meta):
+            log.debug('prep_sc_update\n\n %s\n\n %s\n\n %s', cls_val, sc_val, prep_meta)
             cls_val.update(sc_val)
+            log.debug('post prep_sc_update\n\n %s', cls_val)
             return cls_val
 
         @staticmethod
         def scinit_mk_secret_inst(cls_val, scinit_meta):
-            return cls_val.clone(ctxt=scinit_meta.cls)
+            log.debug('scinit_mk_secret_inst\n\n %s \n\n %s', cls_val, scinit_meta)
+            result = cls_val.clone(ctxt=scinit_meta.cls)
+            log.debug('post scinit_mk_secret_inst\n\n %s \n\n %s',result, scinit_meta)
+            return result
 
         @staticmethod
         def scinit_attr_docstring(cls_val, scinit_meta):
