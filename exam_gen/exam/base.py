@@ -57,10 +57,8 @@ class Exam(ExamSettings, ExamMetadata, PersonalDoc, ContextDoc, RNGSourceDoc):
         sets up questions, etc...
         """
 
-        (sup_out, sub_log) = super().start_build_files(outputs,
-                                                       data_dir,
-                                                       build_dir,
-                                                       build_settings)
+        (sup_out, sub_log) = super().start_build_files(
+            outputs, data_dir, build_dir, build_settings)
 
         # Propagate RNG to questions
         # Run user setup, push vars to question
@@ -69,8 +67,16 @@ class Exam(ExamSettings, ExamMetadata, PersonalDoc, ContextDoc, RNGSourceDoc):
         outputs = dict()
         return (outputs, log_data)
 
-    def user_setup(self):
-        """
-        Test Docs
-        """
-        return dict()
+    def subdoc_build_files(self):
+        pass
+
+    def finish_build_filed(self):
+        pass
+
+
+
+    # def user_setup(self):
+    #     """
+    #     Test Docs
+    #     """
+    #     return dict()

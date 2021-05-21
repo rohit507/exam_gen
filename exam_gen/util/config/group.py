@@ -5,8 +5,9 @@ from pprint import *
 
 import attr
 
+from .value import ConfigValue
+
 import exam_gen.util.logging as logging
-from exam_gen.mixins.config.value import ConfigValue
 
 log = logging.new(__name__, level="WARNING")
 

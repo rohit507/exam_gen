@@ -1,10 +1,4 @@
-import textwrap
-import types
-from copy import *
-from pprint import *
-
 import attr
-import attr.validators as valid
 
 import exam_gen.util.logging as logging
 

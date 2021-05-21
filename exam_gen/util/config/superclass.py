@@ -3,18 +3,19 @@ import types
 from copy import *
 from pprint import *
 
-import attr
+# import attr
+
+from .format import ConfigDocFormat, default_format
+from .group import ConfigGroup
+from .value import ConfigValue
+
+from exam_gen.util.prepare_attrs import AttrDecorData, create_decorator
 
 import exam_gen.util.logging as logging
-from exam_gen.mixins.config.format import ConfigDocFormat, default_format
-from exam_gen.mixins.config.group import ConfigGroup
-from exam_gen.mixins.config.value import ConfigValue
-from exam_gen.mixins.prepare_attrs.dataclasses import AttrDecorData
-from exam_gen.mixins.prepare_attrs.decorator import create_decorator
-
-__all__ = ["config_superclass"]
 
 log = logging.new(__name__, level="WARNING")
+
+__all__ = ["config_superclass"]
 
 config_classes = dict()
 

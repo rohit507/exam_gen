@@ -1,12 +1,12 @@
-from exam_gen.mixins.prepare_attrs.dataclasses import (
+from .dataclasses import (
     AttrDecorData,
     FinalMeta,
     NewMeta,
     PrepMeta,
     ScInitMeta,
 )
-from exam_gen.mixins.prepare_attrs.decorator import create_decorator
-from exam_gen.mixins.prepare_attrs.metaclass import PrepareAttrs
+from .decorator import create_decorator
+from .metaclass import PrepareAttrs
 
 __all__ = [
     'PrepareAttrs',

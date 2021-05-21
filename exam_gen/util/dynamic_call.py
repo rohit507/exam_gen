@@ -3,6 +3,7 @@ from itertools import chain, count, product
 from pprint import *
 from string import ascii_lowercase
 
+__all__ = ["dynamic_call", "dcall"]
 
 def dynamic_call(
         func,

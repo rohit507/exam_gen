@@ -14,7 +14,6 @@ try:
 except ModuleNotFoundError:
     pass
 
-
 def new(name=None, level='WARNING'):
     """
     Create a new logger for this module. Once made, the logger can then

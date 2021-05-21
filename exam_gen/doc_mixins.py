@@ -15,7 +15,6 @@ log = logging.new(__name__, level="DEBUG")
 @attr.s
 class UserSetupDoc(BuildableDoc, UserSetup):
 
-
     def start_build_files(
             self,
             outputs,
@@ -144,13 +143,8 @@ class RNGSourceDoc(UserSetupDoc):
         if isinstance(doc_obj, RNGSourceDoc):
             doc_obj.root_seed = create_seed(self.root_seed, set_name, doc_name)
 
-        return super(set_name,
-                     doc_name,
-                     doc_obj,
-                     outputs,
-                     data_dir,
-                     build_dir,
-                     build_settings)
+        return super(set_name, doc_name, doc_obj, outputs,
+                     data_dir, build_dir, build_settings)
 
 @attr.s
 class TemplateDoc(BuildableDoc):

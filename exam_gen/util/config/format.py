@@ -10,9 +10,11 @@ import jinja2
 import pkg_resources
 
 import exam_gen.templates
+
 import exam_gen.util.logging as logging
-from exam_gen.mixins.config.group import ConfigGroup
-from exam_gen.mixins.config.value import ConfigValue
+
+from .group import ConfigGroup
+from .value import ConfigValue
 
 log = logging.new(__name__)
 
@@ -44,6 +46,7 @@ def var_empty_docstring(var_name, desc):
             that are defined at the class level. Changes made at runtime will
             **not** be inherited by subclasses and only affect a single object.
         """).format(var_name = var_name, desc = textwrap.dedent(desc))
+
 @attr.s
 class ConfigDocFormat():
     """
@@ -731,7 +734,9 @@ template_env = jinja2.Environment(
     )
 
 default_format = ConfigDocFormat(
-    template = template_env.get_template('default_config_doc_format.jn2.html'),
+    template = template_env.get_template(
+        'mkdocs/default_config_doc_format.jn2.html'
+    ),
     val_table_name = "Configuration Values",
     val_table_format = {
         'Value Name':"`#!py {path}`",
