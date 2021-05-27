@@ -1,1 +1,2 @@
-from .base import *
+from .base import Exam
+from .latex import LatexExam

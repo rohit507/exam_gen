@@ -107,6 +107,25 @@ class PrepareAttrs(type):
               bases would have.
         """
         stub_bases = tuple(self.get_stub_class(base) for base in bases)
-        stub_cls = type(name, stub_bases, {})
+
+        try:
+            stub_cls = type(name, stub_bases, {})
+        except TypeError:
+
+            err_str = ("Cannot find consistent MRO for class {} "
+                       "with bases:\n\n").format(name)
+
+            for base in stub_bases:
+
+                nice_mro = list(map(lambda x: x.__name__, base.__mro__))
+                nice_mro = textwrap.indent(pformat(nice_mro),
+                                           "         ").strip()
+                nice_mro = "    mro: " + nice_mro
+
+                err_str+="  - base: {}\n{}\n\n".format(base.__name__,nice_mro)
+
+            raise TypeError(err_str)
+
+
         reversed_cache = {value:key for key, value in self.stub_cache.items()}
         return [reversed_cache[mro_base] for mro_base in  stub_cls.__mro__[1:]]

@@ -1,6 +1,7 @@
 import attr
 import functools
 
+from copy import *
 from .object import VersionedObj
 
 import exam_gen.util.logging as logging
@@ -35,6 +36,10 @@ class VersionedOptions(VersionedObj):
 
         if name in self.options:
             return self.options[name]
+        elif 'default' in self._option_spec[name]:
+            return self._option_spec[name]['default']
+        elif 'factory' in self._option_spec[name]:
+            return self._option_spec[name]['factory']()
 
         if self._parent != None:
             return getattr(self._parent, name)
@@ -90,7 +95,7 @@ class VersionedOptions(VersionedObj):
     def apply_version_tree(self, tree, override=False):
 
         def merge_opts(self, other):
-            for (name, val) in other.options.entries():
+            for (name, val) in other.options.items():
                 if override or (name not in self.options):
                     setattr(self, name, val)
 

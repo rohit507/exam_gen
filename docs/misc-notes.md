@@ -54,6 +54,11 @@ stuff here should be eventually moved somewhere else in these docs.
     to setup `setuptools` and the core python packaging infrastucture.
 
 
+  - new examproject
+    - `pipenv --python 3.9`
+    - `pipenv install <exam_gen>` or `pipenv install -e <exam_gen>`
+
+
 ## Useful Python Facts
 
   - `inspect.getargspec` can get you get all sorts of information about the arguments

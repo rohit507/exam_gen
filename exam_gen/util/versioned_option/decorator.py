@@ -5,7 +5,7 @@ from copy import *
 
 from exam_gen.util.prepare_attrs import AttrDecorData, create_decorator
 
-from .option import VersionedOption
+from .option import VersionedOptions
 
 import exam_gen.util.logging as logging
 
@@ -26,7 +26,7 @@ def add_versioned_option(
         doc = template_class.__doc__
 
     if template_class == None:
-        template_class = VersionedOption
+        template_class = VersionedOptions
 
     class VerOptDecor(AttrDecorData):
 
@@ -40,7 +40,7 @@ def add_versioned_option(
             if option_spec: params['option_spec'] = option_spec
             if format_spec: params['format_spec'] = format_spec
 
-            return template_class(**prep_args)
+            return template_class(**params)
 
         @staticmethod
         def prep_sc_update(cls_val, sc_val, prep_meta):

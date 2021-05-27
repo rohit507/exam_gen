@@ -1,0 +1,220 @@
+\documentclass[12pt]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       BEGINNING OF PREAMBLE                            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{errorcontextlines}{20}
+\usepackage{lastpage}
+\usepackage{ifthen}
+\usepackage{hyperref}
+
+\newboolean{isSolution}
+\setboolean{isSolution}{true}
+{% if version == 'solution' %}
+  \newcommand{\solution}[1]{\color{red} #1 \color{black}}
+  \newcommand{\notsolution}[1]{}
+{% else %}
+  \newcommand{\solution}[1]{}
+  \newcommand{\notsolution}[1]{ #1}
+{% endif %}
+
+\newcounter{probcount}
+\newcommand{\nextprob}[0]{\addtocounter{probcount}{1} \arabic{probcount}}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes, decorations, patterns, arrows}
+
+\usepackage{times}
+% \usepackage{fullpage}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usepackage{wrapfig}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{enumitem}
+\usepackage{xspace}
+% For code listings
+\usepackage{listings}
+\lstset{language=C, basicstyle=\ttfamily, numbers=left, numberstyle=\tiny, tabsize=4, showstringspaces=false}
+% Blocks of code and variables
+\newcommand{\code}[1]{\texttt{ #1} }
+
+\usepackage{epsfig}
+\usepackage{epstopdf}
+\usepackage{gensymb}
+\usepackage{color}
+\usepackage[export]{adjustbox}
+\definecolor{darkblue}{rgb}{0.,0.,0.5}
+\newcommand{\answer}[1]{ {\color{darkblue} #1} }
+%\newcommand{\answer}[1]{ { #1} }
+%\newcommand{\answer}[1]{ {} }
+\newcommand{\ie}{\textit{i.e.} }
+\newcommand{\eg}{\textit{e.g.} }
+\newcommand{\ignore}[1]{}
+\let\answer=\ignore
+
+\usepackage{textcomp}
+
+%----------------------------------------------------------------
+% For compact bullet lists
+\newenvironment{compactItemize}{\begin{list}{$\bullet$}
+%{\setlength{\topsep}{0.8mm}\setlength{\itemsep}{0.25mm}
+{\setlength{\topsep}{1mm}\setlength{\itemsep}{0.25mm}
+\setlength{\parsep}{0.1mm}
+\setlength{\itemindent}{0mm}\setlength{\partopsep}{0mm}
+\setlength{\labelwidth}{15mm}
+\setlength{\leftmargin}{4mm}}}{\end{list}}
+
+% For state names in a state machine.
+\newcommand{\stateName}[1]{\textsf{ #1}}
+% For port names.
+\newcommand{\port}[1]{\textit{ #1}}
+
+%   arg: The name of the set.
+\newcommand{\set}[1]{\mbox{\textit{ #1}}}
+
+%\usepackage{fancyheadings}
+
+%\pagestyle{fancy} % use fancy footer
+%\headrulewidth 0pt
+%
+% IMPORTANT: TOTAL PAGES must be in sync with the actual number!
+%
+%\rhead{}
+%\rhead{ {\small{\rm{Page \thepage}}}}
+%\lhead{}
+%\chead{}
+%\lfoot{}
+%\cfoot{}
+%\rfoot{ {\small{\rm{\thepage}}}}
+%\rfoot{ {\small{\rm{Page \thepage\ of 5}}}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Theorems are environments with numbering schemes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{fact}{Fact}
+\newtheorem{assumption}{Assumption}
+
+\newenvironment{proof}{\QuadSpace\par\noindent{\bf Proof}:}{\EndProof\HalfSpace}
+\newenvironment{proofsketch}{\QuadSpace\par\noindent{\bf Proof sketch}:}{\EndProof\HalfSpace}
+\newenvironment{notation}{\QuadSpace\par\noindent{\bf Notation}:}{\HalfSpace}
+\newenvironment{intuition}{\begin{quote}\par\noindent{\bf Intuition}:}{\end{quote}}
+\newenvironment{note}{\QuadSpace\par\noindent{\bf Note}:}{\HalfSpace}
+\newenvironment{convention}{\QuadSpace\par\noindent{\bf Convention}:}{\HalfSpace}
+\newenvironment{example}{\QuadSpace\par\noindent{\bf Example}:}{\HalfSpace}
+\newenvironment{question}{\QuadSpace\par\noindent{\bf Question}:}{\HalfSpace}
+\newenvironment{remark}{\QuadSpace\par\noindent{\bf Remark}:}{\HalfSpace}
+\newenvironment{observation}{\QuadSpace\par\noindent{\bf Observation}:}{\HalfSpace}
+\newenvironment{proposition}{\QuadSpace\par\noindent{\bf Proposition}:}{\HalfSpace}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%       DO NOT EVEN THINK OF CHANGING THE PREAMBLE BELOW HERE ;-)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\textwidth=6in
+\oddsidemargin=0.25in
+\evensidemargin=0.25in
+\topmargin=-0.1in
+\footskip=0.8in
+\parindent=0.0cm
+\parskip=0.3cm
+\textheight=8.00in
+
+\newcommand{\homework}[2]{
+\newpage
+\noindent
+\begin{center}
+\framebox{
+\vbox{
+\hbox to 5.75in { {\small\bf {{ class_name }}, {{ semester }}
+\hfill {{ instructors }} }  }
+\vspace{7mm}
+\hbox to 5.75in { {\Large\bf \hfill #1 \hfill} }
+\vspace{5mm}
+\hbox to 5.75in { { \small\it \hfill #2} }
+}
+}
+\end{center}
+\vspace*{4mm}
+}
+
+\newcommand{\eventually}{\ensuremath{ {\bf{F}}}}
+\newcommand{\finally}{\ensuremath{ {\bf{F}}}}
+\newcommand{\globally}{\ensuremath{ {\bf{G}}}}
+\newcommand{\nextstate}{\ensuremath{ {\bf{X}}}}
+\newcommand{\until}{\ensuremath{ {\bf{U}}}}
+
+\newcommand{\QuadSpace}{\vspace{0.25\baselineskip}}
+\newcommand{\HalfSpace}{\vspace{0.5\baselineskip}}
+\newcommand{\FullSpace}{\vspace{1.0\baselineskip}}
+\newcommand{\EndProof}{ \hfill \vrule width 1ex height 1ex depth 0pt }
+
+\newcommand{\comment}[1]{}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       END OF PREAMBLE                                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%               UDPATE the header and synopsis below                    %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\homework{ {{ exam_name }} \solution{ SOLUTIONS }}{ {{ date}} }
+
+\notsolution{
+\hrule
+
+\vspace*{0.5cm}
+
+{\sc \textbf{Your Name:}} {{ student_data.Name }}
+
+\vspace*{0.5cm}
+
+\hrule
+
+\vspace*{1cm}
+
+\noindent
+
+{{introduction}}
+
+
+{ {
+\begin{tabular}{l|l}
+{% for problem in questions %}
+Problem {{problem.index + 1}} & ~~~~~~~~~~~~~~~~~~~ \\
+  \hline
+{% endfor %}
+Total & ~~~~~~~~~~~~~~~~~~~
+\end{tabular}
+}}
+
+\newpage
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+{% for problem in problems %}
+\clearpage
+{\Large {Problem {{problem.index + 1}}}} \\
+
+{% if version == 'solution' %}
+  {{problem.solution_text}}
+{% else %}
+  {{problem.exam_text}}
+{% endif %}
+\newpage
+{% endfor %}
+
+\end{document}

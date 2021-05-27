@@ -1,9 +1,8 @@
 import attr
 
-from exam_gen.property.traversable import *
+from .document import *
 
-from exam_gen.util.with_options import with_options
-
+from exam_gen.classroom.student import Student
 import exam_gen.util.logging as logging
 
 log = logging.new(__name__, level="DEBUG")
@@ -14,7 +13,7 @@ class Personalized():
     Classes that are initialized with information on a specific student.
     """
 
-    student_id = attr.ib()
+    student = attr.ib()
     """
     The student that this instance of the exam is for.
     """
@@ -25,29 +24,20 @@ class Personalized():
     """
 
 @attr.s
-class PersonalDoc(Personalized,Traversable):
+class PersonalDoc(Personalized,Document):
     """
     Will initialize all the different subdocs with the student_id and classroom
     information.
 
-    This expects
+    This expects that all the questions under a parent are also personalized.
     """
 
-    def __attrs_post_init__(self):
+    @classmethod
+    def init_document(cls, doc_class):
 
-        if hasattr(super(),'__attrs_post_init__'):
-            super().__attrs_post_init__()
+        new_class = doc_class.with_options(
+            student    = self.student,
+            classroom  = self.classroom
+        )
 
-        def unit(*vargs, **kwargs): return None
-
-        # updates the class information with the new parameters
-        def step(self, **params):
-
-            if issubclass(params['member'], Persomalized):
-               obj = with_options(
-                   params['member'],
-                   student_id = self.student_id,
-                   classroom = self.classroom)
-               params['set_var'](obj)
-
-        traversable.make_walk(setup = unit, step = step, finalize=unit)(self)
+        return super().init_document(new_class)

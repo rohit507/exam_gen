@@ -1,14 +1,13 @@
 import attr
 import functools
-from copy import *
+import textwrap
 
-from exam_gen.util.typed_dispatch import TypedDispatch
+from copy import *
+from pprint import *
 
 import exam_gen.util.logging as logging
 
-log = logging.new(__name__, level="DEBUG")
-
-__traversal
+log = logging.new(__name__, level="WARNING")
 
 @attr.s
 class Traversable():
@@ -38,13 +37,18 @@ class Traversable():
         the stub properties for each of them.
         """
 
+        log.debug("initializing Traversable for subclass: {}".format(cls))
+
         super().__init_subclass__(*vargs, **kwargs)
 
         final_traversable_vars = list()
 
+        cls._traversables = getattr(cls, '_traversables', dict())
+        cls._traversable_cache = getattr(cls, '_traversable_cache', dict())
+
         for var_spec in cls.__traversable_vars__:
 
-            spec = Traversable._format_var_spec(var_spec)
+            spec = Traversable._format_var_spec(cls, var_spec)
             var_name = spec['var']
 
             cls._traversables[var_name] = getattr(cls, var_name, dict())
@@ -56,20 +60,32 @@ class Traversable():
 
         cls.__traversable_vars__ = final_traversable_vars
 
-    @staticfunction
+    def __attrs_post_init__(self):
+        if hasattr(super(),'__attrs_post_init__'):
+            super().__attrs_post_init__()
+
+        self._traversables = getattr(self, '_traversables',
+                                     copy(type(self)._traversables))
+
+        self._traversable_cache = getattr(self, '_traversable_cache',
+                                          copy(type(self)._traversable_cache))
+
+    @staticmethod
     def _format_var_spec(cls, var_spec):
 
         if isinstance(var_spec, str):
             var_spec = {'var': var_spec}
-        elif isinstance(item, dict):
+        elif isinstance(var_spec, dict):
             pass
         else:
             raise RuntimeError(("Invalid entry in `__traversable_vars__`"))
 
         assert ('var' in var_spec), "No var name provided in traversable"
 
+        spec = dict()
+
         # convenience
-        spec['singular'] = var_spec.get('singular', default = var_spec['var'])
+        spec['singular'] = var_spec.get('singular', var_spec['var'])
 
         # traversable var
         spec['var'] = var_spec['var']
@@ -85,6 +101,7 @@ class Traversable():
         spec['setter_doc'] = var_spec.get('setter_doc', None)
 
         spec['doc'] = spec.get('doc', None)
+        if spec['doc'] != None: spec['doc'] = textwrap.dedent(spec['doc'])
 
         # var cache
         spec['cache'] = spec.get('cache',None)
@@ -102,23 +119,30 @@ class Traversable():
         spec['cache_setter_doc'] = var_spec.get('cache_setter_doc', None)
 
         spec['cache_doc'] = spec.get('cache_doc', None)
+        if spec['cache_doc'] != None:
+            spec['cache_doc'] = textwrap.dedent(spec['cache_doc'])
 
         return spec
 
-    @staticfunction
+    @staticmethod
     def _setup_tvar(cls, spec):
 
-        def get_t(self, t_v): return self._traversables[t_v]
+        def get_t(self, *, t_v):
+            if t_v not in self._traversables:
+                self._traversables[t_v] = copy(type(self)._traversables[t_v])
+            return self._traversables[t_v]
 
-        if spec['var_doc'] != None: get_t.__doc__ = spec['var_doc']
+        if spec['doc'] != None: get_t.__doc__ = spec['doc']
 
-        setattr(cls, spec['var'], property(get_t))
+        setattr(cls, spec['var'], property(
+            functools.partial(get_t, t_v = spec['var'])))
 
         def get_var(self, name, *, t_v):
-            if name not in self._traversables[t_v]:
+            t_dict = get_t(self, t_v)
+            if name not in t_dict:
                 return None
             else:
-                return self._traversables[t_v][name]
+                return t_dict[name]
 
         if spec['getter_doc']: get_var.__doc__ = spec['getter_doc']
 
@@ -137,14 +161,17 @@ class Traversable():
             setattr(cls, spec['setter'],
                     functools.partial(set_var, t_v = spec['var']))
 
-    @staticfunction
+    @staticmethod
     def _setup_tcache(cls, spec):
+        # TODO: Fix this to add the checks from `_setup_tvar`
+        # they should mirror each other pretty closely.
 
         def get_t_c(self, tc_v): return self._traversable_cache[tc_v]
 
         if spec['cache_doc'] != None: get_t_c.__doc__ = spec['cache_doc']
 
-        setattr(cls, spec['cache'], property(get_t_c))
+        setattr(cls, spec['cache'], property(
+            functools.partial(get_t_c, tc_v = spec['var'])))
 
         def get_cache_var(self, name, *, t_v):
             if name not in self._traversable_cache[t_v]:
@@ -201,160 +228,3 @@ class Traversable():
 
     def _has_t_var(self, t_var):
         return (t_var in self._traversables)
-
-    @staticfunction
-    def make_walk(setup, step, finalize):
-        """
-        Helper to make it easy to walk though the various children of a
-        traversable. You should be handling type fallbacks and similar in the
-        functions you pass in, raither
-
-        Parameters:
-
-           setup: `(self) -> A` which creates the initial data that goes to
-             children
-
-           step: A function
-             `(self, t_var : str, name : str, member, init : A, recurse) -> B`
-             called on each child. The last parameter is `(self) -> C` that
-             is the recursive call for this function
-
-           finalize: `(self, init : A, result : Dict[t_var,Dict[name, B]]) -> C`
-
-        Returns:
-
-           `(self) -> C`: Function that will do the recursive call on your
-           element of choice.
-        """
-
-        # stupidity to deal with python being stupid. This is the best way to
-        # get python to defer a call to make_walk until it's needed by `step`
-        def _recurse(self,
-                     setup = setup,
-                     step=step,
-                     finalize=finalize):
-            return Traversable.make_walk(setup, step, finalize)(s)
-
-        def walk(self, *, setup, step, finalize):
-
-            init = setup(self)
-            result = dict()
-
-            for (t_var, membs) in self._traversables.items():
-
-                result[t_var] = dict()
-
-                for (name, member) in membs.items():
-
-
-                    params = dict(
-                        t_var = t_var,
-                        name = name,
-                        member = member,
-                        init = init,
-                        recurse = _recurse,
-                        get_var = functools.partial(
-                            self._get_t_var, name=name, t_var=t_var),
-                        set_var = functools.partial(
-                            self._set_t_var, name=name, t_var=t_var),
-                        get_cache = functools.partial(
-                            self._get_t_cache, name=name, t_var=t_var),
-                        set_cache = functools.partial(
-                            self._set_t_cache, name=name, t_var=t_var)
-                    )
-
-                    result[t_var][name] = step(self,**params)
-
-            return finalize(self, init, result)
-
-        return functools.partial(
-            walk,
-            setup=setup,
-            step=step,
-            finalize=finalize)
-
-@attr.s
-class Traversal():
-
-    var = attr.ib()
-    _cache = attr.ib(default=None)
-
-    _setup = attr.ib(default=None)
-    _child = attr.ib(default=None)
-    _recurse = attr.ib(default=None)
-    _finish = attr.ib(default=None)
-
-    _doc = attr.ib(default=None)
-
-    _owner = attr.ib(default=None, init=False)
-    _name = attr.ib(default=None, init=False)
-
-    def __set_name__(self, owner, name):
-        self._owner = owner
-        self._name = name
-
-    def __get__(self, owner, objtype=None):
-        pass
-
-    def __call__(self, *args, **kwargs):
-        pass
-
-    def __attrs_post_init__(self):
-        self._setup_docstring()
-
-
-    @static_function
-    def default_setup(trav, self, *vargs, **kwargs):
-        return self
-
-    @static_function
-    def default_child(trav, self, name, child, *vargs, **kwargs):
-        """
-        """
-        pass
-
-    @static_function
-    def default_recurse(trav, self, *vargs, **kwargs):
-        pass
-
-    @static_function
-    def default_finish(trav, self, results):
-        return results
-
-    @staticfunction
-    def default_call(trav, self, *vargs, **kwargs):
-        if isinstance(self, Traversable) and self._has_t_var(trav._var):
-            parent_context = trav._setup_func(self, *vargs, **kwargs)
-            results = dict()
-            for (name, entry) in self._traversables[trav._var].items():
-                params = dict()
-                params['input'] = parent_context
-                results[name] = trav._child_func(entry,
-                                                 self,
-                                                 parent_context,
-                                                 *vargs,
-                                                 **kwargs)
-            return trav._finish_func(self, parent_context, results)
-        else:
-            return None
-
-    def _recurse(self, child, vargs=[], kwargs={}):
-        # Check if child has parameter w/ name
-        if hasattr(child, self._name):
-            return getattr(child, self._name)(*vargs, **kwargs)
-        else: # otherwise use our dis
-            return self._child.dispatch(child)(*vargs, **kwargs)
-        pass
-
-    def _setup_docstring(self):
-
-        if hasattr(self,'__doc__'):
-            pass
-        elif self._doc:
-            self.__doc__ = self._doc
-        elif hasattr(self._setup,'__doc__'):
-            self.__doc__ = self._setup.__doc__
-        elif hasattr(self._child,'__doc__'):
-            self.__doc__ = self._child.__doc__
-        elif hasattr(self._finish,'__doc__'):
-            self.__doc__ = self._finish.__doc__

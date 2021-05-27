@@ -3,9 +3,38 @@ from pathlib import *
 from jinja2 import *
 from copy import *
 import yaml
+
+from exam.util.file_ops import *
 import exam_gen.util.logging as logging
 
 log = logging.new(__name__, level="DEBUG")
+
+@attr.s
+class TemplateSpec():
+    """
+    A specification for how to build a template.
+    """
+
+    template = attr.ib()
+    context = attr.ib(factory=dict, kw_only=True)
+
+    subtemplates = attr.ib(factory=dict, kw_only=True)
+
+    path = attr.ib(factory=list, init=False)
+    format_dir = attr.ib(default=None, init=True)
+    format_ext = attr.ib(default=None, init=True)
+
+    name = attr.ib(default=None, init=False)
+    out_file = attr.ib(default=None, kw_only=True)
+
+    jinja_opts = attr.ib(factory=dict(), kw_only=True)
+
+
+    log = attr.ib(factory=None, kw_only=True)
+
+def build_from_template_spec(name, spec, debug_dir = None, build_dir = None):
+    pass
+
 
 @attr.s
 class TemplateManager():
@@ -34,9 +63,6 @@ class TemplateManager():
             self.base_loader
         ])
 
-    debug_template_pat = attr.ib(default='template-{}.jn2{}', kw_only=True)
-    debug_context_pat  = attr.ib(default='context-{}.yaml', kw_only=True)
-    debug_result_pat   = attr.ib(default='result-{}{}',     kw_only=True)
 
     def build_template(self,
                        name,

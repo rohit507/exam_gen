@@ -2,6 +2,8 @@ import functools
 import inspect
 import types
 
+from pprint import *
+
 import exam_gen.util.logging as logging
 
 log = logging.new(__name__, level="DEBUG")
@@ -16,18 +18,17 @@ def with_options(cls, **kwargs):
     """
 
     if inspect.isclass(cls):
-        new_cls = types.new_class(cls.__name__, (cls))
 
-        def new_init(self,*vargs,cls,**kwargs):
-            super(cls, self).__init__(*vargs, **kwargs)
+        class AppOpts(cls):
+            def __init__(self, *vargs, **kwargs2):
+                super().__init__(*vargs, **(kwargs2 | kwargs))
 
-        new_cls.__init__ = functools.partial(
-            new_init,
-            cls=cls,
-            **kwargs
-        )
+        # new_cls = type(cls.__name__,
+        #                (cls,),
+        #                {'__init__': functools.partial(
+        #                    new_init, cls=cls, **kwargs)})
 
-        return new_cls
+        return AppOpts
     else:
         return functools.partial(cls, **kwargs)
 

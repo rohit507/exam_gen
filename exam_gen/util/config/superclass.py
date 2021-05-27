@@ -1,5 +1,7 @@
 import textwrap
 import types
+import attr
+
 from copy import *
 from pprint import *
 

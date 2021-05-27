@@ -33,14 +33,14 @@ class VersionedObj():
 
     def __getitem__(self, key):
 
-        if len(self.format_spec) == 0:
+        if len(self._format_spec) == 0:
             raise RuntimeError(("This object has no sub-versions, there is "
                                 "no valid term like '{}[...]'."
             ).format(self.var_name))
 
         error = None
 
-        for depth, fmt in enumerate(self.format_spec):
+        for depth, fmt in enumerate(self._format_spec):
             try:
                 new_key = fmt['key_func'](self, key)
             except RuntimeError as err:
@@ -173,7 +173,7 @@ class VersionedObj():
             new_list = [self._parent_key]
             new_list += [] if key_list == None else key_list
 
-            self.parent.prop_child_func(
+            self._parent.prop_child_func(
                 func,
                 key_list = new_list,
                 apply_self = apply_parent,

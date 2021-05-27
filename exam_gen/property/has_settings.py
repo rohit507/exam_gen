@@ -1,4 +1,3 @@
-# import exam_gen.mixins.config.format as fmt
 import textwrap
 from pprint import *
 
