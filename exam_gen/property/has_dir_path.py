@@ -62,6 +62,9 @@ class HasDirPath():
             textwrap.indent(pformat(self.parent_obj), "    "),
         )
 
+        if hasattr(self, '_parent_doc') and self.parent_obj == None:
+            self.parent_obj = self._parent_doc
+
         self._init_parent_path()
         self._init_root_dir()
 

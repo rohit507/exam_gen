@@ -13,7 +13,6 @@ class AutoGradeable(Gradeable, Answerable):
 
     def set_answer(self, answer):
         super(AutoGradeable, self).set_answer(answer)
-        self.__calc_grade_harness__()
 
     def set_points(self, points, comment=None):
         raise RuntimeError("Don't assign a points score directly for an "

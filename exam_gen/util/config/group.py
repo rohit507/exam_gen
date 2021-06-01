@@ -176,10 +176,22 @@ class ConfigGroup():
         if  not isinstance(other, ConfigGroup):
             raise SomeError
 
-        log.debug("performing update on config group"
-                    "\n\n self.members: %s \n\n other.members: %s",
-                    pformat(self.members.keys()),
-                    pformat(other.members.keys()))
+        if self.path == ['settings']:
+            log.debug("performing update on config group"
+                  "\n\n self.path: %s "
+                  "\n self.ctxt: %s "
+                  #"\n self.ctxt.__mro__: %s "
+                  "\n self.members: %s "
+                  "\n\n other.path: %s "
+                  "\n other.xtxt: %s "
+                  "\n other.members: %s",
+                    self.path,
+                    self.ctxt,
+                    #pformat(self.ctxt.__mro__),
+                  pformat(self.value_dict),
+                    other.path,
+                    other.ctxt,
+                  pformat(other.value_dict))
 
         for (name, member) in other.members.items():
             if name in self.members:
@@ -187,9 +199,10 @@ class ConfigGroup():
                 theirs = member
                 if (isinstance(ours, ConfigValue)
                     and isinstance(theirs, ConfigValue)):
-                    ours.ctxt = theirs.ctxt
+                    if theirs.value != None:
+                        ours.value = deepcopy(theirs.value)
+                        ours.ctxt = theirs.ctxt
                     ours.doc = copy(theirs.doc)
-                    ours.value = deepcopy(theirs.value)
                     self.members[name] = ours
                 elif (isinstance(ours,ConfigGroup)
                       and isinstance(theirs, ConfigGroup)):
@@ -215,9 +228,12 @@ class ConfigGroup():
                 else:
                     assert False, "Internal Error: Member of invalid type."
 
-        log.debug("result of update on config group"
+        if self.path == ['settings']:
+            log.debug("result of update on config group"
+                    "\n\n self.ctxt: %s"
                     "\n\n self.members: %s",
-                    pformat(self.members.keys()))
+                    self.ctxt,
+                    pformat(self.value_dict))
 
         return self
 

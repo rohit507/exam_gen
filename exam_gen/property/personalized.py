@@ -1,8 +1,11 @@
 import attr
 
 from .document import *
+from .templated import Templated
 
 from exam_gen.classroom.student import Student
+
+from exam_gen.util.merge_dict import merge_dicts
 import exam_gen.util.logging as logging
 
 log = logging.new(__name__, level="DEBUG")
@@ -24,7 +27,7 @@ class Personalized():
     """
 
 @attr.s
-class PersonalDoc(Personalized,Document):
+class PersonalDoc(Personalized, Templated, Document):
     """
     Will initialize all the different subdocs with the student_id and classroom
     information.
@@ -32,12 +35,22 @@ class PersonalDoc(Personalized,Document):
     This expects that all the questions under a parent are also personalized.
     """
 
-    @classmethod
-    def init_document(cls, doc_class):
+    def init_document(self, doc_class, **kwargs):
 
-        new_class = doc_class.with_options(
+        return super(PersonalDoc,self).init_document(
+            doc_class,
             student    = self.student,
-            classroom  = self.classroom
+            classroom  = self.classroom,
+            **kwargs
         )
 
-        return super().init_document(new_class)
+    def build_template_spec(self, build_info=None):
+
+        spec = super(PersonalDoc, self).build_template_spec(build_info)
+
+        spec.context['student'] = merge_dicts(
+            spec.context.get('student',dict()),
+            self.student.student_data,
+            attr.asdict(self.student))
+
+        return spec

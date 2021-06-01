@@ -3,6 +3,7 @@ import os
 import subprocess
 import shutil
 
+from pprint import *
 from pathlib import *
 
 from ..document import Document
@@ -17,7 +18,7 @@ import os
 
 log = logging.new(__name__, level="DEBUG")
 
-class LatexDoc(Templated, Buildable):
+class LatexDoc(Buildable, Templated):
     """
     Specializes the document type for latex
     """
@@ -27,46 +28,34 @@ class LatexDoc(Templated, Buildable):
     settings.template.format_ext = "tex"
 
     settings.build.new_value(
-        'latex_command', default='pdftex', doc=
+        'latex_command', default='pdflatex', doc=
         """
         The actual command line application that will be used to build the
-        document. `'xetex'` and `'luatex'` are some other possible options.
+        document. `'xelatex'` and `'lualatex'` are some other possible options.
         """)
 
-    settings.build.new_value(
-        'tex_file', default='document.tex', doc=
-        """
-        The file which the generated latex file will be written to.
-        The resulting PDF file will use the same name with the '.pdf'
-        extension.
-        """)
+    def finalize_build(self, build_info):
 
-    def finalize_build(self, data_dir, build_dir, **build_settings):
-
-        if os.getcwd() != build_dir:
+        if Path(os.getcwd()) != build_info.build_path:
             raise RuntimeError("LatexDoc Builds must be run in build dir")
 
-        tex_file = Path(self.settings.build.tex_file)
-        file_stem = tex_file.stem
+        file_stem = self.settings.template.output
+        tex_file = Path(file_stem + '.' + self.settings.template.format_ext)
         pdf_file = tex_file.with_suffix('.pdf')
 
-        template_spec = self.template_spec(
-            out_file = self.settings.build.tex_file,
-            **build_settings)
+        # template_spec = self.template_spec(
+        #     out_file = self.settings.build.tex_file,
+        #     **build_settings)
 
-        results = build_template_spec(
-            file_stem, template_spec, dict(), tex_file, data_dir)
+        # results = build_template_spec(
+        #     file_stem, template_spec, dict(), tex_file, data_dir)
 
         build_cmd = subprocess.run([self.settings.build.latex_command,
-                                    tex_file], capture_output=True)
+                                    tex_file])
 
-        log = {'tex_file': tex_file,
+        log_ = {'tex_file': tex_file,
                'pdf_file': pdf_file,
-               'build_cmd': build_cmd,
-               'data_dir': data_dir,
-               'build_dir': build_dir,
-               'cwd': os.getcwd(),
-               'build_settings': build_settings,
+               'build_info': build_info,
                'latex_command': self.settings.build.latex_command}
 
         try:
@@ -75,29 +64,24 @@ class LatexDoc(Templated, Buildable):
         except err:
             log_name = "finalize-error-{}.yaml".format(file_stem)
 
-            dump_yaml(log, path=(data_dir, log_name))
+            dump_yaml(log_, path=(data_dir, log_name))
 
             raise err
 
-        return log
+        return log_
 
-    def output_build(self, data_dir, build_dir, out_dir,
-                     output_file=None,
-                     **build_settings):
+    def output_build(self, build_info, output_file=None):
 
         if output_file == None:
-            output_file = Path(self.settings.build.tex_file).with_suffix('.pdf')
+            output_file = self.settings.template.output
 
-        output_file = Path(out_dir, output_file)
+        output_file = Path(build_info.out_path, output_file).with_suffix('.pdf')
 
-        pdf_file = Path(build_dir,
-                        self.settings.build.tex_file).with_suffix('.pdf')
+        pdf_file = Path(build_info.build_path,
+                        self.settings.template.output).with_suffix('.pdf')
 
         shutil.copyfile(pdf_file, output_file)
 
-        return {'data_dir': data_dir,
-                'build_dir': build_dir,
-                'out_dir': out_dir,
-                'output_file': output_file,
+        return {'output_file': output_file,
                 'pdf_file': pdf_file,
-                'build_settings': build_settings}
+                'build_info': build_info}

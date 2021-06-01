@@ -8,7 +8,7 @@ import attr.validators as valid
 
 import exam_gen.util.logging as logging
 
-log = logging.new(__name__, level="DEBUG")
+log = logging.new(__name__, level="WARNING")
 
 class PrepareAttrs(type):
     """
@@ -52,11 +52,23 @@ class PrepareAttrs(type):
         attrs = super().__prepare__(name,bases)
         mro = PrepareAttrs.get_future_mro(name, bases)
 
+        log.debug(
+            "Preparing attrs"
+            "\n\n meta: %s"
+            "\n name: %s"
+            "\n mro: \n%s",
+            metaclass,
+            name,
+            pformat(mro))
+
         for cls in reversed(mro):
 
             prep_hook = getattr(cls,'__prepare_attrs__', None)
             if prep_hook is not None:
+                log.debug("running prep_hook: %s", cls)
                 attrs = prep_hook(name,bases,attrs)
+            else:
+                log.debug("No prep_hook: %s", cls)
 
         return attrs
 

@@ -152,6 +152,8 @@ def create_decorator(attr_name, decor_data):
         The final decorator function that can be used to modify class.
         """
 
+        log.debug("Adding decorating class: %s\nattr:%s", cls, attr_name)
+
         new_cls_ref = [None]
 
         final_meta = FinalMeta(
@@ -196,6 +198,20 @@ def create_decorator(attr_name, decor_data):
 
         def prep_attrs(cls, name, bases, env):
 
+            log.debug(
+                "running prep attrs"
+                "\n\n cls: %s"
+                "\n name: %s"
+                "\n attr_name: %s",
+                # "\n meta:  %s"
+                # "\n mro:\n%s",
+                cls,
+                name,
+                final_meta.attr_name,
+                # type(cls),
+                # pformat(cls.__mro__)
+            )
+
             initial_env = copy(env)
 
             final_attrs = attr.asdict(final_meta)
@@ -234,8 +250,8 @@ def create_decorator(attr_name, decor_data):
                 textwrap.indent(pformat(meta), "      "),
             )
 
-            if hasattr(super(cls), "__prepare_attrs__"):
-                env = super(cls).__prepare_attrs__(name, bases, env)
+            if hasattr(super(new_cls_ref[0],cls), "__prepare_attrs__"):
+                env = super(new_cls_ref[0],cls).__prepare_attrs__(name, bases, env)
 
             cls_inst = decor_data.prep_attr_inst(meta)
 
@@ -300,6 +316,14 @@ def create_decorator(attr_name, decor_data):
             if cls_inst == None:
                 assert False, ("Internal Error: During `__init_superclass__`"+
                                " for `{}`").format(base_cls)
+
+            log.debug("start_mk_secret_inst: "
+                      "\n attr_name: %s "
+                      "\n new_cls: %s "
+                      "\n cls: %s",
+                      meta.attr_name,
+                      meta.new_cls,
+                      cls)
 
             cls_inst = decor_data.scinit_mk_secret_inst(
                 cls_inst,

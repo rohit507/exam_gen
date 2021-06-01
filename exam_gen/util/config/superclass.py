@@ -166,21 +166,33 @@ def config_superclass(
         @staticmethod
         def prep_env_update(cls_val, env_val, prep_meta):
             log.debug('prep_env_update '
-                      '\n\n%s \n\n%s', cls_val, env_val)
+                      '\n\n%s \n\n%s',
+                      cls_val,
+                      env_val
+            )
             cls_val.update(env_val)
             log.debug('post prep_env_update\n\n %s', cls_val)
             return cls_val
 
         @staticmethod
         def prep_sc_update(cls_val, sc_val, prep_meta):
-            log.debug('prep_sc_update\n\n %s\n\n %s\n\n %s', cls_val, sc_val, prep_meta)
+            log.debug("prep_sc_update:"
+                      "\n\n %s"
+                      "\n\n %s"
+                      "\n\n %s"
+                      , cls_val
+                      , sc_val
+                        , prep_meta.cls)
+
             cls_val.update(sc_val)
             log.debug('post prep_sc_update\n\n %s', cls_val)
             return cls_val
 
         @staticmethod
         def scinit_mk_secret_inst(cls_val, scinit_meta):
-            log.debug('scinit_mk_secret_inst\n\n %s \n\n %s', cls_val, scinit_meta)
+            log.debug('ConfigGroup scinit_mk_secret_inst\n\n %s \n\n %s',
+                      pformat(cls_val.value_dict),
+                      scinit_meta)
             result = cls_val.clone(ctxt=scinit_meta.cls)
             log.debug('post scinit_mk_secret_inst\n\n %s \n\n %s',result, scinit_meta)
             return result
@@ -213,6 +225,7 @@ def config_superclass(
 
         @staticmethod
         def new_mk_inst(super_obj, cls_inst, new_meta):
+
             new_inst = cls_inst.clone(ctxt=super_obj)
 
             log.debug(
@@ -244,7 +257,6 @@ def config_superclass(
             setattr(new_inst,'_hidden_new_group',
                     getattr(new_inst, 'new_group'))
             # delattr(new_inst,'new_group')
-
 
             return new_inst
 

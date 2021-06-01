@@ -1,0 +1,15 @@
+{{ question }}
+\begin{enumerate}[label=(\Alph*)]
+  {% for choice in choices %}
+    \item {{choice.text}}
+    {% if version == 'solution' %}
+      \solution{
+      {{ "Correct" if choice.correct else "Incorrect" }}
+      {{ choice.solution }}
+      }
+    {% endif %}
+  {% endfor %}
+\end{enumerate}
+{% if version == 'solution' %}
+  \solution{ {{ solution }} }
+{% endif %}

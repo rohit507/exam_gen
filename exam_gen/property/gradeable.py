@@ -2,10 +2,12 @@ import attr
 
 from .document import Document
 from .has_settings import HasSettings
+from .templated import Templated
 
 import exam_gen.util.logging as logging
 
 log = logging.new(__name__, level="DEBUG")
+
 
 @attr.s
 class GradeData():
@@ -52,7 +54,7 @@ class GradeData():
 
 
 @attr.s
-class Gradeable(HasSettings, Document):
+class Gradeable(Templated):
 
     _weight = attr.ib(default=None, kw_only=True)
     _points = attr.ib(default=None, init=False)
@@ -73,13 +75,13 @@ class Gradeable(HasSettings, Document):
     settings.grade.new_value(
         "weight", default=None, doc=
         """
-        The weight of this problem relative to others in exam. If none, this
+        The weight of this problem relative to others in exam. If `None`, this
         is assumed to be the same as `settings.grade.max_points`.
         """)
 
     def __attrs_post_init__(self):
-        if hasattr(super(), '__attrs_post_init__'):
-            super().__attrs_post_init__()
+        if hasattr(super(Gradeable,self), '__attrs_post_init__'):
+            super(Gradeable,self).__attrs_post_init__()
 
         # stupid way of sneaking an init parameter into the settings
         if self._weight != None:
@@ -124,6 +126,24 @@ class Gradeable(HasSettings, Document):
     @property
     def total_weight(self):
         return self.settings.grade.weight
+
+    def build_template_spec(self, build_info):
+
+        spec = super(Gradeable, self).build_template_spec(
+            build_info)
+
+        grades = dict()
+
+        if self._points != None:
+            grades['points'] = self._points
+
+        if self._comment != None:
+            grades['comment'] = self._comment
+
+        if grades != {}:
+            spec.context['grade'] = grades
+
+        return spec
 
 def distribute_scores(obj , grades):
     """

@@ -2,12 +2,14 @@ import attr
 import functools
 
 from copy import *
+from pprint import *
+
 from .object import VersionedObj
 
 import exam_gen.util.logging as logging
 
 
-log = logging.new(__name__, level="DEBUG")
+log = logging.new(__name__, level="WARNING")
 
 __all__ = ["VersionedOptions"]
 
@@ -20,6 +22,9 @@ class VersionedOptions(VersionedObj):
 
     def __attrs_post_init__(self):
         self.pre_init = False
+        if self._parent != None:
+            self._option_spec = self._parent._option_spec
+            self.options = deepcopy(self._parent.options)
 
     def __getattr__(self, name):
         """
@@ -30,9 +35,13 @@ class VersionedOptions(VersionedObj):
         if name == 'pre_init':
             raise AttributeError("{} attr not found pre-init".format(name))
 
+
         if name not in self.__getattribute__('_option_spec'):
+            log.debug(pformat(self.var_name))
+            log.debug(pformat(self._option_spec))
             # raise AttributeError("No such option.")
             return super(VersionedOptions, self).__getattribute__(name)
+        # log.error("getting attr %s from %s", name, self.var_name)
 
         if name in self.options:
             return self.options[name]
@@ -62,13 +71,6 @@ class VersionedOptions(VersionedObj):
 
                 raise RuntimeError(("Option `{}` can only be set at the root "
                                     "level of this term.").format(name))
-
-            s_attr = getattr(self,name,None)
-
-            if s_attr != None:
-                raise RuntimeException(
-                    "Has an option overloading an "
-                    "attribute from a parent class.")
 
             self.options[name] = deepcopy(value)
 

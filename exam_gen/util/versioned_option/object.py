@@ -190,7 +190,8 @@ class VersionedObj():
 
         new_entry = type(self)("{}[{}]".format(self.var_name, key.name),
                                parent=self,
-                               parent_key=key)
+                               parent_key=key,
+                               format_spec=self._format_spec[1:])
 
         self._stored_entries[key] = new_entry
 

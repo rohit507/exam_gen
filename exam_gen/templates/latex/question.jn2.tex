@@ -1,0 +1,11 @@
+{{ question }}
+{% if version == 'solution' %}
+\solution{ {{ solution }} }
+{% endif %}
+{% for problem in problems %}
+{\large {Sub Problem: {{ problem.question_number }} } } \\
+{{ problem.exam_text }}
+{% if version == 'solution' %}
+\solution{ {{ problem.solution_text }} }
+{% endif %}
+{% endfor %}

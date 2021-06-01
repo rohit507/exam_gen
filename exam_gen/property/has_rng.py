@@ -5,7 +5,6 @@ from .has_user_setup import HasUserSetup
 from exam_gen.util.user_setup import setup_arg
 from random import Random
 from exam_gen.util.stable_hash import stable_hash
-
 import exam_gen.util.logging as logging
 
 log = logging.new(__name__, level="DEBUG")
@@ -24,6 +23,11 @@ class HasRNG(HasUserSetup,Document):
     """
 
     def init_root_seed(self):
+        from exam_gen.property.personalized import Personalized
+
+        if isinstance(self, Personalized):
+            return self.student.root_seed
+
         raise RuntimeError("No method to get root seed")
 
     def get_keyed_rng(self, *keys):
@@ -41,7 +45,7 @@ class HasRNG(HasUserSetup,Document):
 
     def setup_build(self, build_info):
 
-        log = super().setup_build(build_info)
+        log = super(HasRNG, self).setup_build(build_info)
 
         if self.root_seed == None:
             self.root_seed = self.init_root_seed()

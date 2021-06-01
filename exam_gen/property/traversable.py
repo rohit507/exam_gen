@@ -39,19 +39,19 @@ class Traversable():
 
         log.debug("initializing Traversable for subclass: {}".format(cls))
 
-        super().__init_subclass__(*vargs, **kwargs)
+        super(Traversable, cls).__init_subclass__(*vargs, **kwargs)
 
         final_traversable_vars = list()
 
-        cls._traversables = getattr(cls, '_traversables', dict())
-        cls._traversable_cache = getattr(cls, '_traversable_cache', dict())
+        cls._traversables = deepcopy(getattr(cls, '_traversables', dict()))
+        cls._traversable_cache = deepcopy(getattr(cls, '_traversable_cache', dict()))
 
         for var_spec in cls.__traversable_vars__:
 
             spec = Traversable._format_var_spec(cls, var_spec)
             var_name = spec['var']
 
-            cls._traversables[var_name] = getattr(cls, var_name, dict())
+            cls._traversables[var_name] = deepcopy(getattr(cls, var_name, dict()))
 
             Traversable._setup_tvar(cls, spec)
             if spec['cache'] != None: Traversable._setup_tcache(cls, spec)
@@ -65,10 +65,10 @@ class Traversable():
             super().__attrs_post_init__()
 
         self._traversables = getattr(self, '_traversables',
-                                     copy(type(self)._traversables))
+                                     deepcopy(type(self)._traversables))
 
         self._traversable_cache = getattr(self, '_traversable_cache',
-                                          copy(type(self)._traversable_cache))
+                                          deepcopy(type(self)._traversable_cache))
 
     @staticmethod
     def _format_var_spec(cls, var_spec):

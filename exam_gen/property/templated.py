@@ -13,6 +13,7 @@ from .document import Document
 
 from exam_gen.util.versioned_option import add_versioned_option
 from exam_gen.util.file_ops import dump_str, dump_yaml
+from exam_gen.util.stable_hash import stable_hash
 
 import exam_gen.util.logging as logging
 
@@ -76,7 +77,7 @@ class Templated(HasSettings, HasDirPath, Document):
         """)
 
     settings.template.new_value(
-        'included',
+        'embedded',
         default = None,
         doc =
         """
@@ -90,7 +91,6 @@ class Templated(HasSettings, HasDirPath, Document):
         doc =
         """
         The template to use when building this file as a standalone document.
-        **Currently unused.**
         """)
 
     settings.template.new_value(
@@ -114,6 +114,16 @@ class Templated(HasSettings, HasDirPath, Document):
         """)
 
     settings.template.new_value(
+        'template_dir',
+        default = None,
+        doc =
+        """
+        Convenience alias for a single-entry `settings.template.search_path`.
+        This directory will be the first place that the templating engine looks
+        for templates.
+        """)
+
+    settings.template.new_value(
         'jinja_opts',
         default = dict(),
         doc =
@@ -129,6 +139,8 @@ class Templated(HasSettings, HasDirPath, Document):
         build a TemplateSpec that describes how to apply all the various
         templates for each object.
 
+        Each superclass can augment the template spec with more information
+
         It should call `template_spec(name)` on subquestions, appropriately
         name them and so on. Note that `template_spec` makes sure that
         settings from this document are properly set in the `TemplateSpec`
@@ -136,36 +148,62 @@ class Templated(HasSettings, HasDirPath, Document):
 
         The result should be a recursive TemplateSpec that can be built in
         one shot by whatever is managing the build process.
+
+        Note: This assumes that we're using the `embedded` rather than the
+        `standalone` template unless specified in `build_info.is_standalone`
         """
 
-        return TemplateSpec(Path(self.settings.template.standalone))
+        template = self.settings.template.embedded
+        if ((build_info != None and build_info.is_standalone)
+            or template == None):
+            template = self.settings.template.standalone
 
-        raise NotImplementedError(
-            "`build_template_spec` needs to be implemented "
-            "in a subclass of `Templated` in order to be able to "
-            "construct a template.")
+        spec = TemplateSpec(Path(template))
+
+        if build_info != None:
+            build_info = build_info.where(is_standalone = False)
+            if build_info.exam_format != None:
+                spec.context['format'] = build_info.exam_format
+
+        spec.subtemplates['questions'] = dict()
+
+        for (ind, (name, qn)) in enumerate(self.questions.items()):
+
+            spec.subtemplates['questions'][name] = qn.template_spec(
+                build_info=build_info)
+
+            spec.subtemplates['questions'][name].context['index'] = ind
+
+        return spec
 
     def __get_search_path(self):
 
         path = list()
 
         if isinstance(self._parent_doc, Templated):
-            path = self._parent_doc.__get_search_path(other)
+            path = self._parent_doc.__get_search_path()
 
         add_root = lambda p : Path(self.root_dir, p)
 
-        path += list(map(add_root,['./',*self.settings.template.search_path]))
+        string_paths = list()
+        if self.settings.template.template_dir != None:
+            string_paths.append(self.settings.template.template_dir)
+        string_paths += ['./',*self.settings.template.search_path]
+
+        path += list(map(add_root,string_paths))
 
         return path
 
     def __get_jinja_opts(self):
         opts = dict()
         if isinstance(self._parent_doc, Templated):
-            opts = deepcopy(self._parent_doc.__get_jinja_opts)
+            opts = deepcopy(self._parent_doc.__get_jinja_opts())
         opts |= self.settings.template.jinja_opts
         return opts
 
     def template_spec(self, out_file=None, build_info=None):
+
+
 
         spec = self.build_template_spec(build_info)
 
@@ -236,7 +274,7 @@ def build_template_spec(name,
         # and just doing it normally
         if template_str == None:
             (template_str,_,_) = loader.get_source(environment, str(template_file))
-            template = loader.load(environment, template_file)
+            template = loader.load(environment, str(template_file))
 
     # Otherwise just get it from the string.
     else:
@@ -244,11 +282,13 @@ def build_template_spec(name,
 
     # Get the path we're outputting a file to
     out_path = out_file if out_file else spec.out_file
+    spec.out_file = str(out_path)
 
     # Get the extension we use for debug output
     if out_path != None:
-        out_ext = "".join(Path(out_file).suffixes)
+        out_ext = "".join(Path(out_path).suffixes)
     elif spec.format_ext != None:
+        # log.warning(out_path)
         out_ext = "." + spec.format_ext
     else:
         out_ext = ""
@@ -275,18 +315,11 @@ def build_template_spec(name,
     # run through all subtemplates and build them too
     for (subname, subtemp) in spec.subtemplates.items():
 
-        subtemp.path = spec.path + subtemp.path
-        if subtemp.format_dir == None:
-            subtemp.format_dir = spec.format_dir
+        # log.warning((name, subname, type(subtemp)))
 
-        if subtemp.format_ext == None:
-            subtemp.format_ext = spec.format_ext
+        final_ctxt[subname] = build_subtemplates(
+            spec, name, subtemp, subname, initial_ctxt, debug_dir)
 
-        final_ctxt[subname] = build_template_spec(
-            name="{}-{}".format(name, subname),
-            spec=subtemp,
-            ctxt=initial_ctxt,
-            debug_dir=debug_dir)
 
     # dump the context post subtemplating
     if debug_dir != None:
@@ -299,14 +332,70 @@ def build_template_spec(name,
     if debug_dir != None:
         dump_str(result, path=(debug_dir,result_pat.format(name, out_ext)))
 
-    return_val = dict(text=result)
+    return_val = {k:v for (k,v) in final_ctxt.items() if k not in ctxt or
+                  ctxt[k] != final_ctxt[k]}
+    return_val['text'] = result
 
     # print the out_put
     if out_path != None:
         dump_str(result, path=out_path)
         return_val['file'] = out_path
 
+    if spec.post_render_hook != None:
+        spec.post_render_hook(return_val)
+
     return return_val
+
+
+def build_subtemplates(spec, name, sub, subname, ctxt, debug):
+    """
+    Properly handle lists and dicts of subtemplates, allowing for better
+    management of subquestions. Esp. not requiring templates to know what
+    all the various sub-questions are called.
+    """
+
+    entries = None
+    output = None
+
+    if isinstance(sub, list):
+        entries = list(enumerate(sub))
+        output = [None] * len(entries)
+    elif isinstance(sub, dict):
+        entries = sub.items()
+        output = dict()
+    else:
+
+        new_name = "{}-{}".format(name, subname)
+
+        sub.path = spec.path + sub.path
+        if sub.format_dir == None:
+            sub.format_dir = spec.format_dir
+        if sub.format_ext == None:
+            sub.format_ext = spec.format_ext
+
+        # make a new outfile for the subtemplate if none exists
+        if spec.out_file != None and sub.out_file == None:
+            pat = Path(spec.out_file)
+            ext = "".join(pat.suffixes)
+            suff = "." + sub.format_ext if sub.format_ext else ext
+            pat = pat.with_stem(new_name).with_suffix(suff)
+            sub.out_file = pat
+
+        return build_template_spec(name=new_name,
+                                   spec=sub,
+                                   ctxt=ctxt,
+                                   debug_dir=debug)
+
+    for (keyname, subspec) in entries:
+        # log.warning((keyname, subspec))
+        output[keyname] = build_subtemplates(
+            spec = spec,
+            name = name,
+            sub = subspec,
+            subname = "{}[{}]".format(subname, keyname),
+            ctxt = ctxt,
+            debug = debug)
+    return output
 
 @attr.s
 class TemplateSpec():
@@ -326,6 +415,45 @@ class TemplateSpec():
     out_file = attr.ib(default=None, init=False)
 
     jinja_opts = attr.ib(factory=dict, init=False)
+
+    post_render_hook = attr.ib(default=None, kw_only=True)
+
+def template_spec_from_var(var, versions=[], empty_okay=False):
+    """
+    Create a TemplateSpec from a template var (a `VersionedOpts` with the
+    fields `text`, `file`, and `ctxt`)
+
+    Treats `text` as higher priority than `file`
+    """
+
+    # Get the version of the spec we need for this task
+    for v in versions:
+        var = var[v]
+
+    # get requisite template type
+    template = None
+    if var.text != None:
+        template = var.text
+        if var.file != None:
+            log.warning(("Both `file` and `text` parameters are set "
+                         "for template '{}'. `text` is being used by "
+                         "default.").format(var.name))
+    elif var.file != None:
+        template = Path(var.file)
+    elif empty_okay:
+        template = ""
+    else:
+        raise RuntimeError(("Template Var {} has neither `text` nor `file` "
+                            "parameter specified.").format(var.name))
+
+    # log.warning(pformat((var.var_name, var.ctxt)))
+
+    return TemplateSpec(template,
+                        context=var.ctxt)
+
+
+
+
 
 __jinja_default_opts__ = dict(
     block_start_string = '{%',

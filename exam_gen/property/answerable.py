@@ -2,6 +2,7 @@ import attr
 
 from .document import Document
 from .has_settings import HasSettings
+from .templated import Templated
 
 import exam_gen.util.logging as logging
 
@@ -41,7 +42,7 @@ class AnswerData():
 
 
 @attr.s
-class Answerable(HasSettings, Document):
+class Answerable(Templated):
 
     _answer = attr.ib(default=None, init=False)
 
@@ -62,6 +63,16 @@ class Answerable(HasSettings, Document):
 
     def get_answer(self):
         return self._answer
+
+    def build_template_spec(self, build_info):
+
+        spec = super(Answerable, self).build_template_spec(
+            build_info)
+
+        if self._answer != None:
+            spec.context['answer'] = self._answer
+
+        return spec
 
 def distribute_answers(obj , answers):
     """
