@@ -10,7 +10,7 @@
 
 \newboolean{isSolution}
 \setboolean{isSolution}{true}
-{% if version == 'solution' %}
+{% if format == 'solution' %}
   \newcommand{\solution}[1]{\color{red} #1 \color{black}}
   \newcommand{\notsolution}[1]{}
 {% else %}
@@ -134,7 +134,7 @@
 \begin{center}
 \framebox{
 \vbox{
-\hbox to 5.75in { {\small\bf {{ class_name }}, {{ semester }}
+\hbox to 5.75in { {\small\bf {{ course }}, {{ semester }}
 \hfill {{ instructors }} }  }
 \vspace{7mm}
 \hbox to 5.75in { {\Large\bf \hfill #1 \hfill} }
@@ -170,14 +170,14 @@
 %               UDPATE the header and synopsis below                    %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\homework{ {{ exam_name }} \solution{ SOLUTIONS }}{ {{ date}} }
+\homework{ {{ assignment }} \solution{ SOLUTIONS }}{ {{ date }} }
 
 \notsolution{
 \hrule
 
 \vspace*{0.5cm}
 
-{\sc \textbf{Your Name:}} {{ student_data.Name }}
+{\sc \textbf{Your Name:}} {{ student.name }}
 
 \vspace*{0.5cm}
 
@@ -187,13 +187,13 @@
 
 \noindent
 
-{{introduction}}
+{{intro.text}}
 
 
-{ {
+{  {
 \begin{tabular}{l|l}
-{% for problem in questions %}
-Problem {{problem.index + 1}} & ~~~~~~~~~~~~~~~~~~~ \\
+{% for (name, question) in questions.items() %}
+Problem {{question.index + 1}} & ~~~~~~~~~~~~~~~~~~~ \\
   \hline
 {% endfor %}
 Total & ~~~~~~~~~~~~~~~~~~~
@@ -205,15 +205,9 @@ Total & ~~~~~~~~~~~~~~~~~~~
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-{% for problem in problems %}
+{% for (name, question) in questions.items() %}
 \clearpage
-{\Large {Problem {{problem.index + 1}}}} \\
-
-{% if version == 'solution' %}
-  {{problem.solution_text}}
-{% else %}
-  {{problem.exam_text}}
-{% endif %}
+{{question.text}}
 \newpage
 {% endfor %}
 

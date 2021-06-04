@@ -1,0 +1,18 @@
+{% if nesting_depth == 1 %}
+{\Large { Problem: {{ number }} } } \\
+{% elif nesting_depth == 2 %}
+{\large { Sub-Problem: {{ number }} } } \\
+{% elif nesting_depth == 3 %}
+{\large { Sub-Sub-Problem: {{ number }} } } \\
+{% else %}
+{\large { Part: {{ number }} } } \\
+{% endif %}
+
+{{ body.text }} \\
+{% if format == 'solution' %}
+\solution{ {{ solution.text }} } \\
+{% endif %}
+{% for (name, subquestion) in questions.items() %}
+
+{{ subquestion.text }}
+{% endfor -%}

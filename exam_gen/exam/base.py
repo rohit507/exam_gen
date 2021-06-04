@@ -91,7 +91,7 @@ class Exam(Numbered,
         """)
 
 
-    settings.template.standalone = "exam.jn2"
+    settings.template.standalone = "exam_standalone.jn2"
 
     use_class_root = True
     """

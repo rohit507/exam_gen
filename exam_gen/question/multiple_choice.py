@@ -91,21 +91,21 @@ class MultipleChoiceQuestion(AutoGradeable, Question):
     settings.grade.new_value(
         "supress_correct_choice_error", default=False, doc=
         """
-        supress the error that's raised when there's no correct choices
+        Supress the error that's raised when there's no correct choices
         provided to the student.
         """)
 
     settings.grade.new_value(
         "supress_incorrect_choice_error", default=False, doc=
         """
-        supress the error that's raised when there's no incorrect choices
+        Supress the error that's raised when there's no incorrect choices
         provided to the student.
         """)
 
     settings.grade.new_value(
         "supress_choice_equality_error", default=False, doc=
         """
-        supress the error that's raised when multiple_choices have the same
+        Supress the error that's raised when multiple choices have the same
         content.
         """)
 
@@ -322,8 +322,6 @@ class MultipleChoiceQuestion(AutoGradeable, Question):
             raise RuntimeError("Question has no correct answers.")
         if not some_incorrect:
             raise RuntimeError("Question has no incorrect answers.")
-
-
 
     def build_template_spec(self, build_info=None):
 

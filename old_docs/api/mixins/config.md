@@ -29,13 +29,13 @@
           - Move the former to the `prepare_attrs` module.
           - Fix the inheritance stuff where needed to make this work.
 
-::: exam_gen.mixins.config
-    handler: python
-    selection:
-      filters:
-         - "!__"
-    rendering:
-      heading_level: 2
-      show_source: True
-      show_root_toc_entry: False
-      show_object_full_path: True
+<!-- ::: exam_gen.mixins.config -->
+<!--     handler: python -->
+<!--     selection: -->
+<!--       filters: -->
+<!--          - "!__" -->
+<!--     rendering: -->
+<!--       heading_level: 2 -->
+<!--       show_source: True -->
+<!--       show_root_toc_entry: False -->
+<!--       show_object_full_path: True -->

@@ -1,17 +1,11 @@
-# Welcome to MkDocs
+# `exam_gen` : Automatic, personalized assignment generation and grading.
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+`exam_gen` is a library that allows people to create personalized exams unique
+to each student in a class.
 
-## Commands
+## Documentation Sections
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
-
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+  1. **[Tutorial](tutorial.md):** A detailed walkthrough of how to build a simple exam with
+     this library.
+  1. **[Quick Reference](quick_reference.md):** Links to different sections of
+     this documentation organized by task.

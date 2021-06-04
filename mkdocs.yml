@@ -14,21 +14,127 @@ theme:
 
 nav:
   - Home: index.md
-  - 'Test (Exam)': api/exam.md
-  - Getting Started: getting-started.md
-  - Miscellaneous Notes: misc-notes.md
-  - Developer API:
-      - exam_gen.mixins:
-          - config: api/mixins/config.md
-          - prepare_attrs: api/mixins/prepare_attrs.md
-          - yaml_rep: api/mixins/yaml_rep.md
-          - template: api/mixins/template.md
-          - chain: api/mixins/chain.md
-          - user_setup: api/mixins/user_setup.md
-      - exam_gen.util:
-          - dynamic_call: api/util/dynamic_call.md
-          - error: api/util/error.md
-          - logging: api/util/logging.md
+  - Tutorial: # tutorial/*
+    - Your First Assignment: tutorial/first_assignment.md
+    - Classrooms and Rosters: tutorial/classrooms_and_rosters.md
+    - Writing Questions: tutorial/writing_questions.md
+    - Customization and Randomization: tutorial/customization_and_randomization.md
+    # - Advanced Template Use:
+    # - Multi-Part Questions: tutorial/multi_part_questions.md
+    # - Answers and Scoring: tutorial/answers_and_scoring.md
+    # - Multiple Choice Questions: tutorial/multiple_choice_questions.md
+    # - Solution Keys:
+    # - Bulk Operations:
+  # - User's Guide: # user_guide/*
+    # - Project Organization:
+    # - Exams:
+    # - External Assets:
+      # - Specifying Static Assets:
+      # - Creating Dynamic Assets:
+      # - File Search and Lookup:
+    # - Internal Processing:
+    # - Questions:
+      # - Basic Questions:
+      # - Nesting:
+      # - Multiple Choice:
+    # - Templates:
+      # - Template Formatting:
+      # - Template Variables:
+      # - Class Level Templates:
+      # - Debug Information:
+      # - Template Search and Lookup:
+    # - User Setup:
+      # - Randomness:
+      # - Template Context:
+    # - Command Line Options:
+      # - Parse Roster:
+      # - Build Exam:
+      # - Build Solutions:
+  # - Developer Guide: # dev_guide/*
+    # - Development Environment Setup: dev_guide/dev_env_setup.md
+    # - Development Workflow: dev_guide/development_workflow.md
+    # - Project Organization: dev_guide/project_organization.md
+    # - Build Process: dev_guide/build_phases.md
+    # - Adding Components: # dev_guide/adding_components/*
+      # - Roster Parsers:
+      # - Answer Parsers:
+      # - Score Parsers:
+      # - Grade Printers:
+      # - Question Types:
+      # - Output Formats:
+      # - Templates:
+    # - Adding Properties:
+      # - User Setup Arguments:
+      # - Configuration Variables:
+      # - Template Variables:
+    # - Adding Question Types:
+      # - Basic Changes:
+      # - Answer Formats:
+      # - Auto-grading:
+      # - Templates:
+    # - Output Formats:
+      # - Latex:
+  # - API Documentation: # api/*
+    # - exam_gen.build: # api/build/*
+      # - exam_gen.build.data: api/build/data.md
+      # - exam_gen.build.loader: api/build/loader.md
+      # - exam_gen.build.cli: api/build/cli.md
+    # - exam_gen.classrooom: # api/classroom/*
+      # - exam_gen.classroom.answers: api/classroom/answers.md
+      # - exam_gen.classroom.base: api/classroom/base.md
+      # - exam_gen.classroom.grades: api/classroom/grades.md
+      # - exam_gen.classroom.rosters: api/classroom/rosters.md
+      # - exam_gen.classroom.scores: api/classroom/scores.md
+      # - exam_gen.classroom.student: api/classroom/student.md
+    # - exam_gen.exam : api/exam.md
+    # - exam_gen.property: # api/property/*
+      # - exam_gen.property.answerable : api/property/answerable.md
+      # - exam_gen.property.auto_gradeable : api/property/auto_gradeable.md
+      # - exam_gen.property.buildable : api/property/buildable.md
+      # - exam_gen.property.document : api/property/document.md
+      # - exam_gen.property.format : api/property/format.md
+      # - exam_gen.property.gradeable : api/property/gradeable.md
+      # - exam_gen.property.has_context : api/property/has_context.md
+      # - exam_gen.property.has_dir_path : api/property/has_dir_path.md
+      # - exam_gen.property.has_metadata : api/property/has_metadata.md
+      # - exam_gen.property.has_rng : api/property/has_rng.md
+      # - exam_gen.property.has_settings : api/property/has_settings.md
+      # - exam_gen.property.has_user_setup : api/property/has_user_setup.md
+      # - exam_gen.property.numbered : api/property/numbered.md
+      # - exam_gen.property.personalized : api/property/personalized.md
+      # - exam_gen.property.templated : api/property/templated.md
+    # - exam_gen.question: # api/question/*
+      # - exam_gen.question.base: api/question/base.md
+      # - exam_gen.question.multiple_choice: api/question/multiple_choice.md
+    # - exam_gen.util: # api/util/*
+      # - exam_gen.util.config : api/util/config.md
+      # - exam_gen.util.excel_cols : api/util/excel_cols.md
+      # - exam_gen.util.file_ops : api/util/file_ops.md
+      # - exam_gen.util.logging : api/util/logging.md
+      # - exam_gen.util.merge_dict : api/util/merge_dict.md
+      # - exam_gen.util.prepare_attrs : api/util/prepare_attrs.md
+      # - exam_gen.util.stable_hash : api/util/stable_hash.md
+      # - exam_gen.util.user_setup : api/util/user_setup.md
+      # - exam_gen.util.versioned_option : api/util/versioned_option.md
+      # - exam_gen.util.with_options : api/util/with_options.md
+  - Quick Reference: quick_reference.md
+
+
+  # - 'Test (Exam)': api/exam.md
+  # - Getting Started: getting-started.md
+  # - Miscellaneous Notes: misc-notes.md
+  # - Developer API:
+  #     - exam_gen.mixins:
+  #         - config: api/mixins/config.md
+  #         - prepare_attrs: api/mixins/prepare_attrs.md
+  #         - yaml_rep: api/mixins/yaml_rep.md
+  #         - template: api/mixins/template.md
+  #         - chain: api/mixins/chain.md
+  #         - user_setup: api/mixins/user_setup.md
+  #     - exam_gen.util:
+  #         - dynamic_call: api/util/dynamic_call.md
+  #         - error: api/util/error.md
+  #         - logging: api/util/logging.md
 
 plugins:
   - search
@@ -43,6 +149,7 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.superfences
   - pymdownx.inlinehilite
+  - attr_list
   - toc:
       permalink: true
 

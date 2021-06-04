@@ -10,8 +10,9 @@ pep517 = "*"
 makefun = "*"
 doit = "*"
 attrs = "*"
-jinja2 = "*"
 jsonpickle = "*"
+jinja2 = "<3.0"
+markupsafe = "<2.0"
 
 [dev-packages]
 coloredlogs = "*"
@@ -26,7 +27,6 @@ pymdown-extensions = "*"
 pytest = "*"
 pytest-cov = "*"
 pipenv-setup = "*"
-exam-gen = {editable = true, path = "."}
 
 [console_scripts]
 exam-gen = "exam_gen.cli:main"

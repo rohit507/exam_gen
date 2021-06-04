@@ -16,14 +16,14 @@ down and pass rendered content up.
 
 I'm pretty sure this needs the changes to prepare_attrs to works well.
 
-## Generated Documentation
-::: exam_gen.mixins.template
-    handler: python
-    selection:
-      filters:
-         - "!__"
-    rendering:
-      heading_level: 2
-      show_source: True
-      show_root_toc_entry: False
-      show_object_full_path: True
+<!-- ## Generated Documentation -->
+<!-- ::: exam_gen.mixins.template -->
+<!--     handler: python -->
+<!--     selection: -->
+<!--       filters: -->
+<!--          - "!__" -->
+<!--     rendering: -->
+<!--       heading_level: 2 -->
+<!--       show_source: True -->
+<!--       show_root_toc_entry: False -->
+<!--       show_object_full_path: True -->
