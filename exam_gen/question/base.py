@@ -17,12 +17,12 @@ from exam_gen.property.templated import (
     TemplateSpec,
     template_spec_from_var)
 
+from exam_gen.build.formats import __exam_formats__
 import exam_gen.util.logging as logging
 
 log = logging.new(__name__, level="DEBUG")
 
 
-__exam_formats__ = ['exam', 'solution']
 
 @add_template_var('body', __exam_formats__, doc=
                   """
@@ -67,7 +67,8 @@ class Question(Numbered,
 
         spec.subtemplates['solution'] = template_spec_from_var(
             self.solution,
-            versions=[build_info.exam_format])
+            versions=[build_info.exam_format],
+            empty_okay=True)
 
         return spec
 

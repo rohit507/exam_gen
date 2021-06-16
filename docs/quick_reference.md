@@ -16,16 +16,20 @@
 
   - How do I set the body text of a question?
     - Add link: minimal inline version in tutorial/writing_questions
+    - minimal external file in `tut/proj_org`
 
   - How do I set the solution text for a question?
     - Add link: minimal inline version in tutorial/writing_questions
+    - add link: More complex version in tut/adv_temp
+    - minimal external file in `tut/proj_org`
 
   - What is the API for the rng provided to `user_setup`?
     - Add Link: python docs "Random.Random"
 
   - How do I format templates?
-    - add Link: Jinja doccs
+    - add Link: Jinja doccs lw1
     - add link: minimal notes in tut/cust_and_rand
+    - add link: info on loops and whitespace in tut/adv_temp
 
   - What variables are available to the templates I use?
     - add link: minimal notes in tut/cust_and_rand
@@ -33,7 +37,27 @@
   - How do I pass new variables to my templates?
     - add link: minimal notes via user_setup in tut/cust_and_rand
 
+  - How do I add packages or modify the LaTeX header?
+
   - LaTeX is giving me an error, how can I figure out where it's coming from?
+
+  - How do I nest questions or add sub-questions?
+    - add link `tut/multi-part`
+
+  - How do I share information between questions and sub-questions? or an
+    exam and its questions?
+    - add line `tut/multipart`
+
+  - Can I organize questions and sub-questions in sub-directories of the
+    main assignment?
+    - yes, see `tut/proj_org`
+
+  - Can I split questions and sub-question into multiple files?
+      - yes, see `tut/proj_org`
+
+  - How do I use external files in my assignment?
+    - see `tut/ext_assets`
+
 
 ## Build Process
 

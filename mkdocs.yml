@@ -19,11 +19,12 @@ nav:
     - Classrooms and Rosters: tutorial/classrooms_and_rosters.md
     - Writing Questions: tutorial/writing_questions.md
     - Customization and Randomization: tutorial/customization_and_randomization.md
-    # - Advanced Template Use:
-    # - Multi-Part Questions: tutorial/multi_part_questions.md
+    - Advanced Template Use: tutorial/advanced_template_use.md
+    - Multi-Part Questions: tutorial/multi_part_questions.md
+    - Project Organization: tutorial/project_organization.md
+    - External and Generated Assets: tutorial/external_and_generated_assets.md
     # - Answers and Scoring: tutorial/answers_and_scoring.md
     # - Multiple Choice Questions: tutorial/multiple_choice_questions.md
-    # - Solution Keys:
     # - Bulk Operations:
   # - User's Guide: # user_guide/*
     # - Project Organization:
@@ -50,6 +51,8 @@ nav:
       # - Parse Roster:
       # - Build Exam:
       # - Build Solutions:
+    # - Output Formats:
+      # - Latex:
   # - Developer Guide: # dev_guide/*
     # - Development Environment Setup: dev_guide/dev_env_setup.md
     # - Development Workflow: dev_guide/development_workflow.md
@@ -72,8 +75,7 @@ nav:
       # - Answer Formats:
       # - Auto-grading:
       # - Templates:
-    # - Output Formats:
-      # - Latex:
+    # - Documentation and gh-pages:
   # - API Documentation: # api/*
     # - exam_gen.build: # api/build/*
       # - exam_gen.build.data: api/build/data.md

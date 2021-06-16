@@ -99,6 +99,8 @@ class UserSetup():
                 else:
                     results = setup_func()
             except TypeError as err:
+                if not err.args[0].startswith("user_setup"):
+                    raise err
                 raise TypeError(("{} function should have signature "
                                  "'def {}{}'. \n\n"
                                  "This error might because no `{}` function is "

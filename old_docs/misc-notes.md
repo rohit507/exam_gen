@@ -41,6 +41,7 @@ stuff here should be eventually moved somewhere else in these docs.
       <http://127.0.0.1:8000/>.
     - Build a static stite with `pipenv run mkdocs build`, results will be placed
       in the `site/` directory.
+    - deploy to github with `pipenv run mkdocs gh-deploy`
 
   - Using best practices taken from
     [the sourcery.ai blog](https://sourcery.ai/blog/python-best-practices/):
