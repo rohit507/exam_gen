@@ -27,30 +27,41 @@ class GradeData():
     def percent_ungraded(self):
         return (self.ungraded_points / self.total_weight)
 
-    @staticmethod
-    def normalise(data):
-        if isinstance(data, GradeData):
-            return data
-        elif isinstance(data, dict):
-            return GradeData(children=data)
-        else:
-            return GradeData(grade=data)
+    def __new__(cls, *args, **kwargs):
+        if len(args) == 1:
+            if isinstance(args[0], cls):
+                return args[0]
+            elif isinstance(args[0], dict) and 'children' not in kwargs:
+                kwargs['children'] = args[0]
+                args = list()
 
+        if len(args) == 2 and 'comment' not in kwargs:
+            kwargs['comment'] = args[1]
+            args = [args[0]]
+
+        return super(GradeData, cls).__new__(cls, *args, **kwargs)
+
+    def __attrs_post_init__(self):
+        for (name, child) in self.children.items():
+            self.children[name] = GradeData(child)
+        if self.comment == None:
+            self.comment = list()
+        elif not isinstance(self.command, list):
+            self.comment = [self.comment]
 
     def merge(self, other):
 
-        other = GradeData.normalize(other)
+        other = GradeData(other)
 
         if other.grade != None:
             self.grade = other.grade
-            self.format = other.format
+            self.comment += other.comment
 
         for (name, child) in other.children.items():
             if name in self.children:
-                self.children[name] = GradeData.normalise(
-                    self.children[name]).merge(child)
+                self.children[name] = self.children[name].merge(child)
             else:
-                self.children[name] = GradeData.normalize(child)
+                self.children[name] = child
 
 
 @attr.s
@@ -156,7 +167,7 @@ def distribute_scores(obj , grades):
         raise RuntimeError("Can't distribute grades to non-document")
 
     # for convinience allow the user to supply grades or points directly
-    grades = GradeData.normalize(grades)
+    grades = GradeData(grades)
 
     # Copy out basic grades
     if isinstance(obj, Gradeable):

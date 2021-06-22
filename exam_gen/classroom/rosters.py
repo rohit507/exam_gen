@@ -76,9 +76,9 @@ class Roster(HasDirPath, WithOptions):
                            student_obj.username)
 
 @attr.s
-class BCoursesCSVRoster(Roster):
+class CanvasCSVRoster(Roster):
 
-    domain = attr.ib(default="berkeley.edu", kw_only=True)
+    domain = attr.ib(kw_only=True)
 
     def read_roster(self, file_name):
 
@@ -101,5 +101,10 @@ class BCoursesCSVRoster(Roster):
             outputs[username] = Student(ident=username,
                                         name=name,
                                         username=username,
+                                        student_id = sid,
                                         student_data=student)
         return outputs
+
+@attr.s
+class BCoursesCSVRoster(CanvasCSVRoster):
+    domain = attr.ib(default="berkeley.edu")

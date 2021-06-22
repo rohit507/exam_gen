@@ -10,23 +10,33 @@ log = logging.new(__name__, level="DEBUG")
 
 @attr.s
 class AnswerData():
-    answer = attr.ib(default=None)
+    """
+    Available data about the answers for a document or sub-document
+    """
+    answer = attr.ib(default=dict)
     children = attr.ib(factory=dict)
     format = attr.ib(default=None, kw_only=True)
+    meta = attr.ib(factory=dict, kw_only=True)
 
-    @staticmethod
-    def normalise(data):
-        if isinstance(data, AnswerData):
-            return data
-        elif isinstance(data, dict):
-            return AnswerData(children=data)
-        else:
-            return AnswerData(answer=data)
+    def __new__(cls, *args, **kwargs):
+        if len(args) == 1:
+            if isinstance(args[0], cls):
+                return args[0]
+            elif isinstance(args[0], dict) and 'children' not in kwargs:
+                kwargs['children'] = args[0]
+                args = list()
 
+        return super(AnswerData, cls).__new__(cls, *args, **kwargs)
+
+    def __attrs_post_init__(self):
+        for (name, child) in self.children.items():
+            self.children[name] = AnswerData(child)
 
     def merge(self, other):
 
-        other = AnswerData.normalize(other)
+        other = AnswerData(other)
+
+        self.meta |= other.meta
 
         if other.answer != None:
             self.answer = other.answer
@@ -34,12 +44,9 @@ class AnswerData():
 
         for (name, child) in other.children.items():
             if name in self.children:
-                self.children[name] = AnswerData.normalise(
-                    self.children[name]).merge(child)
+                self.children[name] = self.children[name].merge(child)
             else:
-                self.children[name] = AnswerData.normalize(child)
-
-
+                self.children[name] = AnswerData(child)
 
 @attr.s
 class Answerable(Templated):
@@ -58,19 +65,43 @@ class Answerable(Templated):
         An identifier string that describes how an answer should be formatted.
         """)
 
-    def set_answer(self, answer):
-        self._answer = answer
+    def set_answer(self, answer, format = None):
+        """
+        Set the answer for this document to something.
+        """
+        self._answer = self.normalize_answer(answer, format)
 
     def get_answer(self):
         return self._answer
 
+    def normalize_answer(self, answer, format = None):
+        """
+        Overload this to convert answers into a single format on a per-question
+        basis. Ideally to make future auto-grading and printing possible.
+        """
+        return answer
+
+    def template_answer(self, answer, build_info):
+        """
+        Used to turn the answer returned by `normalize_answer` and `get_answer`
+        into a dict or string that is inserted into the template. Return
+        `none` if no answer should appear in the template.
+
+        Overload to change how this works. If you are looking up files that
+        are named in the answer then consider using
+        `build_info.classroom.answers` to finding the correct directory for
+        the corresponding classroom.
+        """
+        return answer
+
     def build_template_spec(self, build_info):
 
-        spec = super(Answerable, self).build_template_spec(
-            build_info)
+        spec = super(Answerable, self).build_template_spec(build_info)
 
-        if self._answer != None:
-            spec.context['answer'] = self._answer
+        answer = self.template_answer(self.get_answer(), build_info)
+
+        if answer != None:
+            spec.context['answer'] = answer
 
         return spec
 
@@ -86,7 +117,7 @@ def distribute_answers(obj , answers):
 
     # for convenience allow users to pass in raw dictionaries by converting
     # it into an answer data, or single value.
-    answers = AnswerData.normalize(answers)
+    answers = AnswerData(answers)
 
     # Copy out basic answers
     if isinstance(obj, Answerable):

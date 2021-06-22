@@ -53,6 +53,11 @@ nav:
       # - Build Solutions:
     # - Output Formats:
       # - Latex:
+    # - Exam Administration: # exam_admin/*
+      # - Distributing Exams:
+      # - Canvas / BCourses : exam_admin/canvas.md
+      # - Manual Scoring:
+      # - Getting Grades:
   # - Developer Guide: # dev_guide/*
     # - Development Environment Setup: dev_guide/dev_env_setup.md
     # - Development Workflow: dev_guide/development_workflow.md

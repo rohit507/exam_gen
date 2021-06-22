@@ -33,6 +33,11 @@ class Document(WithOptions):
 
         self.questions = questions
 
+    def root_document(self):
+        if self._parent_doc != None:
+            return self._parent_doc.root_document()
+        else:
+            return self
 
     def init_document(self, doc_class, **kwargs):
         """

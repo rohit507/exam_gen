@@ -11,6 +11,7 @@ class Student():
 
     name = attr.ib()
     username = attr.ib()
+    student_id = attr.ib()
     root_seed = attr.ib(default=None)
 
     student_data = attr.ib(default=None)
