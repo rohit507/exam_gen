@@ -21,21 +21,23 @@ class Buildable(HasSettings, HasDirPath):
         we're going build each exam. Glob patterns (e.g. `assets/*.png` or
         `**/test.txt`)
 
-        !! Note
-           This will copy files relative to the class where it's set.
+        !!! Note
+            This will copy files relative to the class where it's set.
 
-           If you have:
-            - An `Exam` in `proj_dir/midterm.py` asking for `assets/foo.txt`
-            - And `Question` in `prod_dir/q1/timer.py` asking for `bar.png` and
-              `assets/bar.txt`
+            If you have:
 
-           Then you'll get:
-            - `proj_dir/assets/foo.txt` copied into `build_dir/assets/foo.txt`
-            - `proj_dir/q1/assets/bar.txt` copied into `build_dir/assets/bar.txt`
-            - `proj_dir/q1/bar.png` copied into `build_dir/bar.png`
+              - An `Exam` in `proj_dir/midterm.py` asking for `assets/foo.txt`
+              - And `Question` in `prod_dir/q1/timer.py` asking for `bar.png` and
+               `assets/bar.txt`
 
-           There is no guaranteed behavior if this would result in some file
-           being clobbered.
+            Then you'll get:
+
+              - `proj_dir/assets/foo.txt` copied into `build_dir/assets/foo.txt`
+              - `proj_dir/q1/assets/bar.txt` copied into `build_dir/assets/bar.txt`
+              - `proj_dir/q1/bar.png` copied into `build_dir/bar.png`
+
+            There is no guaranteed behavior if this would result in some file
+            being clobbered.
         """)
 
     settings.new_group("build", doc=

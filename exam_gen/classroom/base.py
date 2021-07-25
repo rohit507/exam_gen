@@ -5,12 +5,15 @@ from exam_gen.util.with_options import WithOptions
 
 import exam_gen.util.logging as logging
 
+# TODO : Check if
+from attr._make import (_CountingAttr)
+
 log = logging.new(__name__, level="DEBUG")
 
-@attr.s
+@attr.s(init=False)
 class Classroom(HasDirPath, WithOptions):
 
-    roster = attr.ib()
+    roster = attr.ib(default=None, kw_only=True)
     """
     Rosters are mandatory entries that let us retrieve a list of students,
     relevant metadata and the like.
@@ -44,6 +47,26 @@ class Classroom(HasDirPath, WithOptions):
     Cache where we store the generated student data.
     """
 
+    # def __init__(self,
+
+
+    def __init__(self, exam, **kwargs):
+
+        key_attribs = ['roster', 'answers', 'scores', 'grades']
+
+        new_kwargs = dict()
+
+        for k in key_attribs:
+            attr = getattr(type(self), k, None)
+            if (k not in kwargs and attr != None
+               and not isinstance(attr,_CountingAttr)):
+                new_kwargs[k] = attr
+
+        kwargs |= new_kwargs
+
+        self.__attrs_init__(exam, **kwargs)
+
+
     def __attrs_post_init__(self):
 
         if hasattr(super(),'__attrs_post_init__'):
@@ -52,12 +75,12 @@ class Classroom(HasDirPath, WithOptions):
         self.roster = self.roster(parent_obj = self,
                                   exam = self.exam)
 
-        if self.answers != None: self.answers(parent_obj = self,
-                                              exam = self.exam)
-        if self.scores  != None: self.scores( parent_obj = self,
-                                              exam = self.exam)
-        if self.grades  != None: self.grades( parent_obj = self,
-                                              exam = self.exam)
+        if self.answers != None:
+            self.answers = self.answers(parent_obj = self, exam = self.exam)
+        if self.scores  != None:
+            self.scores = self.scores( parent_obj = self, exam = self.exam)
+        if self.grades  != None:
+            self.grades = self.grades( parent_obj = self,exam = self.exam)
 
     def __getitem__(self, name):
         return self.students[item]
@@ -66,7 +89,11 @@ class Classroom(HasDirPath, WithOptions):
         self.students |= self.roster.load_roster()
 
     def load_answers(self):
-        answers = self.answers.load_answers()
+
+        assert self.students != None, (
+            "Classroom must load students before loading answers.")
+
+        answers = self.answers.load_answers(self.students)
 
         for (ident, answer) in answers.items():
             if self.students[ident].answer_data == None:
@@ -86,5 +113,5 @@ class Classroom(HasDirPath, WithOptions):
     def assign_grades(self, ident, grade_data):
         self.students[ident].grade_data = grade_data
 
-    def print_grades(self, out_file):
-        self.grades.print_grades(self.students, out_file)
+    def print_grades(self, out_dir):
+        self.grades.print_grades(self.students, out_dir)

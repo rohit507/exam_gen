@@ -2,9 +2,11 @@ import attr
 import os
 import subprocess
 import shutil
+import textwrap
 
 from pprint import *
 from pathlib import *
+from collections import Iterable
 
 from ..document import Document
 from ..buildable import Buildable
@@ -27,12 +29,64 @@ class LatexDoc(Buildable, Templated):
 
     settings.template.format_ext = "tex"
 
-    settings.build.new_value(
-        'latex_command', default='pdflatex', doc=
+    settings.new_group(
+        name="latex",
+        doc="""
+        Settings specific to LaTeX output.
+        """)
+
+    settings.latex.new_value(
+        'command', default='pdflatex', doc=
         """
         The actual command line application that will be used to build the
         document. `'xelatex'` and `'lualatex'` are some other possible options.
         """)
+
+    settings.latex.new_value(
+        name='header_includes',
+        default=None,
+        doc = """
+        The extra LaTeX code to be included in the header of the output
+        document. Can either be a single string or a list of strings to be
+        included in the output document.
+
+        !!! error "Todo: more specific examples"
+        """
+        )
+
+    def get_header_includes(self):
+        """
+        Retrieves the list of all header includes for each child and self.
+        """
+
+        includes = list()
+        self_includes = self.settings.latex.header_includes
+
+        if isinstance(self_includes, str):
+            includes.append(textwrap.dedent(self_includes))
+        elif isinstance(self_includes, Iterable):
+            for inc in self_includes:
+                if isinstance(inc, str):
+                    includes.append(textwrap.dedent(inc))
+                else:
+                    raise RuntimeError("Invalid entry for header includes")
+        elif self_includes == None:
+            pass
+        else:
+            raise RuntimeError("Invalid entry for header includes")
+
+        for (q,v) in self.questions.items():
+            includes += v.get_header_includes()
+
+        return list(dict.fromkeys(includes))
+
+    def build_template_spec(self, build_info):
+
+        spec = super(LatexDoc, self).build_template_spec(build_info)
+
+        spec.context['header_includes'] = self.get_header_includes()
+
+        return spec
 
     def finalize_build(self, build_info):
 
@@ -50,13 +104,13 @@ class LatexDoc(Buildable, Templated):
         # results = build_template_spec(
         #     file_stem, template_spec, dict(), tex_file, data_dir)
 
-        build_cmd = subprocess.run([self.settings.build.latex_command,
+        build_cmd = subprocess.run([self.settings.latex.command,
                                     tex_file])
 
         log_ = {'tex_file': tex_file,
                'pdf_file': pdf_file,
                'build_info': build_info,
-               'latex_command': self.settings.build.latex_command}
+               'latex_command': self.settings.latex.command}
 
         try:
             build_cmd.check_returncode()

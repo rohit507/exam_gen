@@ -66,7 +66,7 @@ class VersionedOptions(VersionedObj):
             spec =  self._option_spec[name]
 
             if (('root_only' in spec)
-                and (self.parent != None)
+                and (self._parent != None)
                 and spec['root_only']):
 
                 raise RuntimeError(("Option `{}` can only be set at the root "

@@ -8,27 +8,33 @@ import exam_gen.util.logging as logging
 
 log = logging.new(__name__, level="DEBUG")
 
-@attr.s
+@attr.s(init=False)
 class AnswerData():
     """
     Available data about the answers for a document or sub-document
     """
-    answer = attr.ib(default=dict)
+    answer = attr.ib(default=None)
     children = attr.ib(factory=dict)
     format = attr.ib(default=None, kw_only=True)
     meta = attr.ib(factory=dict, kw_only=True)
 
-    def __new__(cls, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
+
         if len(args) == 1:
-            if isinstance(args[0], cls):
-                return args[0]
+            if isinstance(args[0], AnswerData):
+                kwargs = attr.asdict(args[0], recurse=False)
+                args = []
             elif isinstance(args[0], dict) and 'children' not in kwargs:
                 kwargs['children'] = args[0]
                 args = list()
 
-        return super(AnswerData, cls).__new__(cls, *args, **kwargs)
+        self.__attrs_init__(*args, **kwargs)
 
     def __attrs_post_init__(self):
+
+        if hasattr(super(),'__attrs_post_init__'):
+            super().__attrs_post_init__()
+
         for (name, child) in self.children.items():
             self.children[name] = AnswerData(child)
 
@@ -121,10 +127,11 @@ def distribute_answers(obj , answers):
 
     # Copy out basic answers
     if isinstance(obj, Answerable):
-        obj.set_answer(answers.answer)
-        if answers.format != None:
-            obj.settings.answer.format = answers.format
-    elif answer.answer != None:
+        if answers.answer != None:
+            obj.set_answer(answers.answer)
+            if answers.format != None:
+                obj.settings.answer.format = answers.format
+    elif answers.answer != None:
         raise RuntimeError("Trying to set answer on non-answerable doc.")
 
     # apply to children

@@ -1,5 +1,7 @@
 import attr
 
+from copy import *
+
 from .document import Document
 from .has_settings import HasSettings
 from .templated import Templated
@@ -9,44 +11,62 @@ import exam_gen.util.logging as logging
 log = logging.new(__name__, level="DEBUG")
 
 
-@attr.s
+@attr.s(init=False)
 class GradeData():
     points = attr.ib(default=None)
     children = attr.ib(factory=dict)
     comment = attr.ib(default=None, kw_only = True)
 
-    ungraded_points = attr.ib(default=None, init=False)
-    weighted_points = attr.ib(default=None, init=False)
-    total_weight = attr.ib(default=None, init=False)
+    answer  = attr.ib(default=None, kw_only=True)
+    correct = attr.ib(default=None, kw_only=True)
+
+    ungraded_points = attr.ib(default=0, init=False)
+    weighted_points = attr.ib(default=0, init=False)
+    total_weight = attr.ib(default=0, init=False)
+
+    def __getitem__(self,key):
+        """
+        Lets us retrieve child grades in a convinient matter
+        """
+        return self.children[key]
 
     @property
     def percent_grade(self):
+        if self.total_weight == 0:
+            return 0
         return (self.weighted_points / self.total_weight)
 
     @property
     def percent_ungraded(self):
+        if self.total_weight == 0:
+            return 0
         return (self.ungraded_points / self.total_weight)
 
-    def __new__(cls, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         if len(args) == 1:
-            if isinstance(args[0], cls):
-                return args[0]
+            if isinstance(args[0], GradeData):
+                kwargs = attr.asdict(args[0], recurse=False)
+                args=[]
             elif isinstance(args[0], dict) and 'children' not in kwargs:
                 kwargs['children'] = args[0]
-                args = list()
+                args = []
 
         if len(args) == 2 and 'comment' not in kwargs:
             kwargs['comment'] = args[1]
             args = [args[0]]
 
-        return super(GradeData, cls).__new__(cls, *args, **kwargs)
+        return self.__attrs_init__(*args, **kwargs)
 
     def __attrs_post_init__(self):
+
+        if hasattr(super(),'__attrs_post_init__'):
+            super().__attrs_post_init__()
+
         for (name, child) in self.children.items():
             self.children[name] = GradeData(child)
         if self.comment == None:
             self.comment = list()
-        elif not isinstance(self.command, list):
+        elif not isinstance(self.comment, list):
             self.comment = [self.comment]
 
     def merge(self, other):
@@ -56,6 +76,8 @@ class GradeData():
         if other.grade != None:
             self.grade = other.grade
             self.comment += other.comment
+            if other.answer: self.answer = other.answer
+            if other.correct: self.correct = other.correct
 
         for (name, child) in other.children.items():
             if name in self.children:
@@ -63,13 +85,17 @@ class GradeData():
             else:
                 self.children[name] = child
 
+        return self
+
 
 @attr.s
 class Gradeable(Templated):
 
+    _grade_data = attr.ib(default=None, init=False)
+
     _weight = attr.ib(default=None, kw_only=True)
-    _points = attr.ib(default=None, init=False)
-    _comment = attr.ib(default=None, init=False)
+    # _points = attr.ib(default=None, init=False)
+    # _comment = attr.ib(default=None, init=False)
 
     settings.new_group(
         "grade", doc=
@@ -102,30 +128,71 @@ class Gradeable(Templated):
         if self.settings.grade.weight == None:
             self.settings.grade.weight = self.settings.grade.max_points
 
-    def set_points(self, points, comment=None):
+    def _set_points(self, points, comment=None, **kwargs):
 
         if len(self.questions) > 0:
             raise RuntimeError("Cannot assign grade to doc with sub-questions")
 
-        if points != None:
-            self._points = points
-
-        if self._points > self.settings.grade.max_points:
+        if points > self.settings.grade.max_points:
             raise RuntimeError("Assigned grade larger than max_points allowed")
 
-        if comment != None:
-            self._comment = comment
+        if comment != None: kwargs['comment'] = comment
+
+        grade_data = GradeData(points, **kwargs)
+
+        self.grade_data = grade_data
+
+    def set_points(self, points, comment=None, **kwargs):
+        self._set_points(points, comment, **kwargs)
+
+    @property
+    def grade_data(self):
+
+        kwargs = dict()
+
+        if self._grade_data != None:
+
+            kwargs = attr.asdict(self._grade_data, recurse=False)
+            kwargs.pop('total_weight')#, None)
+            kwargs.pop('weighted_points')# , None)
+            kwargs.pop('ungraded_points')# , None)
+        else:
+            kwargs['points'] = 0
+
+        grade_data = GradeData(**kwargs)
+
+        grade_data.total_weight = self.total_weight
+        if self.ungraded:
+            grade_data.weighted_points = 0
+            grade_data.ungraded_points = self.total_weight
+        else:
+            grade_data.weighted_points = self.weighted_grade
+            grade_data.ungraded_points = 0
+
+        return grade_data
+
+    @grade_data.setter
+    def grade_data(self, other):
+        if self._grade_data == None:
+            self._grade_data = other
+        else:
+            self._grade_data = self._grade_data.merge(grade_data)
+
 
     @property
     def ungraded(self):
-        return self._points == None
+        return self._grade_data == None
 
     @property
     def percent_grade(self):
         """
         returns a grade from between 0 and 1
         """
-        return (self._points / self.settings.grade.max_points)
+        points = 0
+        if not self.ungraded:
+            points = self._grade_data.points
+
+        return (points / self.settings.grade.max_points)
 
     @property
     def weighted_grade(self):
@@ -143,16 +210,10 @@ class Gradeable(Templated):
         spec = super(Gradeable, self).build_template_spec(
             build_info)
 
-        grades = dict()
+        grade_data = collect_grades(self)
 
-        if self._points != None:
-            grades['points'] = self._points
-
-        if self._comment != None:
-            grades['comment'] = self._comment
-
-        if grades != {}:
-            spec.context['grade'] = grades
+        if grade_data.percent_ungraded != 1:
+            spec.context['grade'] = attr.asdict(grade_data, recurse=True)
 
         return spec
 
@@ -171,7 +232,12 @@ def distribute_scores(obj , grades):
 
     # Copy out basic grades
     if isinstance(obj, Gradeable):
-        obj.set_points(grades.points, comment=grade.comment)
+        obj.set_points(
+            grades.points,
+            comment=grade.comment,
+            answer=grade.answer,
+            correct=grade.correct,
+        )
     elif grades.points != None:
         raise RuntimeError("Trying to set grade on non-gradeable doc.")
 
@@ -193,39 +259,24 @@ def collect_grades(obj):
     Goes through a document and gathers the grade info from all the
     sub-elements, keeping track of grade and weight
     """
+    grade_data = None
 
-    grade_data = GradeData()
+    if isinstance(obj, Gradeable): # Leaves have existing grades
+        grade_data = deepcopy(obj.grade_data)
 
-    # check if valid
-    if not isinstance(obj, Document):
+    elif isinstance(obj, Document): # Other documents will not
+        grade_data = GradeData()
+
+    else:
         raise RuntimeError("Can't gather grades from non-document")
 
-    if isinstance(obj, Gradeable):
-        grade_data.points = obj._points
-        grade_data.comment = obj._comment
+    # Add children to the calculation if any
+    for (name, sub_q) in obj.questions.items():
+        sub_data = collect_grades(sub_q)
+        grade_data.children[name] = sub_data
 
-    # Either sum up the information from the sub-questions
-    if len(obj.questions) != 0:
-        grade_data.ungraded_points = 0
-        grade_data.weighted_points = 0
-        grade_data.total_weight = 0
-
-        for (name, sub_q) in obj.questions.items():
-            sub_data = collect_grades(sub_q)
-            grade_data.children[name] = sub_data
-
-            grade_data.total_weight += sub_data.total_weight
-            grade_data.ungraded_points += sub_data.ungraded_points
-            grade_data.weighted_points += sub_data.weighted_points
-
-    # or just use the leaf question's data
-    else:
-        grade_data.total_weight = obj.total_weight
-        if obj.ungraded:
-            grade_data.weighted_points = 0
-            grade_data.ungraded_points = obj.total_weight
-        else:
-            grade_data.weighted_points = obj.weighted_grade
-            grade_data.ungraded_points = 0
+        grade_data.total_weight += sub_data.total_weight
+        grade_data.ungraded_points += sub_data.ungraded_points
+        grade_data.weighted_points += sub_data.weighted_points
 
     return grade_data

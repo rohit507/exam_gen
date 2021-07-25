@@ -1,19 +1,20 @@
 import attr
-i
 
 from .field import *
 
+
+from collections import Iterable
 import exam_gen.util.logging as logging
 
 log = logging.new(__name__, level="DEBUG")
 
-@attr.s
+@attr.s(init=False)
 class DocSelect():
     """
     Associates record fields with documents and sub-documents
     """
 
-    mapping = attr.ib(factory=dict)
+    mapping = attr.ib()
     """
     Map from a document tree to various field selectors
     """
@@ -39,7 +40,15 @@ class DocSelect():
         if len(args) == 1 and len(kwargs) == 0:
             if isinstance(args[0], DocSelect):
                 return args[0]
-        elif len(args) == 0 and len(kwargs) >= 0 and 'mapping' not in kwargs:
+
+        return super(DocSelect, cls).__new__(cls)
+
+    def __init__(self, *args, **kwargs):
+        """
+        Sorta idempotent normalised new.
+        """
+
+        if len(args) == 0 and len(kwargs) >= 0 and 'mapping' not in kwargs:
             _kwargs = dict()
 
             for k in ['selector', 'norm_field']:
@@ -47,7 +56,8 @@ class DocSelect():
 
             kwargs = {'mapping': kwargs} | _kwargs
 
-        return super(DocSelect, cls).__new__(cls, *args, **kwargs)
+        self.__attrs_init__(*args, **kwargs)
+
 
     def __attrs_post_init__(self):
 

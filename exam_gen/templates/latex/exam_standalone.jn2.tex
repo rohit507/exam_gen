@@ -21,8 +21,12 @@
 \newcounter{probcount}
 \newcommand{\nextprob}[0]{\addtocounter{probcount}{1} \arabic{probcount}}
 
-\usepackage{tikz}
-\usetikzlibrary{shapes, decorations, patterns, arrows}
+{% if header_includes %}
+{% for hi in header_includes %}
+{{ hi }}
+{% endfor %}
+{% endif %}
+
 
 \usepackage{times}
 % \usepackage{fullpage}

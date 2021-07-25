@@ -2,15 +2,18 @@
 import attr
 import textwrap
 
+from pprint import *
+
 from .field import *
 
 from exam_gen.classroom.student import *
+from collections import Iterable
 
 import exam_gen.util.logging as logging
 
 log = logging.new(__name__, level="DEBUG")
 
-@attr.s
+@attr.s(init=False)
 class StudentSelect():
     """
     Associates records with students.
@@ -37,20 +40,28 @@ class StudentSelect():
     student_field = attr.ib(default="student_id")
 
     def __new__(cls, *args, **kwargs):
+        if len(args) == 1 and len(kwargs) == 0:
+            if isinstance(args[0], cls):
+                return args[0]
+
+        return super(StudentSelect, cls).__new__(cls)
+
+
+    def __init__(self, *args, **kwargs):
         """
         Sorta idempotent normalised new.
         """
 
         if len(args) == 1 and len(kwargs) == 0:
-            if isinstance(args[0], cls):
-                return args[0]
+            if isinstance(args[0], str):
+                pass
             elif isinstance(args[0], Iterable):
                 args = args[0]
             elif isinstance(args[0], dict):
                 args = []
                 kwargs |= args
 
-        return super(StudentSelect, cls).__new__(cls, *args, **kwargs)
+        return self.__attrs_init__(*args, **kwargs)
 
     def __attrs_post_init__(self):
 

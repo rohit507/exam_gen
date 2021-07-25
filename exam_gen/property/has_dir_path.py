@@ -20,6 +20,9 @@ class HasDirPath():
 
       root_dir (Path): A path to the root directory for this object.
 
+      root_file (Path): The path to the root file for this object.
+        Just used to set `root_dir` after the file at the end is stripped.
+
       parent_obj (HasDirPath): A parent object that should have a
         `root_dir` in the same directory or a parent directory of this one.
 
@@ -29,11 +32,14 @@ class HasDirPath():
 
     root_dir = attr.ib(default=None, kw_only=True)
 
+
     parent_obj = attr.ib(default=None, kw_only=True)
 
     parent_path = attr.ib(default=None, kw_only=True)
 
-    use_class_root = attr.ib(default=False, kw_only=True)
+    use_class_root = attr.ib(default=True, kw_only=True)
+
+    root_file = attr.ib(default=None, kw_only=True)
 
     def __attrs_post_init__(self):
 
@@ -99,7 +105,19 @@ class HasDirPath():
 
         root_dir = None
 
-        if self.root_dir != None:
+        if self.root_file != None:
+
+            root_file = Path(self.root_file)
+
+            assert root_file.name != "", (
+                "`root_file` must be a filename")
+
+            assert root_dir == None, (
+                "Cannot set both `root_file` and `root_dir` simultaneously")
+
+            root_dir = root_file.parent
+
+        elif self.root_dir != None:
 
             root_dir = Path(self.root_dir)
 

@@ -437,14 +437,14 @@ def template_spec_from_var(var, versions=[], empty_okay=False):
         if var.file != None:
             log.warning(("Both `file` and `text` parameters are set "
                          "for template '{}'. `text` is being used by "
-                         "default.").format(var.name))
+                         "default.").format(var.var_name))
     elif var.file != None:
         template = Path(var.file)
     elif empty_okay:
         template = ""
     else:
         raise RuntimeError(("Template Var {} has neither `text` nor `file` "
-                            "parameter specified.").format(var.name))
+                            "parameter specified.").format(var.var_name))
 
     # log.warning(pformat((var.var_name, var.ctxt)))
 

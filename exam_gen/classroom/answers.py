@@ -36,17 +36,21 @@ class CSVAnswers(Answers):
     ident_column = attr.ib(converter=StudentSelect, default="Student ID")
     attempt_column = attr.ib(default=None)
 
+
     def __attrs_post_init__(self):
+
+        if hasattr(super(),'__attrs_post_init__'):
+            super().__attrs_post_init__()
+
         self.mapping = DocSelect(self.mapping, norm_field=CSVAnswers._norm_map_field)
         if self.attempt_column != None:
             self.attempt_column = FieldSelect(self.attempt_column)
-
 
     def load_answers(self, students):
 
         file_name = self.lookup_file(self.file_name)
         raw_answers = self.read_answers(file_name)
-        return self.convert_answers(self, students, raw_answers)
+        return self.convert_answers(students, raw_answers)
 
     def read_answers(self, file_name):
 
@@ -63,7 +67,7 @@ class CSVAnswers(Answers):
         merge_attempts = lambda new, old: [new] if old == None else [new] + old
 
         student_attempts = self.ident_column.partition(students,
-                                                       records,
+                                                       answers,
                                                        merge_with=merge_attempts)
 
         student_answers = dict()
@@ -95,16 +99,27 @@ class CSVAnswers(Answers):
 
         answer_data = None
         for attempt in attempt_list:
-            new_data = self.convert_attempt(attempt)
-            new_data.meta['raw'] = attempt
+            new_data = AnswerData(
+                children=self.convert_attempt(attempt),
+                meta={'raw':attempt}
+                )
+
             if self.attempt_column != None:
-                new_data.meta['attempt'] = self.attempt_column.select(attempt)
+                new_data.meta['attempt_num'] = self.attempt_column.select(attempt)
+
             if answer_data != None:
-                if new_data.meta['attempt'] < answer_data.meta['attempt']:
+                if new_data.meta['attempt_num'] < answer_data.meta['attempt_num']:
                     answer_data, new_data = (new_data, answer_data)
+
                 new_data.meta['prev_attempt'] = answer_data
-            answer_data = deepcopy(answer_data)
-            answer_data.merge(deepcopy(new_data))
+
+                answer_data = deepcopy(answer_data)
+
+                answer_data.merge(deepcopy(new_data))
+
+            else:
+
+                answer_data = new_data
 
         return answer_data
 

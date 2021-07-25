@@ -5,6 +5,8 @@ import functools
 from copy import *
 from pprint import *
 from textwrap import *
+from collections.abc import *
+from numbers import *
 
 from exam_gen.util.versioned_option import add_versioned_option
 from exam_gen.property.templated import (
@@ -15,6 +17,7 @@ from exam_gen.property.templated import (
 
 from exam_gen.property.has_settings import HasSettings
 from exam_gen.property.has_user_setup import HasUserSetup
+from exam_gen.property.has_context import HasContext
 from exam_gen.property.auto_gradeable import AutoGradeable
 
 from .base import Question, __exam_formats__
@@ -36,6 +39,7 @@ __choices_versioned_opts__ = __template_versioned_opts__ | {
     'capitalize_letters':{'default':True, 'root_only':True},
     'is_correct':{'default':False},
     }
+
 
 choices_doc = textwrap.dedent(
     """
@@ -111,11 +115,10 @@ class MultipleChoiceQuestion(AutoGradeable, Question):
 
     settings.template.embedded = "multiple_choice_embed.jn2"
 
-    _forward_map = attr.ib(factory=dict, init=False)
-    _forward_letter = attr.ib(factory=dict, init=False)
-    _reverse_map = attr.ib(factory=dict, init=False)
-    _reverse_letter = attr.ib(factory=dict, init=False)
-
+    forward_map = attr.ib(factory=dict, init=False)
+    forward_letter = attr.ib(factory=dict, init=False)
+    reverse_map = attr.ib(factory=dict, init=False)
+    reverse_letter = attr.ib(factory=dict, init=False)
 
     def gen_permutation(self):
 
@@ -131,22 +134,22 @@ class MultipleChoiceQuestion(AutoGradeable, Question):
         result = rng.sample(to_shuffle, k=len(to_shuffle))
 
         for (orig, shuff) in zip(to_shuffle, result):
-            self._forward_map[orig] = shuff
-            self._reverse_map[shuff] = orig
+            self.forward_map[orig] = shuff
+            self.reverse_map[shuff] = orig
 
         for i in range(0, self.choice.total_number):
-            if i not in self._forward_map:
-                self._forward_map[i] = i
-                self._reverse_map[i] = i
+            if i not in self.forward_map:
+                self.forward_map[i] = i
+                self.reverse_map[i] = i
 
     def gen_letter_maps(self):
 
         seq_char = 'A' if self.choice.capitalize_letters else 'a'
 
-        for (orig, shuff) in self._forward_map.items():
+        for (orig, shuff) in self.forward_map.items():
             letter =  excel_col(seq_char, shuff)
-            self._forward_letter[orig] = letter
-            self._reverse_letter[letter] = orig
+            self.forward_letter[orig] = letter
+            self.reverse_letter[letter] = orig
 
     def check_total_choices(self):
 
@@ -198,39 +201,51 @@ class MultipleChoiceQuestion(AutoGradeable, Question):
 
         return log_
 
+    def normalize_answer(self, answer):
+
+        conv_letter = lambda a: a.upper() if self.choice.capitalize_letters else a.lower()
+
+        norm_letters = map(conv_letter, answer)
+        num_answers = map(lambda a: self.reverse_letter[a], norm_letters)
+
+        return list(num_answers)
+
     def __calc_grade_harness__(self):
 
-        answer = self.get_answer()
+        answer = self.normalize_answer(self.get_answer())
 
-        points = self.select_grading_func(answer)
+        grade_result = self.select_grading_func(answer)
 
-        self.set_points(points)
+        args = self.norm_grade_result(
+            grade_result,
+            self.settings.grade.max_points
+        )
+
+        if 'answer' not in args:
+            args['answer'] = ', '.join(sorted(
+                [self.forward_letter[i] for i in answer]))
+
+        if 'correct' not in args:
+            args['correct'] = ', '.join(sorted(
+                [self.forward_letter[i]
+                 for i in range(0,self.choice.total_number)
+                 if self.choice[i].is_correct]))
+
+        self._set_points(**args)
 
     def set_answer(self, answer):
 
+        norm_letter = lambda s: s.strip().upper()
+
         if isinstance(answer, str):
-            answer = list(map(lambda s: s.strip(), answer.split(',')))
-
-        if isinstance(answer, list) and isinstance(answer[0], str):
-
-            def map_letter(s):
-                s_norm = s.strip()
-                if self.choice.capitalize_letters:
-                    s_norm = s_norm.toupper()
-                else:
-                    s_norm = s_norm.tolower()
-                return self._reverse_letter[s_norm]
-
-            self._answer = list(map(map_letter, answer))
-        elif isinstance(answer, list) and isinstance(answer[0], int):
-            self._answer = list(map(lambda n: self._reverse_map[n], answer))
+            self._answer = list(map(norm_letter, answer.split(',')))
+        elif isinstance(answer, list) and isinstance(answer[0], str):
+            self._answer = list(map(norm_letter, answer))
         else:
             raise RuntimeError(
                  "Question answer is in unknown format, acceptable "
                  "formats are: comma separated string of choice letters, "
-                 "list of choice letter, list of choice numbers.")
-
-
+                 "list of choice letters")
 
     def select_grading_func(self, answer):
         if self.settings.grade.style == 'all_correct':
@@ -240,7 +255,7 @@ class MultipleChoiceQuestion(AutoGradeable, Question):
         elif self.settings.grade.style == 'percent_correct':
             return self.grade_percent_correct(answer)
         elif self.settings.grade.style == 'custom':
-            return self.calculate_grade(answer)
+            return self.grade_custom(answer)
         else:
             raise RuntimeError(
                 "'{}' is not a valid grading style".format(
@@ -257,23 +272,62 @@ class MultipleChoiceQuestion(AutoGradeable, Question):
         return 0 if not corr else self.settings.grade.max_points
 
     def grade_percent_correct(self, answer):
-        return (((self.count.total_number
+        return (((self.choice.total_number
                   - self.count_false_positives(answer)
                   - self.count_false_negatives(answer))
-                / self.count.total_number)
+                / self.choice.total_number)
                 * self.settings.grade.max_points)
 
     def grade_custom(self, answer):
         is_answer = list()
         is_correct = list()
-        for i in range(0, self.count.total_number):
+        for i in range(0, self.choice.total_number):
             is_answer.append(i in answer)
-            is_correct.append(self.choice.is_correct[i])
+            is_correct.append(self.choice[i].is_correct)
 
-        return (self.calculate_grade(is_answer, is_correct) *
-                self.settings.grade.max_points)
+        if self.final_context == None:
+            raise RuntimeError("Can only calculate grade after `user_setup` "
+                               "is run")
 
-    def calculate_grade(self, is_answer, is_correct):
+        return self.calculate_grade(
+            self.final_context,
+            is_answer
+        )
+
+
+    def norm_grade_result(self, result, max_points=1):
+        args = dict()
+
+        # Make inputs a tuple
+        if isinstance(result, Iterable):
+            result = tuple(result)
+        else:
+            result = (result,)
+
+        # Extract point total
+        if isinstance(result[0], Number):
+            args['points'] = result[0]
+            result = result[1:]
+        elif isinstance(result[0], bool):
+            args['points'] = max_points if result[0] else 0
+            result = result[1:]
+
+        # Extract dict
+        if len(result) > 0 and isinstance(result[-1], dict):
+            args = result[-1] | args
+            result = result[:-1]
+
+        # Extract comment
+        if len(result) == 1 and 'points' in args:
+            args['comment'] = result[0]
+        elif len(result) == 0 and 'points' in args:
+            pass
+        else:
+            raise RuntimeError("Invalid return for calculate_grade")
+
+        return args
+
+    def calculate_grade(self, ctxt, is_answer):
         """
         Function to overload when using a custom grade function.
         This should always return a number between 0 and max_points.
@@ -281,11 +335,23 @@ class MultipleChoiceQuestion(AutoGradeable, Question):
 
         Params:
 
+           ctxt: The context as returned by `user_setup`
            is_answer: a list of bools telling you whether each choice was
-              selected. All the indices have been appropriately unshuffled
-           is_correct: a list of bools telling you whether each choice was
-              marked as correct. Each index `n` is `self.choice[n].is_correct`.
-              Provided for convenience.
+              selected. All the indices have been appropriately unshuffled.
+
+        Returns:
+
+           Any of the following:
+             1) A boolean where `True` means `max_points` and `False` means `0`.
+             2) A single number from `0` to `max_points`.
+               (larger numbers will be treated as extra credit.)
+             3) A dictionary with some of the following keys:
+                - 'points': As option 2.
+                - 'comment' : A comment on the answer.
+                - 'answer': The student provided answer
+                - 'correct': The correct answer.
+             4) A tuple where the first element is either option 1 or 2, the
+               next elements are either a comment, option 3, or both.
         """
         raise NotImplementedError(
             ("Must implement 'calculate_grade' if using a custom grading "
@@ -318,9 +384,9 @@ class MultipleChoiceQuestion(AutoGradeable, Question):
             else:
                 some_incorrect = True
 
-        if not some_correct:
+        if not some_correct and not self.settings.grade.supress_correct_choice_error:
             raise RuntimeError("Question has no correct answers.")
-        if not some_incorrect:
+        if not some_incorrect and not self.settings.grade.supress_incorrect_choice_error:
             raise RuntimeError("Question has no incorrect answers.")
 
     def build_template_spec(self, build_info=None):
@@ -334,21 +400,21 @@ class MultipleChoiceQuestion(AutoGradeable, Question):
             spec.post_render_hook = functools.partial(
                 post_render_choice_validation,
                 type(self).__name__,
-                copy(self._forward_letter))
+                copy(self.forward_letter))
 
         choices = list()
 
         for ind in range(0,self.choice.total_number):
 
-            orig_ind = self._reverse_map[ind]
+            orig_ind = self.reverse_map[ind]
 
             cspec = template_spec_from_var(
                 self.choice , versions=[orig_ind,
                                build_info.exam_format])
 
             cspec.context['index'] = orig_ind
-            cspec.context['letter'] = self._forward_letter[orig_ind]
-            cspec.context['choice_letters'] = copy(self._forward_letter)
+            cspec.context['letter'] = self.forward_letter[orig_ind]
+            cspec.context['choice_letters'] = copy(self.forward_letter)
             cspec.context['is_correct'] = self.choice[orig_ind].is_correct
 
             if self._answer != None:

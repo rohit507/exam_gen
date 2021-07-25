@@ -41,6 +41,9 @@
 
   - LaTeX is giving me an error, how can I figure out where it's coming from?
 
+  - How do I use latex libraries?
+    - add link `tut/multi-choice/simple`
+
   - How do I nest questions or add sub-questions?
     - add link `tut/multi-part`
 
@@ -57,6 +60,21 @@
 
   - How do I use external files in my assignment?
     - see `tut/ext_assets`
+
+  - How do i make multiple choice questions?
+    - see `tule/mult_choi`
+
+  - How do I set the choies in the multiple choice question?
+    - see `tule/mult_choi/simple` if they're all based on the same template
+    - see `tut/mult_choi/choices` to set them separately
+
+  - How can i shuffle the choices in a multiple choice queston?
+    - see `tule/mult_choi/simple` for basic yes-no
+    - see `tut/mult_choi/choices` for complex shuffle
+
+  - How do I specify the grading scheme for a multiple choice question?
+    - see `tule/mult_choi/simple` for one option (percent correct)
+    - see `tut/mult_choi/choices` for all-or-nothing
 
 
 ## Build Process

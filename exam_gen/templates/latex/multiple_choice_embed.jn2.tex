@@ -1,0 +1,23 @@
+{% if nesting_depth == 1 %}
+{\Large { Problem: {{ number }} } } \\
+{% elif nesting_depth == 2 %}
+{\large { Sub-Problem: {{ number }} } } \\
+{% elif nesting_depth == 3 %}
+{\large { Sub-Sub-Problem: {{ number }} } } \\
+{% else %}
+{\large { Part: {{ number }} } } \\
+{% endif %}
+{{ body.text }} \\
+{% if format == 'solution' %}
+\solution{ {{ solution.text }} } \\
+{% endif %}
+
+\begin{enumerate}[label=(\Alph*)]
+{% for choice in choices %}
+\item {{choice.text}}
+{%- if format == 'solution' %} \\
+\solution{ {{ "Correct" if choice.is_correct else "Incorrect" }}
+{%- if choice.solution -%} {{ choice.solution }} {%- endif -%} }
+{%- endif -%}
+{%- endfor %}
+\end{enumerate}

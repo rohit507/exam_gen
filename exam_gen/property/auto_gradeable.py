@@ -28,8 +28,6 @@ class AutoGradeable(Gradeable, Answerable):
           - Set up the appropriate parameters for calculating the grade
           - Take the result of the calc_grade function and properly
             assign it to `self._points`, `self._comment` and the like
-
-        It will be run immidiately after an answer is written to `self._answer`.
         """
         raise NotImplementedError("Class needs a new `__calc_grade_harness__`")
 
