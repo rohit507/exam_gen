@@ -218,16 +218,16 @@ With what we can set each of the choices.
     ```
 
   1. Finally we can specify that we should only shuffle the first three options
-    with the following:
+  with the following:
 
-    ```python linenums="77"
-    # Chose which options to shuffle, leave others in their place
-    settings.grade.shuffle = [0,1,2]
-    ```
+  ```python linenums="77"
+  # Chose which options to shuffle, leave others in their place
+  settings.grade.shuffle = [0,1,2]
+  ```
 
-    While `#!python True` and `#!python False` turn shuffling on and off globally,
-    you can also specify a list of options to shuffle. In this case just the first
-    three.
+  While `#!python True` and `#!python False` turn shuffling on and off globally,
+  you can also specify a list of options to shuffle. In this case just the first
+  three.
 
 ??? quote "Complete Current `matrix_question/question.py`"
     ```python linenums="1"

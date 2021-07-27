@@ -26,8 +26,8 @@ nav:
     - Multiple Choice Questions: # tutorial/multiple_choice
       - Simple Questions: tutorial/multiple_choice/simple_question.md
       - Choices and Shuffling: tutorial/multiple_choice/choices_and_shuffling.md
-      - Custom Grading and Setup: tutorial/multiple_choice/custom_grading_and_setup.pmd
-    # - Answers and Scoring: tutorial/answers_and_scoring.md
+      - Custom Grading and Setup: tutorial/multiple_choice/custom_grading_and_setup.md
+    - Answers and Scoring: tutorial/answers_and_scoring.md
     # - Bulk Operations:
   # - User's Guide: # user_guide/*
     # - Project Organization:

@@ -37,12 +37,16 @@
   - How do I pass new variables to my templates?
     - add link: minimal notes via user_setup in tut/cust_and_rand
 
+  - How do I use latex libraries?
+    - add link `tut/multi-choice/simple`
+
   - How do I add packages or modify the LaTeX header?
+    - see `tule/mult_choi/simple` to do so at the question or exam level
 
   - LaTeX is giving me an error, how can I figure out where it's coming from?
 
-  - How do I use latex libraries?
-    - add link `tut/multi-choice/simple`
+  - How do I override templates for embedding a question?
+    - add link `tut/multi-choice/custom` basic example
 
   - How do I nest questions or add sub-questions?
     - add link `tut/multi-part`
@@ -67,14 +71,19 @@
   - How do I set the choies in the multiple choice question?
     - see `tule/mult_choi/simple` if they're all based on the same template
     - see `tut/mult_choi/choices` to set them separately
+    - see `tut/mult_choi/custom` to set them within `user_setup`
 
   - How can i shuffle the choices in a multiple choice queston?
     - see `tule/mult_choi/simple` for basic yes-no
     - see `tut/mult_choi/choices` for complex shuffle
 
+  - How can I refer to one multiple choice answer in another?
+    - see `tut/mult_choi/choices` for how to do so even with shuffling.
+
   - How do I specify the grading scheme for a multiple choice question?
     - see `tule/mult_choi/simple` for one option (percent correct)
     - see `tut/mult_choi/choices` for all-or-nothing
+    - see `tut/mult_choi/custom` for an example of a custom grading function.
 
 
 ## Build Process
