@@ -1,18 +1,34 @@
 # Quick Reference
 
+## Core
+
+  - What does the basic structure of an exam/assignment with this library?
+    - overview project as a whole in `u_g/proj_setup`
+    - overview of root exam obj specifially in `u_g/exams`
+
+
+
 ## Assignment Creation
 
   - How do I set up my development environment?
     - FIX LINK : (In the tutorial)[tutorial.html#setting-up-your-development-environment]
+    - in `u_g/proj_setup`
 
   - How do I set up a new assignment project?
     - FIX LINK : (In the tutorial)[tutorial.html#setting-up-the-project]
+    - add link: `u_g/proj_setup`
 
   - How do I add a classroom to a project?
     - FIX LINK : (In the tutorial)[tutorial.html#adding-a-classroom-and-roster-to-the-project]
 
   - How do I add a roster to a project?
     - FIX LINK : (In the tutorial)[tutorial.html#adding-a-classroom-and-roster-to-the-project]
+
+  - How do I associate student answers with exam problems?
+    - `tut/answer` for basic csv input
+
+  - How do I dump student grades?
+    - `tut/answer` for basic csv dump
 
   - How do I set the body text of a question?
     - Add link: minimal inline version in tutorial/writing_questions

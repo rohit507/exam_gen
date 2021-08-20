@@ -4,15 +4,14 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-PyYAML = "*"
-graphlib = "*"
-pep517 = "*"
-makefun = "*"
-doit = "*"
 attrs = "*"
-jsonpickle = "*"
+doit = "*"
+graphlib = "*"
 jinja2 = "<3.0"
+jsonpickle = "*"
+makefun = "*"
 markupsafe = "<2.0"
+PyYAML = "*"
 
 [dev-packages]
 coloredlogs = "*"
@@ -21,6 +20,7 @@ flake8 = "*"
 isort = "*"
 mkdocs = "*"
 mkdocs-localsearch = "*"
+mkdocs-macros-plugin = "*"
 mkdocs-material = "*"
 mkdocstrings = "*"
 pymdown-extensions = "*"

@@ -2,16 +2,6 @@ site_name: UCB EECS Exam Generator
 
 repo_name: rohit507/exam_gen
 
-theme:
-  name: material
-  custom_dir : docs/theme/
-  palette:
-    scheme: slate
-    primary: blue
-    secondary: yellow
-  icon:
-    repo: check-square
-
 nav:
   - Home: index.md
   - Tutorial: # tutorial/*
@@ -29,38 +19,44 @@ nav:
       - Custom Grading and Setup: tutorial/multiple_choice/custom_grading_and_setup.md
     - Answers and Scoring: tutorial/answers_and_scoring.md
     # - Bulk Operations:
-  # - User's Guide: # user_guide/*
-    # - Project Organization:
-    # - Exams:
-    # - External Assets:
-      # - Specifying Static Assets:
-      # - Creating Dynamic Assets:
-      # - File Search and Lookup:
-    # - Internal Processing:
-    # - Questions:
-      # - Basic Questions:
-      # - Nesting:
-      # - Multiple Choice:
-    # - Templates:
-      # - Template Formatting:
-      # - Template Variables:
-      # - Class Level Templates:
-      # - Debug Information:
-      # - Template Search and Lookup:
-    # - User Setup:
-      # - Randomness:
-      # - Template Context:
-    # - Command Line Options:
-      # - Parse Roster:
-      # - Build Exam:
-      # - Build Solutions:
-    # - Output Formats:
-      # - Latex:
-    # - Exam Administration: # exam_admin/*
-      # - Distributing Exams:
-      # - Canvas / BCourses : exam_admin/canvas.md
-      # - Manual Scoring:
-      # - Getting Grades:
+  - User's Guide: # user_guide/*
+    - Project Setup and Organization: user_guide/project_setup.md
+    - "Exams/Assignments": user_guide/exams.md
+    # - External Assets: user_guide/
+      # - Specifying Static Assets: user_guide/
+      # - Creating Dynamic Assets: user_guide/
+      # - File Search and Lookup: user_guide/
+    # - Internal Processing: user_guide/
+    # - Questions: user_guide/
+      # - Basic Questions: user_guide/
+      # - Nesting: user_guide/
+      # - Multiple Choice: user_guide/
+    # - Templates: user_guide/
+      # - Template Formatting: user_guide/
+      # - Template Variables: user_guide/
+      # - Class Level Templates: user_guide/
+      # - Debug Information: user_guide/
+      # - Template Search and Lookup: user_guide/
+    # - Classrooms and Student Data:
+      # - Classrooms:
+      # - Rosters:
+      # - Answers:
+      # - Scores:
+      # - Grades:
+    # - User Setup: user_guide/
+      # - Randomness: user_guide/
+      # - Template Context: user_guide/
+    # - Command Line Options: user_guide/
+      # - Parse Roster: user_guide/
+      # - Build Exam: user_guide/
+      # - Build Solutions: user_guide/
+    # - Output Formats: user_guide/
+      # - Latex: user_guide/
+    # - Exam Administration: user_guide/ # exam_admin/*
+      # - Distributing Exams: user_guide/
+      # - Canvas / BCourses : user_guide/ exam_admin/canvas.md
+      # - Manual Scoring: user_guide/
+      # - Getting Grades: user_guide/
   # - Developer Guide: # dev_guide/*
     # - Development Environment Setup: dev_guide/dev_env_setup.md
     # - Development Workflow: dev_guide/development_workflow.md
@@ -131,25 +127,15 @@ nav:
       # - .util.with_options : api/util/with_options.md
   - Quick Reference: quick_reference.md
 
-
-  # - 'Test (Exam)': api/exam.md
-  # - Getting Started: getting-started.md
-  # - Miscellaneous Notes: misc-notes.md
-  # - Developer API:
-  #     - exam_gen.mixins:
-  #         - config: api/mixins/config.md
-  #         - prepare_attrs: api/mixins/prepare_attrs.md
-  #         - yaml_rep: api/mixins/yaml_rep.md
-  #         - template: api/mixins/template.md
-  #         - chain: api/mixins/chain.md
-  #         - user_setup: api/mixins/user_setup.md
-  #     - exam_gen.util:
-  #         - dynamic_call: api/util/dynamic_call.md
-  #         - error: api/util/error.md
-  #         - logging: api/util/logging.md
-
 plugins:
   - search
+  - macros:
+      module_name: docs
+      j2_block_start_string: '[|%'
+      j2_block_end_string: '%|]'
+      j2_variable_start_string: '[|'
+      j2_variable_end_string: '|]'
+
   - localsearch
   - mkdocstrings:
       handlers:
@@ -168,8 +154,19 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.superfences
   - pymdownx.inlinehilite
+  - pymdownx.snippets
   - attr_list
   - toc:
       permalink: true
 
 use_directory_urls: false
+
+theme:
+  name: material
+  custom_dir : docs/theme/
+  palette:
+    scheme: slate
+    primary: blue
+    secondary: yellow
+  icon:
+    repo: check-square

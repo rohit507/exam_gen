@@ -69,46 +69,10 @@ for each template it renders into the appropriate folder in `~data`.
     number of intermediate files that we generate as a template is created.
 
     ??? Info "Result of `tree ~data/class-fake-class/student-erios` w/ explanation."
-        ``` linenums="1" hl_lines="4-8 10-14 24-28 30-34"
-            ~data/class-fake-class/student-erios/
-            ├── data.yaml
-            └── exam-exam
-                ├── final-context-output-intro.yaml
-                ├── final-context-output-questions[addition-question]-body.yaml
-                ├── final-context-output-questions[addition-question]-solution.yaml
-                ├── final-context-output-questions[addition-question].yaml
-                ├── final-context-output.yaml
-                ├── finalize-log.yaml
-                ├── initial-context-output-intro.yaml
-                ├── initial-context-output-questions[addition-question]-body.yaml
-                ├── initial-context-output-questions[addition-question]-solution.yaml
-                ├── initial-context-output-questions[addition-question].yaml
-                ├── initial-context-output.yaml
-                ├── output-log.yaml
-                ├── post-finalize-doc.yaml
-                ├── post-init-doc.yaml
-                ├── post-setup-doc.yaml
-                ├── post-template-doc.yaml
-                ├── pre-finalize-doc.yaml
-                ├── pre-init-doc.yaml
-                ├── pre-setup-doc.yaml
-                ├── pre-template-doc.yaml
-                ├── result-output-intro.tex
-                ├── result-output-questions[addition-question]-body.tex
-                ├── result-output-questions[addition-question]-solution.tex
-                ├── result-output-questions[addition-question].tex
-                ├── result-output.tex
-                ├── setup-log.yaml
-                ├── template-output-intro.jn2.tex
-                ├── template-output.jn2.tex
-                ├── template-output-questions[addition-question]-body.jn2.tex
-                ├── template-output-questions[addition-question].jn2.tex
-                ├── template-output-questions[addition-question]-solution.jn2.tex
-                ├── template-result.yaml
-                └── template-spec.yaml
-        ```
+        [|include_block("assets/erios_exam_data_tree.txt",hl_lines="4-8 10-14 24-28 30-34",lang=None)| indent(8) |]
 
-        The files relevant to template rendering are highlighted and can be split along
+        The files relevant to
+        template rendering are highlighted and can be split along
         two axes.
 
         The first axis, based on the latter half of the filename, corresponds to the
