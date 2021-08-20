@@ -1,0 +1,1642 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.3">
+    
+    
+      
+        <title>Customization and Randomization - UCB EECS Exam Generator</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.f7f47774.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#2094f3">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#customizing-and-randomizing-questions" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="UCB EECS Exam Generator" class="md-header__button md-logo" aria-label="UCB EECS Exam Generator" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            UCB EECS Exam Generator
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Customization and Randomization
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="UCB EECS Exam Generator" class="md-nav__button md-logo" aria-label="UCB EECS Exam Generator" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    UCB EECS Exam Generator
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      <label class="md-nav__link" for="__nav_2">
+        Tutorial
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Tutorial" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorial
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="first_assignment.html" class="md-nav__link">
+        Your First Assignment
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="classrooms_and_rosters.html" class="md-nav__link">
+        Classrooms and Rosters
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="writing_questions.html" class="md-nav__link">
+        Writing Questions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Customization and Randomization
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="customization_and_randomization.html" class="md-nav__link md-nav__link--active">
+        Customization and Randomization
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#using-templates-for-customization" class="md-nav__link">
+    Using Templates for Customization
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#finding-available-template-variables" class="md-nav__link">
+    Finding Available Template Variables
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-user_setup-to-add-new-variables" class="md-nav__link">
+    Using user_setup to Add New Variables
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-the-student-specific-rng" class="md-nav__link">
+    Using the student-specific RNG
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="advanced_template_use.html" class="md-nav__link">
+        Advanced Template Use
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="multi_part_questions.html" class="md-nav__link">
+        Multi-Part Questions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="project_organization.html" class="md-nav__link">
+        Project Organization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="external_and_generated_assets.html" class="md-nav__link">
+        External and Generated Assets
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_9" type="checkbox" id="__nav_2_9" >
+      
+      <label class="md-nav__link" for="__nav_2_9">
+        Multiple Choice Questions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Multiple Choice Questions" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_9">
+          <span class="md-nav__icon md-icon"></span>
+          Multiple Choice Questions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="multiple_choice/simple_question.html" class="md-nav__link">
+        Simple Questions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="multiple_choice/choices_and_shuffling.html" class="md-nav__link">
+        Choices and Shuffling
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="multiple_choice/custom_grading_and_setup.html" class="md-nav__link">
+        Custom Grading and Setup
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="answers_and_scoring.html" class="md-nav__link">
+        Answers and Scoring
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        User's Guide
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="User's Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          User's Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_guide/project_setup.html" class="md-nav__link">
+        Project Setup and Organization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_guide/exams.html" class="md-nav__link">
+        Exams/Assignments
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        API Documentation
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API Documentation" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          API Documentation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" type="checkbox" id="__nav_4_1" >
+      
+      <label class="md-nav__link" for="__nav_4_1">
+        exam_gen.build
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="exam_gen.build" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          exam_gen.build
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/build/cli.html" class="md-nav__link">
+        .build.cli
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/build/data.html" class="md-nav__link">
+        .build.data
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/build/formats.html" class="md-nav__link">
+        .build.formats
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" >
+      
+      <label class="md-nav__link" for="__nav_4_2">
+        exam_gen.classrooom
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="exam_gen.classrooom" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_2">
+          <span class="md-nav__icon md-icon"></span>
+          exam_gen.classrooom
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/classroom/answers.html" class="md-nav__link">
+        .classroom.answers
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/classroom/base.html" class="md-nav__link">
+        .classroom.base
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/classroom/grade.html" class="md-nav__link">
+        .classroom.grades
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/classroom/rosters.html" class="md-nav__link">
+        .classroom.rosters
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/classroom/scores.html" class="md-nav__link">
+        .classroom.scores
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/classroom/student.html" class="md-nav__link">
+        .classroom.student
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/exam.html" class="md-nav__link">
+        exam_gen.exam
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
+      
+      <label class="md-nav__link" for="__nav_4_4">
+        exam_gen.property
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="exam_gen.property" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_4">
+          <span class="md-nav__icon md-icon"></span>
+          exam_gen.property
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/answerable.html" class="md-nav__link">
+        .property.answerable
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/auto_gradeable.html" class="md-nav__link">
+        .property.auto_gradeable
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/buildable.html" class="md-nav__link">
+        .property.buildable
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/document.html" class="md-nav__link">
+        .property.document
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/format.html" class="md-nav__link">
+        .property.format
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/gradeable.html" class="md-nav__link">
+        .property.gradeable
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/has_context.html" class="md-nav__link">
+        .property.has_context
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/has_dir_path.html" class="md-nav__link">
+        .property.has_dir_path
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/has_metadata.html" class="md-nav__link">
+        .property.has_metadata
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/has_rng.html" class="md-nav__link">
+        .property.has_rng
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/has_settings.html" class="md-nav__link">
+        .property.has_settings
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/has_user_setup.html" class="md-nav__link">
+        .property.has_user_setup
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/numbered.html" class="md-nav__link">
+        .property.numbered
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/personalized.html" class="md-nav__link">
+        .property.personalized
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/templated.html" class="md-nav__link">
+        .property.templated
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" type="checkbox" id="__nav_4_5" >
+      
+      <label class="md-nav__link" for="__nav_4_5">
+        exam_gen.util
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="exam_gen.util" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_5">
+          <span class="md-nav__icon md-icon"></span>
+          exam_gen.util
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/util/selectors.html" class="md-nav__link">
+        .util.selectors
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quick_reference.html" class="md-nav__link">
+        Quick Reference
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#using-templates-for-customization" class="md-nav__link">
+    Using Templates for Customization
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#finding-available-template-variables" class="md-nav__link">
+    Finding Available Template Variables
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-user_setup-to-add-new-variables" class="md-nav__link">
+    Using user_setup to Add New Variables
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-the-student-specific-rng" class="md-nav__link">
+    Using the student-specific RNG
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="customizing-and-randomizing-questions">Customizing and Randomizing Questions<a class="headerlink" href="#customizing-and-randomizing-questions" title="Permanent link">&para;</a></h1>
+<p>We'll be adding some additional customization to the question itself in this
+section of the tutorial, starting from basic use of context variables about
+the exam and student, through to randomizing the question's values itself.</p>
+<h2 id="using-templates-for-customization">Using Templates for Customization<a class="headerlink" href="#using-templates-for-customization" title="Permanent link">&para;</a></h2>
+<p>The core of <code>exam_gen</code> is built around the <code>jinja2</code> library, a templating
+library designed for HTML but usable for pretty much any text. Most of the text
+one has to specify for a question or an exam is actually a template which can
+be modified at runtime.</p>
+<div class="admonition info">
+<p><strong>Jinja2's template format has comprehensive documentation available
+<a href="https://jinja.palletsprojects.com/en/3.0.x/templates/">here</a></strong></p>
+</div>
+<ol>
+<li>
+<p>We can show this by editing <code>addition_question.py</code> so the body will read:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="n">body</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    Hello \texttt{ {{ student[&#39;Email Address&#39;] }} },</span>
+
+<span class="s1">    Welcome to question number {{ number }}.</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+</code></pre></div>
+</td></tr></table>
+<div class="admonition important">
+<p class="admonition-title">Important Things to Notice</p>
+<ol>
+<li>Statements between <code>{{</code> and <code>}}</code> are expressions that will be
+   replaced with their values.</li>
+<li><code>student['Email Address']</code> and <code>number</code> (the question number) are
+   variables the template will have access to when it's rendered.</li>
+<li>We need to use a space to separate LaTeX's <code>{</code>s from jinja's <code>{{</code>
+   as with the <code>\texttt{ {{</code> on line 7.</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Generate the exams for different students and see how the different exams
+    each have the appropriate student's email address.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>./exam.py cleanup
+<span class="gp">$ </span>./exam.py build-exam:fake-class:erios
+</code></pre></div>
+<p>You'll find them in <code>~out/exam-exam/class-fake-class/</code>.</p>
+<details class="quote"><summary>Complete Current <code>addition_question.py</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">exam_gen</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">SumQuestion</span><span class="p">(</span><span class="n">LatexDoc</span><span class="p">,</span> <span class="n">Question</span><span class="p">):</span>
+    <span class="n">metadata</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Basic Addition Question&quot;</span>
+
+    <span class="n">body</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    Hello \texttt{ {{ student[&#39;Email Address&#39;] }} },</span>
+
+<span class="s1">    Welcome to question number {{ number }}.</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+
+    <span class="n">solution</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Placeholder text for the solution of the question.&quot;</span>
+</code></pre></div>
+</td></tr></table>
+</details>
+</li>
+</ol>
+<h2 id="finding-available-template-variables">Finding Available Template Variables<a class="headerlink" href="#finding-available-template-variables" title="Permanent link">&para;</a></h2>
+<p>In order to assist in writing templates <code>exam_gen</code> dumps the available variables
+for each template it renders into the appropriate folder in <code>~data</code>.</p>
+<ol>
+<li>
+<p>If you look in <code>~data/class-fake-class/student-erios/exam-exam</code> you'll find a
+    number of intermediate files that we generate as a template is created.</p>
+<details class="info"><summary>Result of <code>tree ~data/class-fake-class/student-erios</code> w/ explanation.</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>~data/class-fake-class/student-erios/
+├── data.yaml
+└── exam-exam
+<span class="hll">    ├── final-context-output-intro.yaml
+</span><span class="hll">    ├── final-context-output-questions[addition-question]-body.yaml
+</span><span class="hll">    ├── final-context-output-questions[addition-question]-solution.yaml
+</span><span class="hll">    ├── final-context-output-questions[addition-question].yaml
+</span><span class="hll">    ├── final-context-output.yaml
+</span>    ├── finalize-log.yaml
+<span class="hll">    ├── initial-context-output-intro.yaml
+</span><span class="hll">    ├── initial-context-output-questions[addition-question]-body.yaml
+</span><span class="hll">    ├── initial-context-output-questions[addition-question]-solution.yaml
+</span><span class="hll">    ├── initial-context-output-questions[addition-question].yaml
+</span><span class="hll">    ├── initial-context-output.yaml
+</span>    ├── output-log.yaml
+    ├── post-finalize-doc.yaml
+    ├── post-init-doc.yaml
+    ├── post-setup-doc.yaml
+    ├── post-template-doc.yaml
+    ├── pre-finalize-doc.yaml
+    ├── pre-init-doc.yaml
+    ├── pre-setup-doc.yaml
+    ├── pre-template-doc.yaml
+<span class="hll">    ├── result-output-intro.tex
+</span><span class="hll">    ├── result-output-questions[addition-question]-body.tex
+</span><span class="hll">    ├── result-output-questions[addition-question]-solution.tex
+</span><span class="hll">    ├── result-output-questions[addition-question].tex
+</span><span class="hll">    ├── result-output.tex
+</span>    ├── setup-log.yaml
+<span class="hll">    ├── template-output-intro.jn2.tex
+</span><span class="hll">    ├── template-output.jn2.tex
+</span><span class="hll">    ├── template-output-questions[addition-question]-body.jn2.tex
+</span><span class="hll">    ├── template-output-questions[addition-question].jn2.tex
+</span><span class="hll">    ├── template-output-questions[addition-question]-solution.jn2.tex
+</span>    ├── template-result.yaml
+    └── template-spec.yaml
+</code></pre></div>
+</td></tr></table>
+<p>The files relevant to
+template rendering are highlighted and can be split along
+two axes.</p>
+<p>The first axis, based on the latter half of the filename, corresponds to the
+template being rendered:</p>
+<ul>
+<li><code>*-output.*</code> : The template for <code>NewExam</code> as a whole, the final output of
+    the build process.<ul>
+<li><code>*-output-intro.*</code> : The template for <code>NewExam.intro</code>, the introduction
+  text we specify on lines 2-22 of <code>exam.py</code>. (Starting with
+  <code class="highlight"><span class="n">intro</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span></code>)</li>
+<li><code>*-output-questions[addition-question].*</code> : The template for
+  <code>SumQuestion</code>.<ul>
+<li><code>*-output-questions[addition-question]-body.*</code> : The template we specify
+  for <code>SumQuestion.body</code> in <code>addition_question.py</code> in lines 6-10.</li>
+<li><code>*-output-questions[addition-question]-solution.*</code> : The template we
+  specify for <code>SumQuestion.solution</code> in <code>addition_question.py</code> in line 12.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>The tree structure here is intentional. Each template can access variables from
+its parents and the parents can use final <em>post-rendering</em> results from its
+children.</p>
+<p>The second axis, based on the prefix of the filename, tells us what actual data
+is in the file:</p>
+<ul>
+<li><code>template-*.jn2.tex</code> : The raw, un-rendered template used for this portion
+    of the assignment.</li>
+<li><code>initial-context-*.yaml</code> : The initial variables available to this template
+    before child templates are rendered. These are all made available to child
+    templates unless they're overridden by those child templates.</li>
+<li><code>final-context-*.yaml</code> : These are the variables available to each template
+    when they're rendered. <strong>The are the variables you can use in the
+    templates</strong>, along with their values for <em>this particular build</em>. We'll
+    break this down further in a moment.</li>
+<li><code>result-*.tex</code> : This is final result of each template after the variables
+    in <code>final-context-*.yaml</code> are applied to <code>template-*.jn2.tex</code>.</li>
+</ul>
+</details>
+</li>
+<li>
+<p>We can look in <code>final-context-output-questions[addition-question]-body.yaml</code> to
+    see what variables we can use when setting <code class="highlight"><span class="n">body</span><span class="o">.</span><span class="n">text</span></code>.</p>
+<details class="example" open="open"><summary>Contents of <code>final-context-output-questions[addition-question]-body.yaml</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nt">assignment</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Example Assignment</span>
+<span class="nt">author</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">J. Doe \&amp; B. Smith</span>
+<span class="nt">course</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">TEST 101</span>
+<span class="nt">date</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">12-12-2012</span>
+<span class="nt">format</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">exam</span>
+<span class="nt">index</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Basic Addition Question</span>
+<span class="nt">nesting_depth</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="nt">number</span><span class="p">:</span> <span class="s">&#39;1&#39;</span>
+<span class="nt">numbering_depth</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">a.</span>
+<span class="nt">numbering_scheme</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1a.</span>
+<span class="nt">semester</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Fall xx</span>
+<span class="nt">student</span><span class="p">:</span>
+  <span class="nt">Email Address</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">erios@berkeley.edu</span>
+  <span class="nt">Name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Rios, Christine</span>
+  <span class="nt">Student ID</span><span class="p">:</span> <span class="s">&#39;49232540&#39;</span>
+  <span class="nt">answer_data</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">null</span>
+  <span class="nt">grade_data</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">null</span>
+  <span class="nt">ident</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">erios</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Rios, Christine</span>
+  <span class="nt">root_seed</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">d6f585da</span>
+  <span class="nt">score_data</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">null</span>
+  <span class="nt">sid</span><span class="p">:</span> <span class="s">&#39;49232540&#39;</span>
+  <span class="nt">student_data</span><span class="p">:</span>
+    <span class="nt">Email Address</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">erios@berkeley.edu</span>
+    <span class="nt">Name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Rios, Christine</span>
+    <span class="nt">Student ID</span><span class="p">:</span> <span class="s">&#39;49232540&#39;</span>
+    <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Rios, Christine</span>
+    <span class="nt">sid</span><span class="p">:</span> <span class="s">&#39;49232540&#39;</span>
+    <span class="nt">username</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">erios</span>
+  <span class="nt">username</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">erios</span>
+<span class="nt">teacher</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">J. Doe \&amp; B. Smith</span>
+</code></pre></div>
+</td></tr></table>
+</details>
+</li>
+</ol>
+<p>Each of the fields above is available for use in the <code>body.text</code> template as
+part of the context dictionary passed to our templating engine.</p>
+<p>In general, you can refer to the base level variables directly. For example:</p>
+<ul>
+<li><code class="highlight"><span class="cp">{{</span> <span class="nv">teacher</span> <span class="cp">}}</span><span class="x"></span></code> will use the value on line 32 and be rendered as
+    <code class="highlight">J. Doe <span class="k">\&amp;</span> B. Smith</code>.</li>
+<li><code class="highlight"><span class="cp">{{</span> <span class="nv">name</span> <span class="cp">}}</span><span class="x"></span></code> refers to the name of the questions and will use the
+    value on line 7 to render as <code class="highlight">Basic Addition Question</code>.</li>
+</ul>
+<p>Nested values can be referenced with both attribute notation
+<code class="highlight"><span class="cp">{{</span> <span class="nv">foo.bar</span> <span class="cp">}}</span><span class="x"></span></code> or item lookup notation <code class="highlight"><span class="cp">{{</span><span class="nv">foo</span><span class="o">[</span><span class="s1">&#39;bar&#39;</span><span class="o">]</span><span class="cp">}}</span><span class="x"></span></code>
+when applicable.  For example:</p>
+<ul>
+<li><code class="highlight"><span class="cp">{{</span> <span class="nv">student.ident</span> <span class="cp">}}</span><span class="x"></span></code> and <code class="highlight"><span class="cp">{{</span> <span class="nv">student</span><span class="o">[</span><span class="s1">&#39;ident&#39;</span><span class="o">]</span> <span class="cp">}}</span><span class="x"></span></code> both
+    will render as <code class="highlight">erios</code> based on line 19.</li>
+<li>On the other hand, as <code class="highlight"><span class="s2">&quot;Email Address&quot;</span></code> has a space in it, we
+    can only use <code class="highlight"><span class="cp">{{</span> <span class="nv">student</span><span class="o">[</span><span class="s1">&#39;Email Address&#39;</span><span class="o">]</span> <span class="cp">}}</span><span class="x"></span></code> to refer to the
+    value on line 14. <code class="highlight"><span class="cp">{{</span> <span class="nv">student.Email</span> <span class="nv">Address</span> <span class="cp">}}</span><span class="x"></span></code> is not syntactically
+    valid.</li>
+</ul>
+<p>The full explanation on how to refer to context variables is found
+<a href="https://jinja.palletsprojects.com/en/3.0.x/templates/#variables">here</a> along
+with a bunch of additional template formatting tools like conditionals, loops,
+and basic arithmetic.</p>
+<h2 id="using-user_setup-to-add-new-variables">Using <code>user_setup</code> to Add New Variables<a class="headerlink" href="#using-user_setup-to-add-new-variables" title="Permanent link">&para;</a></h2>
+<p>It'll also be useful to add new variables that our templates can use.
+The primary way to do this is by defining a <code>user_setup</code> function.</p>
+<ol>
+<li>
+<p>Add the following to the end of <code>addition_question.py</code>:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>   <span class="k">def</span> <span class="nf">user_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+       <span class="n">ctxt_vars</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+       <span class="n">ctxt_vars</span><span class="p">[</span><span class="s1">&#39;test_vars&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+           <span class="s1">&#39;test_str&#39;</span><span class="p">:</span> <span class="s1">&#39;Hello, testing </span><span class="se">\t</span><span class="s1">extbf</span><span class="si">{TESTING}</span><span class="s1">&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;test_int&#39;</span><span class="p">:</span> <span class="mi">1234</span>
+       <span class="p">}</span>
+
+       <span class="k">return</span> <span class="n">ctxt_vars</span>
+</code></pre></div>
+</td></tr></table>
+<p>This is the <code>user_setup</code> function that can be defined for every <code>Exam</code> and
+<code>Question</code>, and is the primary way in which all of these elements can be
+customized.</p>
+<p>The <code>user_setup</code> function should always return a dictionary with values that
+are then added to the template context.</p>
+</li>
+<li>
+<p>Build a new test with these changes:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>./exam.py cleanup
+<span class="gp">$ </span>./exam.py build-exam:fake-class:erios
+</code></pre></div>
+</li>
+<li>
+<p>There won't be any changes to the actual <code>.pdf</code> file, but we can take a
+    look at <code>final-context-output-questions[addition-question]-body.yaml</code> to
+    see a few new lines:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nt">test_vars</span><span class="p">:</span>
+  <span class="nt">test_int</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1234</span>
+  <span class="nt">test_str</span><span class="p">:</span> <span class="s">&quot;Hello,</span><span class="nv"> </span><span class="s">testing</span><span class="nv"> </span><span class="s">\textbf{TESTING}&quot;</span>
+</code></pre></div>
+</td></tr></table>
+<p>Meaning we can now use <code class="highlight"><span class="cp">{{</span> <span class="nv">test_vars.test_int</span> <span class="cp">}}</span><span class="x"></span></code> and
+<code class="highlight"><span class="cp">{{</span> <span class="nv">text_vars.test_str</span> <span class="cp">}}</span><span class="x"></span></code> in our <code>body</code> template.</p>
+</li>
+<li>
+<p>So let's try that, by changing our <code>addition_question.py</code> as follows:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="n">body</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    Hello \texttt{ {{ student[&#39;Email Address&#39;] }} },</span>
+
+<span class="s1">    Here&#39;s some test text {{ test_vars.test_str }}. \\</span>
+<span class="s1">    And the test integer: ${{test_vars.test_int }}$.</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>And building a new test, as usual:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>./exam.py cleanup
+<span class="gp">$ </span>./exam.py build-exam:fake-class:erios
+</code></pre></div>
+<div class="admonition error">
+<p class="admonition-title">TODO: Add image of result. Should be in <code>assets/</code> already.</p>
+</div>
+</li>
+<li>
+<p>Whoops, looks like we have some formatting issues. We're not getting proper
+    bold text for "TESTING".</p>
+<div class="admonition error">
+<p class="admonition-title">TODO: Add image of latex error, should be in <code>assets/</code></p>
+</div>
+<p>This is because of the following line:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">20</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>        <span class="s1">&#39;test_str&#39;</span><span class="p">:</span> <span class="s1">&#39;Hello, testing </span><span class="se">\t</span><span class="s1">extbf</span><span class="si">{TESTING}</span><span class="s1">&#39;</span><span class="p">,</span>
+</code></pre></div>
+</td></tr></table>
+<p>Python is interpreting <code>\t</code> as a tab rather than the literal slash and
+ <code>t</code> character. We can fix this by making this line a raw string:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">20</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>        <span class="s1">&#39;test_str&#39;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;Hello, testing \textbf</span><span class="si">{TESTING}</span><span class="s1">&#39;</span><span class="p">,</span>
+</code></pre></div>
+</td></tr></table>
+<div class="admonition error">
+<p class="admonition-title">TODO: Add images of the result, should be in <code>assets/</code></p>
+</div>
+</li>
+</ol>
+<details class="quote"><summary>Complete Current <code>addition_question.py</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">exam_gen</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">SumQuestion</span><span class="p">(</span><span class="n">LatexDoc</span><span class="p">,</span> <span class="n">Question</span><span class="p">):</span>
+    <span class="n">metadata</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Basic Addition Question&quot;</span>
+
+    <span class="n">body</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    Hello \texttt{ {{ student[&#39;Email Address&#39;] }} },</span>
+
+<span class="s1">    Here&#39;s some test text {{ test_vars.test_str }}. \\</span>
+<span class="s1">    And the test integer: ${{test_vars.test_int }}$.</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+
+    <span class="n">solution</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Placeholder text for the solution of the question.&quot;</span>
+
+    <span class="k">def</span> <span class="nf">user_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="n">ctxt_vars</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="n">ctxt_vars</span><span class="p">[</span><span class="s1">&#39;test_vars&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;test_str&#39;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;Hello, testing \textbf</span><span class="si">{TESTING}</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;test_int&#39;</span><span class="p">:</span> <span class="mi">1234</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">ctxt_vars</span>
+</code></pre></div>
+</td></tr></table>
+</details>
+<h2 id="using-the-student-specific-rng">Using the student-specific RNG<a class="headerlink" href="#using-the-student-specific-rng" title="Permanent link">&para;</a></h2>
+<p>One of the key reasons to have this library at all is to allow the creation of
+custom exams for each student as well as custom answer keys.</p>
+<p>The main way to do this is by using the student specific rng to generate
+or permute problems and answers, for a quick example we'll just tweak the user
+setup to use the provided rng.</p>
+<ol>
+<li>
+<p>First we need to change the definition of <code>user_setup</code> to pull out the
+    provided random umber generator.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">16</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">user_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</code></pre></div>
+</td></tr></table>
+<p>Note that the parameter has to be named 'rng' and the value will have type
+<code class="highlight"><span class="n">random</span><span class="o">.</span><span class="n">Random</span></code> (a builtin python type with docs
+<a href="https://docs.python.org/3/library/random.html">here</a>).</p>
+</li>
+<li>
+<p>And we can then replace our <code>test_int</code> variable with a new random one:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">21</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>        <span class="s1">&#39;test_int&#39;</span><span class="p">:</span> <span class="n">rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p>The number generated here is unique to each student and stable through
+multiple runs of the build system. Any fixed sequence of calls to the rng
+will be always product the same outputs for each student.</p>
+<div class="admonition error">
+<p class="admonition-title">TODO: Insert example images, shoudl be in <code>assets/</code></p>
+</div>
+</li>
+</ol>
+<details class="quote"><summary>Complete Current <code>addition_question.py</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">exam_gen</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">SumQuestion</span><span class="p">(</span><span class="n">LatexDoc</span><span class="p">,</span> <span class="n">Question</span><span class="p">):</span>
+    <span class="n">metadata</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Basic Addition Question&quot;</span>
+
+    <span class="n">body</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    Hello \texttt{ {{ student[&#39;Email Address&#39;] }} },</span>
+
+<span class="s1">    Here&#39;s some test text {{ test_vars.test_str }}. \\</span>
+<span class="s1">    And the test integer: ${{test_vars.test_int }}$.</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+
+    <span class="n">solution</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Placeholder text for the solution of the question.&quot;</span>
+
+    <span class="k">def</span> <span class="nf">user_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="n">ctxt_vars</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="n">ctxt_vars</span><span class="p">[</span><span class="s1">&#39;test_vars&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;test_str&#39;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;Hello, testing \textbf</span><span class="si">{TESTING}</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;test_int&#39;</span><span class="p">:</span> <span class="n">rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">ctxt_vars</span>
+</code></pre></div>
+</td></tr></table>
+</details>
+<p>In the next section we'll turn this proof-of-concept into an actual exam
+question with some more advanced use of templates and <code>user_setup</code>.</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="writing_questions.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Writing Questions" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Writing Questions
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="advanced_template_use.html" class="md-footer__link md-footer__link--next" aria-label="Next: Advanced Template Use" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Advanced Template Use
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+
+<script src="../theme/js/iframe-worker.js"></script>
+<script src="../search/search_index.js"></script>
+
+
+    
+      <script src="../assets/javascripts/bundle.29db7785.min.js"></script>
+      
+    
+  </body>
+</html>

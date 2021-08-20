@@ -1,0 +1,2066 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.3">
+    
+    
+      
+        <title>Custom Grading and Setup - UCB EECS Exam Generator</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.f7f47774.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#2094f3">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#custom-setup-and-grading" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="UCB EECS Exam Generator" class="md-header__button md-logo" aria-label="UCB EECS Exam Generator" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            UCB EECS Exam Generator
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Custom Grading and Setup
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="UCB EECS Exam Generator" class="md-nav__button md-logo" aria-label="UCB EECS Exam Generator" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    UCB EECS Exam Generator
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../index.html" class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      <label class="md-nav__link" for="__nav_2">
+        Tutorial
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Tutorial" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorial
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../first_assignment.html" class="md-nav__link">
+        Your First Assignment
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../classrooms_and_rosters.html" class="md-nav__link">
+        Classrooms and Rosters
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../writing_questions.html" class="md-nav__link">
+        Writing Questions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../customization_and_randomization.html" class="md-nav__link">
+        Customization and Randomization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced_template_use.html" class="md-nav__link">
+        Advanced Template Use
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multi_part_questions.html" class="md-nav__link">
+        Multi-Part Questions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../project_organization.html" class="md-nav__link">
+        Project Organization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../external_and_generated_assets.html" class="md-nav__link">
+        External and Generated Assets
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_9" type="checkbox" id="__nav_2_9" checked>
+      
+      <label class="md-nav__link" for="__nav_2_9">
+        Multiple Choice Questions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Multiple Choice Questions" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_9">
+          <span class="md-nav__icon md-icon"></span>
+          Multiple Choice Questions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="simple_question.html" class="md-nav__link">
+        Simple Questions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="choices_and_shuffling.html" class="md-nav__link">
+        Choices and Shuffling
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Custom Grading and Setup
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="custom_grading_and_setup.html" class="md-nav__link md-nav__link--active">
+        Custom Grading and Setup
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#initial-setup" class="md-nav__link">
+    Initial Setup
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-custom-question-templates" class="md-nav__link">
+    Using Custom Question Templates
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-choices-at-runtime-in-user_setup" class="md-nav__link">
+    Setting Up Choices at Runtime (in user_setup)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defining-a-custom-grading-function" class="md-nav__link">
+    Defining a Custom Grading Function
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#finishing-up" class="md-nav__link">
+    Finishing Up
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../answers_and_scoring.html" class="md-nav__link">
+        Answers and Scoring
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        User's Guide
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="User's Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          User's Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user_guide/project_setup.html" class="md-nav__link">
+        Project Setup and Organization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user_guide/exams.html" class="md-nav__link">
+        Exams/Assignments
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        API Documentation
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API Documentation" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          API Documentation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" type="checkbox" id="__nav_4_1" >
+      
+      <label class="md-nav__link" for="__nav_4_1">
+        exam_gen.build
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="exam_gen.build" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          exam_gen.build
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/build/cli.html" class="md-nav__link">
+        .build.cli
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/build/data.html" class="md-nav__link">
+        .build.data
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/build/formats.html" class="md-nav__link">
+        .build.formats
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" >
+      
+      <label class="md-nav__link" for="__nav_4_2">
+        exam_gen.classrooom
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="exam_gen.classrooom" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_2">
+          <span class="md-nav__icon md-icon"></span>
+          exam_gen.classrooom
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/classroom/answers.html" class="md-nav__link">
+        .classroom.answers
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/classroom/base.html" class="md-nav__link">
+        .classroom.base
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/classroom/grade.html" class="md-nav__link">
+        .classroom.grades
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/classroom/rosters.html" class="md-nav__link">
+        .classroom.rosters
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/classroom/scores.html" class="md-nav__link">
+        .classroom.scores
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/classroom/student.html" class="md-nav__link">
+        .classroom.student
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/exam.html" class="md-nav__link">
+        exam_gen.exam
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
+      
+      <label class="md-nav__link" for="__nav_4_4">
+        exam_gen.property
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="exam_gen.property" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_4">
+          <span class="md-nav__icon md-icon"></span>
+          exam_gen.property
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/property/answerable.html" class="md-nav__link">
+        .property.answerable
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/property/auto_gradeable.html" class="md-nav__link">
+        .property.auto_gradeable
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/property/buildable.html" class="md-nav__link">
+        .property.buildable
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/property/document.html" class="md-nav__link">
+        .property.document
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/property/format.html" class="md-nav__link">
+        .property.format
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/property/gradeable.html" class="md-nav__link">
+        .property.gradeable
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/property/has_context.html" class="md-nav__link">
+        .property.has_context
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/property/has_dir_path.html" class="md-nav__link">
+        .property.has_dir_path
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/property/has_metadata.html" class="md-nav__link">
+        .property.has_metadata
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/property/has_rng.html" class="md-nav__link">
+        .property.has_rng
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/property/has_settings.html" class="md-nav__link">
+        .property.has_settings
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/property/has_user_setup.html" class="md-nav__link">
+        .property.has_user_setup
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/property/numbered.html" class="md-nav__link">
+        .property.numbered
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/property/personalized.html" class="md-nav__link">
+        .property.personalized
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/property/templated.html" class="md-nav__link">
+        .property.templated
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" type="checkbox" id="__nav_4_5" >
+      
+      <label class="md-nav__link" for="__nav_4_5">
+        exam_gen.util
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="exam_gen.util" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_5">
+          <span class="md-nav__icon md-icon"></span>
+          exam_gen.util
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/util/selectors.html" class="md-nav__link">
+        .util.selectors
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quick_reference.html" class="md-nav__link">
+        Quick Reference
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#initial-setup" class="md-nav__link">
+    Initial Setup
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-custom-question-templates" class="md-nav__link">
+    Using Custom Question Templates
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-choices-at-runtime-in-user_setup" class="md-nav__link">
+    Setting Up Choices at Runtime (in user_setup)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defining-a-custom-grading-function" class="md-nav__link">
+    Defining a Custom Grading Function
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#finishing-up" class="md-nav__link">
+    Finishing Up
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="custom-setup-and-grading">Custom Setup and Grading<a class="headerlink" href="#custom-setup-and-grading" title="Permanent link">&para;</a></h1>
+<p>Here we'll be adding a needlessly complicated problem that shows off a number
+of advanced features and ways to interact with the <code>exam_gen</code> library.</p>
+<p>Students will have to choose an assignment of variables and some constraints
+to create a constraint satisfaction problem that meets various conditions.</p>
+<div class="admonition error">
+<p class="admonition-title">TODO: image in <code>assets/</code></p>
+</div>
+<h2 id="initial-setup">Initial Setup<a class="headerlink" href="#initial-setup" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>First we can create a new folder for our question and some initial files:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>mkdir csp_question
+<span class="gp">$ </span>touch csp_question/question.py
+<span class="gp">$ </span>touch csp_question/exp.py
+<span class="gp">$ </span>touch csp_question/small_text.jn2.tex
+</code></pre></div>
+</li>
+<li>
+<p><code>exp.py</code> will contain some code for manipulating and printing boolean
+    formulas. Put the following in <code>csp_question/exp.py</code>:</p>
+<details class="quote"><summary>Complete Current <code>csp_question/exp.py</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  1</span>
+<span class="normal">  2</span>
+<span class="normal">  3</span>
+<span class="normal">  4</span>
+<span class="normal">  5</span>
+<span class="normal">  6</span>
+<span class="normal">  7</span>
+<span class="normal">  8</span>
+<span class="normal">  9</span>
+<span class="normal"> 10</span>
+<span class="normal"> 11</span>
+<span class="normal"> 12</span>
+<span class="normal"> 13</span>
+<span class="normal"> 14</span>
+<span class="normal"> 15</span>
+<span class="normal"> 16</span>
+<span class="normal"> 17</span>
+<span class="normal"> 18</span>
+<span class="normal"> 19</span>
+<span class="normal"> 20</span>
+<span class="normal"> 21</span>
+<span class="normal"> 22</span>
+<span class="normal"> 23</span>
+<span class="normal"> 24</span>
+<span class="normal"> 25</span>
+<span class="normal"> 26</span>
+<span class="normal"> 27</span>
+<span class="normal"> 28</span>
+<span class="normal"> 29</span>
+<span class="normal"> 30</span>
+<span class="normal"> 31</span>
+<span class="normal"> 32</span>
+<span class="normal"> 33</span>
+<span class="normal"> 34</span>
+<span class="normal"> 35</span>
+<span class="normal"> 36</span>
+<span class="normal"> 37</span>
+<span class="normal"> 38</span>
+<span class="normal"> 39</span>
+<span class="normal"> 40</span>
+<span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">attr</span>
+
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
+<span class="k">class</span> <span class="nc">Var</span><span class="p">():</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">vars</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_eval_exp</span><span class="p">(</span><span class="nb">vars</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="p">),</span> <span class="nb">vars</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">print_tex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">r</span><span class="s1">&#39;\mathit{\mathsf{</span><span class="si">%s</span><span class="s1">}}&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+    <span class="k">def</span> <span class="nf">is_complex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
+<span class="k">class</span> <span class="nc">Not</span><span class="p">():</span>
+    <span class="n">exp</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__attrs_init__</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">vars</span><span class="p">):</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="n">_eval_exp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exp</span><span class="p">,</span><span class="nb">vars</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+            <span class="k">return</span> <span class="ow">not</span> <span class="n">val</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">Not</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">val</span><span class="o">.</span><span class="n">exp</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">val</span>
+
+    <span class="k">def</span> <span class="nf">print_tex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span>  <span class="sa">r</span><span class="s1">&#39;\neg{</span><span class="si">%s</span><span class="s1">}&#39;</span> <span class="o">%</span> <span class="n">_print_wrap_tex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exp</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">is_complex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">And</span><span class="p">():</span>
+    <span class="n">exps</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">cmpnts</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__attrs_init__</span><span class="p">(</span><span class="n">cmpnts</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">vars</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">exp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">exps</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">_eval_exp</span><span class="p">(</span><span class="n">exp</span><span class="p">,</span> <span class="nb">vars</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">And</span><span class="p">):</span>
+                <span class="n">result</span> <span class="o">+=</span> <span class="n">val</span><span class="o">.</span><span class="n">exps</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exps</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">True</span>
+
+
+    <span class="k">def</span> <span class="nf">is_complex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exps</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">print_tex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exps</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_print_tex</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exps</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_print_tex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exps</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">r</span><span class="s1">&#39; \wedge &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">_print_wrap_tex</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">exps</span><span class="p">))</span>
+
+
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Or</span><span class="p">():</span>
+    <span class="n">exps</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">cmpnts</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__attrs_init__</span><span class="p">(</span><span class="n">cmpnts</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">vars</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">exp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">exps</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">_eval_exp</span><span class="p">(</span><span class="n">exp</span><span class="p">,</span> <span class="nb">vars</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">Or</span><span class="p">):</span>
+                <span class="n">result</span> <span class="o">+=</span> <span class="n">val</span><span class="o">.</span><span class="n">exps</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exps</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">is_complex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exps</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">print_tex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exps</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_print_tex</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exps</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_print_tex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exps</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">r</span><span class="s1">&#39; \vee &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">_print_wrap_tex</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">exps</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">_eval_exp</span><span class="p">(</span><span class="n">exp</span><span class="p">,</span> <span class="nb">vars</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">exp</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">exp</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">exp</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="nb">vars</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_print_tex</span><span class="p">(</span><span class="n">exp</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">exp</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">r</span><span class="s1">&#39;\mathsf{\mathit{</span><span class="si">%s</span><span class="s1">}}&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;True&quot;</span> <span class="k">if</span> <span class="n">exp</span> <span class="k">else</span> <span class="s2">&quot;False&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">exp</span><span class="o">.</span><span class="n">print_tex</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">_print_wrap_tex</span><span class="p">(</span><span class="n">exp</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">exp</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_print_tex</span><span class="p">(</span><span class="n">exp</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">exp</span><span class="o">.</span><span class="n">is_complex</span><span class="p">():</span>
+        <span class="k">return</span> <span class="sa">r</span><span class="s1">&#39;\left(</span><span class="si">%s</span><span class="s1">\right)&#39;</span> <span class="o">%</span> <span class="n">_print_tex</span><span class="p">(</span><span class="n">exp</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_print_tex</span><span class="p">(</span><span class="n">exp</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+</details>
+</li>
+<li>
+<p>Next we can initialize <code>csp_question/question.py</code> with:</p>
+<details class="quote" open="open"><summary>Complete Current <code>csp_question/question.py</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">exam_gen</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.exp</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># Problem Variables</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="s2">&quot;z&quot;</span><span class="p">)</span>
+
+<span class="nb">vars</span> <span class="o">=</span> <span class="p">[</span><span class="n">w</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">]</span>
+
+<span class="c1"># Problem Constraints</span>
+<span class="n">exps</span> <span class="o">=</span> <span class="p">[</span> <span class="n">Not</span><span class="p">(</span><span class="n">w</span><span class="p">),</span>
+         <span class="n">Or</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Not</span><span class="p">(</span><span class="n">w</span><span class="p">)),</span>
+         <span class="n">And</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">Not</span><span class="p">(</span><span class="n">Or</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Not</span><span class="p">(</span><span class="n">z</span><span class="p">))),</span> <span class="n">Or</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)),</span>
+         <span class="n">Or</span><span class="p">(</span><span class="n">And</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Not</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="n">y</span><span class="p">,</span> <span class="n">Not</span><span class="p">(</span><span class="n">z</span><span class="p">)),</span> <span class="n">And</span><span class="p">(</span><span class="n">Not</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">Not</span><span class="p">(</span><span class="n">y</span><span class="p">))),</span>
+         <span class="n">And</span><span class="p">(</span><span class="n">Or</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">Not</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">Not</span><span class="p">(</span><span class="n">z</span><span class="p">)),</span> <span class="n">Or</span><span class="p">(</span><span class="n">Not</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="n">z</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">Or</span><span class="p">(</span><span class="n">Not</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">w</span><span class="p">,</span> <span class="n">y</span><span class="p">)),</span>
+         <span class="n">Or</span><span class="p">(</span> <span class="n">Not</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="n">x</span><span class="p">,</span> <span class="n">And</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">Not</span><span class="p">(</span><span class="n">w</span><span class="p">))),</span>
+         <span class="n">Or</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">Not</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+       <span class="p">]</span>
+
+<span class="k">class</span> <span class="nc">CspQuestion</span><span class="p">(</span><span class="n">LatexDoc</span><span class="p">,</span> <span class="n">MultipleChoiceQuestion</span><span class="p">):</span>
+
+    <span class="n">body</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    From the options below choose:</span>
+<span class="s1">    \begin</span><span class="si">{itemize}</span><span class="s1"></span>
+<span class="s1">      \item An assignment for \emph</span><span class="si">{every}</span><span class="s1"> variable</span>
+<span class="s1">      \item At least two constraints</span>
+<span class="s1">    \end</span><span class="si">{itemize}</span><span class="s1"></span>
+
+<span class="s1">    Such that all chosen constraints are satisfied.</span>
+
+<span class="s1">    Extra credit points will be awarded for every constraint above 2 that is</span>
+<span class="s1">    chosen, but no points will be awarded if even a single chosen constraint</span>
+<span class="s1">    is not satisfied by the given assignment.</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+
+    <span class="c1"># No need to shuffle this problem</span>
+    <span class="n">settings</span><span class="o">.</span><span class="n">grade</span><span class="o">.</span><span class="n">shuffle</span> <span class="o">=</span> <span class="kc">False</span>
+</code></pre></div>
+</td></tr></table>
+</details>
+</li>
+<li>
+<p>Then we can edit <code>exam.py</code> to import and use the new question.</p>
+<p>To add the new import:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">8</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">csp_question.question</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div>
+</td></tr></table>
+<p>To add our new question to the question list:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">questions</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;addition-question&#39;</span><span class="p">:</span> <span class="n">SumQuestion</span><span class="p">,</span>
+    <span class="s1">&#39;poly-question&#39;</span><span class="p">:</span> <span class="n">PolyQuestion</span><span class="p">,</span>
+    <span class="s1">&#39;graph-question&#39;</span><span class="p">:</span> <span class="n">GraphQuestion</span><span class="p">,</span>
+    <span class="s1">&#39;matrix-question&#39;</span><span class="p">:</span> <span class="n">MatrixQuestion</span><span class="p">,</span>
+<span class="hll">    <span class="s1">&#39;csp-question&#39;</span><span class="p">:</span> <span class="n">CspQuestion</span><span class="p">,</span>
+</span><span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+<details class="quote"><summary>Complete Current <code>exam.py</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env -S pipenv run python3</span>
+
+<span class="kn">from</span> <span class="nn">exam_gen</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">addition_question</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">poly_question.question</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">graph_question.question</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">matrix_question.question</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">csp_question.question</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">NewExam</span><span class="p">(</span><span class="n">LatexDoc</span><span class="p">,</span> <span class="n">Exam</span><span class="p">):</span>
+
+    <span class="n">classes</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;fake-class&#39;</span><span class="p">:</span> <span class="n">Classroom</span><span class="o">.</span><span class="n">with_options</span><span class="p">(</span>
+            <span class="n">roster</span><span class="o">=</span><span class="n">BCoursesCSVRoster</span><span class="o">.</span><span class="n">with_options</span><span class="p">(</span>
+                <span class="n">file_name</span><span class="o">=</span><span class="s2">&quot;class-1.csv&quot;</span>
+            <span class="p">)</span>
+        <span class="p">),</span>
+    <span class="p">}</span>
+
+    <span class="n">questions</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;addition-question&#39;</span><span class="p">:</span> <span class="n">SumQuestion</span><span class="p">,</span>
+        <span class="s1">&#39;poly-question&#39;</span><span class="p">:</span> <span class="n">PolyQuestion</span><span class="p">,</span>
+        <span class="s1">&#39;graph-question&#39;</span><span class="p">:</span> <span class="n">GraphQuestion</span><span class="p">,</span>
+        <span class="s1">&#39;matrix-question&#39;</span><span class="p">:</span> <span class="n">MatrixQuestion</span><span class="p">,</span>
+        <span class="s1">&#39;csp-question&#39;</span><span class="p">:</span> <span class="n">CspQuestion</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="n">intro</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    \emph{Example Exam Introduction}</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">user_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span> <span class="n">run_cli</span><span class="p">(</span><span class="nb">globals</span><span class="p">())</span>
+</code></pre></div>
+</td></tr></table>
+</details>
+</li>
+</ol>
+<h2 id="using-custom-question-templates">Using Custom Question Templates<a class="headerlink" href="#using-custom-question-templates" title="Permanent link">&para;</a></h2>
+<p>This question has a lot of options and spills over to multiple pages.
+To fix this we'll overload the basic question template with one that has smaller
+text.</p>
+<ol>
+<li>
+<p>First we can fill <code>csp_question/small_text.jn2.tex</code> with the following:</p>
+<details class="quote" open="open"><summary>Complete Current <code>csp_question/small_text.jn2.tex</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nb">{</span><span class="c">% if nesting_depth == 1 %}</span>
+<span class="nb">{</span><span class="k">\large</span> <span class="nb">{</span> Problem: <span class="nb">{{</span> number <span class="nb">}}</span> <span class="nb">}</span> <span class="nb">}</span> <span class="k">\\</span>
+<span class="nb">{</span><span class="c">% elif nesting_depth == 2 %}</span>
+<span class="nb">{</span><span class="k">\large</span> <span class="nb">{</span> Sub-problem: <span class="nb">{{</span> number <span class="nb">}}</span> <span class="nb">}</span> <span class="nb">}</span> <span class="k">\\</span>
+<span class="nb">{</span><span class="c">% elif nesting_depth == 3 %}</span>
+<span class="nb">{</span><span class="k">\large</span> <span class="nb">{</span> Sub-sub-problem: <span class="nb">{{</span> number <span class="nb">}}</span> <span class="nb">}</span> <span class="nb">}</span> <span class="k">\\</span>
+<span class="nb">{</span><span class="c">% else %}</span>
+<span class="nb">{</span><span class="k">\large</span> <span class="nb">{</span> Part: <span class="nb">{{</span> number <span class="nb">}}</span> <span class="nb">}</span> <span class="nb">}</span> <span class="k">\\</span>
+<span class="nb">{</span><span class="c">% endif %}</span>
+<span class="hll"><span class="nb">{</span><span class="k">\small</span>
+</span><span class="nb">{{</span> body.text <span class="nb">}}</span> <span class="k">\\</span>
+<span class="nb">{</span><span class="c">% if format == &#39;solution&#39; %}</span>
+<span class="k">\solution</span><span class="nb">{</span> <span class="nb">{{</span> solution.text <span class="nb">}}</span> <span class="nb">}</span> <span class="k">\\</span>
+<span class="nb">{</span><span class="c">% endif %}</span>
+<span class="k">\begin</span><span class="nb">{</span>enumerate<span class="nb">}</span>[label=(<span class="k">\alph*</span>)]
+<span class="nb">{</span><span class="c">% for choice in choices %}</span>
+<span class="k">\item</span> <span class="nb">{{</span>choice.text<span class="nb">}}</span>
+<span class="nb">{</span><span class="c">%- if format == &#39;solution&#39; %} \\</span>
+<span class="k">\solution</span><span class="nb">{</span> <span class="nb">{{</span> &quot;correct&quot; if choice.is<span class="nb">_</span>correct else &quot;incorrect&quot; <span class="nb">}}</span>
+<span class="nb">{</span><span class="c">%- if choice.solution -%} {{ choice.solution }} {%- endif -%} }</span>
+<span class="nb">{</span><span class="c">%- endif -%}</span>
+<span class="nb">{</span><span class="c">%- endfor %}</span>
+<span class="k">\end</span><span class="nb">{</span>enumerate<span class="nb">}</span>
+<span class="hll"><span class="nb">}</span>
+</span></code></pre></div>
+</td></tr></table>
+</details>
+</li>
+<li>
+<p>And then override the default template by adding the following to
+    <code>csp_question/question.py</code>:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">41</span>
+<span class="normal">42</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Alternate template so question will render on a single page.</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">embedded</span> <span class="o">=</span> <span class="s2">&quot;small_text.jn2.tex&quot;</span>
+</code></pre></div>
+</td></tr></table>
+<p>The <code>settings.template.embedded</code> option controls which template is used when
+a question or exam is being rendered <em>within</em> another document.</p>
+<p>If we wanted to change the template being used when something is being
+rendered as a <em>separate, standalone document</em> we'd edit
+<code>settings.template.standalone</code>.</p>
+</li>
+</ol>
+<h2 id="setting-up-choices-at-runtime-in-user_setup">Setting Up Choices at Runtime (in <code>user_setup</code>)<a class="headerlink" href="#setting-up-choices-at-runtime-in-user_setup" title="Permanent link">&para;</a></h2>
+<p>In order to get more control over the printing of choices, or to change them
+based on the <code>rng</code> and <code>ctxt</code>, we will want to manipulate them within the
+<code>user_setup</code> functions or other functions it calls.</p>
+<ol>
+<li>
+<p>First let's make sure that no error is thrown when we make a number of
+    choices and don't mark any as correct. Add the following to <code>CspQuestion</code>:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Due to our custom grading function we won&#39;t mark any choices as</span>
+<span class="c1"># correct, so we need to supress the check to ensure at least one</span>
+<span class="c1"># correct choice</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">grade</span><span class="o">.</span><span class="n">supress_correct_choice_error</span> <span class="o">=</span> <span class="kc">True</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Then we can add a new <code>user_setup</code> function to <code>CspQuestion</code>:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">user_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="n">ctxt</span><span class="p">):</span>
+
+    <span class="c1"># When working with a question&#39;s choices or settings at runtime</span>
+    <span class="c1"># (inside the `user_setup` or other funtions) you can&#39;t refer to</span>
+    <span class="c1"># them directly, instead they&#39;re all properties of `self`.</span>
+    <span class="c1"># See how we use `self.choice` here instead of just `choice`.</span>
+<span class="hll">    <span class="bp">self</span><span class="o">.</span><span class="n">choice</span><span class="o">.</span><span class="n">total_number</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="nb">vars</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">exps</span><span class="p">)</span>
+</span>
+    <span class="n">choice_exps</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+    <span class="c1"># Generate choices for each variable assignment</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">vars</span><span class="p">):</span>
+<span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">choice</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;Variable: $</span><span class="si">%s</span><span class="s1">$&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">print_tex</span><span class="p">())</span>
+</span>        <span class="bp">self</span><span class="o">.</span><span class="n">choice</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;Variable: $</span><span class="si">%s</span><span class="s1">$&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">Not</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">print_tex</span><span class="p">())</span>
+        <span class="n">choice_exps</span> <span class="o">|=</span> <span class="p">{</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="p">:</span> <span class="n">v</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span> <span class="n">Not</span><span class="p">(</span><span class="n">v</span><span class="p">)}</span>
+
+    <span class="n">exp_start</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="nb">vars</span><span class="p">)</span>
+
+    <span class="c1"># Generate choices for each boolean expression</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">exps</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">choice</span><span class="p">[</span><span class="n">exp_start</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39; Constraint: $</span><span class="si">%s</span><span class="s1">$&#39;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="n">e</span><span class="o">.</span><span class="n">print_tex</span><span class="p">())</span>
+        <span class="n">choice_exps</span><span class="p">[</span><span class="n">exp_start</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">e</span>
+
+    <span class="c1"># Return the expressions (for use in `calculate_grade`)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;choice_exps&#39;</span><span class="p">:</span> <span class="n">choice_exps</span> <span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+<p>Note how we use <code class="highlight"><span class="bp">self</span></code> to refer to <code>choice</code> and <code>settings</code> (like
+in line 55).
+This is standard python-ism, the variables you have access to when defining
+a class are associated with the class as a whole.
+Inside functions you must refer to properties of a specific instance of that
+class via <code class="highlight"><span class="bp">self</span></code>, as functions operate on instances instead of classes.</p>
+<p>Otherwise things work as usual, as with line 61 setting <code class="highlight"><span class="bp">self</span><span class="o">.</span><span class="n">choice</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">.</span><span class="n">text</span></code>
+just as we set <code class="highlight"><span class="n">choice</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">.</span><span class="n">text</span></code> in earlier examples.</p>
+<div class="admonition info">
+<p><code>exam_gen</code> is designed so that while a class represents the general template for
+an exam or question, <em>each instance is the version of that exam or question that
+is generated for a</em> <strong>specific</strong> <em>student</em>.
+So when some aspect of your question depends on information that is unique to
+each student, like the student's unique <code>rng</code>, that needs to be set inside
+a function by way of <code class="highlight"><span class="bp">self</span></code>.</p>
+<p>In general the library is designed to allow the separation of student specific
+information from properties of the question itself (the heavy use of templating
+is a big part of this) but that's not always feasible, hence being able to
+set properties directly.</p>
+</div>
+</li>
+</ol>
+<h2 id="defining-a-custom-grading-function">Defining a Custom Grading Function<a class="headerlink" href="#defining-a-custom-grading-function" title="Permanent link">&para;</a></h2>
+<p>While we'll discuss the autograding feature in more detail in another section,
+this is a good place to show how custom grading works for multiple-choice-questions.</p>
+<div class="admonition error">
+<p class="admonition-title">TODO: link to section.</p>
+</div>
+<ol>
+<li>
+<p>Initialize some settings by adding the following:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Specify that we&#39;ll be using a custom grading function</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">grade</span><span class="o">.</span><span class="n">style</span> <span class="o">=</span> <span class="s2">&quot;custom&quot;</span>
+
+<span class="c1"># We will award between 0 and 2 points for this problem</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">grade</span><span class="o">.</span><span class="n">max_points</span> <span class="o">=</span> <span class="mi">2</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Define a <code>calculate_grade</code> function as follows:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">calculate_grade</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctxt</span><span class="p">,</span> <span class="n">is_selected</span><span class="p">):</span>
+    <span class="c1"># Extract assignments from student choices</span>
+    <span class="n">assignments</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="nb">vars</span><span class="p">)):</span>
+        <span class="n">assignment</span> <span class="o">=</span> <span class="n">ctxt</span><span class="p">[</span><span class="s1">&#39;choice_exps&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">is_selected</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">assignment</span><span class="p">,</span> <span class="n">Var</span><span class="p">):</span>
+            <span class="n">assignments</span><span class="p">[</span><span class="n">assignment</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">is_selcted</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">assignment</span><span class="p">,</span> <span class="n">Not</span><span class="p">):</span>
+            <span class="n">assignments</span><span class="p">[</span><span class="n">assignment</span><span class="o">.</span><span class="n">exp</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1"># Extract Constraints that students chose</span>
+    <span class="n">constraints</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="nb">vars</span><span class="p">),</span> <span class="mi">2</span><span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="nb">vars</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">exps</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">is_selected</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ctxt</span><span class="p">[</span><span class="s1">&#39;choice_exps&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
+
+    <span class="c1"># Calculate and return score</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">constraints</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span> <span class="c1"># Not enough contraints chosen</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">constraints</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">assignments</span><span class="p">)</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">score</span> <span class="o">+=</span> <span class="mi">1</span> <span class="c1"># Point per Satisfied Constraint</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">0</span> <span class="c1"># Unsatisfied Constraint = 0 Points</span>
+        <span class="k">return</span> <span class="n">score</span>
+</code></pre></div>
+</td></tr></table>
+<p>This function is given the user context (<code>ctxt</code>) that <code>user_setup</code> returned
+earlier and an array (<code>is_selected</code>) that tells you whether the student
+selected the corresponding entry in (<code>choice</code>).</p>
+<p><code>is_selected</code> is unshuffled before being given to you so each
+<code>is_selected[n]</code> corresponds directly to <code>choice[n]</code>.</p>
+<p><code>calculate_grade</code> should return the number of points to be given to the
+student. No scaling of the result is done with respect to <code>max_points</code> so
+it's possible to give extra-credit this way.</p>
+</li>
+</ol>
+<details class="quote"><summary>Complete Current <code>csp_question/question.py</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  1</span>
+<span class="normal">  2</span>
+<span class="normal">  3</span>
+<span class="normal">  4</span>
+<span class="normal">  5</span>
+<span class="normal">  6</span>
+<span class="normal">  7</span>
+<span class="normal">  8</span>
+<span class="normal">  9</span>
+<span class="normal"> 10</span>
+<span class="normal"> 11</span>
+<span class="normal"> 12</span>
+<span class="normal"> 13</span>
+<span class="normal"> 14</span>
+<span class="normal"> 15</span>
+<span class="normal"> 16</span>
+<span class="normal"> 17</span>
+<span class="normal"> 18</span>
+<span class="normal"> 19</span>
+<span class="normal"> 20</span>
+<span class="normal"> 21</span>
+<span class="normal"> 22</span>
+<span class="normal"> 23</span>
+<span class="normal"> 24</span>
+<span class="normal"> 25</span>
+<span class="normal"> 26</span>
+<span class="normal"> 27</span>
+<span class="normal"> 28</span>
+<span class="normal"> 29</span>
+<span class="normal"> 30</span>
+<span class="normal"> 31</span>
+<span class="normal"> 32</span>
+<span class="normal"> 33</span>
+<span class="normal"> 34</span>
+<span class="normal"> 35</span>
+<span class="normal"> 36</span>
+<span class="normal"> 37</span>
+<span class="normal"> 38</span>
+<span class="normal"> 39</span>
+<span class="normal"> 40</span>
+<span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">exam_gen</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.exp</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># Problem Variables</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="s2">&quot;z&quot;</span><span class="p">)</span>
+
+<span class="nb">vars</span> <span class="o">=</span> <span class="p">[</span><span class="n">w</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">]</span>
+
+<span class="c1"># Problem Constraints</span>
+<span class="n">exps</span> <span class="o">=</span> <span class="p">[</span> <span class="n">Not</span><span class="p">(</span><span class="n">w</span><span class="p">),</span>
+         <span class="n">Or</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Not</span><span class="p">(</span><span class="n">w</span><span class="p">)),</span>
+         <span class="n">And</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">Not</span><span class="p">(</span><span class="n">Or</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Not</span><span class="p">(</span><span class="n">z</span><span class="p">))),</span> <span class="n">Or</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)),</span>
+         <span class="n">Or</span><span class="p">(</span><span class="n">And</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Not</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="n">y</span><span class="p">,</span> <span class="n">Not</span><span class="p">(</span><span class="n">z</span><span class="p">)),</span> <span class="n">And</span><span class="p">(</span><span class="n">Not</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">Not</span><span class="p">(</span><span class="n">y</span><span class="p">))),</span>
+         <span class="n">And</span><span class="p">(</span><span class="n">Or</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">Not</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">Not</span><span class="p">(</span><span class="n">z</span><span class="p">)),</span> <span class="n">Or</span><span class="p">(</span><span class="n">Not</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="n">z</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">Or</span><span class="p">(</span><span class="n">Not</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">w</span><span class="p">,</span> <span class="n">y</span><span class="p">)),</span>
+         <span class="n">Or</span><span class="p">(</span> <span class="n">Not</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="n">x</span><span class="p">,</span> <span class="n">And</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">Not</span><span class="p">(</span><span class="n">w</span><span class="p">))),</span>
+         <span class="n">Or</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">Not</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+       <span class="p">]</span>
+
+<span class="k">class</span> <span class="nc">CspQuestion</span><span class="p">(</span><span class="n">LatexDoc</span><span class="p">,</span> <span class="n">MultipleChoiceQuestion</span><span class="p">):</span>
+
+    <span class="n">body</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    From the options below choose:</span>
+<span class="s1">    \begin</span><span class="si">{itemize}</span><span class="s1"></span>
+<span class="s1">      \item An assignment for \emph</span><span class="si">{every}</span><span class="s1"> variable</span>
+<span class="s1">      \item At least two constraints</span>
+<span class="s1">    \end</span><span class="si">{itemize}</span><span class="s1"></span>
+
+<span class="s1">    Such that all chosen constraints are satisfied.</span>
+
+<span class="s1">    Extra credit points will be awarded for every constraint above 2 that is</span>
+<span class="s1">    chosen, but no points will be awarded if even a single chosen constraint</span>
+<span class="s1">    is not satisfied by the given assignment.</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+
+    <span class="c1"># No need to shuffle this problem</span>
+    <span class="n">settings</span><span class="o">.</span><span class="n">grade</span><span class="o">.</span><span class="n">shuffle</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1"># Alternate template so question will render on a single page.</span>
+    <span class="n">settings</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">embedded</span> <span class="o">=</span> <span class="s2">&quot;small_text.jn2.tex&quot;</span>
+
+    <span class="c1"># Due to our custom grading function we won&#39;t mark any choices as</span>
+    <span class="c1"># correct, so we need to supress the check to ensure at least one</span>
+    <span class="c1"># correct choice</span>
+    <span class="n">settings</span><span class="o">.</span><span class="n">grade</span><span class="o">.</span><span class="n">supress_correct_choice_error</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">user_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="n">ctxt</span><span class="p">):</span>
+
+        <span class="c1"># When working with a question&#39;s choices or settings at runtime</span>
+        <span class="c1"># (inside the `user_setup` or other funtions) you can&#39;t refer to</span>
+        <span class="c1"># them directly, instead they&#39;re all properties of `self`.</span>
+        <span class="c1"># See how we use `self.choice` here instead of just `choice`.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">choice</span><span class="o">.</span><span class="n">total_number</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="nb">vars</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">exps</span><span class="p">)</span>
+
+        <span class="n">choice_exps</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="c1"># Generate choices for each variable assignment</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">vars</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">choice</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;Variable: $</span><span class="si">%s</span><span class="s1">$&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">print_tex</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">choice</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;Variable: $</span><span class="si">%s</span><span class="s1">$&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">Not</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">print_tex</span><span class="p">())</span>
+            <span class="n">choice_exps</span> <span class="o">|=</span> <span class="p">{</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="p">:</span> <span class="n">v</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span> <span class="n">Not</span><span class="p">(</span><span class="n">v</span><span class="p">)}</span>
+
+        <span class="n">exp_start</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="nb">vars</span><span class="p">)</span>
+
+        <span class="c1"># Generate choices for each boolean expression</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">exps</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">choice</span><span class="p">[</span><span class="n">exp_start</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39; Constraint: $</span><span class="si">%s</span><span class="s1">$&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="n">e</span><span class="o">.</span><span class="n">print_tex</span><span class="p">())</span>
+            <span class="n">choice_exps</span><span class="p">[</span><span class="n">exp_start</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">e</span>
+
+        <span class="c1"># Return the expressions (for use in `calculate_grade`)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;choice_exps&#39;</span><span class="p">:</span> <span class="n">choice_exps</span> <span class="p">}</span>
+
+    <span class="c1"># Specify that we&#39;ll be using a custom grading function</span>
+    <span class="n">settings</span><span class="o">.</span><span class="n">grade</span><span class="o">.</span><span class="n">style</span> <span class="o">=</span> <span class="s2">&quot;custom&quot;</span>
+
+    <span class="c1"># We will award between 0 and 2 points for this problem</span>
+    <span class="n">settings</span><span class="o">.</span><span class="n">grade</span><span class="o">.</span><span class="n">max_points</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="k">def</span> <span class="nf">calculate_grade</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctxt</span><span class="p">,</span> <span class="n">is_answer</span><span class="p">):</span>
+        <span class="c1"># Extract assignments from student choices</span>
+        <span class="n">assignments</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="nb">vars</span><span class="p">)):</span>
+            <span class="n">assignment</span> <span class="o">=</span> <span class="n">ctxt</span><span class="p">[</span><span class="s1">&#39;choice_exps&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">is_selected</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">assignment</span><span class="p">,</span> <span class="n">Var</span><span class="p">):</span>
+                <span class="n">assignments</span><span class="p">[</span><span class="n">assignment</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="n">is_selected</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">assignment</span><span class="p">,</span> <span class="n">Not</span><span class="p">):</span>
+                <span class="n">assignments</span><span class="p">[</span><span class="n">assignment</span><span class="o">.</span><span class="n">exp</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># Extract Constraints that students chose</span>
+        <span class="n">constraints</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="nb">vars</span><span class="p">),</span> <span class="mi">2</span><span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="nb">vars</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">exps</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">is_selected</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ctxt</span><span class="p">[</span><span class="s1">&#39;choice_exps&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
+
+        <span class="c1"># Calculate and return score</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">constraints</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span> <span class="c1"># Not enough contraints chosen</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">constraints</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">assignments</span><span class="p">)</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                    <span class="n">score</span> <span class="o">+=</span> <span class="mi">1</span> <span class="c1"># Point per Satisfied Constraint</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="mi">0</span> <span class="c1"># Unsatisfied Constraint = 0 Points</span>
+            <span class="k">return</span> <span class="n">score</span>
+</code></pre></div>
+</td></tr></table>
+</details>
+<h2 id="finishing-up">Finishing Up<a class="headerlink" href="#finishing-up" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>Finally generate the new solution key with the following commands:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>./exam.py cleanup
+<span class="gp">$ </span>./exam.py build-solution:fake-class:erios
+</code></pre></div>
+<div class="admonition error">
+<p class="admonition-title">TODO: image in <code>assets/</code></p>
+</div>
+</li>
+</ol>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="choices_and_shuffling.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Choices and Shuffling" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Choices and Shuffling
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../answers_and_scoring.html" class="md-footer__link md-footer__link--next" aria-label="Next: Answers and Scoring" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Answers and Scoring
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+
+<script src="../../theme/js/iframe-worker.js"></script>
+<script src="../../search/search_index.js"></script>
+
+
+    
+      <script src="../../assets/javascripts/bundle.29db7785.min.js"></script>
+      
+    
+  </body>
+</html>

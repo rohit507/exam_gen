@@ -1,0 +1,2041 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.3">
+    
+    
+      
+        <title>.property.has_rng - UCB EECS Exam Generator</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.f7f47774.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#2094f3">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#exam_genpropertyhas_rng-items-with-a-stable-seeded-random-number-generator" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="UCB EECS Exam Generator" class="md-header__button md-logo" aria-label="UCB EECS Exam Generator" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            UCB EECS Exam Generator
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              .property.has_rng
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="UCB EECS Exam Generator" class="md-nav__button md-logo" aria-label="UCB EECS Exam Generator" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    UCB EECS Exam Generator
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../index.html" class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      <label class="md-nav__link" for="__nav_2">
+        Tutorial
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Tutorial" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorial
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/first_assignment.html" class="md-nav__link">
+        Your First Assignment
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/classrooms_and_rosters.html" class="md-nav__link">
+        Classrooms and Rosters
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/writing_questions.html" class="md-nav__link">
+        Writing Questions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/customization_and_randomization.html" class="md-nav__link">
+        Customization and Randomization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/advanced_template_use.html" class="md-nav__link">
+        Advanced Template Use
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/multi_part_questions.html" class="md-nav__link">
+        Multi-Part Questions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/project_organization.html" class="md-nav__link">
+        Project Organization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/external_and_generated_assets.html" class="md-nav__link">
+        External and Generated Assets
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_9" type="checkbox" id="__nav_2_9" >
+      
+      <label class="md-nav__link" for="__nav_2_9">
+        Multiple Choice Questions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Multiple Choice Questions" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_9">
+          <span class="md-nav__icon md-icon"></span>
+          Multiple Choice Questions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/multiple_choice/simple_question.html" class="md-nav__link">
+        Simple Questions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/multiple_choice/choices_and_shuffling.html" class="md-nav__link">
+        Choices and Shuffling
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/multiple_choice/custom_grading_and_setup.html" class="md-nav__link">
+        Custom Grading and Setup
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/answers_and_scoring.html" class="md-nav__link">
+        Answers and Scoring
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        User's Guide
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="User's Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          User's Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user_guide/project_setup.html" class="md-nav__link">
+        Project Setup and Organization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user_guide/exams.html" class="md-nav__link">
+        Exams/Assignments
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      <label class="md-nav__link" for="__nav_4">
+        API Documentation
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API Documentation" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          API Documentation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" type="checkbox" id="__nav_4_1" >
+      
+      <label class="md-nav__link" for="__nav_4_1">
+        exam_gen.build
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="exam_gen.build" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          exam_gen.build
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build/cli.html" class="md-nav__link">
+        .build.cli
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build/data.html" class="md-nav__link">
+        .build.data
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build/formats.html" class="md-nav__link">
+        .build.formats
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" >
+      
+      <label class="md-nav__link" for="__nav_4_2">
+        exam_gen.classrooom
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="exam_gen.classrooom" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_2">
+          <span class="md-nav__icon md-icon"></span>
+          exam_gen.classrooom
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../classroom/answers.html" class="md-nav__link">
+        .classroom.answers
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../classroom/base.html" class="md-nav__link">
+        .classroom.base
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../classroom/grade.html" class="md-nav__link">
+        .classroom.grades
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../classroom/rosters.html" class="md-nav__link">
+        .classroom.rosters
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../classroom/scores.html" class="md-nav__link">
+        .classroom.scores
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../classroom/student.html" class="md-nav__link">
+        .classroom.student
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exam.html" class="md-nav__link">
+        exam_gen.exam
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" checked>
+      
+      <label class="md-nav__link" for="__nav_4_4">
+        exam_gen.property
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="exam_gen.property" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_4">
+          <span class="md-nav__icon md-icon"></span>
+          exam_gen.property
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="answerable.html" class="md-nav__link">
+        .property.answerable
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="auto_gradeable.html" class="md-nav__link">
+        .property.auto_gradeable
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="buildable.html" class="md-nav__link">
+        .property.buildable
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="document.html" class="md-nav__link">
+        .property.document
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="format.html" class="md-nav__link">
+        .property.format
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="gradeable.html" class="md-nav__link">
+        .property.gradeable
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="has_context.html" class="md-nav__link">
+        .property.has_context
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="has_dir_path.html" class="md-nav__link">
+        .property.has_dir_path
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="has_metadata.html" class="md-nav__link">
+        .property.has_metadata
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          .property.has_rng
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="has_rng.html" class="md-nav__link md-nav__link--active">
+        .property.has_rng
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG" class="md-nav__link">
+    HasRNG
+  </a>
+  
+    <nav class="md-nav" aria-label="HasRNG">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.questions" class="md-nav__link">
+    questions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.settings" class="md-nav__link">
+    settings
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.cleanup_build" class="md-nav__link">
+    cleanup_build()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.finalize_build" class="md-nav__link">
+    finalize_build()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.get_keyed_rng" class="md-nav__link">
+    get_keyed_rng()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.init_document" class="md-nav__link">
+    init_document()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.init_questions" class="md-nav__link">
+    init_questions()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.init_root_seed" class="md-nav__link">
+    init_root_seed()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.lookup_file" class="md-nav__link">
+    lookup_file()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.on_children" class="md-nav__link">
+    on_children()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.output_build" class="md-nav__link">
+    output_build()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.rng" class="md-nav__link">
+    rng()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.root_document" class="md-nav__link">
+    root_document()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.setup_build" class="md-nav__link">
+    setup_build()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.user_setup" class="md-nav__link">
+    user_setup()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="has_settings.html" class="md-nav__link">
+        .property.has_settings
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="has_user_setup.html" class="md-nav__link">
+        .property.has_user_setup
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="numbered.html" class="md-nav__link">
+        .property.numbered
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="personalized.html" class="md-nav__link">
+        .property.personalized
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="templated.html" class="md-nav__link">
+        .property.templated
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" type="checkbox" id="__nav_4_5" >
+      
+      <label class="md-nav__link" for="__nav_4_5">
+        exam_gen.util
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="exam_gen.util" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_5">
+          <span class="md-nav__icon md-icon"></span>
+          exam_gen.util
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../util/selectors.html" class="md-nav__link">
+        .util.selectors
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quick_reference.html" class="md-nav__link">
+        Quick Reference
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG" class="md-nav__link">
+    HasRNG
+  </a>
+  
+    <nav class="md-nav" aria-label="HasRNG">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.questions" class="md-nav__link">
+    questions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.settings" class="md-nav__link">
+    settings
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.cleanup_build" class="md-nav__link">
+    cleanup_build()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.finalize_build" class="md-nav__link">
+    finalize_build()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.get_keyed_rng" class="md-nav__link">
+    get_keyed_rng()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.init_document" class="md-nav__link">
+    init_document()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.init_questions" class="md-nav__link">
+    init_questions()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.init_root_seed" class="md-nav__link">
+    init_root_seed()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.lookup_file" class="md-nav__link">
+    lookup_file()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.on_children" class="md-nav__link">
+    on_children()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.output_build" class="md-nav__link">
+    output_build()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.rng" class="md-nav__link">
+    rng()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.root_document" class="md-nav__link">
+    root_document()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.setup_build" class="md-nav__link">
+    setup_build()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.property.has_rng.HasRNG.user_setup" class="md-nav__link">
+    user_setup()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="exam_genpropertyhas_rng-items-with-a-stable-seeded-random-number-generator"><code>exam_gen.property.has_rng</code>: Items With a Stable, Seeded, Random Number Generator<a class="headerlink" href="#exam_genpropertyhas_rng-items-with-a-stable-seeded-random-number-generator" title="Permanent link">&para;</a></h1>
+
+
+  <div class="doc doc-object doc-module">
+
+
+    <div class="doc doc-contents first">
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 id="exam_gen.property.has_rng.HasRNG" class="doc doc-heading">
+        <code>HasRNG</code>
+
+
+
+<a href="#exam_gen.property.has_rng.HasRNG" class="headerlink" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents ">
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="exam_gen.property.has_rng.HasRNG.questions" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">questions</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-inherited"><code>inherited</code></small>
+  </span>
+
+<a href="#exam_gen.property.has_rng.HasRNG.questions" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="exam_gen.property.has_rng.HasRNG.settings" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">settings</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-property"><code>property</code></small>
+      <small class="doc doc-property doc-property-writable"><code>writable</code></small>
+  </span>
+
+<a href="#exam_gen.property.has_rng.HasRNG.settings" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Assorted settings that are used by this class and can be set during
+class initialization or runtime.</p>
+<details class="abstract">
+<p><summary markdown="span">Available Settings</summary></p>
+<table width="100%">
+<tr width="100%">
+<th>
+<p>Value Name</p>
+</th>
+<th>
+<p>Description</p>
+</th>
+<th>
+<p>Default</p>
+</th>
+</tr>
+<tr width="100%">
+<td>
+<p><code class="highlight"><span class="n">settings</span><span class="o">.</span><span class="n">assets</span></code></p>
+</td>
+<td>
+<p>A list of static files that should be copied into the directory where
+we're going build each exam. Glob patterns (e.g. <code>assets/*.png</code> or
+<code>**/test.txt</code>)</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This will copy files relative to the class where it's set.</p>
+<p>If you have:</p>
+<ul>
+<li>An <code>Exam</code> in <code>proj_dir/midterm.py</code> asking for <code>assets/foo.txt</code></li>
+<li>And <code>Question</code> in <code>prod_dir/q1/timer.py</code> asking for <code>bar.png</code> and
+   <code>assets/bar.txt</code></li>
+</ul>
+<p>Then you'll get:</p>
+<ul>
+<li><code>proj_dir/assets/foo.txt</code> copied into <code>build_dir/assets/foo.txt</code></li>
+<li><code>proj_dir/q1/assets/bar.txt</code> copied into <code>build_dir/assets/bar.txt</code></li>
+<li><code>proj_dir/q1/bar.png</code> copied into <code>build_dir/bar.png</code></li>
+</ul>
+<p>There is no guaranteed behavior if this would result in some file
+being clobbered.</p>
+</div>
+</td>
+<td>
+<p><code class="highlight"><span class="p">[]</span></code></p>
+</td>
+</tr>
+<tr width="100%">
+<td>
+<p><code class="highlight"><span class="n">settings</span><span class="o">.</span><span class="n">build</span></code></p>
+</td>
+<td align="left" colspan="2">
+<p>Various settings that control how exams and questions
+are built.</p>
+</td>
+</tr>
+</table>
+</details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="exam_gen.property.has_rng.HasRNG.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">root_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent_obj</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_class_root</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">root_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent_doc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">root_seed</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#exam_gen.property.has_rng.HasRNG.__init__" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Method generated by attrs for class HasRNG.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/property/has_rng.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">root_dir</span><span class="o">=</span><span class="n">attr_dict</span><span class="p">[</span><span class="s1">&#39;root_dir&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">default</span><span class="p">,</span> <span class="n">parent_obj</span><span class="o">=</span><span class="n">attr_dict</span><span class="p">[</span><span class="s1">&#39;parent_obj&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">default</span><span class="p">,</span> <span class="n">parent_path</span><span class="o">=</span><span class="n">attr_dict</span><span class="p">[</span><span class="s1">&#39;parent_path&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">default</span><span class="p">,</span> <span class="n">use_class_root</span><span class="o">=</span><span class="n">attr_dict</span><span class="p">[</span><span class="s1">&#39;use_class_root&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">default</span><span class="p">,</span> <span class="n">root_file</span><span class="o">=</span><span class="n">attr_dict</span><span class="p">[</span><span class="s1">&#39;root_file&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">default</span><span class="p">,</span> <span class="n">parent_doc</span><span class="o">=</span><span class="n">attr_dict</span><span class="p">[</span><span class="s1">&#39;_parent_doc&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">default</span><span class="p">,</span> <span class="n">root_seed</span><span class="o">=</span><span class="n">attr_dict</span><span class="p">[</span><span class="s1">&#39;root_seed&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">default</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span> <span class="o">=</span> <span class="n">root_dir</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">parent_obj</span> <span class="o">=</span> <span class="n">parent_obj</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">parent_path</span> <span class="o">=</span> <span class="n">parent_path</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">use_class_root</span> <span class="o">=</span> <span class="n">use_class_root</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">root_file</span> <span class="o">=</span> <span class="n">root_file</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_parent_doc</span> <span class="o">=</span> <span class="n">parent_doc</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">root_seed</span> <span class="o">=</span> <span class="n">root_seed</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_rng_source</span> <span class="o">=</span> <span class="n">attr_dict</span><span class="p">[</span><span class="s1">&#39;_rng_source&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">default</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__attrs_post_init__</span><span class="p">()</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="exam_gen.property.has_rng.HasRNG.cleanup_build" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">cleanup_build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">build_info</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-inherited"><code>inherited</code></small>
+  </span>
+
+<a href="#exam_gen.property.has_rng.HasRNG.cleanup_build" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Generic cleanup task for a build.</p>
+<p>Default: deletes the build directory</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/property/has_rng.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">cleanup_build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">build_info</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generic cleanup task for a build.</span>
+
+<span class="sd">    Default: deletes the build directory</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">build_dir</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="exam_gen.property.has_rng.HasRNG.finalize_build" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">finalize_build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">build_info</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-inherited"><code>inherited</code></small>
+  </span>
+
+<a href="#exam_gen.property.has_rng.HasRNG.finalize_build" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>To be run once all the build subcommands are done, in order to
+generate the target file in the build directory.</p>
+<p>Note: This isn't run recursively on sub-documents by default.</p>
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code></code></td>
+      <td><p>(log, success)</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/property/has_rng.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">finalize_build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">build_info</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    To be run once all the build subcommands are done, in order to</span>
+<span class="sd">    generate the target file in the build directory.</span>
+
+<span class="sd">    Note: This isn&#39;t run recursively on sub-documents by default.</span>
+
+<span class="sd">    Returns:</span>
+
+<span class="sd">       (log, success)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="exam_gen.property.has_rng.HasRNG.get_keyed_rng" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_keyed_rng</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">keys</span><span class="p">)</span></code>
+
+
+<a href="#exam_gen.property.has_rng.HasRNG.get_keyed_rng" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/property/has_rng.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_keyed_rng</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">keys</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_seed</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root_seed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_root_seed</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">Random</span><span class="p">(</span><span class="n">stable_hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root_seed</span><span class="p">,</span><span class="o">*</span><span class="n">keys</span><span class="p">))</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="exam_gen.property.has_rng.HasRNG.init_document" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">init_document</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc_class</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-inherited"><code>inherited</code></small>
+  </span>
+
+<a href="#exam_gen.property.has_rng.HasRNG.init_document" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Overloading this, with calls to super, allows for modification of
+the member class being initialized with new options.</p>
+<p>This shouldn't do much more than pass options needed at init through
+to child entities or propagate settings information down.</p>
+<p>Example of how you'd use <code>super()</code> in a child class:</p>
+<div class="highlight"><pre><span></span><code>@classmethod
+def init_document(cls, doc_class, **kwargs):
+
+    new_class = # modify doc_class / return new class
+
+    doc_obj = super().init_document(
+        new_class,
+        added_arg = &quot;example&quot;,
+        **kwargs)
+
+    return # modify doc_obj / return new object
+</code></pre></div>
+<p>Done like this, <code>init_questions</code> will happily recurse down the tree
+of options.</p>
+<p>Note: unlike <code>setup_build</code>, <code>pwd</code> isn't guaranteed to be the same as
+the build directory so don't manipulate any files w/o an absolute path.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/property/has_rng.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">init_document</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc_class</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Overloading this, with calls to super, allows for modification of</span>
+<span class="sd">    the member class being initialized with new options.</span>
+
+<span class="sd">    This shouldn&#39;t do much more than pass options needed at init through</span>
+<span class="sd">    to child entities or propagate settings information down.</span>
+
+<span class="sd">    Example of how you&#39;d use `super()` in a child class:</span>
+
+<span class="sd">    ```</span>
+<span class="sd">    @classmethod</span>
+<span class="sd">    def init_document(cls, doc_class, **kwargs):</span>
+
+<span class="sd">        new_class = # modify doc_class / return new class</span>
+
+<span class="sd">        doc_obj = super().init_document(</span>
+<span class="sd">            new_class,</span>
+<span class="sd">            added_arg = &quot;example&quot;,</span>
+<span class="sd">            **kwargs)</span>
+
+<span class="sd">        return # modify doc_obj / return new object</span>
+<span class="sd">    ```</span>
+
+<span class="sd">    Done like this, `init_questions` will happily recurse down the tree</span>
+<span class="sd">    of options.</span>
+
+<span class="sd">    Note: unlike `setup_build`, `pwd` isn&#39;t guaranteed to be the same as</span>
+<span class="sd">    the build directory so don&#39;t manipulate any files w/o an absolute path.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">doc_obj</span> <span class="o">=</span> <span class="n">doc_class</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">doc_obj</span><span class="o">.</span><span class="n">init_questions</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">doc_obj</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="exam_gen.property.has_rng.HasRNG.init_questions" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">init_questions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-inherited"><code>inherited</code></small>
+  </span>
+
+<a href="#exam_gen.property.has_rng.HasRNG.init_questions" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Just runs through all the questions in the document and initializes
+them as needed.</p>
+<p>Meant to be used sometime before <code>setup_build</code>.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/property/has_rng.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">init_questions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Just runs through all the questions in the document and initializes</span>
+<span class="sd">    them as needed.</span>
+
+<span class="sd">    Meant to be used sometime before `setup_build`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">question_class</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">questions</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="se">\n</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">questions</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">questions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_document</span><span class="p">(</span>
+            <span class="n">question_class</span><span class="p">,</span>
+            <span class="n">parent_doc</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="exam_gen.property.has_rng.HasRNG.init_root_seed" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">init_root_seed</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+<a href="#exam_gen.property.has_rng.HasRNG.init_root_seed" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/property/has_rng.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">init_root_seed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">exam_gen.property.personalized</span> <span class="kn">import</span> <span class="n">Personalized</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Personalized</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">student</span><span class="o">.</span><span class="n">root_seed</span>
+
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;No method to get root seed&quot;</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="exam_gen.property.has_rng.HasRNG.lookup_file" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">lookup_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-inherited"><code>inherited</code></small>
+  </span>
+
+<a href="#exam_gen.property.has_rng.HasRNG.lookup_file" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/property/has_rng.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">lookup_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+       <span class="k">return</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent_path</span> <span class="o">!=</span> <span class="kc">None</span>
+          <span class="ow">and</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent_path</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()):</span>
+        <span class="k">return</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent_path</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent_obj</span> <span class="o">!=</span> <span class="kc">None</span>
+          <span class="ow">and</span> <span class="nb">issubclass</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent_obj</span><span class="p">),</span> <span class="n">HasDirPath</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="n">parent_obj</span><span class="o">.</span><span class="n">lookup_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">((</span><span class="s2">&quot;Could not find file &#39;</span><span class="si">{}</span><span class="s2">&#39; in either &quot;</span>
+                            <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> or </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span>
+                                               <span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span><span class="p">,</span>
+                                               <span class="bp">self</span><span class="o">.</span><span class="n">parent_path</span><span class="p">))</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="exam_gen.property.has_rng.HasRNG.on_children" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">on_children</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fun</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-inherited"><code>inherited</code></small>
+  </span>
+
+<a href="#exam_gen.property.has_rng.HasRNG.on_children" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/property/has_rng.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">on_children</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fun</span><span class="p">):</span>
+
+    <span class="n">log</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">question</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">questions</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+
+        <span class="n">log</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">fun</span><span class="p">(</span><span class="n">question</span><span class="p">),</span> <span class="n">question</span><span class="o">.</span><span class="n">on_children</span><span class="p">(</span><span class="n">fun</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">log</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="exam_gen.property.has_rng.HasRNG.output_build" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">output_build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">build_info</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-inherited"><code>inherited</code></small>
+  </span>
+
+<a href="#exam_gen.property.has_rng.HasRNG.output_build" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Copies the files from the build directory to the output directory
+Options to rename them should be in build_settings.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/property/has_rng.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">output_build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">build_info</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Copies the files from the build directory to the output directory</span>
+<span class="sd">    Options to rename them should be in build_settings.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="exam_gen.property.has_rng.HasRNG.rng" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">rng</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+<a href="#exam_gen.property.has_rng.HasRNG.rng" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>A repeatable random number generator that will always produce the same
+sequence of outputs for any given student, exam pair.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/property/has_rng.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="nd">@setup_arg</span>
+<span class="k">def</span> <span class="nf">rng</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Random</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A repeatable random number generator that will always produce the same</span>
+<span class="sd">    sequence of outputs for any given student, exam pair.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_keyed_rng</span><span class="p">(</span><span class="s1">&#39;user_setup&#39;</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="exam_gen.property.has_rng.HasRNG.root_document" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">root_document</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-inherited"><code>inherited</code></small>
+  </span>
+
+<a href="#exam_gen.property.has_rng.HasRNG.root_document" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/property/has_rng.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">root_document</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent_doc</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent_doc</span><span class="o">.</span><span class="n">root_document</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="exam_gen.property.has_rng.HasRNG.setup_build" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">setup_build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">build_info</span><span class="p">)</span></code>
+
+
+<a href="#exam_gen.property.has_rng.HasRNG.setup_build" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Copies files from the source directory to the appropriate build
+directory.</p>
+<p>Note: This is a key override function for other classes.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/property/has_rng.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">setup_build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">build_info</span><span class="p">):</span>
+
+    <span class="n">log</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">HasRNG</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">setup_build</span><span class="p">(</span><span class="n">build_info</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_seed</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root_seed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_root_seed</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">memb</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">questions</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">memb</span><span class="o">.</span><span class="n">root_seed</span> <span class="o">=</span> <span class="n">stable_hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root_seed</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+    <span class="n">log</span><span class="p">[</span><span class="s1">&#39;root_seed&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_seed</span>
+
+    <span class="k">return</span> <span class="n">log</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="exam_gen.property.has_rng.HasRNG.user_setup" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">user_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span></code>
+
+
+<a href="#exam_gen.property.has_rng.HasRNG.user_setup" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <pre><code>Override this function in your code, otherwise it won't customize stuff.
+</code></pre>
+<div class="admonition todo">
+<p class="admonition-title">Todo</p>
+<p>We need a nicer output format here, but this will do for the
+moment.</p>
+</div>
+<p>Function Signature: <code>py &lt;Signature (self, rng: random.Random)&gt;</code></p>
+<p>Arg Metadata:
+<div class="highlight"><pre><span></span><code>  <span class="p">{</span><span class="s1">&#39;rng&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;arg&#39;</span><span class="p">:</span> <span class="s1">&#39;rng&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;doc&#39;</span><span class="p">:</span> <span class="s1">&#39;A repeatable random number generator that will always produce &#39;</span>
+                  <span class="s1">&#39;the same</span><span class="se">\n</span><span class="s1">&#39;</span>
+                  <span class="s1">&#39;sequence of outputs for any given student, exam pair.&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;fun&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">HasRNG</span><span class="o">.</span><span class="n">rng</span> <span class="n">at</span> <span class="mh">0x7fdee2fa3940</span><span class="o">&gt;</span><span class="p">,</span>
+           <span class="s1">&#39;typ&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">random</span><span class="o">.</span><span class="n">Random</span><span class="s1">&#39;&gt;}}</span>
+</code></pre></div></p>
+
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="has_metadata.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: .property.has_metadata" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              .property.has_metadata
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="has_settings.html" class="md-footer__link md-footer__link--next" aria-label="Next: .property.has_settings" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              .property.has_settings
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+
+<script src="../../theme/js/iframe-worker.js"></script>
+<script src="../../search/search_index.js"></script>
+
+
+    
+      <script src="../../assets/javascripts/bundle.29db7785.min.js"></script>
+      
+    
+  </body>
+</html>

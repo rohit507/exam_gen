@@ -1,0 +1,1757 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.3">
+    
+    
+      
+        <title>Advanced Template Use - UCB EECS Exam Generator</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.f7f47774.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#2094f3">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#advanced-template-use" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="UCB EECS Exam Generator" class="md-header__button md-logo" aria-label="UCB EECS Exam Generator" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            UCB EECS Exam Generator
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Advanced Template Use
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="UCB EECS Exam Generator" class="md-nav__button md-logo" aria-label="UCB EECS Exam Generator" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    UCB EECS Exam Generator
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      <label class="md-nav__link" for="__nav_2">
+        Tutorial
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Tutorial" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorial
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="first_assignment.html" class="md-nav__link">
+        Your First Assignment
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="classrooms_and_rosters.html" class="md-nav__link">
+        Classrooms and Rosters
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="writing_questions.html" class="md-nav__link">
+        Writing Questions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="customization_and_randomization.html" class="md-nav__link">
+        Customization and Randomization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Advanced Template Use
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="advanced_template_use.html" class="md-nav__link md-nav__link--active">
+        Advanced Template Use
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#generating-problem-parameters" class="md-nav__link">
+    Generating Problem Parameters
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generating-solution-keys" class="md-nav__link">
+    Generating Solution Keys
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#loops-in-templates" class="md-nav__link">
+    Loops in Templates
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nesting-and-complex-problem-structure" class="md-nav__link">
+    Nesting and Complex Problem Structure
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-solution-text" class="md-nav__link">
+    Advanced Solution Text
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Solution Text">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-library-level-formats" class="md-nav__link">
+    Using Library Level Formats
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#detecting-exam-format-in-templates" class="md-nav__link">
+    Detecting Exam Format in Templates
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="multi_part_questions.html" class="md-nav__link">
+        Multi-Part Questions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="project_organization.html" class="md-nav__link">
+        Project Organization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="external_and_generated_assets.html" class="md-nav__link">
+        External and Generated Assets
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_9" type="checkbox" id="__nav_2_9" >
+      
+      <label class="md-nav__link" for="__nav_2_9">
+        Multiple Choice Questions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Multiple Choice Questions" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_9">
+          <span class="md-nav__icon md-icon"></span>
+          Multiple Choice Questions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="multiple_choice/simple_question.html" class="md-nav__link">
+        Simple Questions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="multiple_choice/choices_and_shuffling.html" class="md-nav__link">
+        Choices and Shuffling
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="multiple_choice/custom_grading_and_setup.html" class="md-nav__link">
+        Custom Grading and Setup
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="answers_and_scoring.html" class="md-nav__link">
+        Answers and Scoring
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        User's Guide
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="User's Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          User's Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_guide/project_setup.html" class="md-nav__link">
+        Project Setup and Organization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_guide/exams.html" class="md-nav__link">
+        Exams/Assignments
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        API Documentation
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API Documentation" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          API Documentation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" type="checkbox" id="__nav_4_1" >
+      
+      <label class="md-nav__link" for="__nav_4_1">
+        exam_gen.build
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="exam_gen.build" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          exam_gen.build
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/build/cli.html" class="md-nav__link">
+        .build.cli
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/build/data.html" class="md-nav__link">
+        .build.data
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/build/formats.html" class="md-nav__link">
+        .build.formats
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" >
+      
+      <label class="md-nav__link" for="__nav_4_2">
+        exam_gen.classrooom
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="exam_gen.classrooom" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_2">
+          <span class="md-nav__icon md-icon"></span>
+          exam_gen.classrooom
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/classroom/answers.html" class="md-nav__link">
+        .classroom.answers
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/classroom/base.html" class="md-nav__link">
+        .classroom.base
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/classroom/grade.html" class="md-nav__link">
+        .classroom.grades
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/classroom/rosters.html" class="md-nav__link">
+        .classroom.rosters
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/classroom/scores.html" class="md-nav__link">
+        .classroom.scores
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/classroom/student.html" class="md-nav__link">
+        .classroom.student
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/exam.html" class="md-nav__link">
+        exam_gen.exam
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
+      
+      <label class="md-nav__link" for="__nav_4_4">
+        exam_gen.property
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="exam_gen.property" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_4">
+          <span class="md-nav__icon md-icon"></span>
+          exam_gen.property
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/answerable.html" class="md-nav__link">
+        .property.answerable
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/auto_gradeable.html" class="md-nav__link">
+        .property.auto_gradeable
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/buildable.html" class="md-nav__link">
+        .property.buildable
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/document.html" class="md-nav__link">
+        .property.document
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/format.html" class="md-nav__link">
+        .property.format
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/gradeable.html" class="md-nav__link">
+        .property.gradeable
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/has_context.html" class="md-nav__link">
+        .property.has_context
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/has_dir_path.html" class="md-nav__link">
+        .property.has_dir_path
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/has_metadata.html" class="md-nav__link">
+        .property.has_metadata
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/has_rng.html" class="md-nav__link">
+        .property.has_rng
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/has_settings.html" class="md-nav__link">
+        .property.has_settings
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/has_user_setup.html" class="md-nav__link">
+        .property.has_user_setup
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/numbered.html" class="md-nav__link">
+        .property.numbered
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/personalized.html" class="md-nav__link">
+        .property.personalized
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/templated.html" class="md-nav__link">
+        .property.templated
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" type="checkbox" id="__nav_4_5" >
+      
+      <label class="md-nav__link" for="__nav_4_5">
+        exam_gen.util
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="exam_gen.util" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_5">
+          <span class="md-nav__icon md-icon"></span>
+          exam_gen.util
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/util/selectors.html" class="md-nav__link">
+        .util.selectors
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quick_reference.html" class="md-nav__link">
+        Quick Reference
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#generating-problem-parameters" class="md-nav__link">
+    Generating Problem Parameters
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generating-solution-keys" class="md-nav__link">
+    Generating Solution Keys
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#loops-in-templates" class="md-nav__link">
+    Loops in Templates
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nesting-and-complex-problem-structure" class="md-nav__link">
+    Nesting and Complex Problem Structure
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-solution-text" class="md-nav__link">
+    Advanced Solution Text
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Solution Text">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-library-level-formats" class="md-nav__link">
+    Using Library Level Formats
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#detecting-exam-format-in-templates" class="md-nav__link">
+    Detecting Exam Format in Templates
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="advanced-template-use">Advanced Template Use<a class="headerlink" href="#advanced-template-use" title="Permanent link">&para;</a></h1>
+<p>In this section of the tutorial we'll be fleshing out our implementation of
+<code>SumQuestion</code> and turning it into something that could plausibly be in an
+assignment.</p>
+<h2 id="generating-problem-parameters">Generating Problem Parameters<a class="headerlink" href="#generating-problem-parameters" title="Permanent link">&para;</a></h2>
+<p>We're going to give each student a randomized addition problem where
+they have to sum up 5 numbers.</p>
+<ol>
+<li>
+<p>We can start generating the variables for a problem by adding the following
+    to <code>addition_question.py</code>:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">generate_question_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rng</span><span class="p">):</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+    <span class="c1"># How many numbers will the student have to sum up?</span>
+    <span class="n">num_vars</span> <span class="o">=</span> <span class="mi">4</span>
+
+    <span class="c1"># Generate each element</span>
+    <span class="n">var_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_vars</span><span class="p">):</span>
+        <span class="n">var_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span><span class="p">))</span>
+
+    <span class="c1"># return the parameters for the problem</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;vars&#39;</span><span class="p">:</span> <span class="n">var_list</span><span class="p">,</span>
+            <span class="s1">&#39;num_vars&#39;</span><span class="p">:</span> <span class="n">num_vars</span><span class="p">,</span>
+            <span class="s1">&#39;total&#39;</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">var_list</span><span class="p">)</span>
+    <span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>On its own, the above does nothing so let's make sure that we get the
+    results of <code>generate_question_params</code> into the context available for our
+    template variables by adding the following to <code>user_setup</code>:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">24</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>   <span class="n">ctxt_vars</span><span class="p">[</span><span class="s1">&#39;problem&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_question_params</span><span class="p">(</span><span class="n">rng</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<details class="quote"><summary>Complete Current <code>addition_question.py</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">exam_gen</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">SumQuestion</span><span class="p">(</span><span class="n">LatexDoc</span><span class="p">,</span> <span class="n">Question</span><span class="p">):</span>
+    <span class="n">metadata</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Basic Addition Question&quot;</span>
+
+    <span class="n">body</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    Hello \texttt{ {{ student[&#39;Email Address&#39;] }} },</span>
+
+<span class="s1">    Here&#39;s some test text {{ test_vars.test_str }}. \\</span>
+<span class="s1">    And the test integer: ${{test_vars.test_int }}$.</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+
+    <span class="n">solution</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Placeholder text for the solution of the question.&quot;</span>
+
+    <span class="k">def</span> <span class="nf">user_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="n">ctxt_vars</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="n">ctxt_vars</span><span class="p">[</span><span class="s1">&#39;test_vars&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;test_str&#39;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;Hello, testing \textbf</span><span class="si">{TESTING}</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;test_int&#39;</span><span class="p">:</span> <span class="n">rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="n">ctxt_vars</span><span class="p">[</span><span class="s1">&#39;problem&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_question_params</span><span class="p">(</span><span class="n">rng</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ctxt_vars</span>
+
+    <span class="k">def</span> <span class="nf">generate_question_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rng</span><span class="p">):</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="c1"># How many numbers will the student have to sum up?</span>
+        <span class="n">num_vars</span> <span class="o">=</span> <span class="mi">4</span>
+
+        <span class="c1"># Generate each element</span>
+        <span class="n">var_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_vars</span><span class="p">):</span>
+            <span class="n">var_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span><span class="p">))</span>
+
+        <span class="c1"># return the parameters for the problem</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;vars&#39;</span><span class="p">:</span> <span class="n">var_list</span><span class="p">,</span>
+                <span class="s1">&#39;num_vars&#39;</span><span class="p">:</span> <span class="n">num_vars</span><span class="p">,</span>
+                <span class="s1">&#39;total&#39;</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">var_list</span><span class="p">)</span>
+        <span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+</details>
+</li>
+<li>
+<p>Then we can run our usual build command:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>./exam.py cleanup
+<span class="gp">$ </span>./exam.py build-exam:fake-class:erios
+</code></pre></div>
+</li>
+<li>
+<p>The new lines in <code>final-context-output-questions[addition-question]-body.yaml</code>
+    show that we've managed to correctly add new variables to the
+    template:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nt">problem</span><span class="p">:</span>
+  <span class="nt">num_vars</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">4</span>
+  <span class="nt">total</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">33</span>
+  <span class="nt">vars</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">14</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">6</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">12</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+</ol>
+<h2 id="generating-solution-keys">Generating Solution Keys<a class="headerlink" href="#generating-solution-keys" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>That isn't enough to actually display our problem in the test itself.
+    For that we need to edit the templates in <code>addition_question.py</code>:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">body</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">Solve the following equation:</span>
+
+<span class="s1">   $${{ problem.vars[0] }} + {{ problem.vars[1] }} +</span>
+<span class="s1">     {{ problem.vars[2] }} + {{ problem.vars[3] }} = \_\_$$</span>
+<span class="s1">&#39;&#39;&#39;</span>
+
+<span class="n">solution</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot; The total is {{ problem.total }}.&quot;</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>With those changes we can run our usual build command and look at the
+    resulting pdf:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>./exam.py cleanup
+<span class="gp">$ </span>./exam.py build-exam:fake-class:erios
+</code></pre></div>
+<div class="admonition error">
+<p class="admonition-title">TODO: add images, should be <code>assets/cust_and_rand_part5</code></p>
+</div>
+</li>
+<li>
+<p>We can also generate the solution key with the following command:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>./exam.py build-solution:fake-class:erios
+</code></pre></div>
+<p>And look at the result in <code>~out/exam_solution/class-fake-class/erios.pdf</code>:</p>
+<div class="admonition error">
+<p class="admonition-title">TODO: Add image <code>assets/aut_and_rand_part5_sols</code></p>
+</div>
+</li>
+</ol>
+<h2 id="loops-in-templates">Loops in Templates<a class="headerlink" href="#loops-in-templates" title="Permanent link">&para;</a></h2>
+<p>We can have more complex operations in the templates themselves like allowing
+variability in the number of variables in each equation or the number of
+equations in total.</p>
+<ol>
+<li>
+<p>Let's first change the number of variables in the each equation by
+    editing the following line in <code>generate_question_params</code>:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">33</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">num_vars</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Now our template can't handle the full length of the problem, so let's use
+    some of <a href="https://jinja.palletsprojects.com/en/3.0.x/templates/#for">jinja2's for loops</a>
+    to make this work:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">body</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">Solve the following equation:</span>
+
+<span class="s1">   $${</span><span class="si">% f</span><span class="s1">or v in problem.vars -%}{{ v }}</span>
+<span class="s1">     {</span><span class="si">%- i</span><span class="s1">f not loop.last %} + {</span><span class="si">% e</span><span class="s1">ndif -%}</span>
+<span class="s1">     {</span><span class="si">%- e</span><span class="s1">ndfor %} = \_\_$$</span>
+<span class="s1">&#39;&#39;&#39;</span>
+</code></pre></div>
+</td></tr></table>
+<details class="info"><summary>Template Constructs</summary><ul>
+<li>Control flow statements like <code>if</code> and <code>for</code> are usually found within
+  <code class="highlight">{%</code> and <code class="highlight">%}</code>, unlike printed statements which are found within <code>{{</code> and <code>}}</code></li>
+<li>Within a loop it's possible to access the <code>loop</code> magic variable, which can
+  be used to determine whether you should print a separator like <code>+</code> here.</li>
+<li>Dashes at the beginning or end of jinja statements, like <code>{%-</code> or <code>-%}</code>
+  are used to delete whitespace. Here we use them to prevent printing
+  unnessesary newlines.</li>
+</ul>
+</details>
+</li>
+<li>
+<p>We can then build the exam and solutions with these changes:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>./exam.py cleanup
+<span class="gp">$ </span>./exam.py build-exam:fake-class:erios
+<span class="gp">$ </span>./exam.py build-solutions:fake-class:erios
+</code></pre></div>
+<div class="admonition error">
+<p class="admonition-title">TODO: images are in <code>assets/</code></p>
+</div>
+</li>
+</ol>
+<h2 id="nesting-and-complex-problem-structure">Nesting and Complex Problem Structure<a class="headerlink" href="#nesting-and-complex-problem-structure" title="Permanent link">&para;</a></h2>
+<p>We can even build a more complex problem by multiplying the number of
+sub-problems. You should probably not do this in an actual assignment.</p>
+<ol>
+<li>
+<p>Generate multiple sub-problems by modifying <code>user_setup</code>:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">user_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+    <span class="n">ctxt_vars</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">ctxt_vars</span><span class="p">[</span><span class="s1">&#39;problem&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="n">ctxt_vars</span><span class="p">[</span><span class="s1">&#39;total&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">sub</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_question_params</span><span class="p">(</span><span class="n">rng</span><span class="p">)</span>
+        <span class="n">ctxt_vars</span><span class="p">[</span><span class="s1">&#39;problem&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sub</span><span class="p">)</span>
+        <span class="n">ctxt_vars</span><span class="p">[</span><span class="s1">&#39;total&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">sub</span><span class="p">[</span><span class="s1">&#39;total&#39;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">ctxt_vars</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Then we can tweak the templates by adding another loop:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">body</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">Solve the following equations:</span>
+
+<span class="s1">{</span><span class="si">% f</span><span class="s1">or eq in problem %}</span>
+<span class="s1">   $${</span><span class="si">% f</span><span class="s1">or v in eq.vars -%}{{ v }}</span>
+<span class="s1">     {</span><span class="si">%- i</span><span class="s1">f not loop.last %} + {</span><span class="si">% e</span><span class="s1">ndif -%}</span>
+<span class="s1">     {</span><span class="si">%- e</span><span class="s1">ndfor %} = \_\_$$</span>
+<span class="s1">{</span><span class="si">% e</span><span class="s1">ndfor %}</span>
+
+<span class="s1">What is the sum of all of their answers?</span>
+<span class="s1">&#39;&#39;&#39;</span>
+
+<span class="n">solution</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot; The total is {{ total }}.&quot;</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+</ol>
+<details class="quote"><summary>Complete Current <code>addition_question.py</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">exam_gen</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">SumQuestion</span><span class="p">(</span><span class="n">LatexDoc</span><span class="p">,</span> <span class="n">Question</span><span class="p">):</span>
+    <span class="n">metadata</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Basic Addition Question&quot;</span>
+
+    <span class="n">body</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    Solve the following equations:</span>
+
+<span class="s1">    {</span><span class="si">% f</span><span class="s1">or eq in problem %}</span>
+<span class="s1">       $${</span><span class="si">% f</span><span class="s1">or v in eq.vars -%}{{ v }}</span>
+<span class="s1">         {</span><span class="si">%- i</span><span class="s1">f not loop.last %} + {</span><span class="si">% e</span><span class="s1">ndif -%}</span>
+<span class="s1">         {</span><span class="si">%- e</span><span class="s1">ndfor %} = \_\_$$</span>
+<span class="s1">    {</span><span class="si">% e</span><span class="s1">ndfor %}</span>
+
+<span class="s1">    What is the sum of all of their answers?</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+
+    <span class="n">solution</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot; The total is {{ total }}.&quot;</span>
+
+    <span class="k">def</span> <span class="nf">user_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="n">ctxt_vars</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">ctxt_vars</span><span class="p">[</span><span class="s1">&#39;problem&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="n">ctxt_vars</span><span class="p">[</span><span class="s1">&#39;total&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">):</span>
+            <span class="n">sub</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_question_params</span><span class="p">(</span><span class="n">rng</span><span class="p">)</span>
+            <span class="n">ctxt_vars</span><span class="p">[</span><span class="s1">&#39;problem&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sub</span><span class="p">)</span>
+            <span class="n">ctxt_vars</span><span class="p">[</span><span class="s1">&#39;total&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">sub</span><span class="p">[</span><span class="s1">&#39;total&#39;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">ctxt_vars</span>
+
+    <span class="k">def</span> <span class="nf">generate_question_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rng</span><span class="p">):</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="c1"># How many numbers will the student have to sum up?</span>
+        <span class="n">num_vars</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
+
+        <span class="c1"># Generate each element</span>
+        <span class="n">var_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_vars</span><span class="p">):</span>
+            <span class="n">var_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span><span class="p">))</span>
+
+        <span class="c1"># return the parameters for the problem</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;vars&#39;</span><span class="p">:</span> <span class="n">var_list</span><span class="p">,</span>
+                <span class="s1">&#39;num_vars&#39;</span><span class="p">:</span> <span class="n">num_vars</span><span class="p">,</span>
+                <span class="s1">&#39;total&#39;</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">var_list</span><span class="p">)</span>
+        <span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+</details>
+<ol>
+<li>
+<p>As usual, we can build our exams and look at the results:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>./exam.py cleanup
+<span class="gp">$ </span>./exam.py build-exam:fake-class:erios
+<span class="gp">$ </span>./exam.py build-solutions:fake-class:erios
+</code></pre></div>
+<div class="admonition error">
+<p class="admonition-title">TODO: Add images from <code>assets/</code></p>
+</div>
+</li>
+</ol>
+<h2 id="advanced-solution-text">Advanced Solution Text<a class="headerlink" href="#advanced-solution-text" title="Permanent link">&para;</a></h2>
+<p>Now, the current solution key isn't as useful as it could be. In part because
+it doesn't tell us the different answers to each sub-problem. There are
+two ways to fix this, in the template itself or setting different versions of
+the template variable.</p>
+<h3 id="using-library-level-formats">Using Library Level Formats<a class="headerlink" href="#using-library-level-formats" title="Permanent link">&para;</a></h3>
+<p>The is a library level mechanism for switching out
+template variables. You can index into template variables like <code>body</code>, <code>solution</code>
+or <code>intro</code> with the same syntax used for dictionaries. Each format lets you
+directly set the parameter for that format.</p>
+<p>For instance setting <code class="highlight"><span class="n">body</span><span class="p">[</span><span class="s1">&#39;exam&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">text</span></code> defines the template when
+we're building exams, and <code class="highlight"><span class="n">body</span><span class="p">[</span><span class="s1">&#39;solution&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">text</span></code> defines the template
+when building a solution.</p>
+<ol>
+<li>
+<p>For example we could change <code>body.text</code> in <code>addition_question.py</code> to read:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="hll"><span class="n">body</span><span class="p">[</span><span class="s1">&#39;exam&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+</span><span class="s1">Solve the following equations:</span>
+
+<span class="s1">{</span><span class="si">%- f</span><span class="s1">or eq in problem -%}</span>
+<span class="s1">   $${</span><span class="si">% f</span><span class="s1">or v in eq.vars -%}{{ v }}</span>
+<span class="s1">     {</span><span class="si">%- i</span><span class="s1">f not loop.last %} + {</span><span class="si">% e</span><span class="s1">ndif -%}</span>
+<span class="s1">     {</span><span class="si">%- e</span><span class="s1">ndfor %} = \_\_$$</span>
+<span class="s1">{</span><span class="si">%- e</span><span class="s1">ndfor -%}</span>
+
+<span class="s1">What is the sum of all of their answers?</span>
+<span class="s1">&#39;&#39;&#39;</span>
+
+<span class="hll"><span class="n">body</span><span class="p">[</span><span class="s1">&#39;solution&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+</span><span class="s1">Solve the following equations:</span>
+
+<span class="s1">{</span><span class="si">%- f</span><span class="s1">or eq in problem -%}</span>
+<span class="s1">   $${</span><span class="si">% f</span><span class="s1">or v in eq.vars -%}{{ v }}</span>
+<span class="s1">     {</span><span class="si">%- i</span><span class="s1">f not loop.last %} + {</span><span class="si">% e</span><span class="s1">ndif -%}</span>
+<span class="s1">     {</span><span class="si">%- e</span><span class="s1">ndfor %} = \solution{ {{ eq.total }} }$$</span>
+<span class="s1">{</span><span class="si">%- e</span><span class="s1">ndfor -%}</span>
+
+<span class="s1">What is the sum of all of their answers?</span>
+<span class="s1">&#39;&#39;&#39;</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>And then build our solution key to get:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>./exam.py build-solutions:fake-class:erios
+</code></pre></div>
+<div class="admonition error">
+<p class="admonition-title">Todo: image in <code>assets/</code></p>
+</div>
+</li>
+</ol>
+<h3 id="detecting-exam-format-in-templates">Detecting Exam Format in Templates<a class="headerlink" href="#detecting-exam-format-in-templates" title="Permanent link">&para;</a></h3>
+<p>Another way to detect whether this is a solution or not is to look at the
+<code>format</code> variable using the template itself. It will be set to
+<code class="highlight"><span class="s1">&#39;exam&#39;</span></code> if we're building in exam form and <code class="highlight"><span class="s1">&#39;solution&#39;</span></code>
+if we're building a solution key.</p>
+<ol>
+<li>
+<p>For instance we could change <code>body.text</code> in <code>addition_question.py</code> to read:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">body</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">Solve the following equations:</span>
+
+<span class="hll"><span class="s1">{</span><span class="si">%- i</span><span class="s1">f format == &#39;solution&#39; -%}</span>
+</span><span class="s1">{</span><span class="si">%- f</span><span class="s1">or eq in problem -%}</span>
+<span class="s1">   $${</span><span class="si">% f</span><span class="s1">or v in eq.vars -%}{{ v }}</span>
+<span class="s1">     {</span><span class="si">%- i</span><span class="s1">f not loop.last %} + {</span><span class="si">% e</span><span class="s1">ndif -%}</span>
+<span class="s1">     {</span><span class="si">%- e</span><span class="s1">ndfor %} = \solution{ {{ eq.total }} }$$</span>
+<span class="s1">{</span><span class="si">%- e</span><span class="s1">ndfor -%}</span>
+<span class="s1">{</span><span class="si">%- e</span><span class="s1">lse -%}</span>
+<span class="s1">{</span><span class="si">%- f</span><span class="s1">or eq in problem -%}</span>
+<span class="s1">   $${</span><span class="si">% f</span><span class="s1">or v in eq.vars -%}{{ v }}</span>
+<span class="s1">     {</span><span class="si">%- i</span><span class="s1">f not loop.last %} + {</span><span class="si">% e</span><span class="s1">ndif -%}</span>
+<span class="s1">     {</span><span class="si">%- e</span><span class="s1">ndfor %} = \_\_$$</span>
+<span class="s1">{</span><span class="si">%- e</span><span class="s1">ndfor -%}</span>
+<span class="s1">{</span><span class="si">%- e</span><span class="s1">ndif -%}</span>
+
+<span class="s1">What is the sum of all of their answers?</span>
+<span class="s1">&#39;&#39;&#39;</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>And then build our solution key to get:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>./exam.py build-solutions:fake-class:erios
+</code></pre></div>
+<div class="admonition error">
+<p class="admonition-title">Todo: image in <code>assets/</code></p>
+</div>
+</li>
+</ol>
+<div class="admonition note">
+<p>It's also possible to use LaTeX macros to do this, <code class="highlight"><span class="k">\solution</span><span class="nb">{}</span></code> is
+one such mechanism, but that's easier to mess up. Changes to the LaTeX
+templates being used at the document and question level are more likely
+to have solution information being improperly shown. Better to avoid having
+the solutions appearing in the raw <code>.tex</code> files at all.</p>
+</div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="customization_and_randomization.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Customization and Randomization" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Customization and Randomization
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="multi_part_questions.html" class="md-footer__link md-footer__link--next" aria-label="Next: Multi-Part Questions" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Multi-Part Questions
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+
+<script src="../theme/js/iframe-worker.js"></script>
+<script src="../search/search_index.js"></script>
+
+
+    
+      <script src="../assets/javascripts/bundle.29db7785.min.js"></script>
+      
+    
+  </body>
+</html>

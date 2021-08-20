@@ -1,0 +1,3745 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.3">
+    
+    
+      
+        <title>.util.selectors - UCB EECS Exam Generator</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.f7f47774.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#2094f3">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#exam_genutilselectors-classes-to-help-associate-record-fields-with-students-and-exams" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="UCB EECS Exam Generator" class="md-header__button md-logo" aria-label="UCB EECS Exam Generator" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            UCB EECS Exam Generator
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              .util.selectors
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="UCB EECS Exam Generator" class="md-nav__button md-logo" aria-label="UCB EECS Exam Generator" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    UCB EECS Exam Generator
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../index.html" class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      <label class="md-nav__link" for="__nav_2">
+        Tutorial
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Tutorial" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorial
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/first_assignment.html" class="md-nav__link">
+        Your First Assignment
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/classrooms_and_rosters.html" class="md-nav__link">
+        Classrooms and Rosters
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/writing_questions.html" class="md-nav__link">
+        Writing Questions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/customization_and_randomization.html" class="md-nav__link">
+        Customization and Randomization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/advanced_template_use.html" class="md-nav__link">
+        Advanced Template Use
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/multi_part_questions.html" class="md-nav__link">
+        Multi-Part Questions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/project_organization.html" class="md-nav__link">
+        Project Organization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/external_and_generated_assets.html" class="md-nav__link">
+        External and Generated Assets
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_9" type="checkbox" id="__nav_2_9" >
+      
+      <label class="md-nav__link" for="__nav_2_9">
+        Multiple Choice Questions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Multiple Choice Questions" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_9">
+          <span class="md-nav__icon md-icon"></span>
+          Multiple Choice Questions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/multiple_choice/simple_question.html" class="md-nav__link">
+        Simple Questions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/multiple_choice/choices_and_shuffling.html" class="md-nav__link">
+        Choices and Shuffling
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/multiple_choice/custom_grading_and_setup.html" class="md-nav__link">
+        Custom Grading and Setup
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/answers_and_scoring.html" class="md-nav__link">
+        Answers and Scoring
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        User's Guide
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="User's Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          User's Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user_guide/project_setup.html" class="md-nav__link">
+        Project Setup and Organization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user_guide/exams.html" class="md-nav__link">
+        Exams/Assignments
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      <label class="md-nav__link" for="__nav_4">
+        API Documentation
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API Documentation" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          API Documentation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" type="checkbox" id="__nav_4_1" >
+      
+      <label class="md-nav__link" for="__nav_4_1">
+        exam_gen.build
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="exam_gen.build" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          exam_gen.build
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build/cli.html" class="md-nav__link">
+        .build.cli
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build/data.html" class="md-nav__link">
+        .build.data
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build/formats.html" class="md-nav__link">
+        .build.formats
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" >
+      
+      <label class="md-nav__link" for="__nav_4_2">
+        exam_gen.classrooom
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="exam_gen.classrooom" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_2">
+          <span class="md-nav__icon md-icon"></span>
+          exam_gen.classrooom
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../classroom/answers.html" class="md-nav__link">
+        .classroom.answers
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../classroom/base.html" class="md-nav__link">
+        .classroom.base
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../classroom/grade.html" class="md-nav__link">
+        .classroom.grades
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../classroom/rosters.html" class="md-nav__link">
+        .classroom.rosters
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../classroom/scores.html" class="md-nav__link">
+        .classroom.scores
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../classroom/student.html" class="md-nav__link">
+        .classroom.student
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exam.html" class="md-nav__link">
+        exam_gen.exam
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
+      
+      <label class="md-nav__link" for="__nav_4_4">
+        exam_gen.property
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="exam_gen.property" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_4">
+          <span class="md-nav__icon md-icon"></span>
+          exam_gen.property
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../property/answerable.html" class="md-nav__link">
+        .property.answerable
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../property/auto_gradeable.html" class="md-nav__link">
+        .property.auto_gradeable
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../property/buildable.html" class="md-nav__link">
+        .property.buildable
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../property/document.html" class="md-nav__link">
+        .property.document
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../property/format.html" class="md-nav__link">
+        .property.format
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../property/gradeable.html" class="md-nav__link">
+        .property.gradeable
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../property/has_context.html" class="md-nav__link">
+        .property.has_context
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../property/has_dir_path.html" class="md-nav__link">
+        .property.has_dir_path
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../property/has_metadata.html" class="md-nav__link">
+        .property.has_metadata
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../property/has_rng.html" class="md-nav__link">
+        .property.has_rng
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../property/has_settings.html" class="md-nav__link">
+        .property.has_settings
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../property/has_user_setup.html" class="md-nav__link">
+        .property.has_user_setup
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../property/numbered.html" class="md-nav__link">
+        .property.numbered
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../property/personalized.html" class="md-nav__link">
+        .property.personalized
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../property/templated.html" class="md-nav__link">
+        .property.templated
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" type="checkbox" id="__nav_4_5" checked>
+      
+      <label class="md-nav__link" for="__nav_4_5">
+        exam_gen.util
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="exam_gen.util" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_5">
+          <span class="md-nav__icon md-icon"></span>
+          exam_gen.util
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          .util.selectors
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="selectors.html" class="md-nav__link md-nav__link--active">
+        .util.selectors
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document" class="md-nav__link">
+    document
+  </a>
+  
+    <nav class="md-nav" aria-label="document">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document.log" class="md-nav__link">
+    log
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document.DocSelect" class="md-nav__link">
+    DocSelect
+  </a>
+  
+    <nav class="md-nav" aria-label="DocSelect">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document.DocSelect.__attrs_init__" class="md-nav__link">
+    __attrs_init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document.DocSelect.__attrs_post_init__" class="md-nav__link">
+    __attrs_post_init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document.DocSelect.__eq__" class="md-nav__link">
+    __eq__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document.DocSelect.__ge__" class="md-nav__link">
+    __ge__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document.DocSelect.__gt__" class="md-nav__link">
+    __gt__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document.DocSelect.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document.DocSelect.__le__" class="md-nav__link">
+    __le__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document.DocSelect.__lt__" class="md-nav__link">
+    __lt__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document.DocSelect.__ne__" class="md-nav__link">
+    __ne__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document.DocSelect.__new__" class="md-nav__link">
+    __new__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document.DocSelect.__repr__" class="md-nav__link">
+    __repr__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document.DocSelect.norm_map_entry" class="md-nav__link">
+    norm_map_entry()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document.DocSelect.select" class="md-nav__link">
+    select()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.field" class="md-nav__link">
+    field
+  </a>
+  
+    <nav class="md-nav" aria-label="field">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.field.log" class="md-nav__link">
+    log
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.field.FieldSelect" class="md-nav__link">
+    FieldSelect
+  </a>
+  
+    <nav class="md-nav" aria-label="FieldSelect">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.field.FieldSelect.__attrs_init__" class="md-nav__link">
+    __attrs_init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.field.FieldSelect.__eq__" class="md-nav__link">
+    __eq__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.field.FieldSelect.__ge__" class="md-nav__link">
+    __ge__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.field.FieldSelect.__gt__" class="md-nav__link">
+    __gt__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.field.FieldSelect.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.field.FieldSelect.__le__" class="md-nav__link">
+    __le__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.field.FieldSelect.__lt__" class="md-nav__link">
+    __lt__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.field.FieldSelect.__ne__" class="md-nav__link">
+    __ne__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.field.FieldSelect.__new__" class="md-nav__link">
+    __new__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.field.FieldSelect.__repr__" class="md-nav__link">
+    __repr__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.field.FieldSelect.match" class="md-nav__link">
+    match()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.field.FieldSelect.select" class="md-nav__link">
+    select()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student" class="md-nav__link">
+    student
+  </a>
+  
+    <nav class="md-nav" aria-label="student">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.log" class="md-nav__link">
+    log
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect" class="md-nav__link">
+    StudentSelect
+  </a>
+  
+    <nav class="md-nav" aria-label="StudentSelect">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect.__attrs_init__" class="md-nav__link">
+    __attrs_init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect.__attrs_post_init__" class="md-nav__link">
+    __attrs_post_init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect.__eq__" class="md-nav__link">
+    __eq__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect.__ge__" class="md-nav__link">
+    __ge__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect.__gt__" class="md-nav__link">
+    __gt__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect.__le__" class="md-nav__link">
+    __le__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect.__lt__" class="md-nav__link">
+    __lt__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect.__ne__" class="md-nav__link">
+    __ne__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect.__new__" class="md-nav__link">
+    __new__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect.__repr__" class="md-nav__link">
+    __repr__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect.match" class="md-nav__link">
+    match()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect.partition" class="md-nav__link">
+    partition()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect.select_records" class="md-nav__link">
+    select_records()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect.select_student" class="md-nav__link">
+    select_student()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quick_reference.html" class="md-nav__link">
+        Quick Reference
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document" class="md-nav__link">
+    document
+  </a>
+  
+    <nav class="md-nav" aria-label="document">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document.log" class="md-nav__link">
+    log
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document.DocSelect" class="md-nav__link">
+    DocSelect
+  </a>
+  
+    <nav class="md-nav" aria-label="DocSelect">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document.DocSelect.__attrs_init__" class="md-nav__link">
+    __attrs_init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document.DocSelect.__attrs_post_init__" class="md-nav__link">
+    __attrs_post_init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document.DocSelect.__eq__" class="md-nav__link">
+    __eq__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document.DocSelect.__ge__" class="md-nav__link">
+    __ge__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document.DocSelect.__gt__" class="md-nav__link">
+    __gt__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document.DocSelect.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document.DocSelect.__le__" class="md-nav__link">
+    __le__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document.DocSelect.__lt__" class="md-nav__link">
+    __lt__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document.DocSelect.__ne__" class="md-nav__link">
+    __ne__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document.DocSelect.__new__" class="md-nav__link">
+    __new__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document.DocSelect.__repr__" class="md-nav__link">
+    __repr__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document.DocSelect.norm_map_entry" class="md-nav__link">
+    norm_map_entry()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.document.DocSelect.select" class="md-nav__link">
+    select()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.field" class="md-nav__link">
+    field
+  </a>
+  
+    <nav class="md-nav" aria-label="field">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.field.log" class="md-nav__link">
+    log
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.field.FieldSelect" class="md-nav__link">
+    FieldSelect
+  </a>
+  
+    <nav class="md-nav" aria-label="FieldSelect">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.field.FieldSelect.__attrs_init__" class="md-nav__link">
+    __attrs_init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.field.FieldSelect.__eq__" class="md-nav__link">
+    __eq__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.field.FieldSelect.__ge__" class="md-nav__link">
+    __ge__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.field.FieldSelect.__gt__" class="md-nav__link">
+    __gt__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.field.FieldSelect.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.field.FieldSelect.__le__" class="md-nav__link">
+    __le__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.field.FieldSelect.__lt__" class="md-nav__link">
+    __lt__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.field.FieldSelect.__ne__" class="md-nav__link">
+    __ne__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.field.FieldSelect.__new__" class="md-nav__link">
+    __new__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.field.FieldSelect.__repr__" class="md-nav__link">
+    __repr__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.field.FieldSelect.match" class="md-nav__link">
+    match()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.field.FieldSelect.select" class="md-nav__link">
+    select()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student" class="md-nav__link">
+    student
+  </a>
+  
+    <nav class="md-nav" aria-label="student">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.log" class="md-nav__link">
+    log
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect" class="md-nav__link">
+    StudentSelect
+  </a>
+  
+    <nav class="md-nav" aria-label="StudentSelect">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect.__attrs_init__" class="md-nav__link">
+    __attrs_init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect.__attrs_post_init__" class="md-nav__link">
+    __attrs_post_init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect.__eq__" class="md-nav__link">
+    __eq__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect.__ge__" class="md-nav__link">
+    __ge__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect.__gt__" class="md-nav__link">
+    __gt__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect.__le__" class="md-nav__link">
+    __le__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect.__lt__" class="md-nav__link">
+    __lt__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect.__ne__" class="md-nav__link">
+    __ne__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect.__new__" class="md-nav__link">
+    __new__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect.__repr__" class="md-nav__link">
+    __repr__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect.match" class="md-nav__link">
+    match()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect.partition" class="md-nav__link">
+    partition()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect.select_records" class="md-nav__link">
+    select_records()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exam_gen.util.selectors.student.StudentSelect.select_student" class="md-nav__link">
+    select_student()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="exam_genutilselectors-classes-to-help-associate-record-fields-with-students-and-exams"><code>exam_gen.util.selectors</code>: Classes to help associate record fields with students and exams.<a class="headerlink" href="#exam_genutilselectors-classes-to-help-associate-record-fields-with-students-and-exams" title="Permanent link">&para;</a></h1>
+
+
+  <div class="doc doc-object doc-module">
+
+
+    <div class="doc doc-contents first">
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-module">
+
+
+
+<h2 id="exam_gen.util.selectors.document" class="doc doc-heading">
+        <code>document</code>
+
+
+
+<a href="#exam_gen.util.selectors.document" class="headerlink" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents ">
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="exam_gen.util.selectors.document.log" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">log</span></code>
+
+
+<a href="#exam_gen.util.selectors.document.log" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+  </div>
+
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 id="exam_gen.util.selectors.document.DocSelect" class="doc doc-heading">
+        <code>DocSelect</code>
+
+
+
+<a href="#exam_gen.util.selectors.document.DocSelect" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Associates record fields with documents and sub-documents</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.document.DocSelect.__attrs_init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">__attrs_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">selector</span><span class="o">=&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">exam_gen</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">selectors</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">FieldSelect</span><span class="s1">&#39;&gt;, norm_field=&lt;function DocSelect.&lt;lambda&gt; at 0x7fdee305f820&gt;)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.document.DocSelect.__attrs_init__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Method generated by attrs for class DocSelect.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/document.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">__attrs_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">selector</span><span class="o">=</span><span class="n">attr_dict</span><span class="p">[</span><span class="s1">&#39;selector&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">default</span><span class="p">,</span> <span class="n">norm_field</span><span class="o">=</span><span class="n">attr_dict</span><span class="p">[</span><span class="s1">&#39;norm_field&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">default</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">mapping</span> <span class="o">=</span> <span class="n">mapping</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">selector</span> <span class="o">=</span> <span class="n">selector</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">norm_field</span> <span class="o">=</span> <span class="n">norm_field</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__attrs_post_init__</span><span class="p">()</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.document.DocSelect.__attrs_post_init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.document.DocSelect.__attrs_post_init__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/document.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+    <span class="n">_mapping</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapping</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">norm_field</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="n">_mapping</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">norm_map_entry</span><span class="p">(</span><span class="n">field</span><span class="p">),</span> <span class="n">meta</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">mapping</span> <span class="o">=</span> <span class="n">_mapping</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.document.DocSelect.__eq__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.document.DocSelect.__eq__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Method generated by attrs for class DocSelect.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/document.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="vm">__class__</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">NotImplemented</span>
+    <span class="k">return</span>  <span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapping</span><span class="p">,</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selector</span><span class="p">,</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">norm_field</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">==</span> <span class="p">(</span>
+        <span class="n">other</span><span class="o">.</span><span class="n">mapping</span><span class="p">,</span>
+        <span class="n">other</span><span class="o">.</span><span class="n">selector</span><span class="p">,</span>
+        <span class="n">other</span><span class="o">.</span><span class="n">norm_field</span><span class="p">,</span>
+    <span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.document.DocSelect.__ge__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.document.DocSelect.__ge__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Method generated by attrs for class DocSelect.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/document.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Automatically created by attrs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="vm">__class__</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">attrs_to_tuple</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">attrs_to_tuple</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="bp">NotImplemented</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.document.DocSelect.__gt__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.document.DocSelect.__gt__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Method generated by attrs for class DocSelect.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/document.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Automatically created by attrs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="vm">__class__</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">attrs_to_tuple</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">attrs_to_tuple</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="bp">NotImplemented</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.document.DocSelect.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.document.DocSelect.__init__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Sorta idempotent normalised new.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/document.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sorta idempotent normalised new.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="s1">&#39;mapping&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="n">_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;selector&#39;</span><span class="p">,</span> <span class="s1">&#39;norm_field&#39;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span> <span class="n">_kwargs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;mapping&#39;</span><span class="p">:</span> <span class="n">kwargs</span><span class="p">}</span> <span class="o">|</span> <span class="n">_kwargs</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">__attrs_init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.document.DocSelect.__le__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.document.DocSelect.__le__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Method generated by attrs for class DocSelect.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/document.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Automatically created by attrs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="vm">__class__</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">attrs_to_tuple</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">attrs_to_tuple</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="bp">NotImplemented</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.document.DocSelect.__lt__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.document.DocSelect.__lt__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Method generated by attrs for class DocSelect.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/document.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Automatically created by attrs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="vm">__class__</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">attrs_to_tuple</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">attrs_to_tuple</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="bp">NotImplemented</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.document.DocSelect.__ne__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.document.DocSelect.__ne__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Method generated by attrs for class DocSelect.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/document.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check equality and either forward a NotImplemented or</span>
+<span class="sd">    return the result negated.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="bp">NotImplemented</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">NotImplemented</span>
+
+    <span class="k">return</span> <span class="ow">not</span> <span class="n">result</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.document.DocSelect.__new__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+      <small class="doc doc-property doc-property-staticmethod"><code>staticmethod</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.document.DocSelect.__new__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Sorta idempotent normalised new.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/document.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sorta idempotent normalised new.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">DocSelect</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">DocSelect</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.document.DocSelect.__repr__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.document.DocSelect.__repr__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Method generated by attrs for class DocSelect.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/document.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Automatically created by attrs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">working_set</span> <span class="o">=</span> <span class="n">_already_repring</span><span class="o">.</span><span class="n">working_set</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="n">working_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">_already_repring</span><span class="o">.</span><span class="n">working_set</span> <span class="o">=</span> <span class="n">working_set</span>
+
+    <span class="k">if</span> <span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="ow">in</span> <span class="n">working_set</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;...&quot;</span>
+    <span class="n">real_cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span>
+    <span class="k">if</span> <span class="n">ns</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">qualname</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">real_cls</span><span class="p">,</span> <span class="s2">&quot;__qualname__&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">qualname</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">class_name</span> <span class="o">=</span> <span class="n">qualname</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">&quot;&gt;.&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">class_name</span> <span class="o">=</span> <span class="n">real_cls</span><span class="o">.</span><span class="vm">__name__</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">class_name</span> <span class="o">=</span> <span class="n">ns</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">real_cls</span><span class="o">.</span><span class="vm">__name__</span>
+
+    <span class="c1"># Since &#39;self&#39; remains on the stack (i.e.: strongly referenced) for the</span>
+    <span class="c1"># duration of this call, it&#39;s safe to depend on id(...) stability, and</span>
+    <span class="c1"># not need to track the instance and therefore worry about properties</span>
+    <span class="c1"># like weakref- or hash-ability.</span>
+    <span class="n">working_set</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">class_name</span><span class="p">,</span> <span class="s2">&quot;(&quot;</span><span class="p">]</span>
+        <span class="n">first</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">attr_repr</span> <span class="ow">in</span> <span class="n">attr_names_with_reprs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">first</span><span class="p">:</span>
+                <span class="n">first</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;=&quot;</span><span class="p">,</span> <span class="n">attr_repr</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">NOTHING</span><span class="p">)))</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">working_set</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.document.DocSelect.norm_map_entry" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">norm_map_entry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span></code>
+
+
+<a href="#exam_gen.util.selectors.document.DocSelect.norm_map_entry" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/document.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">norm_map_entry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">DocSelect</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">entry</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">FieldSelect</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">entry</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">mapping</span><span class="o">=</span><span class="n">entry</span><span class="p">,</span>
+                          <span class="n">selector</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">selector</span><span class="p">,</span>
+                          <span class="n">norm_field</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">norm_field</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">selector</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.document.DocSelect.select" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">,</span> <span class="n">supress_error</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">with_meta</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+
+<a href="#exam_gen.util.selectors.document.DocSelect.select" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Given a record produce a mapped dictionary of values.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/document.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">,</span> <span class="n">supress_error</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">with_meta</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Given a record produce a mapped dictionary of values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+    <span class="c1"># Turn with_meta into a function that will turn the (match, meta) pair</span>
+    <span class="c1"># into the result we want.</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">callable</span><span class="p">(</span><span class="n">with_meta</span><span class="p">):</span>
+        <span class="n">as_tuple</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">f</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">m</span><span class="p">)</span>
+        <span class="n">only_field</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">f</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="n">f</span>
+        <span class="n">with_meta</span> <span class="o">=</span> <span class="n">as_tuple</span> <span class="k">if</span> <span class="n">with_meta</span> <span class="k">else</span> <span class="n">only_field</span>
+
+    <span class="c1"># Go through and grab the matching fields while assembling them</span>
+    <span class="c1"># properly</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="p">(</span><span class="n">fld</span><span class="p">,</span> <span class="n">meta</span><span class="p">))</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapping</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+         <span class="n">match</span> <span class="o">=</span> <span class="n">fld</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="n">supress_error</span><span class="p">)</span>
+         <span class="k">if</span> <span class="n">match</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+             <span class="n">result</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">with_meta</span><span class="p">(</span><span class="n">match</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">result</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-module">
+
+
+
+<h2 id="exam_gen.util.selectors.field" class="doc doc-heading">
+        <code>field</code>
+
+
+
+<a href="#exam_gen.util.selectors.field" class="headerlink" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents ">
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="exam_gen.util.selectors.field.log" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">log</span></code>
+
+
+<a href="#exam_gen.util.selectors.field.log" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+  </div>
+
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 id="exam_gen.util.selectors.field.FieldSelect" class="doc doc-heading">
+        <code>FieldSelect</code>
+
+
+
+<a href="#exam_gen.util.selectors.field.FieldSelect" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.field.FieldSelect.__attrs_init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">__attrs_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selector</span><span class="p">,</span> <span class="n">substring</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">strip_string</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">case_sensitive</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.field.FieldSelect.__attrs_init__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Method generated by attrs for class FieldSelect.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/field.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">__attrs_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selector</span><span class="p">,</span> <span class="n">substring</span><span class="o">=</span><span class="n">attr_dict</span><span class="p">[</span><span class="s1">&#39;substring&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">default</span><span class="p">,</span> <span class="n">strip_string</span><span class="o">=</span><span class="n">attr_dict</span><span class="p">[</span><span class="s1">&#39;strip_string&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">default</span><span class="p">,</span> <span class="n">case_sensitive</span><span class="o">=</span><span class="n">attr_dict</span><span class="p">[</span><span class="s1">&#39;case_sensitive&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">default</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">selector</span> <span class="o">=</span> <span class="n">selector</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">substring</span> <span class="o">=</span> <span class="n">substring</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">strip_string</span> <span class="o">=</span> <span class="n">strip_string</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">case_sensitive</span> <span class="o">=</span> <span class="n">case_sensitive</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.field.FieldSelect.__eq__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.field.FieldSelect.__eq__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Method generated by attrs for class FieldSelect.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/field.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="vm">__class__</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">NotImplemented</span>
+    <span class="k">return</span>  <span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selector</span><span class="p">,</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">substring</span><span class="p">,</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strip_string</span><span class="p">,</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">case_sensitive</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">==</span> <span class="p">(</span>
+        <span class="n">other</span><span class="o">.</span><span class="n">selector</span><span class="p">,</span>
+        <span class="n">other</span><span class="o">.</span><span class="n">substring</span><span class="p">,</span>
+        <span class="n">other</span><span class="o">.</span><span class="n">strip_string</span><span class="p">,</span>
+        <span class="n">other</span><span class="o">.</span><span class="n">case_sensitive</span><span class="p">,</span>
+    <span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.field.FieldSelect.__ge__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.field.FieldSelect.__ge__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Method generated by attrs for class FieldSelect.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/field.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Automatically created by attrs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="vm">__class__</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">attrs_to_tuple</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">attrs_to_tuple</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="bp">NotImplemented</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.field.FieldSelect.__gt__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.field.FieldSelect.__gt__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Method generated by attrs for class FieldSelect.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/field.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Automatically created by attrs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="vm">__class__</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">attrs_to_tuple</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">attrs_to_tuple</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="bp">NotImplemented</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.field.FieldSelect.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.field.FieldSelect.__init__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Sorta idempotent normalised new.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/field.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sorta idempotent normalised new.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
+           <span class="k">pass</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
+           <span class="n">kwargs</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Iterable</span><span class="p">):</span>
+           <span class="n">args</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attrs_init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.field.FieldSelect.__le__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.field.FieldSelect.__le__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Method generated by attrs for class FieldSelect.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/field.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Automatically created by attrs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="vm">__class__</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">attrs_to_tuple</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">attrs_to_tuple</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="bp">NotImplemented</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.field.FieldSelect.__lt__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.field.FieldSelect.__lt__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Method generated by attrs for class FieldSelect.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/field.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Automatically created by attrs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="vm">__class__</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">attrs_to_tuple</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">attrs_to_tuple</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="bp">NotImplemented</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.field.FieldSelect.__ne__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.field.FieldSelect.__ne__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Method generated by attrs for class FieldSelect.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/field.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check equality and either forward a NotImplemented or</span>
+<span class="sd">    return the result negated.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="bp">NotImplemented</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">NotImplemented</span>
+
+    <span class="k">return</span> <span class="ow">not</span> <span class="n">result</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.field.FieldSelect.__new__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+      <small class="doc doc-property doc-property-staticmethod"><code>staticmethod</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.field.FieldSelect.__new__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Create and return a new object.  See help(type) for accurate signature.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/field.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">cls</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">FieldSelect</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.field.FieldSelect.__repr__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.field.FieldSelect.__repr__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Method generated by attrs for class FieldSelect.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/field.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Automatically created by attrs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">working_set</span> <span class="o">=</span> <span class="n">_already_repring</span><span class="o">.</span><span class="n">working_set</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="n">working_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">_already_repring</span><span class="o">.</span><span class="n">working_set</span> <span class="o">=</span> <span class="n">working_set</span>
+
+    <span class="k">if</span> <span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="ow">in</span> <span class="n">working_set</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;...&quot;</span>
+    <span class="n">real_cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span>
+    <span class="k">if</span> <span class="n">ns</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">qualname</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">real_cls</span><span class="p">,</span> <span class="s2">&quot;__qualname__&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">qualname</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">class_name</span> <span class="o">=</span> <span class="n">qualname</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">&quot;&gt;.&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">class_name</span> <span class="o">=</span> <span class="n">real_cls</span><span class="o">.</span><span class="vm">__name__</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">class_name</span> <span class="o">=</span> <span class="n">ns</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">real_cls</span><span class="o">.</span><span class="vm">__name__</span>
+
+    <span class="c1"># Since &#39;self&#39; remains on the stack (i.e.: strongly referenced) for the</span>
+    <span class="c1"># duration of this call, it&#39;s safe to depend on id(...) stability, and</span>
+    <span class="c1"># not need to track the instance and therefore worry about properties</span>
+    <span class="c1"># like weakref- or hash-ability.</span>
+    <span class="n">working_set</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">class_name</span><span class="p">,</span> <span class="s2">&quot;(&quot;</span><span class="p">]</span>
+        <span class="n">first</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">attr_repr</span> <span class="ow">in</span> <span class="n">attr_names_with_reprs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">first</span><span class="p">:</span>
+                <span class="n">first</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;=&quot;</span><span class="p">,</span> <span class="n">attr_repr</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">NOTHING</span><span class="p">)))</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">working_set</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.field.FieldSelect.match" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span></code>
+
+
+<a href="#exam_gen.util.selectors.field.FieldSelect.match" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/field.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+
+    <span class="n">selector</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selector</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">case_sensitive</span><span class="p">:</span>
+        <span class="n">selector</span> <span class="o">=</span> <span class="n">selector</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">strip_string</span><span class="p">:</span>
+        <span class="n">selector</span> <span class="o">=</span> <span class="n">selector</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="n">is_match</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">substring</span><span class="p">:</span>
+        <span class="n">is_match</span> <span class="o">=</span> <span class="n">selector</span> <span class="ow">in</span> <span class="n">key</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">is_match</span> <span class="o">=</span> <span class="n">selector</span> <span class="o">==</span> <span class="n">key</span>
+
+    <span class="k">return</span> <span class="n">is_match</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.field.FieldSelect.select" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">,</span> <span class="n">supress_error</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+
+<a href="#exam_gen.util.selectors.field.FieldSelect.select" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Returns the value of the field which matches the selector</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/field.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">,</span> <span class="n">supress_error</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the value of the field which matches the selector</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="n">record</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">v</span>
+
+    <span class="k">if</span> <span class="n">supress_error</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;No field with selector </span><span class="si">{}</span><span class="s2"> found in </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selector</span><span class="p">,</span> <span class="n">record</span><span class="p">))</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-module">
+
+
+
+<h2 id="exam_gen.util.selectors.student" class="doc doc-heading">
+        <code>student</code>
+
+
+
+<a href="#exam_gen.util.selectors.student" class="headerlink" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents ">
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="exam_gen.util.selectors.student.log" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">log</span></code>
+
+
+<a href="#exam_gen.util.selectors.student.log" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+  </div>
+
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 id="exam_gen.util.selectors.student.StudentSelect" class="doc doc-heading">
+        <code>StudentSelect</code>
+
+
+
+<a href="#exam_gen.util.selectors.student.StudentSelect" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Associates records with students.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>record_field</code></td>
+        <td><code></code></td>
+        <td><p>The field of the record we're going to be using as an
+identifier.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>student_field</code></td>
+        <td><code></code></td>
+        <td><p>The field of the student we'll match it to, available
+options are:</p>
+<ul>
+<li>"ident": The base identifier</li>
+<li>"name": The student's name in "Last, First" format (not reccomended)</li>
+<li>"student_id" : The students id number (default)</li>
+<li>"usersame" : The student's username.</li>
+</ul>
+<p>Other values will default to fields in "student_data", taken from the
+roster directly.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.student.StudentSelect.__attrs_init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">__attrs_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record_field</span><span class="p">,</span> <span class="n">student_field</span><span class="o">=</span><span class="s1">&#39;student_id&#39;</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.student.StudentSelect.__attrs_init__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Method generated by attrs for class StudentSelect.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/student.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">__attrs_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record_field</span><span class="p">,</span> <span class="n">student_field</span><span class="o">=</span><span class="n">attr_dict</span><span class="p">[</span><span class="s1">&#39;student_field&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">default</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">record_field</span> <span class="o">=</span> <span class="n">record_field</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">student_field</span> <span class="o">=</span> <span class="n">student_field</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__attrs_post_init__</span><span class="p">()</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.student.StudentSelect.__attrs_post_init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.student.StudentSelect.__attrs_post_init__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/student.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">record_field</span> <span class="o">=</span> <span class="n">FieldSelect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">record_field</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">student_field</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_init_st_fld</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">student_field</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.student.StudentSelect.__eq__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.student.StudentSelect.__eq__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Method generated by attrs for class StudentSelect.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/student.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="vm">__class__</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">NotImplemented</span>
+    <span class="k">return</span>  <span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">record_field</span><span class="p">,</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_field</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">==</span> <span class="p">(</span>
+        <span class="n">other</span><span class="o">.</span><span class="n">record_field</span><span class="p">,</span>
+        <span class="n">other</span><span class="o">.</span><span class="n">student_field</span><span class="p">,</span>
+    <span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.student.StudentSelect.__ge__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.student.StudentSelect.__ge__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Method generated by attrs for class StudentSelect.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/student.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Automatically created by attrs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="vm">__class__</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">attrs_to_tuple</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">attrs_to_tuple</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="bp">NotImplemented</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.student.StudentSelect.__gt__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.student.StudentSelect.__gt__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Method generated by attrs for class StudentSelect.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/student.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Automatically created by attrs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="vm">__class__</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">attrs_to_tuple</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">attrs_to_tuple</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="bp">NotImplemented</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.student.StudentSelect.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.student.StudentSelect.__init__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Sorta idempotent normalised new.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/student.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sorta idempotent normalised new.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Iterable</span><span class="p">):</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">kwargs</span> <span class="o">|=</span> <span class="n">args</span>
+
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attrs_init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.student.StudentSelect.__le__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.student.StudentSelect.__le__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Method generated by attrs for class StudentSelect.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/student.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Automatically created by attrs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="vm">__class__</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">attrs_to_tuple</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">attrs_to_tuple</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="bp">NotImplemented</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.student.StudentSelect.__lt__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.student.StudentSelect.__lt__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Method generated by attrs for class StudentSelect.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/student.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Automatically created by attrs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="vm">__class__</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">attrs_to_tuple</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">attrs_to_tuple</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="bp">NotImplemented</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.student.StudentSelect.__ne__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.student.StudentSelect.__ne__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Method generated by attrs for class StudentSelect.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/student.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check equality and either forward a NotImplemented or</span>
+<span class="sd">    return the result negated.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="bp">NotImplemented</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">NotImplemented</span>
+
+    <span class="k">return</span> <span class="ow">not</span> <span class="n">result</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.student.StudentSelect.__new__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+      <small class="doc doc-property doc-property-staticmethod"><code>staticmethod</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.student.StudentSelect.__new__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Create and return a new object.  See help(type) for accurate signature.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/student.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">cls</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">StudentSelect</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.student.StudentSelect.__repr__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#exam_gen.util.selectors.student.StudentSelect.__repr__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Method generated by attrs for class StudentSelect.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/student.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Automatically created by attrs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">working_set</span> <span class="o">=</span> <span class="n">_already_repring</span><span class="o">.</span><span class="n">working_set</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="n">working_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">_already_repring</span><span class="o">.</span><span class="n">working_set</span> <span class="o">=</span> <span class="n">working_set</span>
+
+    <span class="k">if</span> <span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="ow">in</span> <span class="n">working_set</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;...&quot;</span>
+    <span class="n">real_cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span>
+    <span class="k">if</span> <span class="n">ns</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">qualname</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">real_cls</span><span class="p">,</span> <span class="s2">&quot;__qualname__&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">qualname</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">class_name</span> <span class="o">=</span> <span class="n">qualname</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">&quot;&gt;.&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">class_name</span> <span class="o">=</span> <span class="n">real_cls</span><span class="o">.</span><span class="vm">__name__</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">class_name</span> <span class="o">=</span> <span class="n">ns</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">real_cls</span><span class="o">.</span><span class="vm">__name__</span>
+
+    <span class="c1"># Since &#39;self&#39; remains on the stack (i.e.: strongly referenced) for the</span>
+    <span class="c1"># duration of this call, it&#39;s safe to depend on id(...) stability, and</span>
+    <span class="c1"># not need to track the instance and therefore worry about properties</span>
+    <span class="c1"># like weakref- or hash-ability.</span>
+    <span class="n">working_set</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">class_name</span><span class="p">,</span> <span class="s2">&quot;(&quot;</span><span class="p">]</span>
+        <span class="n">first</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">attr_repr</span> <span class="ow">in</span> <span class="n">attr_names_with_reprs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">first</span><span class="p">:</span>
+                <span class="n">first</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;=&quot;</span><span class="p">,</span> <span class="n">attr_repr</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">NOTHING</span><span class="p">)))</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">working_set</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.student.StudentSelect.match" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">student</span><span class="p">,</span> <span class="n">record</span><span class="p">)</span></code>
+
+
+<a href="#exam_gen.util.selectors.student.StudentSelect.match" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Check whether this student matches the given record.</p>
+<p>Overload this to implement more advanced behavior.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/student.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">student</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check whether this student matches the given record.</span>
+
+<span class="sd">    Overload this to implement more advanced behavior.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">student_field</span><span class="p">(</span><span class="n">student</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">record_field</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.student.StudentSelect.partition" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">partition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">students</span><span class="p">,</span> <span class="n">records</span><span class="p">,</span> <span class="n">student_field</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">merge_with</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+<a href="#exam_gen.util.selectors.student.StudentSelect.partition" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Go through a set of students and associate records with them.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/student.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">partition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">students</span><span class="p">,</span> <span class="n">records</span><span class="p">,</span> <span class="n">student_field</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">merge_with</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Go through a set of students and associate records with them.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">student_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">student_field</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_init_st_fld</span><span class="p">(</span><span class="n">student_field</span><span class="p">)</span> <span class="k">if</span> <span class="n">student_field</span>
+                     <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">student_field</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">students</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="n">student_dict</span> <span class="o">=</span> <span class="n">students</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">students</span><span class="p">,</span><span class="n">Iterable</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">student</span> <span class="ow">in</span> <span class="n">student</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">student_field</span><span class="p">(</span><span class="n">student</span><span class="p">)</span>
+            <span class="n">student_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">student</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Students must be provided as dict or iterable&quot;</span><span class="p">)</span>
+
+    <span class="n">record_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">student</span><span class="p">)</span> <span class="ow">in</span> <span class="n">student_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">record_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">select_records</span><span class="p">(</span><span class="n">student</span><span class="p">,</span>
+                                               <span class="n">records</span><span class="p">,</span>
+                                               <span class="n">merge_with</span><span class="o">=</span><span class="n">merge_with</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">record_dict</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.student.StudentSelect.select_records" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">select_records</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">student</span><span class="p">,</span> <span class="n">records</span><span class="p">,</span> <span class="n">merge_with</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+<a href="#exam_gen.util.selectors.student.StudentSelect.select_records" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Get the set of records associated with a given student.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/student.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">select_records</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">student</span><span class="p">,</span> <span class="n">records</span><span class="p">,</span> <span class="n">merge_with</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the set of records associated with a given student.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">merge_with</span> <span class="o">=</span> <span class="n">merge_with</span> <span class="k">if</span> <span class="n">merge_with</span> <span class="k">else</span> <span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">records</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">record</span><span class="p">)</span> <span class="ow">in</span> <span class="n">records</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">student</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+                <span class="n">out</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">merge_with</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="n">out</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">out</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">records</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">records</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">student</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">out</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Records must be list or dict.&quot;</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="exam_gen.util.selectors.student.StudentSelect.select_student" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">select_student</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">students</span><span class="p">,</span> <span class="n">record</span><span class="p">,</span> <span class="n">supress_error</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+
+<a href="#exam_gen.util.selectors.student.StudentSelect.select_student" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>Find a student that matches a given record.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>exam_gen/util/selectors/student.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">select_student</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">students</span><span class="p">,</span> <span class="n">record</span><span class="p">,</span> <span class="n">supress_error</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Find a student that matches a given record.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">student</span><span class="p">)</span> <span class="ow">in</span> <span class="n">students</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">student</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">student</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">supress_error</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+            <span class="n">textwrap</span><span class="o">.</span><span class="n">dedent</span><span class="p">(</span>
+                <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">                No student found matching given record:</span>
+
+<span class="sd">                  Record Field: {}</span>
+
+<span class="sd">                  Record: {}</span>
+<span class="sd">                &quot;&quot;&quot;</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">record_field</span><span class="p">,</span> <span class="n">record</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="kc">None</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+<pre><code>  filters:
+    - "!^_[^_]*"
+    - "!log"
+    - "__init__"
+</code></pre>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../property/templated.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: .property.templated" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              .property.templated
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../../quick_reference.html" class="md-footer__link md-footer__link--next" aria-label="Next: Quick Reference" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Quick Reference
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+
+<script src="../../theme/js/iframe-worker.js"></script>
+<script src="../../search/search_index.js"></script>
+
+
+    
+      <script src="../../assets/javascripts/bundle.29db7785.min.js"></script>
+      
+    
+  </body>
+</html>

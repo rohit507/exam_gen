@@ -1,0 +1,1662 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.3">
+    
+    
+      
+        <title>Project Organization - UCB EECS Exam Generator</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.f7f47774.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#2094f3">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#project-organization" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="UCB EECS Exam Generator" class="md-header__button md-logo" aria-label="UCB EECS Exam Generator" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            UCB EECS Exam Generator
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Project Organization
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="UCB EECS Exam Generator" class="md-nav__button md-logo" aria-label="UCB EECS Exam Generator" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    UCB EECS Exam Generator
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      <label class="md-nav__link" for="__nav_2">
+        Tutorial
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Tutorial" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorial
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="first_assignment.html" class="md-nav__link">
+        Your First Assignment
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="classrooms_and_rosters.html" class="md-nav__link">
+        Classrooms and Rosters
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="writing_questions.html" class="md-nav__link">
+        Writing Questions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="customization_and_randomization.html" class="md-nav__link">
+        Customization and Randomization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="advanced_template_use.html" class="md-nav__link">
+        Advanced Template Use
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="multi_part_questions.html" class="md-nav__link">
+        Multi-Part Questions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Project Organization
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="project_organization.html" class="md-nav__link md-nav__link--active">
+        Project Organization
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#moving-polynomial_questionpy-into-a-sub-directory" class="md-nav__link">
+    Moving polynomial_question.py into a Sub-Directory
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#splitting-poly_questionquestionpy-into-multiple-files" class="md-nav__link">
+    Splitting poly_question/question.py into Multiple Files
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-file-templates" class="md-nav__link">
+    Using File Templates
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="external_and_generated_assets.html" class="md-nav__link">
+        External and Generated Assets
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_9" type="checkbox" id="__nav_2_9" >
+      
+      <label class="md-nav__link" for="__nav_2_9">
+        Multiple Choice Questions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Multiple Choice Questions" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_9">
+          <span class="md-nav__icon md-icon"></span>
+          Multiple Choice Questions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="multiple_choice/simple_question.html" class="md-nav__link">
+        Simple Questions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="multiple_choice/choices_and_shuffling.html" class="md-nav__link">
+        Choices and Shuffling
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="multiple_choice/custom_grading_and_setup.html" class="md-nav__link">
+        Custom Grading and Setup
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="answers_and_scoring.html" class="md-nav__link">
+        Answers and Scoring
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        User's Guide
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="User's Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          User's Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_guide/project_setup.html" class="md-nav__link">
+        Project Setup and Organization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_guide/exams.html" class="md-nav__link">
+        Exams/Assignments
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        API Documentation
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API Documentation" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          API Documentation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" type="checkbox" id="__nav_4_1" >
+      
+      <label class="md-nav__link" for="__nav_4_1">
+        exam_gen.build
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="exam_gen.build" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          exam_gen.build
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/build/cli.html" class="md-nav__link">
+        .build.cli
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/build/data.html" class="md-nav__link">
+        .build.data
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/build/formats.html" class="md-nav__link">
+        .build.formats
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" >
+      
+      <label class="md-nav__link" for="__nav_4_2">
+        exam_gen.classrooom
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="exam_gen.classrooom" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_2">
+          <span class="md-nav__icon md-icon"></span>
+          exam_gen.classrooom
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/classroom/answers.html" class="md-nav__link">
+        .classroom.answers
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/classroom/base.html" class="md-nav__link">
+        .classroom.base
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/classroom/grade.html" class="md-nav__link">
+        .classroom.grades
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/classroom/rosters.html" class="md-nav__link">
+        .classroom.rosters
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/classroom/scores.html" class="md-nav__link">
+        .classroom.scores
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/classroom/student.html" class="md-nav__link">
+        .classroom.student
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/exam.html" class="md-nav__link">
+        exam_gen.exam
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
+      
+      <label class="md-nav__link" for="__nav_4_4">
+        exam_gen.property
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="exam_gen.property" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_4">
+          <span class="md-nav__icon md-icon"></span>
+          exam_gen.property
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/answerable.html" class="md-nav__link">
+        .property.answerable
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/auto_gradeable.html" class="md-nav__link">
+        .property.auto_gradeable
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/buildable.html" class="md-nav__link">
+        .property.buildable
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/document.html" class="md-nav__link">
+        .property.document
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/format.html" class="md-nav__link">
+        .property.format
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/gradeable.html" class="md-nav__link">
+        .property.gradeable
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/has_context.html" class="md-nav__link">
+        .property.has_context
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/has_dir_path.html" class="md-nav__link">
+        .property.has_dir_path
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/has_metadata.html" class="md-nav__link">
+        .property.has_metadata
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/has_rng.html" class="md-nav__link">
+        .property.has_rng
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/has_settings.html" class="md-nav__link">
+        .property.has_settings
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/has_user_setup.html" class="md-nav__link">
+        .property.has_user_setup
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/numbered.html" class="md-nav__link">
+        .property.numbered
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/personalized.html" class="md-nav__link">
+        .property.personalized
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/templated.html" class="md-nav__link">
+        .property.templated
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" type="checkbox" id="__nav_4_5" >
+      
+      <label class="md-nav__link" for="__nav_4_5">
+        exam_gen.util
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="exam_gen.util" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_5">
+          <span class="md-nav__icon md-icon"></span>
+          exam_gen.util
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/util/selectors.html" class="md-nav__link">
+        .util.selectors
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quick_reference.html" class="md-nav__link">
+        Quick Reference
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#moving-polynomial_questionpy-into-a-sub-directory" class="md-nav__link">
+    Moving polynomial_question.py into a Sub-Directory
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#splitting-poly_questionquestionpy-into-multiple-files" class="md-nav__link">
+    Splitting poly_question/question.py into Multiple Files
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-file-templates" class="md-nav__link">
+    Using File Templates
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="project-organization">Project Organization<a class="headerlink" href="#project-organization" title="Permanent link">&para;</a></h1>
+<p>Right now <code>polynomial_question.py</code> is getting messy and needs to be cleaned up
+and split into more reasonable pieces.
+Future steps of the tutorial will also be easier if the project is set up in
+a more reasonable way.</p>
+<h2 id="moving-polynomial_questionpy-into-a-sub-directory">Moving <code>polynomial_question.py</code> into a Sub-Directory<a class="headerlink" href="#moving-polynomial_questionpy-into-a-sub-directory" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>First we'll create a new subdirectory for the problem:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>mkdir poly_question
+</code></pre></div>
+</li>
+<li>
+<p>And then move our current <code>polynomial_question.py</code> into it:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>mv polynomial_question.py poly_question/question.py
+</code></pre></div>
+</li>
+<li>
+<p>Finally we'll change the import statement in <code>exam.py</code> to reflect the
+    new location of the question:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">poly_question.question</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div>
+</td></tr></table>
+<details class="quote"><summary>Complete Current <code>exam.py</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env -S pipenv run python3</span>
+
+<span class="kn">from</span> <span class="nn">exam_gen</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">addition_question</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">poly_question.question</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">NewExam</span><span class="p">(</span><span class="n">LatexDoc</span><span class="p">,</span> <span class="n">Exam</span><span class="p">):</span>
+
+    <span class="n">classes</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;fake-class&#39;</span><span class="p">:</span> <span class="n">Classroom</span><span class="o">.</span><span class="n">with_options</span><span class="p">(</span>
+            <span class="n">roster</span><span class="o">=</span><span class="n">BCoursesCSVRoster</span><span class="o">.</span><span class="n">with_options</span><span class="p">(</span>
+                <span class="n">file_name</span><span class="o">=</span><span class="s2">&quot;class-1.csv&quot;</span>
+            <span class="p">)</span>
+        <span class="p">),</span>
+    <span class="p">}</span>
+
+    <span class="n">questions</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;addition-question&#39;</span><span class="p">:</span> <span class="n">SumQuestion</span><span class="p">,</span>
+        <span class="s1">&#39;poly-question&#39;</span><span class="p">:</span> <span class="n">PolyQuestion</span>
+    <span class="p">}</span>
+
+    <span class="n">intro</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    \emph{Example Exam Introduction}</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">user_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span> <span class="n">run_cli</span><span class="p">(</span><span class="nb">globals</span><span class="p">())</span>
+</code></pre></div>
+</td></tr></table>
+</details>
+</li>
+<li>
+<p>This would be a good time to run the various build commands and ensure
+    nothing has changed:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>./exam.py cleanup
+<span class="gp">$ </span>./exam.py build-exam:fake-class:erios
+<span class="gp">$ </span>./exam.py build-solution:fake-class:erios
+</code></pre></div>
+</li>
+</ol>
+<h2 id="splitting-poly_questionquestionpy-into-multiple-files">Splitting <code>poly_question/question.py</code> into Multiple Files<a class="headerlink" href="#splitting-poly_questionquestionpy-into-multiple-files" title="Permanent link">&para;</a></h2>
+<p>Even with the creation of a new directory our primary source file is still
+cluttered. Let's split it into multiple files for ease of use.</p>
+<ol>
+<li>
+<p>Create a new <code>poly_question/functions.py</code> with the following contents:</p>
+<details class="quote" open="open"><summary>Complete Current <code>poly_question/functions.py</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">reduce</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">zip_longest</span><span class="p">,</span> <span class="n">dropwhile</span>
+
+<span class="c1"># multiplies a polynomial by x^n</span>
+<span class="n">mul_x</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="p">([</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">p</span>
+<span class="c1"># multiples a polynomial by a constant</span>
+<span class="n">mul_c</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">p</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="p">[</span><span class="n">c</span> <span class="o">*</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">p</span><span class="p">]</span>
+<span class="c1"># sums two polynomials together</span>
+<span class="n">sum_p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span> <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span> <span class="ow">in</span> <span class="n">zip_longest</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span> <span class="n">fillvalue</span><span class="o">=</span><span class="mi">0</span><span class="p">)]</span>
+<span class="c1"># trims a polynomial of extraneous zeroes</span>
+<span class="n">trim_p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">dropwhile</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">l</span><span class="p">))))</span>
+<span class="c1"># multiply polynomials together</span>
+<span class="n">mul_p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">reduce</span><span class="p">(</span><span class="n">sum_p</span><span class="p">,[</span><span class="n">mul_x</span><span class="p">(</span><span class="n">mul_c</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">c</span><span class="p">),</span><span class="n">d</span><span class="p">)</span><span class="k">for</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="n">c</span><span class="p">)</span><span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">b</span><span class="p">)])</span>
+<span class="c1"># take a zero and give us the corresponding polynomial factor</span>
+<span class="n">fact_z</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span> <span class="n">z</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="c1"># take a list of zeros and produce the polynomial</span>
+<span class="n">prod_z</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">zs</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">trim_p</span><span class="p">(</span><span class="n">reduce</span><span class="p">(</span><span class="n">mul_p</span><span class="p">,</span> <span class="nb">map</span><span class="p">(</span><span class="n">fact_z</span><span class="p">,</span> <span class="n">zs</span><span class="p">))))</span>
+</code></pre></div>
+</td></tr></table>
+</details>
+</li>
+<li>
+<p>Likewise a new <code>poly_question/graph_question.py</code> with the following:</p>
+<details class="quote" open="open"><summary>Complete Current <code>poly_question/graph_question.py</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">exam_gen</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.functions</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">GraphQuestion</span><span class="p">(</span><span class="n">LatexDoc</span><span class="p">,</span> <span class="n">Question</span><span class="p">):</span>
+    <span class="n">metadata</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Graph Question&quot;</span>
+
+    <span class="n">body</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    Sketch the polynomial on this graph:</span>
+<span class="s1">    Placeholder</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">user_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">pass</span>
+</code></pre></div>
+</td></tr></table>
+</details>
+<div class="admonition note">
+<p>Note how we use a python relative import on line 2, since
+<code>functions.py</code> is in the same sub-directory as this file.</p>
+<p><code class="highlight"><span class="kn">from</span> <span class="nn">poly_question.functions</span> <span class="kn">import</span> <span class="o">*</span></code> would also work,
+as it's an absolute import specified relative to the root of the
+assignment.</p>
+</div>
+</li>
+<li>
+<p>We can similarly split off <code>poly_question/factor_question.py</code> with the
+    following:</p>
+<details class="quote" open="open"><summary>Complete Current <code>poly_question/factor_question.py</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">exam_gen</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.functions</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">FactorQuestion</span><span class="p">(</span><span class="n">LatexDoc</span><span class="p">,</span> <span class="n">Question</span><span class="p">):</span>
+    <span class="n">metadata</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Polynomial Factors&quot;</span>
+
+    <span class="n">body</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    What are its factors?</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+
+    <span class="n">solution</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    The factors are:</span>
+
+<span class="s1">    $${</span><span class="si">%- f</span><span class="s1">or factor in factors.values() -%}</span>
+<span class="s1">    {</span>
+<span class="s1">      {</span><span class="si">%- i</span><span class="s1">f factor.has_term -%}</span>
+<span class="s1">        \left( x {{ factor.sign }} {{ factor.num }} \right)</span>
+<span class="s1">      {</span><span class="si">%- e</span><span class="s1">lse -%}</span>
+<span class="s1">        x</span>
+<span class="s1">      {</span><span class="si">%- e</span><span class="s1">ndif -%}</span>
+<span class="s1">    }</span>
+<span class="s1">      {</span><span class="si">%- i</span><span class="s1">f factor.degree != 1 -%}</span>
+<span class="s1">         ^{ {{factor.degree}} }</span>
+<span class="s1">      {</span><span class="si">%- e</span><span class="s1">ndif -%}</span>
+<span class="s1">    {</span><span class="si">%- e</span><span class="s1">ndfor -%}</span>
+<span class="s1">    $$</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">user_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctxt</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="c1"># Format the factors so that they&#39;re also easier to print</span>
+        <span class="n">print_factors</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="c1"># the `zeros` value returned by the parent question is found here</span>
+        <span class="c1"># in the `ctxt` parameter under `ctxt[&#39;zeroes&#39;]`</span>
+        <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">ctxt</span><span class="p">[</span><span class="s1">&#39;zeros&#39;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">z</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">print_factors</span><span class="p">:</span>
+                <span class="n">print_factors</span><span class="p">[</span><span class="n">z</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                      <span class="s1">&#39;zero&#39;</span><span class="p">:</span> <span class="n">z</span><span class="p">,</span>
+                      <span class="s1">&#39;degree&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                      <span class="s1">&#39;has_term&#39;</span><span class="p">:</span> <span class="n">z</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">,</span> <span class="c1"># do we even print a constant term?</span>
+                      <span class="s1">&#39;sign&#39;</span><span class="p">:</span> <span class="s2">&quot;+&quot;</span> <span class="k">if</span> <span class="n">z</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span>
+                      <span class="s1">&#39;num&#39;</span><span class="p">:</span> <span class="nb">abs</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+                    <span class="p">}</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">print_factors</span><span class="p">[</span><span class="n">z</span><span class="p">][</span><span class="s1">&#39;degree&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;factors&quot;</span><span class="p">:</span> <span class="n">print_factors</span><span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+</details>
+</li>
+<li>
+<p>Next remove <code>GraphQuestion</code> and <code>PolyQuestion</code> from
+    <code>poly_question/question.py</code>.</p>
+</li>
+<li>
+<p>Instead we will import them from their new locations, with the following:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">exam_gen</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.functions</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.graph_question</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.factor_question</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div>
+</td></tr></table>
+<details class="quote"><summary>Complete Current <code>poly_question/question.py</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">exam_gen</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.functions</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.graph_question</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.factor_question</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">PolyQuestion</span><span class="p">(</span><span class="n">LatexDoc</span><span class="p">,</span> <span class="n">Question</span><span class="p">):</span>
+    <span class="n">metadata</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Polynomial Question&quot;</span>
+
+    <span class="n">body</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    For the following polynomial:</span>
+
+<span class="s1">    $$</span>
+<span class="s1">    {</span><span class="si">%- f</span><span class="s1">or term in poly -%}</span>
+<span class="s1">      {</span><span class="si">%- i</span><span class="s1">f not loop.first -%}{{term.sign}}{</span><span class="si">%- e</span><span class="s1">ndif -%}</span>
+<span class="s1">      { {{term.num}}{</span><span class="si">%- i</span><span class="s1">f term.degree != 0 -%}x{</span><span class="si">%- e</span><span class="s1">ndif -%} }</span>
+<span class="s1">      {</span><span class="si">%- i</span><span class="s1">f term.degree &gt; 1 -%}^{ {{term.degree}} }{</span><span class="si">%- e</span><span class="s1">ndif -%}</span>
+<span class="s1">    {</span><span class="si">%- e</span><span class="s1">ndfor -%}</span>
+<span class="s1">    $$</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+
+    <span class="n">questions</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;graph&#39;</span><span class="p">:</span> <span class="n">GraphQuestion</span><span class="p">,</span>
+        <span class="s1">&#39;factors&#39;</span><span class="p">:</span> <span class="n">FactorQuestion</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">user_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="c1"># Make a list of 4 random integers, the zeros of our polynomial</span>
+        <span class="n">zeros</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">)))</span>
+
+        <span class="c1"># The polynomial such that each index is the coefficient of the</span>
+        <span class="c1"># corresponding term.</span>
+        <span class="c1"># (i.e. the polynomial is `poly[0] + poly[1]x + poly[2]x^2 ...` for a</span>
+        <span class="c1"># given list `poly`)</span>
+        <span class="n">poly</span> <span class="o">=</span> <span class="n">prod_z</span><span class="p">(</span><span class="n">zeros</span><span class="p">)</span>
+
+        <span class="c1"># Reorder the terms so the highest degree is first, and split it out</span>
+        <span class="c1"># to make the templates easier to write.</span>
+        <span class="n">print_poly</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">degree</span><span class="p">,</span> <span class="n">coeff</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">poly</span><span class="p">))):</span>
+            <span class="k">if</span> <span class="n">coeff</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">print_poly</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                      <span class="s1">&#39;degree&#39;</span><span class="p">:</span> <span class="n">degree</span><span class="p">,</span>
+                      <span class="s1">&#39;coefficient&#39;</span><span class="p">:</span> <span class="n">coeff</span><span class="p">,</span>
+                      <span class="s1">&#39;sign&#39;</span><span class="p">:</span> <span class="s2">&quot;-&quot;</span> <span class="k">if</span> <span class="n">coeff</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;+&quot;</span><span class="p">,</span>
+                      <span class="s1">&#39;num&#39;</span><span class="p">:</span> <span class="nb">abs</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span>
+                    <span class="p">})</span>
+
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;poly&#39;</span><span class="p">:</span> <span class="n">print_poly</span><span class="p">,</span>
+            <span class="s1">&#39;zeros&#39;</span><span class="p">:</span> <span class="n">zeros</span>
+        <span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+</details>
+</li>
+<li>
+<p>Again, this would be a good time to run the various build commands and ensure
+    nothing has changed:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>./exam.py cleanup
+<span class="gp">$ </span>./exam.py build-exam:fake-class:erios
+<span class="gp">$ </span>./exam.py build-solution:fake-class:erios
+</code></pre></div>
+</li>
+</ol>
+<h2 id="using-file-templates">Using File Templates<a class="headerlink" href="#using-file-templates" title="Permanent link">&para;</a></h2>
+<p>Some of the templates we use in the questions are also proving unwieldy, so
+we can move them into files.</p>
+<ol>
+<li>
+<p>Create a file for the <code>FactorQuestion</code>'s <code>solution</code> variable by placing
+    the following into <code>poly_question/factor_solution.jn2.tex</code>:</p>
+<details class="quote" open="open"><summary>Complete Current <code>poly_question/factor_solution.jn2.tex</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>The factors are:
+
+<span class="sb">$$</span><span class="nb"></span>
+<span class="nb">{</span><span class="c">%- for factor in factors.values() -%}</span>
+<span class="nb">{</span>
+<span class="nb">  {</span><span class="c">%- if factor.has_term -%}</span>
+<span class="nb">    </span><span class="nv">\left</span><span class="o">(</span><span class="nb"> x {{ factor.sign }} {{ factor.num }} </span><span class="nv">\right</span><span class="o">)</span><span class="nb"></span>
+<span class="nb">  {</span><span class="c">%- else -%}</span>
+<span class="nb">    x</span>
+<span class="nb">  {</span><span class="c">%- endif -%}</span>
+<span class="nb">}</span>
+<span class="nb">  {</span><span class="c">%- if factor.degree != 1 -%}</span>
+<span class="nb">    ^{ {{factor.degree}} }</span>
+<span class="nb">  {</span><span class="c">%- endif -%}</span>
+<span class="nb">{</span><span class="c">%- endfor -%}</span>
+<span class="s">$$</span>
+</code></pre></div>
+</td></tr></table>
+</details>
+</li>
+<li>
+<p>We can then edit <code>factor_question.py</code> to make it use the template file
+    rather than the inline code by removing the assignment to <code>solution.text</code>
+    and replacing it with the following:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">11</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">solution</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="s2">&quot;factor_solution.jn2.tex&quot;</span>
+</code></pre></div>
+</td></tr></table>
+<details class="quote"><summary>Complete Current <code>poly_question/factor_question.py</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">exam_gen</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.functions</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">FactorQuestion</span><span class="p">(</span><span class="n">LatexDoc</span><span class="p">,</span> <span class="n">Question</span><span class="p">):</span>
+    <span class="n">metadata</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Polynomial Factors&quot;</span>
+
+    <span class="n">body</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    What are its factors?</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+
+    <span class="n">solution</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="s2">&quot;factor_solution.jn2.tex&quot;</span>
+
+    <span class="k">def</span> <span class="nf">user_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctxt</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="c1"># Format the factors so that they&#39;re also easier to print</span>
+        <span class="n">print_factors</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="c1"># the `zeros` value returned by the parent question is found here</span>
+        <span class="c1"># in the `ctxt` parameter under `ctxt[&#39;zeroes&#39;]`</span>
+        <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">ctxt</span><span class="p">[</span><span class="s1">&#39;zeros&#39;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">z</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">print_factors</span><span class="p">:</span>
+                <span class="n">print_factors</span><span class="p">[</span><span class="n">z</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                      <span class="s1">&#39;zero&#39;</span><span class="p">:</span> <span class="n">z</span><span class="p">,</span>
+                      <span class="s1">&#39;degree&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                      <span class="s1">&#39;has_term&#39;</span><span class="p">:</span> <span class="n">z</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">,</span> <span class="c1"># do we even print a constant term?</span>
+                      <span class="s1">&#39;sign&#39;</span><span class="p">:</span> <span class="s2">&quot;+&quot;</span> <span class="k">if</span> <span class="n">z</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span>
+                      <span class="s1">&#39;num&#39;</span><span class="p">:</span> <span class="nb">abs</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+                    <span class="p">}</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">print_factors</span><span class="p">[</span><span class="n">z</span><span class="p">][</span><span class="s1">&#39;degree&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;factors&quot;</span><span class="p">:</span> <span class="n">print_factors</span><span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+</details>
+</li>
+<li>
+<p>As usual, none of the actual contents of the assignment have changed
+    so we can run the build commands to verify things still work:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>./exam.py cleanup
+<span class="gp">$ </span>./exam.py build-exam:fake-class:erios
+<span class="gp">$ </span>./exam.py build-solution:fake-class:erios
+</code></pre></div>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Notes on Template Files</p>
+<ul>
+<li>You can use <code>*.file</code> anywhere you can use <code>*.text</code> to define the text
+  of a template field.<ul>
+<li>This includes <code>intro</code> and <code>body</code>, as well as any other similar
+  variables.</li>
+</ul>
+</li>
+<li>The library will search for the template file in the following order:<ol>
+<li>The directory with the question/exam where it's specified.</li>
+<li>The directories of each parent question or exam, until it reaches
+   the root of project.</li>
+<li>The set of templates provided with the <code>exam_gen</code> library.</li>
+</ol>
+</li>
+</ul>
+<div class="admonition error">
+<p class="admonition-title">TODO: link to detailed search path description in user guide</p>
+</div>
+</div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="multi_part_questions.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Multi-Part Questions" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Multi-Part Questions
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="external_and_generated_assets.html" class="md-footer__link md-footer__link--next" aria-label="Next: External and Generated Assets" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              External and Generated Assets
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+
+<script src="../theme/js/iframe-worker.js"></script>
+<script src="../search/search_index.js"></script>
+
+
+    
+      <script src="../assets/javascripts/bundle.29db7785.min.js"></script>
+      
+    
+  </body>
+</html>

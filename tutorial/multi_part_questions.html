@@ -1,0 +1,2072 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.3">
+    
+    
+      
+        <title>Multi-Part Questions - UCB EECS Exam Generator</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.f7f47774.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#2094f3">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#multi-part-questions" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="UCB EECS Exam Generator" class="md-header__button md-logo" aria-label="UCB EECS Exam Generator" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            UCB EECS Exam Generator
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Multi-Part Questions
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="UCB EECS Exam Generator" class="md-nav__button md-logo" aria-label="UCB EECS Exam Generator" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    UCB EECS Exam Generator
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      <label class="md-nav__link" for="__nav_2">
+        Tutorial
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Tutorial" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorial
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="first_assignment.html" class="md-nav__link">
+        Your First Assignment
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="classrooms_and_rosters.html" class="md-nav__link">
+        Classrooms and Rosters
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="writing_questions.html" class="md-nav__link">
+        Writing Questions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="customization_and_randomization.html" class="md-nav__link">
+        Customization and Randomization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="advanced_template_use.html" class="md-nav__link">
+        Advanced Template Use
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Multi-Part Questions
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="multi_part_questions.html" class="md-nav__link md-nav__link--active">
+        Multi-Part Questions
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#initial-setup" class="md-nav__link">
+    Initial Setup
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-sub-questions" class="md-nav__link">
+    Adding Sub-Questions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generating-problem-data-in-the-parent" class="md-nav__link">
+    Generating Problem Data in the Parent
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-problem-data-in-the-children" class="md-nav__link">
+    Using Problem Data in the Children
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="project_organization.html" class="md-nav__link">
+        Project Organization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="external_and_generated_assets.html" class="md-nav__link">
+        External and Generated Assets
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_9" type="checkbox" id="__nav_2_9" >
+      
+      <label class="md-nav__link" for="__nav_2_9">
+        Multiple Choice Questions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Multiple Choice Questions" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_9">
+          <span class="md-nav__icon md-icon"></span>
+          Multiple Choice Questions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="multiple_choice/simple_question.html" class="md-nav__link">
+        Simple Questions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="multiple_choice/choices_and_shuffling.html" class="md-nav__link">
+        Choices and Shuffling
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="multiple_choice/custom_grading_and_setup.html" class="md-nav__link">
+        Custom Grading and Setup
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="answers_and_scoring.html" class="md-nav__link">
+        Answers and Scoring
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        User's Guide
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="User's Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          User's Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_guide/project_setup.html" class="md-nav__link">
+        Project Setup and Organization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_guide/exams.html" class="md-nav__link">
+        Exams/Assignments
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        API Documentation
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API Documentation" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          API Documentation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" type="checkbox" id="__nav_4_1" >
+      
+      <label class="md-nav__link" for="__nav_4_1">
+        exam_gen.build
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="exam_gen.build" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          exam_gen.build
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/build/cli.html" class="md-nav__link">
+        .build.cli
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/build/data.html" class="md-nav__link">
+        .build.data
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/build/formats.html" class="md-nav__link">
+        .build.formats
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" >
+      
+      <label class="md-nav__link" for="__nav_4_2">
+        exam_gen.classrooom
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="exam_gen.classrooom" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_2">
+          <span class="md-nav__icon md-icon"></span>
+          exam_gen.classrooom
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/classroom/answers.html" class="md-nav__link">
+        .classroom.answers
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/classroom/base.html" class="md-nav__link">
+        .classroom.base
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/classroom/grade.html" class="md-nav__link">
+        .classroom.grades
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/classroom/rosters.html" class="md-nav__link">
+        .classroom.rosters
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/classroom/scores.html" class="md-nav__link">
+        .classroom.scores
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/classroom/student.html" class="md-nav__link">
+        .classroom.student
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/exam.html" class="md-nav__link">
+        exam_gen.exam
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
+      
+      <label class="md-nav__link" for="__nav_4_4">
+        exam_gen.property
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="exam_gen.property" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_4">
+          <span class="md-nav__icon md-icon"></span>
+          exam_gen.property
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/answerable.html" class="md-nav__link">
+        .property.answerable
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/auto_gradeable.html" class="md-nav__link">
+        .property.auto_gradeable
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/buildable.html" class="md-nav__link">
+        .property.buildable
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/document.html" class="md-nav__link">
+        .property.document
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/format.html" class="md-nav__link">
+        .property.format
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/gradeable.html" class="md-nav__link">
+        .property.gradeable
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/has_context.html" class="md-nav__link">
+        .property.has_context
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/has_dir_path.html" class="md-nav__link">
+        .property.has_dir_path
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/has_metadata.html" class="md-nav__link">
+        .property.has_metadata
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/has_rng.html" class="md-nav__link">
+        .property.has_rng
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/has_settings.html" class="md-nav__link">
+        .property.has_settings
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/has_user_setup.html" class="md-nav__link">
+        .property.has_user_setup
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/numbered.html" class="md-nav__link">
+        .property.numbered
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/personalized.html" class="md-nav__link">
+        .property.personalized
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/property/templated.html" class="md-nav__link">
+        .property.templated
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" type="checkbox" id="__nav_4_5" >
+      
+      <label class="md-nav__link" for="__nav_4_5">
+        exam_gen.util
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="exam_gen.util" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_5">
+          <span class="md-nav__icon md-icon"></span>
+          exam_gen.util
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/util/selectors.html" class="md-nav__link">
+        .util.selectors
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quick_reference.html" class="md-nav__link">
+        Quick Reference
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#initial-setup" class="md-nav__link">
+    Initial Setup
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-sub-questions" class="md-nav__link">
+    Adding Sub-Questions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generating-problem-data-in-the-parent" class="md-nav__link">
+    Generating Problem Data in the Parent
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-problem-data-in-the-children" class="md-nav__link">
+    Using Problem Data in the Children
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="multi-part-questions">Multi-Part Questions<a class="headerlink" href="#multi-part-questions" title="Permanent link">&para;</a></h1>
+<p>Now we'll take a look at multi-part questions as well as some advanced features
+of the <code>exam_gen</code> library.</p>
+<h2 id="initial-setup">Initial Setup<a class="headerlink" href="#initial-setup" title="Permanent link">&para;</a></h2>
+<p>Let's first set up a new question for this section of the tutorial.</p>
+<ol>
+<li>
+<p>Create a new file <code>polynomial_question.py</code> with the following contents:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">exam_gen</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">PolyQuestion</span><span class="p">(</span><span class="n">LatexDoc</span><span class="p">,</span> <span class="n">Question</span><span class="p">):</span>
+    <span class="n">metadata</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Polynomial Question&quot;</span>
+
+    <span class="n">body</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    For this polynomial: Placeholder Text</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">user_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">pass</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>And edit the <code>questions</code> variable in <code>exam.py</code> so that it reads as follows:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="n">questions</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;addition-question&#39;</span><span class="p">:</span> <span class="n">SumQuestion</span><span class="p">,</span>
+<span class="hll">        <span class="s1">&#39;poly-question&#39;</span><span class="p">:</span> <span class="n">PolyQuestion</span>
+</span>    <span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+<details class="quote"><summary>Complete Current <code>exam.py</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env -S pipenv run python3</span>
+
+<span class="kn">from</span> <span class="nn">exam_gen</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">addition_question</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">polynomial_question</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">NewExam</span><span class="p">(</span><span class="n">LatexDoc</span><span class="p">,</span> <span class="n">Exam</span><span class="p">):</span>
+
+    <span class="n">classes</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;fake-class&#39;</span><span class="p">:</span> <span class="n">Classroom</span><span class="o">.</span><span class="n">with_options</span><span class="p">(</span>
+            <span class="n">roster</span><span class="o">=</span><span class="n">BCoursesCSVRoster</span><span class="o">.</span><span class="n">with_options</span><span class="p">(</span>
+                <span class="n">file_name</span><span class="o">=</span><span class="s2">&quot;class-1.csv&quot;</span>
+            <span class="p">)</span>
+        <span class="p">),</span>
+    <span class="p">}</span>
+
+    <span class="n">questions</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;addition-question&#39;</span><span class="p">:</span> <span class="n">SumQuestion</span><span class="p">,</span>
+<span class="hll">        <span class="s1">&#39;poly-question&#39;</span><span class="p">:</span> <span class="n">PolyQuestion</span>
+</span>    <span class="p">}</span>
+
+    <span class="n">intro</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    \emph{Example Exam Introduction}</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">user_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span> <span class="n">run_cli</span><span class="p">(</span><span class="nb">globals</span><span class="p">())</span>
+</code></pre></div>
+</td></tr></table>
+</details>
+</li>
+<li>
+<p>From there we can build the exam and see the new question:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>./exam.py cleanup
+<span class="gp">$ </span>./exam.py build-exam:fake-class:erios
+</code></pre></div>
+<div class="admonition error">
+<p class="admonition-title">Todo: image in <code>assets/</code></p>
+</div>
+</li>
+</ol>
+<h2 id="adding-sub-questions">Adding Sub-Questions<a class="headerlink" href="#adding-sub-questions" title="Permanent link">&para;</a></h2>
+<p>Now we can add some placeholders for the subquestions as well.</p>
+<ol>
+<li>
+<p>Edit <code>polynomial_question.py</code> by adding the following before the
+     declaration of <code class="highlight"><span class="n">PolyQuestion</span></code>:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">GraphQuestion</span><span class="p">(</span><span class="n">LatexDoc</span><span class="p">,</span> <span class="n">Question</span><span class="p">):</span>
+    <span class="n">metadata</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Graph Question&quot;</span>
+
+    <span class="n">body</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    Sketch the polynomial on this graph:</span>
+<span class="s1">    Placeholder</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">user_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">FactorQuestion</span><span class="p">(</span><span class="n">LatexDoc</span><span class="p">,</span> <span class="n">Question</span><span class="p">):</span>
+    <span class="n">metadata</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Polynomial Factors&quot;</span>
+
+    <span class="n">body</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    What are its factors?</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">user_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">pass</span>
+</code></pre></div>
+</td></tr></table>
+<div class="admonition note">
+<p>This has to come before the line with <code class="highlight"><span class="k">class</span> <span class="nc">PolyQuestion</span><span class="p">(</span><span class="o">..</span><span class="p">):</span></code>
+due to how python loads classes. Both <code>GraphQuestion</code> and
+<code>FactorQuestion</code> need to already exist before we define <code>PolyQuestion</code>.</p>
+</div>
+</li>
+<li>
+<p>As well as adding a <code>questions</code> variables (just like in <code>exam.py</code>) to
+     <code class="highlight"><span class="n">PolyQuestion</span></code> as follows:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">questions</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;graph&#39;</span><span class="p">:</span> <span class="n">GraphQuestion</span><span class="p">,</span>
+    <span class="s1">&#39;factors&#39;</span><span class="p">:</span> <span class="n">FactorQuestion</span>
+<span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+<details class="quote"><summary>Complete Current <code>polynomial_question.py</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">exam_gen</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">GraphQuestion</span><span class="p">(</span><span class="n">LatexDoc</span><span class="p">,</span> <span class="n">Question</span><span class="p">):</span>
+    <span class="n">metadata</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Graph Question&quot;</span>
+
+    <span class="n">body</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    Sketch the polynomial on this graph:</span>
+<span class="s1">    Placeholder</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">user_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">FactorQuestion</span><span class="p">(</span><span class="n">LatexDoc</span><span class="p">,</span> <span class="n">Question</span><span class="p">):</span>
+    <span class="n">metadata</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Polynomial Factors&quot;</span>
+
+    <span class="n">body</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    What are its factors?</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">user_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">PolyQuestion</span><span class="p">(</span><span class="n">LatexDoc</span><span class="p">,</span> <span class="n">Question</span><span class="p">):</span>
+    <span class="n">metadata</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Polynomial Question&quot;</span>
+
+    <span class="n">body</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    For the following polynomial: Placeholder Text</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+
+    <span class="n">questions</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;graph&#39;</span><span class="p">:</span> <span class="n">GraphQuestion</span><span class="p">,</span>
+        <span class="s1">&#39;factors&#39;</span><span class="p">:</span> <span class="n">FactorQuestion</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">user_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">pass</span>
+</code></pre></div>
+</td></tr></table>
+</details>
+</li>
+<li>
+<p>From there we can build the exam and see the new question:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>./exam.py cleanup
+<span class="gp">$ </span>./exam.py build-exam:fake-class:erios
+</code></pre></div>
+<div class="admonition error">
+<p class="admonition-title">Todo: image in <code>assets/</code></p>
+</div>
+</li>
+</ol>
+<h2 id="generating-problem-data-in-the-parent">Generating Problem Data in the Parent<a class="headerlink" href="#generating-problem-data-in-the-parent" title="Permanent link">&para;</a></h2>
+<p>For this question to work, both the subquestions need to refer to the same
+polynomial. We can't generate a new one for each section. This is where
+the other use of <code>user_setup</code> comes in.</p>
+<p>In addition to providing variables to templates those variables are made
+available to child problems as well.</p>
+<ol>
+<li>
+<p>To start, we're just going to add some imports and a few functions that
+    let us manipulate polynomials. The exact contents aren't particularly
+    important for this tutorial, so don't worry too much about them.</p>
+<p>For now add the following to the start of <code>polynomial_question.py</code>:</p>
+<details class="example" open="open"><summary>Support Code</summary></details>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">reduce</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">zip_longest</span><span class="p">,</span> <span class="n">dropwhile</span>
+
+<span class="c1"># multiplies a polynomial by x^n</span>
+<span class="n">mul_x</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="p">([</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">p</span>
+<span class="c1"># multiples a polynomial by a constant</span>
+<span class="n">mul_c</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">p</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="p">[</span><span class="n">c</span> <span class="o">*</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">p</span><span class="p">]</span>
+<span class="c1"># sums two polynomials together</span>
+<span class="n">sum_p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span> <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span> <span class="ow">in</span> <span class="n">zip_longest</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span> <span class="n">fillvalue</span><span class="o">=</span><span class="mi">0</span><span class="p">)]</span>
+<span class="c1"># trims a polynomial of extraneous zeroes</span>
+<span class="n">trim_p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">dropwhile</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">l</span><span class="p">))))</span>
+<span class="c1"># multiply polynomials together</span>
+<span class="n">mul_p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">reduce</span><span class="p">(</span><span class="n">sum_p</span><span class="p">,[</span><span class="n">mul_x</span><span class="p">(</span><span class="n">mul_c</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">c</span><span class="p">),</span><span class="n">d</span><span class="p">)</span><span class="k">for</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="n">c</span><span class="p">)</span><span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">b</span><span class="p">)])</span>
+<span class="c1"># take a zero and give us the corresponding polynomial factor</span>
+<span class="n">fact_z</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span> <span class="n">z</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="c1"># take a list of zeros and produce the polynomial</span>
+<span class="n">prod_z</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">zs</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">trim_p</span><span class="p">(</span><span class="n">reduce</span><span class="p">(</span><span class="n">mul_p</span><span class="p">,</span> <span class="nb">map</span><span class="p">(</span><span class="n">fact_z</span><span class="p">,</span> <span class="n">zs</span><span class="p">))))</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Using those helpers we can then write the start of our <code>user_setup</code> for
+    the problem as a whole. So add the following to <code>polynomial_question.py</code>:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">user_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+    <span class="c1"># Make a list of 4 random integers, the zeros of our polynomial</span>
+    <span class="n">zeros</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">)))</span>
+
+    <span class="c1"># The polynomial such that each index is the coefficient of the</span>
+    <span class="c1"># corresponding term.</span>
+    <span class="c1"># (i.e. the polynomial is `poly[0] + poly[1]x + poly[2]x^2 ...` for a</span>
+    <span class="c1"># given list `poly`)</span>
+    <span class="n">poly</span> <span class="o">=</span> <span class="n">prod_z</span><span class="p">(</span><span class="n">zeros</span><span class="p">)</span>
+
+    <span class="c1"># Reorder the terms so the highest degree is first, and split it out</span>
+    <span class="c1"># to make the templates easier to write.</span>
+    <span class="n">print_poly</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">degree</span><span class="p">,</span> <span class="n">coeff</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">poly</span><span class="p">))):</span>
+        <span class="k">if</span> <span class="n">coeff</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">print_poly</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                  <span class="s1">&#39;degree&#39;</span><span class="p">:</span> <span class="n">degree</span><span class="p">,</span>
+                  <span class="s1">&#39;coefficient&#39;</span><span class="p">:</span> <span class="n">coeff</span><span class="p">,</span>
+                  <span class="s1">&#39;sign&#39;</span><span class="p">:</span> <span class="s2">&quot;-&quot;</span> <span class="k">if</span> <span class="n">coeff</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;+&quot;</span><span class="p">,</span>
+                  <span class="s1">&#39;num&#39;</span><span class="p">:</span> <span class="nb">abs</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span>
+                <span class="p">})</span>
+
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;poly&#39;</span><span class="p">:</span> <span class="n">print_poly</span><span class="p">,</span>
+<span class="hll">        <span class="s1">&#39;zeros&#39;</span><span class="p">:</span> <span class="n">zeros</span>
+</span>    <span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+<p>The latter half of that code just unpacks the terms of the polynomial so
+that the template can access them under the <code>poly</code> variable.</p>
+<p>Also important is the highlighted line, where we add the list of zeroes
+to the context. Our child questions will be able to access the full context
+we return here (just as the template can) so anything they need to know
+should be stuffed in there as well.</p>
+</li>
+<li>
+<p>Finally, we can make use of those reformatted polynomial variables in
+    our template by changing <code>body.text</code>:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">body</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">For the following polynomial:</span>
+
+<span class="s1">$$</span>
+<span class="s1">{</span><span class="si">%- f</span><span class="s1">or term in poly -%}</span>
+<span class="s1">  {</span><span class="si">%- i</span><span class="s1">f not loop.first -%}{{term.sign}}{</span><span class="si">%- e</span><span class="s1">ndif -%}</span>
+<span class="s1">  { {{term.num}}{</span><span class="si">%- i</span><span class="s1">f term.degree != 0 -%}x{</span><span class="si">%- e</span><span class="s1">ndif -%} }</span>
+<span class="s1">  {</span><span class="si">%- i</span><span class="s1">f term.degree &gt; 1 -%}^{ {{term.degree}} }{</span><span class="si">%- e</span><span class="s1">ndif -%}</span>
+<span class="s1">{</span><span class="si">%- e</span><span class="s1">ndfor -%}</span>
+<span class="s1">$$</span>
+<span class="s1">&#39;&#39;&#39;</span>
+</code></pre></div>
+</td></tr></table>
+<details class="quote"><summary>Complete Current <code>polynomial_question.py</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">exam_gen</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">reduce</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">zip_longest</span><span class="p">,</span> <span class="n">dropwhile</span>
+
+<span class="c1"># multiplies a polynomial by x^n</span>
+<span class="n">mul_x</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="p">([</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">p</span>
+<span class="c1"># multiples a polynomial by a constant</span>
+<span class="n">mul_c</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">p</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="p">[</span><span class="n">c</span> <span class="o">*</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">p</span><span class="p">]</span>
+<span class="c1"># sums two polynomials together</span>
+<span class="n">sum_p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span> <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span> <span class="ow">in</span> <span class="n">zip_longest</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span> <span class="n">fillvalue</span><span class="o">=</span><span class="mi">0</span><span class="p">)]</span>
+<span class="c1"># trims a polynomial of extraneous zeroes</span>
+<span class="n">trim_p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">dropwhile</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">l</span><span class="p">))))</span>
+<span class="c1"># multiply polynomials together</span>
+<span class="n">mul_p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">reduce</span><span class="p">(</span><span class="n">sum_p</span><span class="p">,[</span><span class="n">mul_x</span><span class="p">(</span><span class="n">mul_c</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">c</span><span class="p">),</span><span class="n">d</span><span class="p">)</span><span class="k">for</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="n">c</span><span class="p">)</span><span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">b</span><span class="p">)])</span>
+<span class="c1"># take a zero and give us the corresponding polynomial factor</span>
+<span class="n">fact_z</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span> <span class="n">z</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="c1"># take a list of zeros and produce the polynomial</span>
+<span class="n">prod_z</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">zs</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">trim_p</span><span class="p">(</span><span class="n">reduce</span><span class="p">(</span><span class="n">mul_p</span><span class="p">,</span> <span class="nb">map</span><span class="p">(</span><span class="n">fact_z</span><span class="p">,</span> <span class="n">zs</span><span class="p">))))</span>
+
+<span class="k">class</span> <span class="nc">GraphQuestion</span><span class="p">(</span><span class="n">LatexDoc</span><span class="p">,</span> <span class="n">Question</span><span class="p">):</span>
+    <span class="n">metadata</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Graph Question&quot;</span>
+
+    <span class="n">body</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    Sketch the polynomial on this graph:</span>
+<span class="s1">    Placeholder</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">user_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">FactorQuestion</span><span class="p">(</span><span class="n">LatexDoc</span><span class="p">,</span> <span class="n">Question</span><span class="p">):</span>
+    <span class="n">metadata</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Polynomial Factors&quot;</span>
+
+    <span class="n">body</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    What are its factors?</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">user_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">PolyQuestion</span><span class="p">(</span><span class="n">LatexDoc</span><span class="p">,</span> <span class="n">Question</span><span class="p">):</span>
+    <span class="n">metadata</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Polynomial Question&quot;</span>
+
+    <span class="n">body</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    For the following polynomial:</span>
+
+<span class="s1">    $$</span>
+<span class="s1">    {</span><span class="si">%- f</span><span class="s1">or term in poly -%}</span>
+<span class="s1">      {</span><span class="si">%- i</span><span class="s1">f not loop.first -%}{{term.sign}}{</span><span class="si">%- e</span><span class="s1">ndif -%}</span>
+<span class="s1">      { {{term.num}}{</span><span class="si">%- i</span><span class="s1">f term.degree != 0 -%}x{</span><span class="si">%- e</span><span class="s1">ndif -%} }</span>
+<span class="s1">      {</span><span class="si">%- i</span><span class="s1">f term.degree &gt; 1 -%}^{ {{term.degree}} }{</span><span class="si">%- e</span><span class="s1">ndif -%}</span>
+<span class="s1">    {</span><span class="si">%- e</span><span class="s1">ndfor -%}</span>
+<span class="s1">    $$</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+
+    <span class="n">questions</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;graph&#39;</span><span class="p">:</span> <span class="n">GraphQuestion</span><span class="p">,</span>
+        <span class="s1">&#39;factors&#39;</span><span class="p">:</span> <span class="n">FactorQuestion</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">user_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="c1"># Make a list of 4 random integers, the zeros of our polynomial</span>
+        <span class="n">zeros</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">)))</span>
+
+        <span class="c1"># The polynomial such that each index is the coefficient of the</span>
+        <span class="c1"># corresponding term.</span>
+        <span class="c1"># (i.e. the polynomial is `poly[0] + poly[1]x + poly[2]x^2 ...` for a</span>
+        <span class="c1"># given list `poly`)</span>
+        <span class="n">poly</span> <span class="o">=</span> <span class="n">prod_z</span><span class="p">(</span><span class="n">zeros</span><span class="p">)</span>
+
+        <span class="c1"># Reorder the terms so the highest degree is first, and split it out</span>
+        <span class="c1"># to make the templates easier to write.</span>
+        <span class="n">print_poly</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">degree</span><span class="p">,</span> <span class="n">coeff</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">poly</span><span class="p">))):</span>
+            <span class="k">if</span> <span class="n">coeff</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">print_poly</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                  <span class="s1">&#39;degree&#39;</span><span class="p">:</span> <span class="n">degree</span><span class="p">,</span>
+                      <span class="s1">&#39;coefficient&#39;</span><span class="p">:</span> <span class="n">coeff</span><span class="p">,</span>
+                  <span class="s1">&#39;sign&#39;</span><span class="p">:</span> <span class="s2">&quot;-&quot;</span> <span class="k">if</span> <span class="n">coeff</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;+&quot;</span><span class="p">,</span>
+                      <span class="s1">&#39;num&#39;</span><span class="p">:</span> <span class="nb">abs</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span>
+                <span class="p">})</span>
+
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;poly&#39;</span><span class="p">:</span> <span class="n">print_poly</span><span class="p">,</span>
+            <span class="s1">&#39;zeros&#39;</span><span class="p">:</span> <span class="n">zeros</span>
+        <span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+</details>
+</li>
+<li>
+<p>Build the current version of exam with:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>./exam.py cleanup
+<span class="gp">$ </span>./exam.py build-exam:fake-class:erios
+</code></pre></div>
+<div class="admonition error">
+<p class="admonition-title">TODO: immage in <code>assets/</code></p>
+</div>
+</li>
+</ol>
+<h2 id="using-problem-data-in-the-children">Using Problem Data in the Children<a class="headerlink" href="#using-problem-data-in-the-children" title="Permanent link">&para;</a></h2>
+<p>This gives us the setup of the problem but the sub-problems, especially
+<code>FactorQuestion</code>, need to know information generated in the parent in order
+to render.</p>
+<p>In this case, there's a <code>ctxt</code> parameter made available to <code>user_setup</code> that
+contains all the data returned by the <code>user_setup</code> of the parent.</p>
+<ol>
+<li>
+<p>We will need to print a nicer form of the factored polynomial based on
+     the zeroes of that polynomial.</p>
+<p>Edit the <code>user_setup</code> of <code>FactorQuestion</code> as follows:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">user_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctxt</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+   <span class="c1"># Format the factors so that they&#39;re also easier to print</span>
+   <span class="n">print_factors</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+   <span class="c1"># the `zeros` value returned by the parent question is found here</span>
+   <span class="c1"># in the `ctxt` parameter under `ctxt[&#39;zeroes&#39;]`</span>
+   <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">ctxt</span><span class="p">[</span><span class="s1">&#39;zeros&#39;</span><span class="p">]:</span>
+       <span class="k">if</span> <span class="n">z</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">print_factors</span><span class="p">:</span>
+           <span class="n">print_factors</span><span class="p">[</span><span class="n">z</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                 <span class="s1">&#39;zero&#39;</span><span class="p">:</span> <span class="n">z</span><span class="p">,</span>
+                 <span class="s1">&#39;degree&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                 <span class="s1">&#39;has_term&#39;</span><span class="p">:</span> <span class="n">z</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">,</span> <span class="c1"># do we even print a constant term?</span>
+                 <span class="s1">&#39;sign&#39;</span><span class="p">:</span> <span class="s2">&quot;+&quot;</span> <span class="k">if</span> <span class="n">z</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span>
+                 <span class="s1">&#39;num&#39;</span><span class="p">:</span> <span class="nb">abs</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+               <span class="p">}</span>
+       <span class="k">else</span><span class="p">:</span>
+           <span class="n">print_factors</span><span class="p">[</span><span class="n">z</span><span class="p">][</span><span class="s1">&#39;degree&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+   <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;factors&quot;</span><span class="p">:</span> <span class="n">print_factors</span><span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+<p>Now how in the declaration for <code>user_setup</code> we have an additional parameter
+ <code>ctxt</code>. That we can use to get values from the parent question.</p>
+</li>
+<li>
+<p>We also need to change the solution template to use the newly generated
+    values by editing <code>polynomial_question.py</code>:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">solution</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">The factors are:</span>
+
+<span class="s1">$${</span><span class="si">%- f</span><span class="s1">or factor in factors.values() -%}</span>
+<span class="s1">{</span>
+<span class="s1">  {</span><span class="si">%- i</span><span class="s1">f factor.has_term -%}</span>
+<span class="s1">    \left( x {{ factor.sign }} {{ factor.num }} \right)</span>
+<span class="s1">  {</span><span class="si">%- e</span><span class="s1">lse -%}</span>
+<span class="s1">    x</span>
+<span class="s1">  {</span><span class="si">%- e</span><span class="s1">ndif -%}</span>
+<span class="s1">}</span>
+<span class="s1">  {</span><span class="si">%- i</span><span class="s1">f factor.degree != 1 -%}</span>
+<span class="s1">     ^{ {{factor.degree}} }</span>
+<span class="s1">  {</span><span class="si">%- e</span><span class="s1">ndif -%}</span>
+<span class="s1">{</span><span class="si">%- e</span><span class="s1">ndfor -%}</span>
+<span class="s1">$$</span>
+<span class="s1">&#39;&#39;&#39;</span>
+</code></pre></div>
+</td></tr></table>
+<details class="quote"><summary>Complete Current <code>polynomial_question.py</code></summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  1</span>
+<span class="normal">  2</span>
+<span class="normal">  3</span>
+<span class="normal">  4</span>
+<span class="normal">  5</span>
+<span class="normal">  6</span>
+<span class="normal">  7</span>
+<span class="normal">  8</span>
+<span class="normal">  9</span>
+<span class="normal"> 10</span>
+<span class="normal"> 11</span>
+<span class="normal"> 12</span>
+<span class="normal"> 13</span>
+<span class="normal"> 14</span>
+<span class="normal"> 15</span>
+<span class="normal"> 16</span>
+<span class="normal"> 17</span>
+<span class="normal"> 18</span>
+<span class="normal"> 19</span>
+<span class="normal"> 20</span>
+<span class="normal"> 21</span>
+<span class="normal"> 22</span>
+<span class="normal"> 23</span>
+<span class="normal"> 24</span>
+<span class="normal"> 25</span>
+<span class="normal"> 26</span>
+<span class="normal"> 27</span>
+<span class="normal"> 28</span>
+<span class="normal"> 29</span>
+<span class="normal"> 30</span>
+<span class="normal"> 31</span>
+<span class="normal"> 32</span>
+<span class="normal"> 33</span>
+<span class="normal"> 34</span>
+<span class="normal"> 35</span>
+<span class="normal"> 36</span>
+<span class="normal"> 37</span>
+<span class="normal"> 38</span>
+<span class="normal"> 39</span>
+<span class="normal"> 40</span>
+<span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">exam_gen</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">reduce</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">zip_longest</span><span class="p">,</span> <span class="n">dropwhile</span>
+
+<span class="c1"># multiplies a polynomial by x^n</span>
+<span class="n">mul_x</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="p">([</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">p</span>
+<span class="c1"># multiples a polynomial by a constant</span>
+<span class="n">mul_c</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">p</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="p">[</span><span class="n">c</span> <span class="o">*</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">p</span><span class="p">]</span>
+<span class="c1"># sums two polynomials together</span>
+<span class="n">sum_p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span> <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span> <span class="ow">in</span> <span class="n">zip_longest</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span> <span class="n">fillvalue</span><span class="o">=</span><span class="mi">0</span><span class="p">)]</span>
+<span class="c1"># trims a polynomial of extraneous zeroes</span>
+<span class="n">trim_p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">dropwhile</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">l</span><span class="p">))))</span>
+<span class="c1"># multiply polynomials together</span>
+<span class="n">mul_p</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">reduce</span><span class="p">(</span><span class="n">sum_p</span><span class="p">,[</span><span class="n">mul_x</span><span class="p">(</span><span class="n">mul_c</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">c</span><span class="p">),</span><span class="n">d</span><span class="p">)</span><span class="k">for</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="n">c</span><span class="p">)</span><span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">b</span><span class="p">)])</span>
+<span class="c1"># take a zero and give us the corresponding polynomial factor</span>
+<span class="n">fact_z</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span> <span class="n">z</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="c1"># take a list of zeros and produce the polynomial</span>
+<span class="n">prod_z</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">zs</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">trim_p</span><span class="p">(</span><span class="n">reduce</span><span class="p">(</span><span class="n">mul_p</span><span class="p">,</span> <span class="nb">map</span><span class="p">(</span><span class="n">fact_z</span><span class="p">,</span> <span class="n">zs</span><span class="p">))))</span>
+
+<span class="k">class</span> <span class="nc">GraphQuestion</span><span class="p">(</span><span class="n">LatexDoc</span><span class="p">,</span> <span class="n">Question</span><span class="p">):</span>
+    <span class="n">metadata</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Graph Question&quot;</span>
+
+    <span class="n">body</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    Sketch the polynomial on this graph:</span>
+<span class="s1">    Placeholder</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">user_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">FactorQuestion</span><span class="p">(</span><span class="n">LatexDoc</span><span class="p">,</span> <span class="n">Question</span><span class="p">):</span>
+    <span class="n">metadata</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Polynomial Factors&quot;</span>
+
+    <span class="n">body</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    What are its factors?</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+
+    <span class="n">solution</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    The factors are:</span>
+
+<span class="s1">    $${</span><span class="si">%- f</span><span class="s1">or factor in factors.values() -%}</span>
+<span class="s1">    {</span>
+<span class="s1">      {</span><span class="si">%- i</span><span class="s1">f factor.has_term -%}</span>
+<span class="s1">        \left( x {{ factor.sign }} {{ factor.num }} \right)</span>
+<span class="s1">      {</span><span class="si">%- e</span><span class="s1">lse -%}</span>
+<span class="s1">        x</span>
+<span class="s1">      {</span><span class="si">%- e</span><span class="s1">ndif -%}</span>
+<span class="s1">    }</span>
+<span class="s1">      {</span><span class="si">%- i</span><span class="s1">f factor.degree != 1 -%}</span>
+<span class="s1">         ^{ {{factor.degree}} }</span>
+<span class="s1">      {</span><span class="si">%- e</span><span class="s1">ndif -%}</span>
+<span class="s1">    {</span><span class="si">%- e</span><span class="s1">ndfor -%}</span>
+<span class="s1">    $$</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">user_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctxt</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="c1"># Format the factors so that they&#39;re also easier to print</span>
+        <span class="n">print_factors</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="c1"># the `zeros` value returned by the parent question is found here</span>
+        <span class="c1"># in the `ctxt` parameter under `ctxt[&#39;zeroes&#39;]`</span>
+        <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">ctxt</span><span class="p">[</span><span class="s1">&#39;zeros&#39;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">z</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">print_factors</span><span class="p">:</span>
+                <span class="n">print_factors</span><span class="p">[</span><span class="n">z</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                      <span class="s1">&#39;zero&#39;</span><span class="p">:</span> <span class="n">z</span><span class="p">,</span>
+                      <span class="s1">&#39;degree&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                      <span class="s1">&#39;has_term&#39;</span><span class="p">:</span> <span class="n">z</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">,</span> <span class="c1"># do we even print a constant term?</span>
+                      <span class="s1">&#39;sign&#39;</span><span class="p">:</span> <span class="s2">&quot;+&quot;</span> <span class="k">if</span> <span class="n">z</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span>
+                      <span class="s1">&#39;num&#39;</span><span class="p">:</span> <span class="nb">abs</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+                    <span class="p">}</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">print_factors</span><span class="p">[</span><span class="n">z</span><span class="p">][</span><span class="s1">&#39;degree&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;factors&quot;</span><span class="p">:</span> <span class="n">print_factors</span><span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">PolyQuestion</span><span class="p">(</span><span class="n">LatexDoc</span><span class="p">,</span> <span class="n">Question</span><span class="p">):</span>
+    <span class="n">metadata</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Polynomial Question&quot;</span>
+
+    <span class="n">body</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    For the following polynomial:</span>
+
+<span class="s1">    $$</span>
+<span class="s1">    {</span><span class="si">%- f</span><span class="s1">or term in poly -%}</span>
+<span class="s1">      {</span><span class="si">%- i</span><span class="s1">f not loop.first -%}{{term.sign}}{</span><span class="si">%- e</span><span class="s1">ndif -%}</span>
+<span class="s1">      { {{term.num}}{</span><span class="si">%- i</span><span class="s1">f term.degree != 0 -%}x{</span><span class="si">%- e</span><span class="s1">ndif -%} }</span>
+<span class="s1">      {</span><span class="si">%- i</span><span class="s1">f term.degree &gt; 1 -%}^{ {{term.degree}} }{</span><span class="si">%- e</span><span class="s1">ndif -%}</span>
+<span class="s1">    {</span><span class="si">%- e</span><span class="s1">ndfor -%}</span>
+<span class="s1">    $$</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+
+    <span class="n">questions</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;graph&#39;</span><span class="p">:</span> <span class="n">GraphQuestion</span><span class="p">,</span>
+        <span class="s1">&#39;factors&#39;</span><span class="p">:</span> <span class="n">FactorQuestion</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">user_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="c1"># Make a list of 4 random integers, the zeros of our polynomial</span>
+        <span class="n">zeros</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">)))</span>
+
+        <span class="c1"># The polynomial such that each index is the coefficient of the</span>
+        <span class="c1"># corresponding term.</span>
+        <span class="c1"># (i.e. the polynomial is `poly[0] + poly[1]x + poly[2]x^2 ...` for a</span>
+        <span class="c1"># given list `poly`)</span>
+        <span class="n">poly</span> <span class="o">=</span> <span class="n">prod_z</span><span class="p">(</span><span class="n">zeros</span><span class="p">)</span>
+
+        <span class="c1"># Reorder the terms so the highest degree is first, and split it out</span>
+        <span class="c1"># to make the templates easier to write.</span>
+        <span class="n">print_poly</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">degree</span><span class="p">,</span> <span class="n">coeff</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">poly</span><span class="p">))):</span>
+            <span class="k">if</span> <span class="n">coeff</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">print_poly</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                      <span class="s1">&#39;degree&#39;</span><span class="p">:</span> <span class="n">degree</span><span class="p">,</span>
+                      <span class="s1">&#39;coefficient&#39;</span><span class="p">:</span> <span class="n">coeff</span><span class="p">,</span>
+                      <span class="s1">&#39;sign&#39;</span><span class="p">:</span> <span class="s2">&quot;-&quot;</span> <span class="k">if</span> <span class="n">coeff</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;+&quot;</span><span class="p">,</span>
+                      <span class="s1">&#39;num&#39;</span><span class="p">:</span> <span class="nb">abs</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span>
+                    <span class="p">})</span>
+
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;poly&#39;</span><span class="p">:</span> <span class="n">print_poly</span><span class="p">,</span>
+            <span class="s1">&#39;zeros&#39;</span><span class="p">:</span> <span class="n">zeros</span>
+        <span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+</details>
+</li>
+<li>
+<p>We can then generate the new solution key with the following commands:
+   <div class="highlight"><pre><span></span><code><span class="gp">$ </span>./exam.py cleanup
+<span class="gp">$ </span>./exam.py build-solution:fake-class:erios
+</code></pre></div></p>
+</li>
+</ol>
+<p>!!! error "TODO: image in <code>assets/</code>"</p>
+<p>In the next section we'll see how problems can use images and graphs, as well
+as external files and libraries in general.</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="advanced_template_use.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Advanced Template Use" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Advanced Template Use
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="project_organization.html" class="md-footer__link md-footer__link--next" aria-label="Next: Project Organization" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Project Organization
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+
+<script src="../theme/js/iframe-worker.js"></script>
+<script src="../search/search_index.js"></script>
+
+
+    
+      <script src="../assets/javascripts/bundle.29db7785.min.js"></script>
+      
+    
+  </body>
+</html>
