@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-attrs = "*"
+attrs = "21.2.0"
 doit = "*"
 graphlib = "*"
 jinja2 = "<3.0"
@@ -12,6 +12,7 @@ jsonpickle = "*"
 makefun = "*"
 markupsafe = "<2.0"
 PyYAML = "*"
+exam-gen = {editable = true, path = "."}
 
 [dev-packages]
 coloredlogs = "*"
@@ -29,7 +30,7 @@ pytest-cov = "*"
 pipenv-setup = "*"
 
 [console_scripts]
-exam-gen = "exam_gen.cli:main"
+exam-gen = "exam_gen.build.cli:main"
 
 [requires]
 python_version = "3.9"
