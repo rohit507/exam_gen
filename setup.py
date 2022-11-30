@@ -24,6 +24,8 @@ setup(
     ],
     include_package_data=True,
     package_data={"": ["templates/**.jn2*"],},
-    packages=setuptools.find_packages(),
+    packages=setuptools.find_packages(
+        include=['exam_gen*'],
+    ),
     #entry_points={"console_scripts": ["exam-gen = exam_gen.cli:main"]},
 )
