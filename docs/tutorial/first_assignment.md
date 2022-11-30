@@ -47,7 +47,7 @@ With both of those ready to go, we can move on to making an assignment.
   2. Then we can add the `exam_gen` library to our project using pipenv:
 
      ```console
-     $ pipenv install <repo_url>
+     $ pipenv install git+https://github.com/rohit507/exam_gen.git#egg=exam_gen
      ```
 
      Right now `<repo_url>` would be `https://github.com/rohit507/exam_gen.git`
