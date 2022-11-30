@@ -10,7 +10,7 @@ we import.
 
   1. Copy the image below into `poly_question/empty_grid.png`:
 
-    !!! error "TODO: image in `assets/`"
+    !!! error "TODO: image is [https://rohit507.github.io/exam_gen/tutorial/assets/empty_grid.png]"
 
 
 
@@ -232,7 +232,7 @@ student.
             Sketch the polynomial on this graph:
 
             \includegraphics[width=\textwidth]{solution.png} \\ ~ \\
-            ''' lw
+            '''
 
             settings.assets = ["empty_grid.png"]
 

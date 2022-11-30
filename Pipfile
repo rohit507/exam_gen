@@ -5,17 +5,16 @@ name = "pypi"
 
 [packages]
 attrs = "21.2.0"
-doit = "*"
-graphlib = "*"
+doit = "0.33.1"
 jinja2 = "<3.0"
-jsonpickle = "*"
-makefun = "*"
+jsonpickle = "2.0.0"
+makefun = "1.11.3"
 markupsafe = "<2.0"
-PyYAML = "*"
-exam-gen = {editable = true, path = "."}
+PyYAML = "5.4.1"
+exam-gen = {path = "."}
 
 [dev-packages]
-coloredlogs = "*"
+coloredlogs = "<16.0.0"
 setuptools = "*"
 flake8 = "*"
 isort = "*"
@@ -23,14 +22,11 @@ mkdocs = "*"
 mkdocs-localsearch = "*"
 mkdocs-macros-plugin = "*"
 mkdocs-material = "*"
-mkdocstrings = "*"
 pymdown-extensions = "*"
+pygments = "*"
 pytest = "*"
 pytest-cov = "*"
-pipenv-setup = "*"
-
-[console_scripts]
-exam-gen = "exam_gen.build.cli:main"
+mkdocstrings = {version = "*", extras = ["python"]}
 
 [requires]
 python_version = "3.9"

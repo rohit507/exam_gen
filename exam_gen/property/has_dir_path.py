@@ -32,7 +32,6 @@ class HasDirPath():
 
     root_dir = attr.ib(default=None, kw_only=True)
 
-
     parent_obj = attr.ib(default=None, kw_only=True)
 
     parent_path = attr.ib(default=None, kw_only=True)
@@ -152,7 +151,7 @@ class HasDirPath():
             return Path(self.parent_path, filename)
         elif (self.parent_obj != None
               and issubclass(type(self.parent_obj), HasDirPath)):
-            return parent_obj.lookup_file(filename)
+            return self.parent_obj.lookup_file(filename)
         else:
             raise RuntimeError(("Could not find file '{}' in either "
                                 "{} or {}").format(filename,

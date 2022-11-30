@@ -1,7 +1,7 @@
 from setuptools import setup
 import setuptools
 
-print("running exam_gen setup.py")
+#print("running exam_gen setup.py")
 
 # TODO : Set up flags based on https://packaging.python.org/guides/distributing-packages-using-setuptools/#setup-args
 # TODO : Set up package data files ala https://setuptools.readthedocs.io/en/latest/userguide/datafiles.html
@@ -25,5 +25,5 @@ setup(
     include_package_data=True,
     package_data={"": ["templates/**.jn2*"],},
     packages=setuptools.find_packages(),
-    entry_points={"console_scripts": ["exam-gen = exam_gen.cli:main"]},
+    #entry_points={"console_scripts": ["exam-gen = exam_gen.cli:main"]},
 )

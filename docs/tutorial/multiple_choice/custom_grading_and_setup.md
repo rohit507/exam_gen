@@ -516,7 +516,7 @@ this is a good place to show how custom grading works for multiple-choice-questi
         # We will award between 0 and 2 points for this problem
         settings.grade.max_points = 2
 
-        def calculate_grade(self, ctxt, is_answer):
+        def calculate_grade(self, ctxt, is_selected):
             # Extract assignments from student choices
             assignments = dict()
             for i in range(0, 2 * len(vars)):

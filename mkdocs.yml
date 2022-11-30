@@ -80,51 +80,51 @@ nav:
       # - Auto-grading:
       # - Templates:
     # - Documentation and gh-pages:
-  - API Documentation: # api/*
-    # - Summary: api/Summary.md
-    - exam_gen.build: # api/build/*
-      - .build.cli: api/build/cli.md
-      - .build.data: api/build/data.md
-      - .build.formats: api/build/formats.md
-    - exam_gen.classrooom: # api/classroom/*
-      - .classroom.answers: api/classroom/answers.md
-      - .classroom.base: api/classroom/base.md
-      - .classroom.grades: api/classroom/grade.md
-      - .classroom.rosters: api/classroom/rosters.md
-      - .classroom.scores: api/classroom/scores.md
-      - .classroom.student: api/classroom/student.md
-    - exam_gen.exam : api/exam.md
-    - exam_gen.property: # api/property/*
-      - .property.answerable : api/property/answerable.md
-      - .property.auto_gradeable : api/property/auto_gradeable.md
-      - .property.buildable : api/property/buildable.md
-      - .property.document : api/property/document.md
-      - .property.format : api/property/format.md
-      - .property.gradeable : api/property/gradeable.md
-      - .property.has_context : api/property/has_context.md
-      - .property.has_dir_path : api/property/has_dir_path.md
-      - .property.has_metadata : api/property/has_metadata.md
-      - .property.has_rng : api/property/has_rng.md
-      - .property.has_settings : api/property/has_settings.md
-      - .property.has_user_setup : api/property/has_user_setup.md
-      - .property.numbered : api/property/numbered.md
-      - .property.personalized : api/property/personalized.md
-      - .property.templated : api/property/templated.md
-    # - exam_gen.question: # api/question/*
-      # - .question.base: api/question/base.md
-      # - .question.multiple_choice: api/question/multiple_choice.md
-    - exam_gen.util: # api/util/*
-      # - .util.config : api/util/config.md
-      # - .util.excel_cols : api/util/excel_cols.md
-      # - .util.file_ops : api/util/file_ops.md
-      # - .util.logging : api/util/logging.md
-      # - .util.merge_dict : api/util/merge_dict.md
-      # - .util.prepare_attrs : api/util/prepare_attrs.md
-      # - .util.stable_hash : api/util/stable_hash.md
-      - .util.selectors : api/util/selectors.md
-      # - .util.user_setup : api/util/user_setup.md
-      # - .util.versioned_option : api/util/versioned_option.md
-      # - .util.with_options : api/util/with_options.md
+  # - API Documentation: # api/*
+  #   # - Summary: api/Summary.md
+  #   - exam_gen.build: # api/build/*
+  #     - .build.cli: api/build/cli.md
+  #     - .build.data: api/build/data.md
+  #     - .build.formats: api/build/formats.md
+  #   - exam_gen.classrooom: # api/classroom/*
+  #     - .classroom.answers: api/classroom/answers.md
+  #     - .classroom.base: api/classroom/base.md
+  #     - .classroom.grades: api/classroom/grade.md
+  #     - .classroom.rosters: api/classroom/rosters.md
+  #     - .classroom.scores: api/classroom/scores.md
+  #     - .classroom.student: api/classroom/student.md
+  #   - exam_gen.exam : api/exam.md
+  #   - exam_gen.property: # api/property/*
+  #     - .property.answerable : api/property/answerable.md
+  #     - .property.auto_gradeable : api/property/auto_gradeable.md
+  #     - .property.buildable : api/property/buildable.md
+  #     - .property.document : api/property/document.md
+  #     - .property.format : api/property/format.md
+  #     - .property.gradeable : api/property/gradeable.md
+  #     - .property.has_context : api/property/has_context.md
+  #     - .property.has_dir_path : api/property/has_dir_path.md
+  #     - .property.has_metadata : api/property/has_metadata.md
+  #     - .property.has_rng : api/property/has_rng.md
+  #     - .property.has_settings : api/property/has_settings.md
+  #     - .property.has_user_setup : api/property/has_user_setup.md
+  #     - .property.numbered : api/property/numbered.md
+  #     - .property.personalized : api/property/personalized.md
+  #     - .property.templated : api/property/templated.md
+  #   # - exam_gen.question: # api/question/*
+  #     # - .question.base: api/question/base.md
+  #     # - .question.multiple_choice: api/question/multiple_choice.md
+  #   - exam_gen.util: # api/util/*
+  #     # - .util.config : api/util/config.md
+  #     # - .util.excel_cols : api/util/excel_cols.md
+  #     # - .util.file_ops : api/util/file_ops.md
+  #     # - .util.logging : api/util/logging.md
+  #     # - .util.merge_dict : api/util/merge_dict.md
+  #     # - .util.prepare_attrs : api/util/prepare_attrs.md
+  #     # - .util.stable_hash : api/util/stable_hash.md
+  #     - .util.selectors : api/util/selectors.md
+  #     # - .util.user_setup : api/util/user_setup.md
+  #     # - .util.versioned_option : api/util/versioned_option.md
+  #     # - .util.with_options : api/util/with_options.md
   - Quick Reference: quick_reference.md
 
 plugins:
@@ -153,6 +153,7 @@ markdown_extensions:
   - md_in_html
   - pymdownx.details
   - pymdownx.superfences
+  - pymdownx.highlight
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - attr_list

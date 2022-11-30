@@ -7,7 +7,7 @@ The core of each classroom is a roster of students that our library can parse.
   1. Create new `class-1.csv` in the project directory with the following
     content:
 
-    ```csv
+    ```csv linenums=1
     Name,Student ID,Email Address
     "Wilkins, Willa",49234720,awilkins@berkeley.edu
     "Smith, Abby",49232758,ysmith@berkeley.edu
